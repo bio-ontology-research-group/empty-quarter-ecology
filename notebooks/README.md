@@ -250,6 +250,20 @@ integration.
 - **Manuscript:** Suppl S27, S28.
 - **Compute:** local, ~2 min.
 
+## `17_xrf_compartment.qmd` — Per-compartment XRF × Shannon (Fig S30)
+
+**Purpose.** Decomposes the site-mean per-element XRF × Shannon
+correlations reported in main Fig. 1C by compartment. Identifies
+which salinity ions (S, Cl, Na) act in which soil compartment and
+surfaces the P sign flip between deep (+) and rhizosphere (−).
+
+- **Inputs:** `data/geochemistry/xrf_lab_table_filtered.tsv`,
+  `cache/feature_table.parquet`, `cache/metadata.parquet`.
+- **Outputs:** `figures/figS30_xrf_per_compartment.pdf`,
+  `cache/xrf_per_compartment.tsv`.
+- **Manuscript:** Suppl S30.
+- **Compute:** local, <1 min.
+
 ## `16_cross_desert.qmd` — Cross-desert generalisation (Fig 11)
 
 **Purpose.** Summarises the cross-desert comparison against published

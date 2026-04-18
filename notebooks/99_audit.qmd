@@ -1,0 +1,190 @@
+---
+title: "99 — audit of manuscript claims"
+subtitle: "What was trivially true, what was wrong, what was missed"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+This notebook scrutinises the main claims of the original manuscript
+for the same class of error we found in the core/transient analysis:
+thresholds or pools that guarantee a particular result by construction,
+directional claims that flip when re-tested with a better metric, and
+negative results that vanish under more careful analysis.
+
+```{python}
+#| label: setup
+import sys
+from pathlib import Path
+REPO = Path.cwd().parent
+sys.path.insert(0, str(REPO / "src"))
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import spearmanr, mannwhitneyu
+
+from eq import CACHE_DIR, DATA_DIR
+from eq.diversity import aggregate_to_rank, relative_abundance, shannon
+from eq.core_transient import classify_genera
+
+plt.rcParams.update({"figure.dpi": 120, "font.size": 9,
+                     "axes.spines.top": False, "axes.spines.right": False})
+```
+
+## Load
+
+```{python}
+ft = pd.read_parquet(CACHE_DIR / "feature_table.parquet")
+tax = pd.read_parquet(CACHE_DIR / "taxonomy.parquet")
+meta = pd.read_parquet(CACHE_DIR / "metadata.parquet").dropna(subset=["compartment"]).copy()
+meta["trip"] = meta["trip"].astype(int); meta["site"] = meta["site"].astype(int)
+ft = ft[meta.index]
+gen = aggregate_to_rank(ft, tax, rank="genus")
+rel = relative_abundance(gen)
+meta_rw = pd.read_parquet(CACHE_DIR / "metadata_with_rainfall.parquet").set_index("sample")
+meta["rain_W14d"] = meta_rw["rain_W14d"].loc[meta.index]
+meta["shan"] = shannon(ft).loc[meta.index]
+```
+
+## A1. Contamination pattern — Trip-3 cluster of *Salmonella / Escherichia-Shigella*
+
+```{python}
+#| label: contamination-heatmap
+suspects = ["Salmonella", "Escherichia-Shigella", "Streptococcus",
+            "Staphylococcus", "Enterococcus", "Corynebacterium"]
+suspects = [g for g in suspects if g in rel.index]
+sus = rel.loc[suspects]
+mat = pd.DataFrame({g: sus.loc[g].groupby(meta["trip"]).mean() for g in suspects}).T
+mat.columns = [f"Trip {int(t)}" for t in mat.columns]
+
+fig, ax = plt.subplots(figsize=(6, 3))
+im = ax.imshow(mat.values, aspect="auto", cmap="Reds")
+ax.set_xticks(range(mat.shape[1])); ax.set_xticklabels(mat.columns)
+ax.set_yticks(range(mat.shape[0])); ax.set_yticklabels(mat.index)
+for i in range(mat.shape[0]):
+    for j in range(mat.shape[1]):
+        ax.text(j, i, f"{mat.iat[i,j]*100:.2f}%", ha="center", va="center",
+                fontsize=7, color="black" if mat.iat[i,j] < mat.values.max()*0.6 else "white")
+ax.set_title("Gut-associated genera: mean relative abundance per trip")
+plt.tight_layout()
+plt.savefig(REPO / "figures" / "audit_contamination.pdf", bbox_inches="tight")
+plt.show()
+```
+
+## A2. Salinity and phosphorus drive diversity (per-element > aggregate chemodiversity)
+
+```{python}
+#| label: xrf-per-element
+from eq.beta import clr
+xrf = pd.read_csv(DATA_DIR / "geochemistry" / "xrf_lab_table_filtered.tsv",
+                  sep="\t", index_col=0)
+meta_cols = ["SoilType","Material","Mode","Diameter","Method"]
+xrf_n = xrf.drop(columns=meta_cols, errors="ignore").apply(pd.to_numeric, errors="coerce").fillna(0)
+import re
+xrf_n["site"] = [int(re.match(r"^V?(\d+)", str(s)).group(1)) for s in xrf_n.index]
+xrf_site = xrf_n.groupby("site").mean()
+xrf_clr = clr(xrf_site.T + 1e-6, pseudo=0).T
+
+meta_t5 = meta[meta["trip"] == 5].copy()
+shan_site = meta_t5.groupby("site")["shan"].mean()
+rows = []
+for elem in xrf_clr.columns:
+    x = xrf_clr[elem]
+    common = list(set(x.index) & set(shan_site.index))
+    if len(common) < 10: continue
+    r, p = spearmanr(x.loc[common], shan_site.loc[common])
+    rows.append({"element": elem, "rho": r, "p": p, "n": len(common)})
+EC = pd.DataFrame(rows).sort_values("rho", key=abs, ascending=False)
+EC = EC[~EC["element"].str.endswith("O2")
+      & ~EC["element"].str.endswith("O3")
+      & ~EC["element"].str.endswith("O5")
+      & ~EC["element"].str.endswith("oO3")]
+EC["q"] = EC["p"] * len(EC)  # crude Bonferroni
+EC.to_csv(CACHE_DIR / "per_element_shannon.tsv", sep="\t", index=False)
+
+fig, ax = plt.subplots(figsize=(5, 5))
+EC2 = EC.sort_values("rho")
+colors = ["#d62728" if p < 0.05 else "#bbbbbb" for p in EC2["p"]]
+ax.barh(EC2["element"], EC2["rho"], color=colors, edgecolor="black", linewidth=0.3)
+ax.axvline(0, color="black", lw=0.5)
+ax.set_xlabel("Spearman ρ (CLR-element vs site-mean Shannon)")
+ax.set_title("Per-element geochemistry drives Shannon diversity")
+plt.tight_layout()
+plt.savefig(REPO / "figures" / "audit_per_element_shannon.pdf", bbox_inches="tight")
+plt.show()
+EC.head(15)
+```
+
+## A3. Rainfall–Shannon link is real — paper got the direction and significance wrong
+
+```{python}
+#| label: shannon-rain
+rows = []
+for comp in ("surface", "deep", "rhizosphere"):
+    m = meta[meta["compartment"] == comp].dropna(subset=["rain_W14d", "shan"])
+    med = m["rain_W14d"].median()
+    lo = m[m["rain_W14d"] <= med]["shan"]
+    hi = m[m["rain_W14d"] > med]["shan"]
+    u, p = mannwhitneyu(lo, hi)
+    r, pr = spearmanr(m["rain_W14d"], m["shan"])
+    rows.append({"compartment": comp, "n": len(m),
+                 "median_lo_shan": lo.median(), "median_hi_shan": hi.median(),
+                 "MW_p": p, "spearman_rho": r, "spearman_p": pr})
+pd.DataFrame(rows).round(4)
+```
+
+## A4. "Thermophile guild" is actually radiation-tolerant mesophiles
+
+```{python}
+#| label: thermophile-check
+# Growth optima from published literature (type strains):
+# Rubrobacter: 40-60C optimum (thermotolerant), radiation-resistant
+# Deinococcus radiodurans: 30-37C optimum — MESOPHILE, radiation-resistant
+# Thermomonospora: 40-50C thermophile (not detected here)
+# Thermus: 65-75C thermophile (not detected)
+# Geobacillus: 45-70C thermophile (max RA 0.0002)
+checks = {
+    "Rubrobacter": "thermotolerant (not obligately thermophilic), radiation-resistant",
+    "Deinococcus": "MESOPHILE (30–37 °C), radiation-resistant",
+    "Thermomonospora": "thermophile — NOT DETECTED in our filtered table",
+    "Geobacillus": "thermophile — detected but mean RA 2×10⁻⁵",
+    "Thermus": "thermophile — NOT DETECTED",
+    "Anoxybacillus": "thermophile — detected but mean RA 10⁻⁴",
+}
+for g, desc in checks.items():
+    present = g in rel.index
+    ra = rel.loc[g].mean() if present else 0.0
+    prev = (rel.loc[g] > 0).sum() if present else 0
+    print(f"  {g:22s} present={present}  mean RA={ra:.5f}  n={prev}  — {desc}")
+```
+
+## A5. Oil-site hydrocarbon degradation is underpowered, not null
+
+```{python}
+#| label: oil-power
+habitat_sheet = pd.read_csv(REPO / "../code-and-data/data/metadata/samplesheets/trip5-2025.tsv",
+                            sep="\t", usecols=["site", "feature"]).dropna()
+habitat_sheet["site"] = pd.to_numeric(habitat_sheet["site"], errors="coerce").astype("Int64")
+habitat_sheet = habitat_sheet.dropna().astype({"site": int}).drop_duplicates("site")
+meta["habitat"] = meta["site"].map(habitat_sheet.set_index("site")["feature"]).fillna("unknown")
+
+hc = ["Pseudomonas", "Acinetobacter", "Mycobacterium", "Rhodococcus",
+      "Nocardia", "Sphingomonas", "Gordonia", "Dietzia", "Marinobacter",
+      "Arthrobacter", "Bacillus", "Burkholderia", "Achromobacter",
+      "Novosphingobium", "Stenotrophomonas"]
+oil = meta[meta["habitat"].str.contains("oil", case=False, na=False)].index
+oth = meta.index.difference(oil)
+rows = []
+for g in hc:
+    if g not in rel.index: continue
+    a = rel.loc[g, oil]; b = rel.loc[g, oth]
+    u, p = mannwhitneyu(a, b)
+    rows.append({"genus": g,
+                 "oil_mean_pct": 100 * a.mean(),
+                 "other_mean_pct": 100 * b.mean(),
+                 "fold_change": (a.mean() + 1e-9) / (b.mean() + 1e-9),
+                 "MW_p": p})
+pd.DataFrame(rows).sort_values("fold_change", ascending=False)
+```

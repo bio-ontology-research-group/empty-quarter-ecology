@@ -1,0 +1,138 @@
+---
+title: "00 — loading and quality control"
+subtitle: "Empty Quarter amplicon dataset — reproducibility package"
+format:
+  html:
+    toc: true
+---
+
+This notebook reads the raw Ampliseq output for the five Rub' al-Khali
+field campaigns, applies the QC filters described in the paper's Methods
+section, and writes analysis-ready caches that every downstream notebook
+consumes. It also reconciles the sample counts reported in the
+manuscript against the tables on disk.
+
+```{python}
+#| label: setup
+import logging
+import sys
+from pathlib import Path
+
+REPO = Path.cwd().parent
+sys.path.insert(0, str(REPO / "src"))
+
+import pandas as pd
+import numpy as np
+pd.set_option("display.max_columns", 40)
+pd.set_option("display.width", 140)
+
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+
+from eq import CACHE_DIR, DATA_DIR
+from eq.loader import (
+    QCConfig,
+    apply_qc,
+    build_sample_metadata,
+    load_feature_table_raw,
+    load_site_geodata,
+    load_taxonomy,
+)
+```
+
+## Raw inputs
+
+```{python}
+#| label: raw-load
+ft_raw = load_feature_table_raw()
+tax = load_taxonomy()
+print(f"Raw feature table: {ft_raw.shape[0]:,} ASVs x {ft_raw.shape[1]:,} sample columns")
+print(f"Taxonomy rows:     {tax.shape[0]:,}")
+```
+
+## QC filtering
+
+The paper's methods specify:
+
+* keep ASVs with prevalence ≥ 3 samples and total abundance > 50 reads
+* drop mitochondrial and chloroplast ASVs by taxonomy
+* drop samples with < 1000 reads after ASV filtering
+
+We reproduce those rules directly (no `decontam` rerun — the Ampliseq
+run already removed control-linked features).
+
+```{python}
+#| label: qc
+config = QCConfig(
+    min_prevalence=3,
+    min_total_abundance=50,
+    min_sample_reads=1_000,
+    drop_mitochondria=True,
+    drop_chloroplast=True,
+    drop_archaea=False,
+    drop_controls=True,
+)
+ft, tax_f, report = apply_qc(ft_raw, tax, config)
+report
+```
+
+## Sample metadata
+
+```{python}
+#| label: metadata
+meta = build_sample_metadata(ft.columns.tolist())
+print(f"Samples with parseable IDs: {meta['trip'].notna().sum():,} / {len(meta):,}")
+print("\nSamples per trip x compartment:")
+print(
+    meta.dropna(subset=["trip", "compartment"])
+        .assign(n=1)
+        .pivot_table(index="trip", columns="compartment", values="n", aggfunc="sum", fill_value=0)
+        .assign(total=lambda d: d.sum(axis=1))
+)
+```
+
+## Reconciliation with the manuscript
+
+The manuscript reports 1,237 samples across the five trips after QC.
+Any discrepancy here goes into the limitations / revision history.
+
+```{python}
+#| label: reconciliation
+published = {1: 325, 2: 24, 3: 478, 4: 177, 5: 233}
+observed = (
+    meta.dropna(subset=["trip"])
+        .groupby("trip")
+        .size()
+        .to_dict()
+)
+recon = pd.DataFrame(
+    {"published": pd.Series(published), "observed": pd.Series(observed)}
+).fillna(0).astype(int)
+recon["delta"] = recon["observed"] - recon["published"]
+recon.loc["total"] = recon.sum()
+recon
+```
+
+## Cache analysis-ready tables
+
+```{python}
+#| label: cache
+ft.to_parquet(CACHE_DIR / "feature_table.parquet")
+tax_f.to_parquet(CACHE_DIR / "taxonomy.parquet")
+meta.to_parquet(CACHE_DIR / "metadata.parquet")
+pd.Series(report).to_json(CACHE_DIR / "qc_report.json")
+print("Wrote:")
+for p in ("feature_table.parquet", "taxonomy.parquet", "metadata.parquet", "qc_report.json"):
+    fp = CACHE_DIR / p
+    print(f"  {fp.name:30s} {fp.stat().st_size/1e6:7.2f} MB")
+```
+
+## Notes
+
+* Filtering here is intentionally light; compositional transforms
+  (rarefaction, CLR) are applied per-analysis downstream.
+* Archaea are retained throughout; the manuscript's taxonomic claims
+  are bacteria-only, but keeping archaea in the table allows sensitivity
+  analysis in the Discussion.
+* The "1,272" sample count of the raw `feature-table-trips1-5.tsv`
+  includes sequencing replicates and control wells; see the
+  reconciliation table above for the breakdown.

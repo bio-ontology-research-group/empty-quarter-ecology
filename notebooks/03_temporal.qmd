@@ -1,0 +1,199 @@
+---
+title: "03 — temporal dynamics: rainfall response, core, and viability"
+subtitle: "Figure 3 of the ISME / Microbiome manuscript"
+format:
+  html:
+    toc: true
+---
+
+Figure 3 asks whether the Empty Quarter microbiome responds to the
+stochastic pulse of rainfall, and whether the temporally stable "core"
+signal we see is driven by viable cells or by accumulated relic DNA.
+
+* **A.** Distributed-lag rainfall-response model: Spearman ρ between
+  Shannon diversity / responder-phylum abundance and cumulative rainfall
+  over 1–30 day antecedent windows, per compartment.
+* **B.** Core vs. transient genera across trips (stacked relative
+  abundance).
+* **C.** PMA viability overlay: surface responder genera vs. Active
+  Resident genera in the PMA Trip-5 subset (Jaccard + volcano).
+
+```{python}
+#| label: setup
+import sys
+from pathlib import Path
+
+REPO = Path.cwd().parent
+sys.path.insert(0, str(REPO / "src"))
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from eq import CACHE_DIR, FIGURES_DIR, DATA_DIR
+from eq.climate import add_rainfall_to_metadata
+from eq.diversity import aggregate_to_rank, relative_abundance, shannon
+
+plt.rcParams.update({
+    "figure.dpi": 120, "font.size": 9,
+    "axes.spines.top": False, "axes.spines.right": False,
+})
+```
+
+## Load tables + build antecedent rainfall windows
+
+```{python}
+#| label: load
+ft = pd.read_parquet(CACHE_DIR / "feature_table.parquet")
+tax = pd.read_parquet(CACHE_DIR / "taxonomy.parquet")
+meta = pd.read_parquet(CACHE_DIR / "metadata.parquet")
+meta = meta.dropna(subset=["trip", "compartment"]).copy()
+meta["trip"] = meta["trip"].astype(int)
+meta["site"] = meta["site"].astype(int)
+ft = ft[meta.index]
+print(f"{ft.shape[0]:,} ASVs × {ft.shape[1]:,} samples")
+
+meta_rw = add_rainfall_to_metadata()
+meta_rw = meta_rw.set_index("sample").loc[meta.index]
+meta = meta.join(meta_rw.drop(columns=[c for c in meta_rw.columns if c in meta.columns]))
+meta["shannon"] = shannon(ft)
+meta.head(3)
+```
+
+## A. Distributed-lag rainfall response
+
+```{python}
+#| label: fig3a-dlm
+from scipy.stats import spearmanr
+
+windows = [1, 3, 7, 10, 14, 30]
+phy = aggregate_to_rank(ft, tax, rank="phylum")
+phy_rel = relative_abundance(phy)
+meta["responder_frac"] = (
+    phy_rel.reindex(["Bacteroidota", "Pseudomonadota"]).fillna(0).sum(axis=0)
+)
+
+rows = []
+for comp in ("surface", "deep", "rhizosphere"):
+    m = meta[meta["compartment"] == comp]
+    for w in windows:
+        col = f"rain_W{w}d"
+        if col not in m.columns: continue
+        x = m[col]; y_s = m["shannon"]; y_r = m["responder_frac"]
+        ok = x.notna() & y_s.notna()
+        r_s, p_s = spearmanr(x[ok], y_s[ok])
+        r_r, p_r = spearmanr(x[ok], y_r[ok])
+        rows.append({"compartment": comp, "window_d": w,
+                     "shannon_rho": r_s, "shannon_p": p_s,
+                     "responder_rho": r_r, "responder_p": p_r,
+                     "n": ok.sum()})
+dlm = pd.DataFrame(rows)
+dlm.to_csv(CACHE_DIR / "rainfall_lag_response.tsv", sep="\t", index=False)
+dlm
+```
+
+```{python}
+#| label: fig3a-plot
+palette = {"surface": "#d62728", "deep": "#1f77b4", "rhizosphere": "#2ca02c"}
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4), sharex=True)
+for comp, grp in dlm.groupby("compartment"):
+    ax1.plot(grp["window_d"], grp["shannon_rho"], "-o", label=comp,
+             color=palette[comp])
+    ax2.plot(grp["window_d"], grp["responder_rho"], "-o", label=comp,
+             color=palette[comp])
+for ax, ylab in zip((ax1, ax2),
+                     ("Shannon vs rain (ρ)", "Bacteroidota+Pseudomonadota vs rain (ρ)")):
+    ax.axhline(0, color="grey", lw=0.5)
+    ax.set_xlabel("antecedent window (days)")
+    ax.set_ylabel(ylab)
+    ax.set_xscale("log")
+    ax.set_xticks(windows); ax.set_xticklabels(windows)
+ax1.legend(frameon=False, fontsize=8)
+plt.tight_layout()
+plt.savefig(FIGURES_DIR / "fig3a_rainfall_lag.pdf", bbox_inches="tight")
+plt.show()
+```
+
+## B. Core / opportunist / conditionally-rare / transient
+
+The manuscript's original rule — "present in ≥4 of 5 trips with any
+non-zero read" — conflates detection with persistence: any abundant
+genus is trivially "present" everywhere, inflating the core fraction to
+~99 % and shrinking the transient pool to ~0.3 %. That's a tautology,
+not ecology.
+
+We replace it with the Shade & Handelsman (2012, *Environ Microbiol*) /
+Dini-Andreote et al. (2015, *ISME J*) prevalence-abundance framework:
+presence requires relative abundance ≥ 0.1 % in a sample, per-trip
+prevalence ≥ 50 % for core membership, and a ``conditionally rare``
+category captures genera that bloom to ≥ 1 % occasionally but are
+globally rare (< 20 % prevalence).
+
+```{python}
+#| label: fig3b-core
+from eq.core_transient import classify_genera
+gen = aggregate_to_rank(ft, tax, rank="genus")
+gen = gen[~gen.index.isin(["unclassified", "NA", ""])]
+
+cat = classify_genera(gen, meta)
+print("Genera per category (new framework):")
+print(cat["category"].value_counts())
+print()
+
+# Abundance share per category (mean across samples × compartment × trip)
+gen_rel = relative_abundance(gen)
+gen_rel["category"] = cat["category"]
+by_cat = gen_rel.groupby("category").sum().drop(columns=[], errors="ignore")
+# Per-sample category shares
+cat_share = by_cat.T  # samples × categories
+cat_share = cat_share.join(meta[["trip", "compartment"]])
+
+# Aggregate to (trip, compartment) means
+agg = (cat_share.groupby(["trip", "compartment"])
+       [list(by_cat.index)].mean()).sort_index()
+print("Mean abundance share per (trip, compartment):")
+print(agg.round(3))
+```
+
+```{python}
+#| label: fig3b-plot
+fig, ax = plt.subplots(figsize=(8, 4))
+cat_order = ["core", "opportunist", "conditionally_rare", "rare_transient", "other"]
+cat_palette = {
+    "core": "#2ca02c", "opportunist": "#ff7f0e",
+    "conditionally_rare": "#9467bd", "rare_transient": "#7f7f7f",
+    "other": "#d3d3d3",
+}
+agg[cat_order].plot.bar(
+    stacked=True, ax=ax,
+    color=[cat_palette[c] for c in cat_order],
+    edgecolor="white", linewidth=0.3,
+)
+ax.set_ylabel("relative abundance")
+ax.set_xlabel("")
+ax.set_xticklabels([f"T{t}-{c[:3]}" for (t, c) in agg.index], rotation=60, ha="right")
+ax.legend(title="category", frameon=False, bbox_to_anchor=(1.02, 1),
+          loc="upper left", fontsize=8)
+plt.tight_layout()
+plt.savefig(FIGURES_DIR / "fig3b_core_transient.pdf", bbox_inches="tight")
+plt.show()
+```
+
+## C. PMA viability overlay
+
+```{python}
+#| label: fig3c-pma
+pma_path = DATA_DIR / "../../code-and-data/data/processed/relic_dna/c2s.tsv"
+if pma_path.exists():
+    pma = pd.read_csv(pma_path, sep="\t")
+    # Clean column names
+    pma.columns = [c.strip() for c in pma.columns]
+    print("PMA columns:", list(pma.columns[:12]))
+    print(f"  rows: {len(pma)}")
+    # Classification counts
+    if "Viability Status" in pma.columns:
+        print()
+        print(pma["Viability Status"].value_counts())
+else:
+    print(f"PMA data not found at {pma_path}")
+```

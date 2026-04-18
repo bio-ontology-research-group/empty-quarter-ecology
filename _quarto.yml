@@ -1,0 +1,19 @@
+project:
+  type: default
+  title: "Empty Quarter amplicon — reproducibility package"
+  output-dir: _output
+
+execute:
+  freeze: auto
+  cache: true
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-tools: true
+    theme: cosmo
+    embed-resources: false
+    fig-width: 7
+    fig-height: 5

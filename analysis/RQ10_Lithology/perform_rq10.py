@@ -1,0 +1,1 @@
+/home/leechuck/Documents/papers/empty-quarter-amplicon/code-and-data/analysis/v2/RQ10_Lithology/perform_rq10.py

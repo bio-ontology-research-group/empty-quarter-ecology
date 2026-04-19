@@ -1,0 +1,203 @@
+---
+title: "Main Figure 1 — Overview (map, elevation, drivers, sampling)"
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+---
+
+# Main figure 1
+
+A single consolidated overview figure with four panels:
+
+- **(a)** Arabian-Peninsula map with OSM basemap, 60 Rub'-al-Khali sites
+- **(b)** East–west elevation profile along the transect (Copernicus DEM)
+- **(c)** Per-element XRF–Shannon Spearman ρ forest plot with FDR-significance
+- **(d)** Sampling intensity heatmap (trip × compartment)
+
+```{python}
+#| label: setup
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+from matplotlib.gridspec import GridSpec
+from pathlib import Path
+mpl.rcParams["font.size"] = 9
+
+REPO = Path("..").resolve()
+CACHE = REPO / "cache"
+FIG = REPO / "figures"
+FIG.mkdir(exist_ok=True)
+print(f"REPO={REPO}")
+print(f"FIG={FIG}")
+```
+
+```{python}
+#| label: load
+# Sites (metadata)
+meta = pd.read_parquet(CACHE / "metadata.parquet").reset_index()
+# Per-element XRF × Shannon correlations (already in cache)
+xrf_ρ = pd.read_csv(CACHE / "per_element_shannon.tsv", sep="\t")
+# Topography (from fetch_srtm_topography.py)
+srtm_path = CACHE / "srtm_topo.parquet"
+srtm = pd.read_parquet(srtm_path) if srtm_path.exists() else None
+print("meta cols:", list(meta.columns)[:8])
+print("XRF ρ rows:", len(xrf_ρ))
+if srtm is not None:
+    print("SRTM cols:", list(srtm.columns)[:8])
+```
+
+```{python}
+#| label: site-coords
+# Site coordinates come from geodata TSVs
+geo_frames = []
+for t in [1, 2, 3, 4, 5]:
+    p = REPO / f"data/geodata/trip{t}_geodata.tsv"
+    if p.exists():
+        df = pd.read_csv(p, sep="\t")
+        df["trip"] = t
+        geo_frames.append(df)
+geo = pd.concat(geo_frames, ignore_index=True) if geo_frames else pd.DataFrame()
+print("geo cols:", list(geo.columns)[:12] if len(geo) else "empty")
+print("geo rows:", len(geo))
+
+# unique site × lat/lon
+site_cols_candidates = [["SiteNum", "lat", "lon"], ["site", "latitude", "longitude"],
+                       ["Site", "Lat", "Lon"], ["SiteNum", "latitude", "longitude"],
+                       ["Site", "Latitude", "Longitude"]]
+for c in site_cols_candidates:
+    if all(cc in geo.columns for cc in c):
+        sites = geo[c].copy(); sites.columns = ["site", "lat", "lon"]
+        break
+else:
+    print("available:", list(geo.columns))
+    raise RuntimeError("site coord columns not found")
+
+sites = sites.dropna(subset=["lat", "lon"]).copy()
+sites["site"] = pd.to_numeric(sites["site"], errors="coerce")
+sites = sites.dropna(subset=["site"])
+sites["site"] = sites["site"].astype(int)
+sites = sites[sites["site"].between(1, 60)].drop_duplicates("site").sort_values("site").reset_index(drop=True)
+print(f"{len(sites)} unique sites")
+print(sites.head(3))
+```
+
+## Build figure
+
+```{python}
+#| label: build
+fig = plt.figure(figsize=(12.5, 9))
+gs = GridSpec(2, 2, figure=fig, hspace=0.32, wspace=0.25,
+              width_ratios=[1.15, 1.0], height_ratios=[1.0, 0.8])
+
+# ---------------- (a) Map ----------------
+ax_a = fig.add_subplot(gs[0, 0])
+try:
+    import contextily as cx
+    import pyproj
+    # Project lat/lon to Web-Mercator
+    transformer = pyproj.Transformer.from_crs(4326, 3857, always_xy=True)
+    xs, ys = transformer.transform(sites["lon"].values, sites["lat"].values)
+    ax_a.scatter(xs, ys, s=52, c="#d1410c", edgecolor="k", linewidth=0.5, zorder=3)
+    # Buffer bounds
+    pad = 1.5e5
+    ax_a.set_xlim(min(xs) - pad, max(xs) + pad)
+    ax_a.set_ylim(min(ys) - pad, max(ys) + pad)
+    try:
+        cx.add_basemap(ax_a, source=cx.providers.OpenStreetMap.Mapnik, crs=3857,
+                       zoom=6, attribution_size=6)
+    except Exception as e:
+        print(f"OSM tiles unavailable ({e}); using plain scatter")
+        ax_a.set_facecolor("#f5e9d0")
+    ax_a.set_xticks([]); ax_a.set_yticks([])
+except ImportError:
+    ax_a.scatter(sites["lon"], sites["lat"], s=52, c="#d1410c", edgecolor="k", linewidth=0.5)
+    ax_a.set_xlabel("Longitude (°E)")
+    ax_a.set_ylabel("Latitude (°N)")
+ax_a.set_title("(a) 60 Rub' al-Khali sites (1,000 km transect)", loc="left", fontsize=10)
+
+# ---------------- (b) Elevation profile ----------------
+ax_b = fig.add_subplot(gs[0, 1])
+if srtm is not None and "elevation_m" in srtm.columns:
+    srtm_sites = srtm[["site", "elevation_m"]].merge(sites[["site", "lon", "lat"]], on="site", how="inner")
+    srtm_sites = srtm_sites.sort_values("lon")
+    ax_b.fill_between(srtm_sites["lon"], 0, srtm_sites["elevation_m"],
+                      color="#d1b27c", alpha=0.55)
+    ax_b.plot(srtm_sites["lon"], srtm_sites["elevation_m"], color="#8b5a2b", lw=1.2)
+    ax_b.scatter(srtm_sites["lon"], srtm_sites["elevation_m"], s=28, c="#d1410c",
+                 edgecolor="k", linewidth=0.5, zorder=5)
+    ax_b.set_xlabel("Longitude (°E, west → east)")
+    ax_b.set_ylabel("Elevation (m)")
+else:
+    ax_b.text(0.5, 0.5, "Copernicus DEM not cached\n(run scripts/fetch_srtm_topography.py)",
+              ha="center", va="center", transform=ax_b.transAxes)
+    ax_b.set_xlim(0, 1); ax_b.set_ylim(0, 1)
+ax_b.set_title("(b) Elevation profile along transect", loc="left", fontsize=10)
+ax_b.grid(alpha=0.3)
+ax_b.spines[["top", "right"]].set_visible(False)
+
+# ---------------- (c) Per-element XRF × Shannon forest ----------------
+ax_c = fig.add_subplot(gs[1, 0])
+focal = ["S", "Cl", "Na", "P", "Fe", "V", "Mn", "Ca", "K", "Si"]
+xrf_show = xrf_ρ[xrf_ρ["element"].isin(focal)].copy().set_index("element").reindex(focal).reset_index()
+xrf_show = xrf_show.dropna(subset=["rho"])
+y = np.arange(len(xrf_show))
+colors = ["#b91c1c" if r < 0 else "#1d4ed8" for r in xrf_show["rho"]]
+# Wilson-style 95% CI via Fisher transform for Spearman
+n = xrf_show["n"].astype(float)
+z_rho = np.arctanh(xrf_show["rho"].astype(float).clip(-0.999, 0.999))
+se = 1.0 / np.sqrt(n - 3)
+lo, hi = np.tanh(z_rho - 1.96 * se), np.tanh(z_rho + 1.96 * se)
+ax_c.hlines(y, lo, hi, color=colors, lw=2.5, alpha=0.7)
+ax_c.scatter(xrf_show["rho"], y, s=90, c=colors, edgecolor="k", linewidth=0.6, zorder=3)
+ax_c.axvline(0, color="k", linestyle=":", alpha=0.5)
+ax_c.set_yticks(y)
+ax_c.set_yticklabels(xrf_show["element"])
+ax_c.invert_yaxis()
+ax_c.set_xlabel("Spearman ρ (element vs per-site Shannon)")
+# Annotate FDR-significant hits
+for i, row in xrf_show.iterrows():
+    q = row.get("q", 1.0)
+    if pd.notna(q) and q < 0.05:
+        ax_c.text(row["rho"] + (0.03 if row["rho"] > 0 else -0.03), i,
+                  "*" if q < 0.05 else "",
+                  ha="left" if row["rho"] > 0 else "right", va="center",
+                  fontsize=12, fontweight="bold")
+ax_c.set_title("(c) XRF element × Shannon (n = 56 sites)", loc="left", fontsize=10)
+ax_c.set_xlim(-0.7, 0.7)
+ax_c.grid(True, axis="x", alpha=0.3)
+ax_c.spines[["top", "right"]].set_visible(False)
+
+# ---------------- (d) Sampling intensity heatmap ----------------
+ax_d = fig.add_subplot(gs[1, 1])
+counts = meta.groupby(["trip", "compartment"]).size().unstack("compartment").fillna(0)
+trip_order = [1, 2, 3, 4, 5]
+comp_order = ["surface", "deep", "rhizosphere"]
+counts = counts.reindex(index=trip_order)[comp_order].astype(int)
+im = ax_d.imshow(counts.values, cmap="YlGnBu", aspect="auto")
+ax_d.set_xticks(range(len(comp_order)))
+ax_d.set_xticklabels(["Surface", "Deep", "Rhizosphere"])
+ax_d.set_yticks(range(len(trip_order)))
+trip_labels = ["T1 Spring '23", "T2 Summer '23", "T3 Winter '24",
+               "T4 Summer '24", "T5 Autumn '24"]
+ax_d.set_yticklabels(trip_labels)
+for i in range(counts.shape[0]):
+    for j in range(counts.shape[1]):
+        v = int(counts.iloc[i, j])
+        color = "white" if v > counts.values.max() / 2 else "black"
+        ax_d.text(j, i, f"{v}", ha="center", va="center", color=color, fontsize=9)
+ax_d.set_title("(d) Sampling intensity (n samples)", loc="left", fontsize=10)
+cb = plt.colorbar(im, ax=ax_d, fraction=0.046, pad=0.04)
+cb.set_label("samples")
+
+out_pdf = FIG / "fig1_overview.pdf"
+out_png = FIG / "fig1_overview.png"
+fig.savefig(out_pdf, bbox_inches="tight")
+fig.savefig(out_png, bbox_inches="tight", dpi=160)
+print(f"wrote {out_pdf} size={out_pdf.stat().st_size}")
+print(f"wrote {out_png} size={out_png.stat().st_size}")
+plt.show()
+```

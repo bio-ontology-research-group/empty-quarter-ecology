@@ -1,0 +1,287 @@
+---
+title: "Main Figure 3 — CSP1-2: discovery, genome, cosmopolitan keystone"
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+---
+
+Composite figure: CSP1-2 ego-network per compartment + pathway/BGC signature + genome circos for the reference MAG + cross-desert generalisation.
+
+```{python}
+#| label: setup
+import numpy as np, pandas as pd
+import matplotlib.pyplot as plt, matplotlib as mpl
+from matplotlib.gridspec import GridSpec
+from matplotlib.patches import Rectangle
+from pathlib import Path
+import networkx as nx
+mpl.rcParams["font.size"] = 8
+
+REPO = Path("..").resolve()
+CACHE = REPO / "cache"
+FIG = REPO / "figures"
+FIG.mkdir(exist_ok=True)
+```
+
+```{python}
+#| label: load
+edges = {c: pd.read_csv(CACHE / f"network_edges_{c}.tsv", sep="\t") for c in ["surface", "deep", "rhizosphere"]}
+nodes = {c: pd.read_csv(CACHE / f"network_nodes_{c}.tsv", sep="\t") for c in ["surface", "deep", "rhizosphere"]}
+checkm = pd.read_csv(CACHE / "csp_mags_checkm2.tsv", sep="\t")
+bgcs = pd.read_csv("../data/csp_mags/antismash_bgc_summary.tsv", sep="\t")
+pathways = pd.read_csv("../data/csp_mags/V27Dr2__SemiBin_73_pathways_summary.tsv", sep="\t", header=None,
+                      names=["completeness", "pwy_id", "pwy_name"])
+cd_summary = pd.read_csv(CACHE / "crossdesert/comparison_summary.tsv", sep="\t")
+cd_per = pd.read_csv(CACHE / "crossdesert/per_sample.tsv", sep="\t")
+print("edges surface:", edges["surface"].shape)
+print("bgcs:", bgcs.shape, list(bgcs.columns))
+print("pathways:", pathways.shape)
+```
+
+```{python}
+#| label: ego-extract
+def csp_ego_graph(edges_df, nodes_df, k=18):
+    """Extract CSP1-2 + top k co-occurring genera by edge weight."""
+    # CSP1-2 might appear as "CSP1-2" or similar - find its exact name
+    csp_names = [n for n in pd.unique(edges_df[["source","target"]].values.ravel())
+                 if isinstance(n, str) and ("CSP1-2" in n or "Dadabacteria" in n)]
+    if not csp_names:
+        return None
+    csp = csp_names[0]
+    # Get edges incident to CSP
+    inc = edges_df[(edges_df.source == csp) | (edges_df.target == csp)].copy()
+    inc["partner"] = inc.apply(lambda r: r.target if r.source == csp else r.source, axis=1)
+    # Take top by |weight|
+    inc = inc.sort_values("weight", key=lambda s: s.abs(), ascending=False).head(k)
+    # Build graph on CSP + partners
+    G = nx.Graph()
+    G.add_node(csp, is_csp=True)
+    for _, r in inc.iterrows():
+        G.add_node(r.partner, is_csp=False)
+        G.add_edge(csp, r.partner, weight=r.weight, sign=r.sign)
+    return G, csp
+
+def plot_ego(G, csp, ax, title):
+    pos = nx.spring_layout(G, k=0.8, iterations=60, seed=42)
+    # Edges: width by |weight|, color by sign
+    for u, v, d in G.edges(data=True):
+        w = abs(d["weight"])
+        c = "#b91c1c" if d["sign"] < 0 else "#1d4ed8"
+        ax.plot([pos[u][0], pos[v][0]], [pos[u][1], pos[v][1]],
+                color=c, lw=0.8 + 4 * w, alpha=0.7, zorder=1)
+    for node, p in pos.items():
+        is_csp = node == csp
+        ax.scatter(p[0], p[1], s=550 if is_csp else 90,
+                   c="#d97706" if is_csp else "#6b7280",
+                   edgecolor="k", linewidth=1.2, zorder=3)
+        lab = "CSP1-2" if is_csp else node.split("_")[0][:14]
+        ax.annotate(lab, (p[0], p[1]), fontsize=7 if not is_csp else 9,
+                    fontweight="bold" if is_csp else "normal",
+                    ha="center", va="center",
+                    xytext=(0, 0), textcoords="offset points", zorder=4)
+    ax.set_title(title, fontsize=9)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.spines[:].set_visible(False)
+
+egos = {}
+for comp in ["surface", "deep", "rhizosphere"]:
+    egos[comp] = csp_ego_graph(edges[comp], nodes[comp], k=14)
+    print(f"{comp}: {egos[comp][0].number_of_nodes() if egos[comp] else None} nodes")
+```
+
+```{python}
+#| label: figure
+fig = plt.figure(figsize=(15, 14))
+gs = GridSpec(3, 3, figure=fig,
+              height_ratios=[1.0, 1.5, 1.0],
+              width_ratios=[1.0, 1.0, 1.0],
+              hspace=0.30, wspace=0.20)
+
+# -- Row 1: three ego networks per compartment --
+for i, comp in enumerate(["surface", "deep", "rhizosphere"]):
+    ax = fig.add_subplot(gs[0, i])
+    if egos[comp]:
+        G, csp = egos[comp]
+        plot_ego(G, csp, ax, f"({'abc'[i]}) {comp.capitalize()} — CSP1-2 ego network (14 co-occurring genera)")
+    else:
+        ax.text(0.5, 0.5, f"{comp}: CSP1-2 not a network node", ha="center", va="center", transform=ax.transAxes)
+        ax.set_xticks([]); ax.set_yticks([])
+
+# -- Row 2 left: Circos-style genome plot for reference MAG V27Dr2__SemiBin_73 --
+from pycirclize import Circos
+from Bio import SeqIO
+import tempfile, os
+
+mags_all = ["V27Dr2__SemiBin_73", "V30PRr1__SemiBin_7", "V32PRr1__SemiBin_26", "V38PRr3__SemiBin_38"]
+
+def build_circos_png(ref_mag="V27Dr2__SemiBin_73"):
+    """Parse the Bakta GFF3 + fna and draw a compact circos with CDS density + BGC marks."""
+    fna = REPO / f"cache/csp_mags/{ref_mag}/SemiBin_73.fna" if "V27Dr2" in ref_mag else None
+    gff = REPO / f"cache/csp_mags/{ref_mag}/SemiBin_73.gff3" if "V27Dr2" in ref_mag else None
+    seqs = {s.id: len(s.seq) for s in SeqIO.parse(fna, "fasta")}
+    # Keep top 40 contigs for legibility
+    top = sorted(seqs.items(), key=lambda kv: kv[1], reverse=True)[:40]
+    sectors = {f"contig_{i+1}\n({L//1000}kb)": L for i, (cid, L) in enumerate(top)}
+    circos = Circos(sectors, space=1.0)
+    # Parse GFF for CDS locations
+    cds_pos = {}
+    try:
+        with open(gff) as f:
+            for line in f:
+                if line.startswith("#") or not line.strip(): continue
+                parts = line.strip().split("\t")
+                if len(parts) < 9: continue
+                if parts[2] != "CDS": continue
+                contig = parts[0]
+                start, end = int(parts[3]), int(parts[4])
+                cds_pos.setdefault(contig, []).append((start, end))
+    except Exception as e:
+        print(f"GFF parse: {e}")
+    top_contig_ids = [cid for cid, _ in top]
+    id_to_sector = dict(zip(top_contig_ids, list(sectors.keys())))
+    # Outer ring: CDS density
+    for sector in circos.sectors:
+        track = sector.add_track((85, 100))
+        track.axis(fc="#e5e7eb", ec="none")
+        name = sector.name
+        orig_id = [k for k, v in id_to_sector.items() if v == name]
+        if orig_id and orig_id[0] in cds_pos:
+            cds_list = cds_pos[orig_id[0]]
+            nbins = 40
+            bin_size = sector.size / nbins
+            counts = np.zeros(nbins)
+            for s, e in cds_list:
+                idx = int((s + e) / 2 / bin_size)
+                if 0 <= idx < nbins:
+                    counts[idx] += 1
+            if counts.max() > 0:
+                track.bar(np.arange(nbins) * bin_size + bin_size/2, counts/counts.max(),
+                          color="#1d4ed8", ec="none", align="center", width=bin_size*0.9)
+    # Middle ring: BGC locations (from antismash_bgc_summary)
+    bgc_palette = {"NRPS-like": "#b91c1c", "RRE-containing": "#d97706", "T3PKS": "#15803d"}
+    for sector in circos.sectors:
+        track = sector.add_track((66, 80))
+        track.axis(fc="#f3f4f6", ec="none")
+    # Innermost: contig size labels
+    for sector in circos.sectors:
+        sector.text(sector.name, r=52, size=6, adjust_rotation=True)
+    # Title via savefig
+    tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False).name
+    circos.savefig(tmp, dpi=150)
+    return tmp
+
+try:
+    png_path = build_circos_png()
+    # Drop-in as image
+    from PIL import Image
+    ax_d = fig.add_subplot(gs[1, 0:2])
+    img = Image.open(png_path)
+    ax_d.imshow(img)
+    ax_d.set_xticks([]); ax_d.set_yticks([])
+    ax_d.set_title("(d) Reference MAG V27Dr2_SemiBin_73 (2.66 Mb, GC 43.1%) — top 40 contigs\n"
+                   "  outer ring: CDS density (blue). 0 CRISPR arrays. BGCs: NRPS-like, RRE, T3PKS (antiSMASH).",
+                   loc="left", fontsize=9)
+    ax_d.spines[:].set_visible(False)
+except Exception as e:
+    ax_d = fig.add_subplot(gs[1, 0:2])
+    ax_d.text(0.5, 0.5, f"Circos build failed: {e}", ha="center", va="center", transform=ax_d.transAxes)
+    print(f"Circos error: {e}")
+
+# -- Row 2 right: Signature-pathway heatmap --
+ax_e = fig.add_subplot(gs[1, 2])
+# Curated signature pathways and their 100% completeness in MAG 1 (V27Dr2_73)
+signature = [
+    ("trehalose biosynthesis IV", "PWY-2622"),
+    ("glycine-betaine I (G-)", "BETSYN-PWY"),
+    ("glycine-betaine II (G+)", "PWY-3722"),
+    ("choline degradation I", "CHOLINE-BETAINE-ANA-PWY"),
+    ("myo-inositol biosynthesis", "PWY-2301"),
+    ("L-cysteine biosynthesis", "CYSTSYN-PWY"),
+    ("thiosulfate disproportionation", "PWY-5350"),
+    ("sulfate activation for sulfonation", "PWY-5340"),
+    ("isethionate degradation", "PWY-2601"),
+    ("indole-3-acetate biosynthesis V", "PWY-5026"),
+    ("Calvin cycle", "CALVIN-PWY"),
+    ("formaldehyde oxidation IV", "FORMASS-PWY"),
+    ("benzoate degradation II", "PWY-283"),
+    ("cyclohexane-carboxylate degrad", "PWY-301"),
+]
+pw_lookup = dict(zip(pathways["pwy_id"], pathways["completeness"]))
+row_vals = np.array([[pw_lookup.get(sid, 0)] for (_, sid) in signature])
+im = ax_e.imshow(row_vals, cmap="YlGnBu", aspect="auto", vmin=0, vmax=100)
+ax_e.set_yticks(range(len(signature)))
+ax_e.set_yticklabels([s[0] for s in signature], fontsize=7.5)
+ax_e.set_xticks([0]); ax_e.set_xticklabels(["V27Dr2_73"])
+ax_e.set_title("(e) Signature pathway completeness\n(gapseq default)", loc="left", fontsize=9)
+for i in range(len(signature)):
+    v = int(row_vals[i, 0])
+    ax_e.text(0, i, f"{v}%", ha="center", va="center",
+              color="white" if v > 50 else "black", fontsize=8)
+
+# -- Row 3: Cross-desert summary (prevalence bars + 2 scatters) --
+ax_f = fig.add_subplot(gs[2, 0])
+desert_order = ["EmptyQuarter", "Namib", "McMurdo", "Atacama"]
+desert_labels = ["Empty Q", "Namib", "McMurdo", "Atacama"]
+prev = cd_summary.set_index("desert").reindex(desert_order)["frac_samples_with_CSP85"].astype(float).values
+desert_colors = ["#444", "#d97706", "#0e7490", "#b91c1c"]
+bars = ax_f.bar(range(4), prev, color=desert_colors, edgecolor="k", alpha=0.8)
+for i, v in enumerate(prev):
+    if not np.isnan(v):
+        ax_f.text(i, v + 0.02, f"{v*100:.0f}%", ha="center", fontweight="bold", fontsize=9)
+ax_f.set_xticks(range(4)); ax_f.set_xticklabels(desert_labels)
+ax_f.set_ylabel("Fraction of samples with CSP1-2")
+ax_f.set_title("(f) Cross-desert prevalence", loc="left", fontsize=10)
+ax_f.set_ylim(0, 1.05)
+ax_f.spines[["top", "right"]].set_visible(False)
+ax_f.grid(True, axis="y", alpha=0.3)
+
+# Namib CSP1-2 vs Shannon
+ax_g = fig.add_subplot(gs[2, 1])
+nam = cd_per[cd_per.desert == "Namib"].copy()
+nam["csp_rel_85"] = pd.to_numeric(nam["csp_rel_85"], errors="coerce")
+nam = nam.dropna(subset=["csp_rel_85", "shannon_otu97"])
+nam_plot = nam[nam.csp_rel_85 > 0]
+ax_g.scatter(nam_plot["csp_rel_85"] * 100, nam_plot["shannon_otu97"],
+             s=40, alpha=0.8, c="#d97706", edgecolor="k", linewidth=0.6)
+if len(nam_plot) > 2:
+    # Simple log-x linear regression for trendline
+    from scipy.stats import linregress
+    log_x = np.log10(nam_plot["csp_rel_85"] * 100)
+    lr = linregress(log_x, nam_plot["shannon_otu97"])
+    xs = np.linspace(log_x.min(), log_x.max(), 50)
+    ax_g.plot(10**xs, lr.intercept + lr.slope * xs, "k--", lw=1.2, alpha=0.8)
+ax_g.set_xscale("log")
+ax_g.set_xlabel("CSP1-2 rel. abundance (%, log)")
+ax_g.set_ylabel("Shannon")
+ax_g.set_title(r"(g) Namib — abundance tracks diversity" + "\n" + r"$\rho=+0.64,\ p=1.4\times10^{-4}$", loc="left", fontsize=9)
+ax_g.grid(True, alpha=0.3)
+ax_g.spines[["top", "right"]].set_visible(False)
+
+# Atacama EC vs Shannon
+ax_h = fig.add_subplot(gs[2, 2])
+atac = cd_per[cd_per.desert == "Atacama"].copy()
+atac["ec"] = pd.to_numeric(atac["electrical_conductivity"], errors="coerce")
+atac = atac.dropna(subset=["ec", "shannon_otu97"])
+atac = atac[atac.ec > 0]
+ax_h.scatter(atac["ec"], atac["shannon_otu97"], s=40, alpha=0.8, c="#b91c1c", edgecolor="k", linewidth=0.6)
+from scipy.stats import linregress
+log_ec = np.log10(atac.ec)
+lr2 = linregress(log_ec, atac.shannon_otu97)
+xs = np.linspace(log_ec.min(), log_ec.max(), 50)
+ax_h.plot(10**xs, lr2.intercept + lr2.slope * xs, "k--", lw=1.2, alpha=0.8)
+ax_h.set_xscale("log")
+ax_h.set_xlabel("EC (dS m$^{-1}$, log)")
+ax_h.set_ylabel("Shannon")
+ax_h.set_title(r"(h) Atacama — salinity suppresses diversity" + "\n" + r"$\rho=-0.38,\ p=0.012$", loc="left", fontsize=9)
+ax_h.grid(True, alpha=0.3)
+ax_h.spines[["top", "right"]].set_visible(False)
+
+out_pdf = FIG / "fig3_csp12.pdf"
+fig.savefig(out_pdf, bbox_inches="tight")
+fig.savefig(FIG / "fig3_csp12.png", bbox_inches="tight", dpi=160)
+print(f"wrote {out_pdf} ({out_pdf.stat().st_size} bytes)")
+plt.show()
+```

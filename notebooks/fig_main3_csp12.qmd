@@ -94,11 +94,11 @@ for comp in ["surface", "deep", "rhizosphere"]:
 
 ```{python}
 #| label: figure
-fig = plt.figure(figsize=(15, 14))
-gs = GridSpec(3, 3, figure=fig,
-              height_ratios=[1.0, 1.5, 1.0],
+fig = plt.figure(figsize=(14, 8))
+gs = GridSpec(2, 3, figure=fig,
+              height_ratios=[1.0, 1.0],
               width_ratios=[1.0, 1.0, 1.0],
-              hspace=0.30, wspace=0.20)
+              hspace=0.32, wspace=0.30)
 
 # -- Row 1: three ego networks per compartment --
 for i, comp in enumerate(["surface", "deep", "rhizosphere"]):
@@ -110,109 +110,10 @@ for i, comp in enumerate(["surface", "deep", "rhizosphere"]):
         ax.text(0.5, 0.5, f"{comp}: CSP1-2 not a network node", ha="center", va="center", transform=ax.transAxes)
         ax.set_xticks([]); ax.set_yticks([])
 
-# -- Row 2 left: Circos-style genome plot for reference MAG V27Dr2__SemiBin_73 --
-from pycirclize import Circos
-from Bio import SeqIO
-import tempfile, os
+# (signature pathway heatmap moved to Supplementary Figure S32)
 
-mags_all = ["V27Dr2__SemiBin_73", "V30PRr1__SemiBin_7", "V32PRr1__SemiBin_26", "V38PRr3__SemiBin_38"]
-
-def build_circos_png(ref_mag="V27Dr2__SemiBin_73"):
-    """Parse the Bakta GFF3 + fna and draw a compact circos with CDS density + BGC marks."""
-    fna = REPO / f"cache/csp_mags/{ref_mag}/SemiBin_73.fna" if "V27Dr2" in ref_mag else None
-    gff = REPO / f"cache/csp_mags/{ref_mag}/SemiBin_73.gff3" if "V27Dr2" in ref_mag else None
-    seqs = {s.id: len(s.seq) for s in SeqIO.parse(fna, "fasta")}
-    # Keep top 40 contigs for legibility
-    top = sorted(seqs.items(), key=lambda kv: kv[1], reverse=True)[:40]
-    sectors = {f"contig_{i+1}\n({L//1000}kb)": L for i, (cid, L) in enumerate(top)}
-    circos = Circos(sectors, space=1.0)
-    # Parse GFF for CDS locations
-    cds_pos = {}
-    try:
-        with open(gff) as f:
-            for line in f:
-                if line.startswith("#") or not line.strip(): continue
-                parts = line.strip().split("\t")
-                if len(parts) < 9: continue
-                if parts[2] != "CDS": continue
-                contig = parts[0]
-                start, end = int(parts[3]), int(parts[4])
-                cds_pos.setdefault(contig, []).append((start, end))
-    except Exception as e:
-        print(f"GFF parse: {e}")
-    top_contig_ids = [cid for cid, _ in top]
-    id_to_sector = dict(zip(top_contig_ids, list(sectors.keys())))
-    # Outer ring: CDS density
-    for sector in circos.sectors:
-        track = sector.add_track((85, 100))
-        track.axis(fc="#e5e7eb", ec="none")
-        name = sector.name
-        orig_id = [k for k, v in id_to_sector.items() if v == name]
-        if orig_id and orig_id[0] in cds_pos:
-            cds_list = cds_pos[orig_id[0]]
-            nbins = 40
-            bin_size = sector.size / nbins
-            counts = np.zeros(nbins)
-            for s, e in cds_list:
-                idx = int((s + e) / 2 / bin_size)
-                if 0 <= idx < nbins:
-                    counts[idx] += 1
-            if counts.max() > 0:
-                track.bar(np.arange(nbins) * bin_size + bin_size/2, counts/counts.max(),
-                          color="#1d4ed8", ec="none", align="center", width=bin_size*0.9)
-    # Middle ring: BGC locations (from antismash_bgc_summary)
-    bgc_palette = {"NRPS-like": "#b91c1c", "RRE-containing": "#d97706", "T3PKS": "#15803d"}
-    for sector in circos.sectors:
-        track = sector.add_track((66, 80))
-        track.axis(fc="#f3f4f6", ec="none")
-    # Innermost: contig size labels
-    for sector in circos.sectors:
-        sector.text(sector.name, r=52, size=6, adjust_rotation=True)
-    # Title via savefig
-    tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False).name
-    circos.savefig(tmp, dpi=150)
-    return tmp
-
-try:
-    png_path = build_circos_png()
-    # Drop-in as image
-    from PIL import Image
-    ax_d = fig.add_subplot(gs[1, 0:2])
-    img = Image.open(png_path)
-    ax_d.imshow(img)
-    ax_d.set_xticks([]); ax_d.set_yticks([])
-    ax_d.set_title("(d) Reference MAG V27Dr2_SemiBin_73 (2.66 Mb, GC 43.1%) — top 40 contigs\n"
-                   "  outer ring: CDS density (blue). 0 CRISPR arrays. BGCs: NRPS-like, RRE, T3PKS (antiSMASH).",
-                   loc="left", fontsize=9)
-    ax_d.spines[:].set_visible(False)
-except Exception as e:
-    ax_d = fig.add_subplot(gs[1, 0:2])
-    ax_d.text(0.5, 0.5, f"Circos build failed: {e}", ha="center", va="center", transform=ax_d.transAxes)
-    print(f"Circos error: {e}")
-
-# -- Row 2 right: Cross-MAG signature-pathway heatmap --
-ax_e = fig.add_subplot(gs[1, 2])
-sig_table = pd.read_csv("../data/csp_mags/signature_pathways_per_mag.tsv", sep="\t")
-mag_cols = [c for c in sig_table.columns if c.startswith("V")]
-row_vals = sig_table[mag_cols].values.astype(float)
-im = ax_e.imshow(row_vals, cmap="YlGnBu", aspect="auto", vmin=0, vmax=100)
-ax_e.set_yticks(range(len(sig_table)))
-ax_e.set_yticklabels(sig_table["pathway"].tolist(), fontsize=7.5)
-ax_e.set_xticks(range(len(mag_cols)))
-ax_e.set_xticklabels(mag_cols, fontsize=7.5, rotation=30, ha="right")
-ax_e.set_title("(e) Signature pathways across MAGs\n       (% completeness, gapseq default)", loc="left", fontsize=9)
-for i in range(row_vals.shape[0]):
-    for j in range(row_vals.shape[1]):
-        v = row_vals[i, j]
-        if np.isnan(v):
-            label = "–"
-        else:
-            label = f"{int(v)}"
-        ax_e.text(j, i, label, ha="center", va="center",
-                  color="white" if (not np.isnan(v) and v > 50) else "black", fontsize=7.5)
-
-# -- Row 3: Cross-desert summary (prevalence bars + 2 scatters) --
-ax_f = fig.add_subplot(gs[2, 0])
+# -- Row 3: Cross-desert (prevalence + 2 scatters) --
+ax_f = fig.add_subplot(gs[1, 0])
 desert_order = ["EmptyQuarter", "Namib", "McMurdo", "Atacama"]
 desert_labels = ["Empty Q", "Namib", "McMurdo", "Atacama"]
 prev = cd_summary.set_index("desert").reindex(desert_order)["frac_samples_with_CSP85"].astype(float).values
@@ -223,7 +124,7 @@ for i, v in enumerate(prev):
         ax_f.text(i, v + 0.02, f"{v*100:.0f}%", ha="center", fontweight="bold", fontsize=9)
 ax_f.set_xticks(range(4)); ax_f.set_xticklabels(desert_labels)
 ax_f.set_ylabel("Fraction of samples with CSP1-2")
-ax_f.set_title("(f) Cross-desert prevalence", loc="left", fontsize=10)
+ax_f.set_title("(d) Cross-desert prevalence of CSP1-2 at 85% V4 ID", loc="left", fontsize=10)
 ax_f.set_ylim(0, 1.05)
 ax_f.spines[["top", "right"]].set_visible(False)
 ax_f.grid(True, axis="y", alpha=0.3)
@@ -234,7 +135,7 @@ from scipy.stats import linregress, spearmanr
 eq_sal = pd.read_csv("../data/csp_mags/eq_sample_csp_shannon_salinity.tsv", sep="\t")
 
 # (g) CSP1-2 abundance → Shannon — EQ + Namib overlaid
-ax_g = fig.add_subplot(gs[2, 1])
+ax_g = fig.add_subplot(gs[1, 1])
 # EQ: per-sample, use Trip 5 for completeness; csp_rel is fractional
 eq_csp = eq_sal[(eq_sal["csp_rel"] > 0)].copy()
 ax_g.scatter(eq_csp["csp_rel"] * 100, eq_csp["Shannon"], s=14, alpha=0.45, c="#444",
@@ -260,14 +161,14 @@ r_nm, p_nm = spearmanr(nam_plot["csp_rel_85"], nam_plot["shannon_otu97"])
 ax_g.set_xscale("log")
 ax_g.set_xlabel("CSP1-2 rel. abundance (%, log)")
 ax_g.set_ylabel("Shannon")
-ax_g.set_title("(g) CSP1-2 abundance vs Shannon (EQ + Namib)\n" +
+ax_g.set_title("(e) CSP1-2 rel. abundance vs Shannon (EQ + Namib)\n" +
                fr"    EQ: ρ={r_eq:+.2f}, p={p_eq:.1e}  |  Namib: ρ={r_nm:+.2f}, p={p_nm:.1e}", loc="left", fontsize=9)
 ax_g.legend(loc="lower right", fontsize=8, frameon=False)
 ax_g.grid(True, alpha=0.3)
 ax_g.spines[["top", "right"]].set_visible(False)
 
 # (h) Salinity → Shannon — EQ (XRF S, as % dry mass proxy) + Atacama (EC)
-ax_h = fig.add_subplot(gs[2, 2])
+ax_h = fig.add_subplot(gs[1, 2])
 # EQ: scatter using XRF S
 eq_s = eq_sal[eq_sal["S"] > 0].copy()
 ax_h.scatter(eq_s["S"], eq_s["Shannon"], s=16, alpha=0.45, c="#444",
@@ -307,7 +208,7 @@ r_eq_s, p_eq_s = spearmanr(eq_s["S"], eq_s["Shannon"])
 r_at, p_at = spearmanr(atac.ec, atac.shannon_otu97)
 ax_h.set_xlabel("Salinity proxy (log, per-desert z-score)")
 ax_h.set_ylabel("Shannon")
-ax_h.set_title("(h) Salinity vs Shannon (EQ + Atacama)\n" +
+ax_h.set_title("(f) Salinity vs Shannon (EQ + Atacama)\n" +
                fr"    EQ (XRF S): ρ={r_eq_s:+.2f}, p={p_eq_s:.1e}  |  Atacama (EC): ρ={r_at:+.2f}, p={p_at:.1e}", loc="left", fontsize=9)
 ax_h.legend(loc="lower left", fontsize=8, frameon=False)
 ax_h.grid(True, alpha=0.3)

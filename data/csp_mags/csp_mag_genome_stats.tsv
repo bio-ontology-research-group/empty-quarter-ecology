@@ -1,0 +1,5 @@
+MAG	length_bp	GC_pct	CDSs	hypothetical_pct	tRNAs	rRNAs	CRISPR	coding_density_pct
+V27Dr2__SemiBin_73	2658102	43.1	2424	40.1	21	0	0	71.7
+V30PRr1__SemiBin_7	2670892	43.2	2500	41.2	30	1	0	72.5
+V32PRr1__SemiBin_26	1979752	43.3	1772	41.8	20	3	0	69.9
+V38PRr3__SemiBin_38	2339966	43.0	2146	41.3	17	1	0	71.5

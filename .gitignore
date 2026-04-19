@@ -33,3 +33,9 @@ data/functional/picrust2/ko_pred_metagenome_unstrat.tsv
 notebooks/*_files/
 notebooks/*.html
 notebooks/.jupyter_cache/
+
+# MAG bulky outputs — summary TSVs kept, full outputs regeneratable
+cache/csp_mags/antismash/*/
+cache/csp_mags/*__SemiBin_*/
+cache/csp_mags/*__SemiBin_*_gapseq/gapseq_find.log
+cache/csp_mags/*__SemiBin_*_gapseq/gapseq_transport.log

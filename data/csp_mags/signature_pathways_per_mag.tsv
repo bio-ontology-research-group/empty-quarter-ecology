@@ -1,15 +1,15 @@
-pathway	id	V27Dr2_73	V30PRr1_7	V32PRr1_26
-trehalose biosynthesis IV	PWY-2622	100	100	100
-glycine-betaine I (G-)	BETSYN-PWY	100	100	100
-glycine-betaine II (G+)	PWY-3722	100	100	100
-choline degradation I	CHOLINE-BETAINE-ANA-PWY	100	100	100
-myo-inositol biosynthesis	PWY-2301	100	50	50
-L-cysteine biosynthesis	CYSTSYN-PWY	100	100	100
-thiosulfate disproportionation	PWY-5350	100	100	100
-sulfate activation for sulfonation	PWY-5340	100	0	0
-isethionate degradation	PWY-2601	100	100	100
-indole-3-acetate biosynthesis V	PWY-5026	100	0	0
-Calvin cycle	CALVIN-PWY	46	30	46
-formaldehyde oxidation IV	FORMASS-PWY	100	100	100
-benzoate degradation II	PWY-283	100	100	0
-cyclohexane-carboxylate degrad	PWY-301	100	100	100
+pathway	id	V27Dr2_73	V30PRr1_7	V32PRr1_26	V38PRr3_38
+trehalose biosynthesis IV	PWY-2622	100	100	100	100
+glycine-betaine I (G-)	BETSYN-PWY	100	100	100	100
+glycine-betaine II (G+)	PWY-3722	100	100	100	100
+choline degradation I	CHOLINE-BETAINE-ANA-PWY	100	100	100	100
+myo-inositol biosynthesis	PWY-2301	100	50	50	50
+L-cysteine biosynthesis	CYSTSYN-PWY	100	100	100	50
+thiosulfate disproportionation	PWY-5350	100	100	100	0
+sulfate activation for sulfonation	PWY-5340	100	0	0	0
+isethionate degradation	PWY-2601	100	100	100	100
+indole-3-acetate biosynthesis V	PWY-5026	100	0	0	0
+Calvin cycle	CALVIN-PWY	46	30	46	46
+formaldehyde oxidation IV	FORMASS-PWY	100	100	100	100
+benzoate degradation II	PWY-283	100	100	0	100
+cyclohexane-carboxylate degrad	PWY-301	100	100	100	100

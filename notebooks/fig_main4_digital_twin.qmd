@@ -44,8 +44,8 @@ print(interv_ex.head(6))
 
 ```{python}
 #| label: fig
-fig = plt.figure(figsize=(13, 9.5))
-gs = GridSpec(2, 2, figure=fig, hspace=0.32, wspace=0.28)
+fig = plt.figure(figsize=(13, 8.5))
+gs = GridSpec(2, 2, figure=fig, hspace=0.32, wspace=0.28, height_ratios=[0.9, 1.0])
 
 # ---------------- (a) Mediation path diagram ----------------
 ax_a = fig.add_subplot(gs[0, 0])
@@ -76,107 +76,108 @@ ax_a.text(3.2, 6.55, r"$-0.29$", color="#b91c1c", fontweight="bold", fontsize=10
 ax_a.text(6.8, 6.55, r"$+0.27$", color="#b91c1c", fontweight="bold", fontsize=10)
 ax_a.text(5.0, 3.6, r"direct $\approx 0$" + "\n" + r"($-0.09$, 95% CI $[-0.31,+0.24]$)",
           ha="center", color="#6b7280", fontsize=9)
-ax_a.text(5.0, 1.3, "Indirect effect:   $-0.077$ (95% CI $[-0.17,\ -0.03]$)\n" +
-                    r"$\bf{88\%}$ of total S→Shannon effect mediated by CSP1-2",
-          ha="center", va="center", color="#92400e", fontsize=9.5,
-          bbox=dict(boxstyle="round,pad=0.5", fc="#fef3c7", ec="#92400e", alpha=0.9))
+ax_a.text(5.0, 1.3, r"Indirect $-0.077$  (95% CI $[-0.17, -0.03]$)" + "\n" +
+                    r"$\bf{88\%}$ of S$\to$Shannon effect via CSP1-2",
+          ha="center", va="center", color="#92400e", fontsize=9,
+          bbox=dict(boxstyle="round,pad=0.4", fc="#fef3c7", ec="#92400e", alpha=0.9))
 ax_a.set_title("(a) Causal mediation:  salinity → CSP1-2 → Shannon", loc="left", fontsize=10)
 
-# ---------------- (b) Non-linear dose response ----------------
+# ---------------- (b) Unified intervention forest plot (Bayesian state-space twin) ----------------
 ax_b = fig.add_subplot(gs[0, 1])
-# Plot Hill / Spline / GP for one compartment (surface) to keep busy panel legible
+comps = ["surface", "deep", "rhizosphere"]
+comp_color = {"surface": "#d97706", "deep": "#0e7490", "rhizosphere": "#15803d"}
+rows = []
+# Rainfall dose gradient from non-linear model (Hill, surface): one value per dose
+for rain_mm in [5, 10, 20, 30]:
+    sub = nonlinear[(nonlinear.model == "Hill") & (nonlinear.compartment == "surface") & (nonlinear.rain_mm == rain_mm)]
+    if len(sub):
+        r = sub.iloc[0]
+        rows.append((f"do(rain +{rain_mm} mm)", "rain", r["median_z"], r["ci_lo_z"], r["ci_hi_z"]))
+# Salinity interventions
+for tag in [("S -= 1", "do(S −1 SD)"), ("S -= 2", "do(S −2 SD)")]:
+    m = interv_ex[interv_ex.intervention.str.contains(tag[0], na=False)]
+    # Global average from interv table
+for scenario in ["do(S -= 1 SD)", "do(S -1 SD)"]:
+    s = interv[interv.intervention == scenario]
+    if len(s):
+        r = s.iloc[0]
+        rows.append(("do(S −1 SD)", "salinity", r["delta_shannon_median_z"], r["delta_ci_lo_z"], r["delta_ci_hi_z"]))
+        break
+# Reclamation scenario per compartment
+rec = interv_ex[interv_ex.intervention.str.contains("S -2 SD.*P \+1", na=False, regex=True)]
+if len(rec) == 0:
+    rec = interv_ex[interv_ex.intervention.str.contains("S -2", na=False)]
+for comp in comps:
+    s = rec[rec.compartment == comp]
+    if len(s):
+        r = s.iloc[0]
+        rows.append((f"Reclamation ({comp[:4]})", comp, r["median_z"], r["ci_lo"], r["ci_hi"]))
+
+if rows:
+    labels = [r[0] for r in rows]
+    vals = np.array([(r[2], r[3], r[4]) for r in rows])
+    kind_color = {"rain": "#2563eb", "salinity": "#9ca3af"}
+    colors_fp = [kind_color.get(r[1], comp_color.get(r[1], "#6b7280")) for r in rows]
+    y = np.arange(len(rows))
+    for i, (lo, med, hi, c) in enumerate(zip(vals[:, 1], vals[:, 0], vals[:, 2], colors_fp)):
+        ax_b.hlines(i, lo, hi, color=c, lw=3, alpha=0.75)
+        ax_b.scatter(med, i, s=140, c=c, edgecolor="k", linewidth=0.8, zorder=5,
+                     marker="D" if "Reclamation" in labels[i] else "o")
+    ax_b.axvline(0, color="k", lw=0.8, alpha=0.4)
+    ax_b.set_yticks(y); ax_b.set_yticklabels(labels, fontsize=8.5)
+    ax_b.invert_yaxis()
+    ax_b.set_xlabel("Δ Shannon (σ)")
+ax_b.set_xlim(-1.2, 0.9)
+ax_b.set_title("(b) Interventional posteriors: rainfall, salinity, reclamation\n"
+               "     (Bayesian state-space digital twin, 95% CrI)", loc="left", fontsize=10)
+ax_b.spines[["top", "right"]].set_visible(False)
+ax_b.grid(True, axis="x", alpha=0.3)
+
+# ---------------- (c) Non-linear rainfall dose-response (surface) ----------------
+ax_c = fig.add_subplot(gs[1, 0])
 comp_plot = "surface"
 model_colors = {"Hill": "#b91c1c", "Spline": "#0ea5e9", "GP": "#15803d"}
 for model, color in model_colors.items():
     sub = nonlinear[(nonlinear.model == model) & (nonlinear.compartment == comp_plot)].sort_values("rain_mm")
     if len(sub) == 0: continue
-    ax_b.plot(sub.rain_mm, sub.median_z, color=color, lw=2, label=model)
-    ax_b.fill_between(sub.rain_mm, sub.ci_lo_z, sub.ci_hi_z, alpha=0.15, color=color)
-ax_b.axhline(0, color="k", lw=0.8, alpha=0.4)
-# Show inferred Hill K
-ax_b.axvline(9.5, color="#b91c1c", ls=":", alpha=0.6)
-ax_b.text(10, ax_b.get_ylim()[1]*0.9, "Hill K = 9.5 mm", color="#b91c1c", fontsize=8)
-ax_b.set_xlabel("Rainfall over 7 days (mm)")
-ax_b.set_ylabel("Δ Shannon (σ, surface compartment)")
-ax_b.set_title(r"(b) Non-linear rainfall dose-response (Hill / spline / GP)", loc="left", fontsize=10)
-ax_b.legend(loc="upper right", fontsize=8, frameon=False)
-ax_b.spines[["top", "right"]].set_visible(False)
-ax_b.grid(True, alpha=0.3)
-
-# ---------------- (c) Intervention forest plot ----------------
-ax_c = fig.add_subplot(gs[1, 0])
-# Build a compact ordered list of interventions
-# Include single-parameter interventions + reclamation
-comps = ["surface", "deep", "rhizosphere"]
-comp_color = {"surface": "#d97706", "deep": "#0e7490", "rhizosphere": "#15803d"}
-rows = []
-# do(rain +10mm): one global from `interv`
-_ = interv[interv.intervention.str.contains("rain", case=False)]
-if len(_):
-    r = _.iloc[0]
-    rows.append(("do(rain +10 mm)", "all", r["delta_shannon_median_z"], r["delta_ci_lo_z"], r["delta_ci_hi_z"]))
-# do(S -1SD): one global
-_ = interv[interv.intervention.str.contains("S -=", case=False)]
-if len(_):
-    r = _.iloc[0]
-    rows.append(("do(S −1 SD)", "all", r["delta_shannon_median_z"], r["delta_ci_lo_z"], r["delta_ci_hi_z"]))
-# Per-compartment from interv_ex: do(S -2 SD, P +1 SD) reclamation is a combined scenario.
-# Find what's in interv_ex
-reclamation_interventions = ["do(S -2 SD, P +1 SD)", "reclamation", "do(S -2 SD)", "do(P +1 SD)"]
-for scenario in ["do(S -2 SD, P +1 SD)"]:
-    sub = interv_ex[interv_ex.intervention == scenario]
-    if len(sub) == 0:
-        # Try matching partial
-        sub = interv_ex[interv_ex.intervention.str.contains("S -2", na=False)]
-    for comp in comps:
-        s = sub[sub.compartment == comp]
-        if len(s):
-            r = s.iloc[0]
-            rows.append((f"Reclamation do(S −2 SD, P +1 SD): {comp}", comp, r["median_z"], r["ci_lo"], r["ci_hi"]))
-
-if not rows:
-    ax_c.text(0.5, 0.5, "Intervention data not available", ha="center", va="center", transform=ax_c.transAxes)
-else:
-    labels = [r[0] for r in rows]
-    vals = np.array([(r[2], r[3], r[4]) for r in rows])
-    colors_fp = ["#6b7280" if r[1] == "all" else comp_color[r[1]] for r in rows]
-    y = np.arange(len(rows))
-    for i, (lo, med, hi, c) in enumerate(zip(vals[:, 1], vals[:, 0], vals[:, 2], colors_fp)):
-        ax_c.hlines(i, lo, hi, color=c, lw=3, alpha=0.75)
-        ax_c.scatter(med, i, s=140, c=c, edgecolor="k", linewidth=0.8, zorder=5,
-                     marker="D" if "Reclamation" in labels[i] else "o")
-    ax_c.axvline(0, color="k", lw=0.8, alpha=0.4)
-    ax_c.set_yticks(y)
-    ax_c.set_yticklabels(labels, fontsize=8)
-    ax_c.invert_yaxis()
-    ax_c.set_xlabel("Δ Shannon (σ)")
-    ax_c.set_xlim(-0.8, 0.8)
-ax_c.set_title("(c) Interventional posteriors (Bayesian state-space digital twin)", loc="left", fontsize=10)
+    ax_c.plot(sub.rain_mm, sub.median_z, color=color, lw=2, label=model)
+    ax_c.fill_between(sub.rain_mm, sub.ci_lo_z, sub.ci_hi_z, alpha=0.15, color=color)
+ax_c.axhline(0, color="k", lw=0.8, alpha=0.4)
+ax_c.axvline(9.5, color="#b91c1c", ls=":", alpha=0.6)
+ax_c.text(10, 0.35, "Hill K = 9.5 mm", color="#b91c1c", fontsize=8)
+ax_c.set_xlabel("Rainfall over 7 days (mm)")
+ax_c.set_ylabel("Δ Shannon (σ, surface)")
+ax_c.set_title("(c) Rainfall dose-response: three functional forms\n    consistent at small mm, diverge at >20 mm", loc="left", fontsize=10)
+ax_c.legend(loc="upper right", fontsize=8, frameon=False)
 ax_c.spines[["top", "right"]].set_visible(False)
-ax_c.grid(True, axis="x", alpha=0.3)
+ax_c.grid(True, alpha=0.3)
 
-# ---------------- (d) JSDM knockout top-affected genera ----------------
+# ---------------- (d) JSDM knockout top-affected genera (enlarged) ----------------
 ax_d = fig.add_subplot(gs[1, 1])
 if knockout is not None and "shift" in knockout.columns:
     name_col = "genus" if "genus" in knockout.columns else knockout.columns[0]
     k = knockout.dropna(subset=[name_col, "shift"]).copy()
     k = k[k[name_col].astype(str) != "nan"]
     k["shift_abs"] = k["shift"].abs()
-    k = k.sort_values("shift_abs", ascending=False).head(10)
-    # Colour by direction
+    k = k.sort_values("shift_abs", ascending=False).head(12)
     fp_colors = ["#b91c1c" if s < 0 else "#1d4ed8" for s in k["shift"]]
     y = np.arange(len(k))
-    ax_d.barh(y, k["shift"], color=fp_colors, edgecolor="k", linewidth=0.4, alpha=0.85)
+    bars = ax_d.barh(y, k["shift"], color=fp_colors, edgecolor="k", linewidth=0.4, alpha=0.85)
     ax_d.set_yticks(y)
-    ax_d.set_yticklabels(k["genus"] if "genus" in k.columns else k.iloc[:, 0], fontsize=8)
+    ax_d.set_yticklabels(k[name_col], fontsize=10)
     ax_d.invert_yaxis()
     ax_d.axvline(0, color="k", lw=0.8, alpha=0.4)
-    ax_d.set_xlabel("Δ mean genus abundance after CSP1-2 knockout")
+    # annotate bar values
+    for rect, v in zip(bars, k["shift"]):
+        ax_d.text(v + (0.0003 if v > 0 else -0.0003), rect.get_y() + rect.get_height()/2,
+                  f"{v:+.4f}", ha="left" if v > 0 else "right", va="center", fontsize=8)
+    ax_d.set_xlabel("Δ mean genus relative abundance after CSP1-2 knockout\n(JSDM with 3 latent factors, 500 posterior draws)")
 else:
-    ax_d.text(0.5, 0.5, "JSDM knockout detailed shifts not cached\n(see cache/jsdm_knockout_*.tsv)",
+    ax_d.text(0.5, 0.5, "JSDM knockout detailed shifts not cached",
               ha="center", va="center", transform=ax_d.transAxes)
     ax_d.set_xticks([]); ax_d.set_yticks([])
-ax_d.set_title("(d) JSDM knockout — top-affected genera\n         ΔShannon ≈ −0.35 propagates through biotic associations", loc="left", fontsize=10)
+ax_d.set_title("(d) JSDM knockout: top 12 genera affected by CSP1-2 removal\n"
+               "     (propagates to ΔShannon ≈ −0.35 via biotic associations)", loc="left", fontsize=10)
 ax_d.spines[["top", "right"]].set_visible(False)
 ax_d.grid(True, axis="x", alpha=0.3)
 

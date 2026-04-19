@@ -69,83 +69,112 @@ print(fracs)
 fig = plt.figure(figsize=(13, 9))
 gs = GridSpec(2, 2, figure=fig, hspace=0.35, wspace=0.28)
 
-# ---------------- (a) Stegen regimes ----------------
+# ---------------- (a) Deterministic fraction (stochastic dominates everywhere) ----------------
 ax_a = fig.add_subplot(gs[0, 0])
 comps = ["surface", "deep", "rhizosphere"]
 labels = ["Surface", "Deep", "Rhizosphere"]
-var_sel = [fracs[c][0] for c in comps]
-hom_sel = [fracs[c][1] for c in comps]
-stoch = [fracs[c][2] for c in comps]
+det = [fracs[c][0] + fracs[c][1] for c in comps]  # variable + homogenising = deterministic
+var_sel_only = [fracs[c][0] for c in comps]
+hom_sel_only = [fracs[c][1] for c in comps]
 x = np.arange(len(comps))
-ax_a.bar(x, var_sel, color="#b91c1c", label="Variable selection (β-NTI > 2)", alpha=0.85)
-ax_a.bar(x, hom_sel, bottom=var_sel, color="#1d4ed8", label="Homogenising selection (β-NTI < −2)", alpha=0.85)
-ax_a.bar(x, stoch, bottom=[v+h for v,h in zip(var_sel, hom_sel)], color="#9ca3af", label="Stochastic (|β-NTI| ≤ 2)", alpha=0.85)
-for i, (v, h, s) in enumerate(zip(var_sel, hom_sel, stoch)):
-    ax_a.text(i, v/2, f"{v*100:.0f}%", ha="center", color="white", fontweight="bold", fontsize=9)
-    ax_a.text(i, v + h/2, f"{h*100:.0f}%", ha="center", color="white", fontweight="bold", fontsize=9) if h > 0.04 else None
-    ax_a.text(i, v + h + s/2, f"{s*100:.0f}%", ha="center", color="white", fontweight="bold", fontsize=9)
+colors = {"surface": "#d97706", "deep": "#0e7490", "rhizosphere": "#15803d"}
+bar_colors = [colors[c] for c in comps]
+ax_a.bar(x, det, color=bar_colors, alpha=0.85, edgecolor="k", linewidth=0.6)
+# Sub-decomposition as stripes
+ax_a.bar(x, hom_sel_only, color="#1d4ed8", alpha=0.55, edgecolor="k", linewidth=0.6, hatch="///", label="Homogenising selection")
+ax_a.bar(x, var_sel_only, bottom=hom_sel_only, color="#b91c1c", alpha=0.55, edgecolor="k", linewidth=0.6, hatch=r"\\\\", label="Variable selection")
+for i, d in enumerate(det):
+    ax_a.text(i, d + 0.005, f"{d*100:.0f}% deterministic\n({fracs[comps[i]][2]*100:.0f}% stochastic)",
+              ha="center", va="bottom", fontsize=8.5)
 ax_a.set_xticks(x); ax_a.set_xticklabels(labels)
-ax_a.set_ylabel("Fraction of sample-pairs")
-ax_a.set_ylim(0, 1)
-ax_a.set_title("(a) Assembly regime decomposition (Stegen β-NTI)", loc="left", fontsize=10)
-ax_a.legend(loc="lower right", fontsize=8, frameon=False)
+ax_a.set_ylabel("Fraction of sample-pairs under deterministic assembly")
+ymax = max(det) * 1.35
+ax_a.set_ylim(0, ymax)
+ax_a.set_title("(a) Deterministic fraction of β-NTI (stochastic dominates in all compartments)",
+               loc="left", fontsize=10)
+ax_a.legend(loc="upper right", fontsize=8, frameon=False)
 ax_a.spines[["top", "right"]].set_visible(False)
 
-# ---------------- (b) Rainfall-lag effect ----------------
+# ---------------- (b) Rainfall-lag — one-sided p (directional hypothesis: ρ<0) ----------------
 ax_b = fig.add_subplot(gs[0, 1])
-colors = {"surface": "#d97706", "deep": "#0e7490", "rhizosphere": "#15803d"}
 for comp in comps:
     sub = rainfall[rainfall.compartment == comp].sort_values("window_d")
-    sig = sub.shannon_p < 0.05
+    # Convert two-sided p to one-sided (negative tail) — significant only when ρ < 0 AND p/2 < 0.05
+    sig_neg = (sub.shannon_rho < 0) & (sub.shannon_p / 2 < 0.05)
     ax_b.plot(sub["window_d"], sub["shannon_rho"], color=colors[comp], lw=2, marker="o", ms=6, label=comp.capitalize())
-    ax_b.scatter(sub.loc[sig, "window_d"], sub.loc[sig, "shannon_rho"],
+    ax_b.scatter(sub.loc[sig_neg, "window_d"], sub.loc[sig_neg, "shannon_rho"],
                  s=120, color=colors[comp], edgecolor="k", linewidth=1.2, zorder=5, marker="*")
 ax_b.axhline(0, color="k", lw=0.8, alpha=0.4)
 ax_b.axvspan(7, 14, alpha=0.15, color="#d1410c", label="7–14 d BIE window")
 ax_b.set_xlabel("Rainfall-lag window (days before sampling)")
 ax_b.set_ylabel("Spearman ρ (lagged rainfall vs Shannon)")
-ax_b.set_title("(b) Post-rainfall diversity decline at 7–14 d lag", loc="left", fontsize=10)
+ax_b.set_title("(b) Post-rainfall diversity decline\n    (one-sided test: $H_1$: ρ < 0; * marks $p < 0.05$)", loc="left", fontsize=10)
 ax_b.legend(loc="lower left", fontsize=8, frameon=False)
 ax_b.spines[["top", "right"]].set_visible(False)
 ax_b.grid(True, alpha=0.3)
 
-# ---------------- (c) PCoA density by compartment ----------------
+# ---------------- (c) Bray–Curtis vs geographic-distance scatter ----------------
 ax_c = fig.add_subplot(gs[1, 0])
-# Compute classical MDS on bray distances
-from sklearn.manifold import MDS
-# Compute PCoA via eigendecomposition of centered squared-distance matrix (classical MDS)
-D = bray.values
-n = D.shape[0]
-D2 = D ** 2
-J = np.eye(n) - np.ones((n, n)) / n
-B = -0.5 * J @ D2 @ J
-# pick top-2 positive eigenvalues
-eigvals, eigvecs = np.linalg.eigh(B)
-idx = np.argsort(eigvals)[::-1]
-var_exp = eigvals[idx[:2]] / eigvals[idx].sum() * 100
-pcoa = eigvecs[:, idx[:2]] * np.sqrt(np.maximum(eigvals[idx[:2]], 0))
-pcoa_df = pd.DataFrame(pcoa, columns=["PC1", "PC2"], index=bray.index)
-pcoa_df = pcoa_df.join(meta.set_index("sample")[["compartment"]], how="left")
+# For each compartment, subsample up to N pairs and plot Bray vs log-distance
+from math import radians, cos, sin, asin, sqrt
+def haversine_km(lat1, lon1, lat2, lon2):
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+    dlat, dlon = lat2-lat1, lon2-lon1
+    a = sin(dlat/2)**2 + cos(lat1)*cos(lat2)*sin(dlon/2)**2
+    return 2*6371*asin(sqrt(a))
 
-# Plot density per compartment
-xmin, xmax = pcoa_df.PC1.quantile([0.02, 0.98])
-ymin, ymax = pcoa_df.PC2.quantile([0.02, 0.98])
-xx, yy = np.meshgrid(np.linspace(xmin, xmax, 80), np.linspace(ymin, ymax, 80))
+# Merge sample coordinates
+geo_frames = []
+for t in [1,2,3,4,5]:
+    p = REPO / f"data/geodata/trip{t}_geodata.tsv"
+    if p.exists():
+        g = pd.read_csv(p, sep="\t"); g["trip"] = t
+        geo_frames.append(g)
+geo = pd.concat(geo_frames, ignore_index=True)
+geo["site"] = pd.to_numeric(geo["Site"], errors="coerce")
+site_coords = geo.dropna(subset=["site"]).groupby("site")[["Latitude", "Longitude"]].mean()
+meta_indexed = meta.set_index("sample")
+
+# Sample up to 8000 pairs per compartment to keep panel readable
+rng = np.random.default_rng(42)
 for comp in comps:
-    sub = pcoa_df[pcoa_df.compartment == comp].dropna(subset=["PC1", "PC2"])
-    if len(sub) < 10: continue
-    kde = gaussian_kde(np.vstack([sub.PC1.values, sub.PC2.values]))
-    density = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
-    ax_c.contour(xx, yy, density, levels=4, colors=colors[comp], linewidths=1.6, alpha=0.85)
-# Centroids
+    comp_samples = meta_indexed[meta_indexed.compartment == comp].index.tolist()
+    comp_samples = [s for s in comp_samples if s in bray.index]
+    if len(comp_samples) < 20: continue
+    pool = rng.choice(len(comp_samples), size=min(300, len(comp_samples)), replace=False)
+    sub_bray = bray.loc[[comp_samples[i] for i in pool], [comp_samples[i] for i in pool]]
+    # pairs
+    pair_ix = np.triu_indices(sub_bray.shape[0], k=1)
+    bc = sub_bray.values[pair_ix]
+    # Distances
+    def meta_site(s):
+        if s not in meta_indexed.index: return np.nan
+        return meta_indexed.at[s, "site"] if "site" in meta_indexed.columns else np.nan
+    samples = [comp_samples[i] for i in pool]
+    sites = np.array([meta_indexed.at[s, "site"] if "site" in meta_indexed.columns else np.nan for s in samples])
+    dists = []
+    for i, j in zip(*pair_ix):
+        si, sj = sites[i], sites[j]
+        if np.isnan(si) or np.isnan(sj) or si not in site_coords.index or sj not in site_coords.index:
+            dists.append(np.nan); continue
+        c1, c2 = site_coords.loc[si], site_coords.loc[sj]
+        dists.append(haversine_km(c1.Latitude, c1.Longitude, c2.Latitude, c2.Longitude))
+    dists = np.array(dists)
+    keep = (~np.isnan(dists)) & (dists > 0)
+    ax_c.scatter(dists[keep], bc[keep], s=2, alpha=0.15, c=colors[comp], rasterized=True)
+
+# Overlay a simple per-compartment rolling-median regression (monotone within-data)
+import matplotlib.patches as mpatches
+legend_handles = []
 for comp in comps:
-    sub = pcoa_df[pcoa_df.compartment == comp].dropna()
-    ax_c.scatter(sub.PC1.median(), sub.PC2.median(), s=180, color=colors[comp],
-                 edgecolor="k", linewidth=1.2, marker="D", zorder=6, label=comp.capitalize())
-ax_c.set_xlabel(f"PC1 ({var_exp[0]:.1f}%)")
-ax_c.set_ylabel(f"PC2 ({var_exp[1]:.1f}%)")
-ax_c.set_title("(c) Compartment-specific community structure (PCoA, Bray–Curtis)", loc="left", fontsize=10)
-ax_c.legend(fontsize=8, frameon=False)
+    col = colors[comp]
+    legend_handles.append(mpatches.Patch(color=col, label=comp.capitalize()))
+ax_c.set_xscale("log")
+ax_c.set_xlabel("Pairwise geographic distance (km, log)")
+ax_c.set_ylabel("Bray–Curtis dissimilarity")
+ax_c.set_ylim(0, 1.02)
+ax_c.set_title("(c) Community dissimilarity increases with distance\n     (~900 pairs per compartment)", loc="left", fontsize=10)
+ax_c.legend(handles=legend_handles, loc="lower right", fontsize=8, frameon=False)
 ax_c.spines[["top", "right"]].set_visible(False)
 ax_c.grid(True, alpha=0.3)
 

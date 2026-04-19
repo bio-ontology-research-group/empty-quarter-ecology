@@ -190,36 +190,26 @@ except Exception as e:
     ax_d.text(0.5, 0.5, f"Circos build failed: {e}", ha="center", va="center", transform=ax_d.transAxes)
     print(f"Circos error: {e}")
 
-# -- Row 2 right: Signature-pathway heatmap --
+# -- Row 2 right: Cross-MAG signature-pathway heatmap --
 ax_e = fig.add_subplot(gs[1, 2])
-# Curated signature pathways and their 100% completeness in MAG 1 (V27Dr2_73)
-signature = [
-    ("trehalose biosynthesis IV", "PWY-2622"),
-    ("glycine-betaine I (G-)", "BETSYN-PWY"),
-    ("glycine-betaine II (G+)", "PWY-3722"),
-    ("choline degradation I", "CHOLINE-BETAINE-ANA-PWY"),
-    ("myo-inositol biosynthesis", "PWY-2301"),
-    ("L-cysteine biosynthesis", "CYSTSYN-PWY"),
-    ("thiosulfate disproportionation", "PWY-5350"),
-    ("sulfate activation for sulfonation", "PWY-5340"),
-    ("isethionate degradation", "PWY-2601"),
-    ("indole-3-acetate biosynthesis V", "PWY-5026"),
-    ("Calvin cycle", "CALVIN-PWY"),
-    ("formaldehyde oxidation IV", "FORMASS-PWY"),
-    ("benzoate degradation II", "PWY-283"),
-    ("cyclohexane-carboxylate degrad", "PWY-301"),
-]
-pw_lookup = dict(zip(pathways["pwy_id"], pathways["completeness"]))
-row_vals = np.array([[pw_lookup.get(sid, 0)] for (_, sid) in signature])
+sig_table = pd.read_csv("../data/csp_mags/signature_pathways_per_mag.tsv", sep="\t")
+mag_cols = [c for c in sig_table.columns if c.startswith("V")]
+row_vals = sig_table[mag_cols].values.astype(float)
 im = ax_e.imshow(row_vals, cmap="YlGnBu", aspect="auto", vmin=0, vmax=100)
-ax_e.set_yticks(range(len(signature)))
-ax_e.set_yticklabels([s[0] for s in signature], fontsize=7.5)
-ax_e.set_xticks([0]); ax_e.set_xticklabels(["V27Dr2_73"])
-ax_e.set_title("(e) Signature pathway completeness\n(gapseq default)", loc="left", fontsize=9)
-for i in range(len(signature)):
-    v = int(row_vals[i, 0])
-    ax_e.text(0, i, f"{v}%", ha="center", va="center",
-              color="white" if v > 50 else "black", fontsize=8)
+ax_e.set_yticks(range(len(sig_table)))
+ax_e.set_yticklabels(sig_table["pathway"].tolist(), fontsize=7.5)
+ax_e.set_xticks(range(len(mag_cols)))
+ax_e.set_xticklabels(mag_cols, fontsize=7.5, rotation=30, ha="right")
+ax_e.set_title("(e) Signature pathways across MAGs\n       (% completeness, gapseq default)", loc="left", fontsize=9)
+for i in range(row_vals.shape[0]):
+    for j in range(row_vals.shape[1]):
+        v = row_vals[i, j]
+        if np.isnan(v):
+            label = "–"
+        else:
+            label = f"{int(v)}"
+        ax_e.text(j, i, label, ha="center", va="center",
+                  color="white" if (not np.isnan(v) and v > 50) else "black", fontsize=7.5)
 
 # -- Row 3: Cross-desert summary (prevalence bars + 2 scatters) --
 ax_f = fig.add_subplot(gs[2, 0])
@@ -238,44 +228,88 @@ ax_f.set_ylim(0, 1.05)
 ax_f.spines[["top", "right"]].set_visible(False)
 ax_f.grid(True, axis="y", alpha=0.3)
 
-# Namib CSP1-2 vs Shannon
+from scipy.stats import linregress, spearmanr
+
+# Load EQ per-sample CSP1-2 × Shannon × salinity (Trip 5 only)
+eq_sal = pd.read_csv("../data/csp_mags/eq_sample_csp_shannon_salinity.tsv", sep="\t")
+
+# (g) CSP1-2 abundance → Shannon — EQ + Namib overlaid
 ax_g = fig.add_subplot(gs[2, 1])
+# EQ: per-sample, use Trip 5 for completeness; csp_rel is fractional
+eq_csp = eq_sal[(eq_sal["csp_rel"] > 0)].copy()
+ax_g.scatter(eq_csp["csp_rel"] * 100, eq_csp["Shannon"], s=14, alpha=0.45, c="#444",
+             edgecolor="none", label=f"Empty Quarter (n={len(eq_csp)})")
+# Namib
 nam = cd_per[cd_per.desert == "Namib"].copy()
 nam["csp_rel_85"] = pd.to_numeric(nam["csp_rel_85"], errors="coerce")
-nam = nam.dropna(subset=["csp_rel_85", "shannon_otu97"])
-nam_plot = nam[nam.csp_rel_85 > 0]
-ax_g.scatter(nam_plot["csp_rel_85"] * 100, nam_plot["shannon_otu97"],
-             s=40, alpha=0.8, c="#d97706", edgecolor="k", linewidth=0.6)
-if len(nam_plot) > 2:
-    # Simple log-x linear regression for trendline
-    from scipy.stats import linregress
-    log_x = np.log10(nam_plot["csp_rel_85"] * 100)
-    lr = linregress(log_x, nam_plot["shannon_otu97"])
-    xs = np.linspace(log_x.min(), log_x.max(), 50)
-    ax_g.plot(10**xs, lr.intercept + lr.slope * xs, "k--", lw=1.2, alpha=0.8)
+nam_plot = nam.dropna(subset=["csp_rel_85", "shannon_otu97"])
+nam_plot = nam_plot[nam_plot["csp_rel_85"] > 0]
+ax_g.scatter(nam_plot["csp_rel_85"] * 100, nam_plot["shannon_otu97"], s=40, alpha=0.85,
+             c="#d97706", edgecolor="k", linewidth=0.5, label=f"Namib (n={len(nam_plot)})")
+# Per-desert regression lines
+for xc, yc, col in [(eq_csp["csp_rel"]*100, eq_csp["Shannon"], "#444"),
+                    (nam_plot["csp_rel_85"]*100, nam_plot["shannon_otu97"], "#d97706")]:
+    if len(xc) > 5:
+        log_x = np.log10(xc)
+        lr = linregress(log_x, yc)
+        xs = np.linspace(log_x.min(), log_x.max(), 50)
+        ax_g.plot(10**xs, lr.intercept + lr.slope * xs, color=col, lw=1.6, ls="--", alpha=0.9)
+# Stats
+r_eq, p_eq = spearmanr(eq_csp["csp_rel"], eq_csp["Shannon"])
+r_nm, p_nm = spearmanr(nam_plot["csp_rel_85"], nam_plot["shannon_otu97"])
 ax_g.set_xscale("log")
 ax_g.set_xlabel("CSP1-2 rel. abundance (%, log)")
 ax_g.set_ylabel("Shannon")
-ax_g.set_title(r"(g) Namib — abundance tracks diversity" + "\n" + r"$\rho=+0.64,\ p=1.4\times10^{-4}$", loc="left", fontsize=9)
+ax_g.set_title("(g) CSP1-2 abundance vs Shannon (EQ + Namib)\n" +
+               fr"    EQ: ρ={r_eq:+.2f}, p={p_eq:.1e}  |  Namib: ρ={r_nm:+.2f}, p={p_nm:.1e}", loc="left", fontsize=9)
+ax_g.legend(loc="lower right", fontsize=8, frameon=False)
 ax_g.grid(True, alpha=0.3)
 ax_g.spines[["top", "right"]].set_visible(False)
 
-# Atacama EC vs Shannon
+# (h) Salinity → Shannon — EQ (XRF S, as % dry mass proxy) + Atacama (EC)
 ax_h = fig.add_subplot(gs[2, 2])
+# EQ: scatter using XRF S
+eq_s = eq_sal[eq_sal["S"] > 0].copy()
+ax_h.scatter(eq_s["S"], eq_s["Shannon"], s=16, alpha=0.45, c="#444",
+             edgecolor="none", label=f"Empty Quarter (XRF S, n={len(eq_s)})")
+# Atacama
 atac = cd_per[cd_per.desert == "Atacama"].copy()
 atac["ec"] = pd.to_numeric(atac["electrical_conductivity"], errors="coerce")
 atac = atac.dropna(subset=["ec", "shannon_otu97"])
 atac = atac[atac.ec > 0]
-ax_h.scatter(atac["ec"], atac["shannon_otu97"], s=40, alpha=0.8, c="#b91c1c", edgecolor="k", linewidth=0.6)
-from scipy.stats import linregress
-log_ec = np.log10(atac.ec)
-lr2 = linregress(log_ec, atac.shannon_otu97)
-xs = np.linspace(log_ec.min(), log_ec.max(), 50)
-ax_h.plot(10**xs, lr2.intercept + lr2.slope * xs, "k--", lw=1.2, alpha=0.8)
-ax_h.set_xscale("log")
-ax_h.set_xlabel("EC (dS m$^{-1}$, log)")
+# EQ XRF S and Atacama EC are different units; use twin axes by normalising ranks
+# Simpler: plot both on a common "salinity proxy (log, per-desert z-score)" axis
+def zlog(x): return (np.log10(x) - np.log10(x).mean()) / np.log10(x).std()
+ax_h.scatter(zlog(eq_s["S"]), eq_s["Shannon"], s=16, alpha=0.45, c="#444", edgecolor="none")
+ax_h.scatter(zlog(atac["ec"]), atac["shannon_otu97"], s=40, alpha=0.85, c="#b91c1c",
+             edgecolor="k", linewidth=0.5, label=f"Atacama (EC, n={len(atac)})")
+# Per-desert regression lines on z-scored log axes
+for xc, yc, col in [(zlog(eq_s["S"]), eq_s["Shannon"], "#444"),
+                    (zlog(atac["ec"]), atac["shannon_otu97"], "#b91c1c")]:
+    if len(xc) > 5:
+        lr = linregress(xc, yc)
+        xs = np.linspace(xc.min(), xc.max(), 50)
+        ax_h.plot(xs, lr.intercept + lr.slope * xs, color=col, lw=1.6, ls="--", alpha=0.9)
+# Clear labels and re-draw Empty-Quarter scatter to match
+# Replace ax_h labels (zlog x already done)
+ax_h.cla()
+ax_h.scatter(zlog(eq_s["S"]), eq_s["Shannon"], s=16, alpha=0.45, c="#444", edgecolor="none",
+             label=f"Empty Quarter (XRF S, n={len(eq_s)})")
+ax_h.scatter(zlog(atac["ec"]), atac["shannon_otu97"], s=40, alpha=0.85, c="#b91c1c",
+             edgecolor="k", linewidth=0.5, label=f"Atacama (EC, n={len(atac)})")
+for xc, yc, col in [(zlog(eq_s["S"]), eq_s["Shannon"], "#444"),
+                    (zlog(atac["ec"]), atac["shannon_otu97"], "#b91c1c")]:
+    if len(xc) > 5:
+        lr = linregress(xc, yc)
+        xs = np.linspace(xc.min(), xc.max(), 50)
+        ax_h.plot(xs, lr.intercept + lr.slope * xs, color=col, lw=1.6, ls="--", alpha=0.9)
+r_eq_s, p_eq_s = spearmanr(eq_s["S"], eq_s["Shannon"])
+r_at, p_at = spearmanr(atac.ec, atac.shannon_otu97)
+ax_h.set_xlabel("Salinity proxy (log, per-desert z-score)")
 ax_h.set_ylabel("Shannon")
-ax_h.set_title(r"(h) Atacama — salinity suppresses diversity" + "\n" + r"$\rho=-0.38,\ p=0.012$", loc="left", fontsize=9)
+ax_h.set_title("(h) Salinity vs Shannon (EQ + Atacama)\n" +
+               fr"    EQ (XRF S): ρ={r_eq_s:+.2f}, p={p_eq_s:.1e}  |  Atacama (EC): ρ={r_at:+.2f}, p={p_at:.1e}", loc="left", fontsize=9)
+ax_h.legend(loc="lower left", fontsize=8, frameon=False)
 ax_h.grid(True, alpha=0.3)
 ax_h.spines[["top", "right"]].set_visible(False)
 

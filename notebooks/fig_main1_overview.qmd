@@ -182,14 +182,14 @@ ax_d.set_xticks(range(len(comp_order)))
 ax_d.set_xticklabels(["Surface", "Deep", "Rhizosphere"])
 ax_d.set_yticks(range(len(trip_order)))
 trip_labels = ["T1 Spring '23", "T2 Summer '23", "T3 Winter '24",
-               "T4 Summer '24", "T5 Autumn '24"]
+               "T4 Summer '24", "T5 Autumn '25"]
 ax_d.set_yticklabels(trip_labels)
 for i in range(counts.shape[0]):
     for j in range(counts.shape[1]):
         v = int(counts.iloc[i, j])
         color = "white" if v > counts.values.max() / 2 else "black"
         ax_d.text(j, i, f"{v}", ha="center", va="center", color=color, fontsize=9)
-ax_d.set_title("(d) Sampling intensity (n samples)", loc="left", fontsize=10)
+ax_d.set_title("(d) n samples sequenced and QC-passed", loc="left", fontsize=10)
 cb = plt.colorbar(im, ax=ax_d, fraction=0.046, pad=0.04)
 cb.set_label("samples")
 

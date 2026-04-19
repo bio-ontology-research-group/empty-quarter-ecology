@@ -12,6 +12,7 @@ NOTEBOOKS := 00_load_and_qc 01_scale_and_phyla 02_assembly \
              13_vegetation_mediation 14_keystone_knockout \
              15_intervention_scenarios 16_cross_desert \
              17_xrf_compartment \
+             18_compartment_trip_and_host_anova \
              fig_main1_overview fig_main2_dynamics \
              fig_main3_csp12 fig_main4_digital_twin \
              99_audit
@@ -40,6 +41,7 @@ figures: cache/feature_table.parquet  ## render all figure notebooks
 	           12_causal_nonlinear 13_vegetation_mediation \
 	           14_keystone_knockout 15_intervention_scenarios \
 	           16_cross_desert 17_xrf_compartment \
+	           18_compartment_trip_and_host_anova \
 	           fig_main1_overview fig_main2_dynamics \
 	           fig_main3_csp12 fig_main4_digital_twin \
 	           99_audit; do \

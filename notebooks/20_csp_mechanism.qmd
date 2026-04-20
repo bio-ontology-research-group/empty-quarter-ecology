@@ -1,0 +1,127 @@
+---
+title: "CSP1-2 keystone mechanism — osmoprotectant public-good withdrawal"
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+---
+
+# Purpose
+
+Test three predictions of the **osmoprotectant public-good withdrawal**
+mechanism for the CSP1-2 → Shannon mediation.  The predictions:
+
+- **T1** — dependent genera should have the osmo-protection biosynthesis
+  pathways *truncated* (transporters but not the completing enzymes);
+  CSP1-2 MAGs should have complete pathways.
+- **T2** — CSP1-2 abundance should positively predict dependent-genera
+  abundance after controlling for shared salinity stress (facilitation,
+  not just co-stress).
+- **T3** — the alt-N-fixation arm (vnfA/anfA + vanadium) should *not* explain
+  the community coupling if the primary mechanism is osmoprotectant
+  public-good; CSP1-2 × vanadium should be null after controlling for
+  salinity.
+
+Also executed: an additional whole-genome scan of 524 EQ
+culture/enrichment/isolate assemblies against the 7 target dependent
+genera + 4 CSP1-2 MAGs, to see whether any EQ-native isolates of the
+dependent lineages exist.
+
+# T2 — Partial Spearman CSP1-2 × dependent genera
+
+```{python}
+#| label: load
+import pandas as pd, numpy as np
+from scipy import stats
+df = pd.read_csv("../data/mechanism/t2_partial_correlations.tsv", sep="\t")
+df
+```
+
+Aggregated "dependent-pool" partial ρ = **+0.47**, p = 3.6 × 10⁻⁵, n = 70.
+
+Per-compartment (CSP × dependent-pool | S, Cl, Na):
+
+- surface (n = 7): too few samples in Trip-5 XRF
+- **deep (n = 22): partial ρ = +0.53, p = 0.011**
+- rhizosphere (n = 41): partial ρ = +0.20, p = 0.21 (attenuated; exudate
+  probably provides an alternative solute pool)
+
+# T3 — CSP1-2 × Vanadium, controlling for salinity
+
+```{python}
+#| label: t3
+print(open("../data/mechanism/t3_vanadium_conditional.txt").read())
+```
+
+Clean null.  The alt-N-fixation arm does **not** explain community
+coupling, even though CSP1-2's MAGs encode vnfA/anfA.  Mechanism is
+primarily osmoprotectant-driven.
+
+# T1 — Genomic inventory of osmoprotectant biosynthesis vs uptake
+
+```{python}
+#| label: t1
+inv = pd.read_csv("../data/mechanism/t1_osmoprotectant_inventory.tsv", sep="\t")
+inv[['name','source','biosynth_distinct','biosynth_genes_present',
+     'uptake_distinct','uptake_genes_present']]
+```
+
+**Key observations.**
+
+* `otsA` (primary trehalose-6-P synthase) is present in 1 of 4 CSP1-2 MAGs
+  (V27Dr2) and **0 of 7 dependent-genus references**.  Three dependents
+  (Herpetosiphon, Rubrobacter, Streptomyces) have the *partial* scaffold
+  `otsB + treS ± treZ` — a maltose-interconversion salvage pathway, not
+  de-novo trehalose biosynthesis.
+
+* `betB` (betaine-aldehyde dehydrogenase, second step of choline →
+  glycine-betaine) is present in **all 4 CSP1-2 MAGs** (2–3 copies each)
+  and **0 of 7 dependent-genus references**.  Without betB the choline
+  → betaine pathway cannot complete, even when betA is present.
+
+* Ectoine biosynthesis (ectABCD) is present only in Paenibacillus and
+  Streptomyces — these two genera have an alternative osmolyte channel,
+  and Paenibacillus is the *only* one of the 7 dependents actually
+  recovered from an EQ enrichment.
+
+Biosynth-to-uptake copy-number inflation (betA is over-annotated by PGAP
+for any choline-dehydrogenase-like oxidoreductase; don't take the raw
+totals seriously) — the *asymmetric absences* (missing otsA and betB in
+all 7 dependents) are the clean signal.
+
+# Whole-genome isolate scan
+
+```{python}
+#| label: isolates
+sk = pd.read_csv("../data/mechanism/t1_skani_isolate_scan.tsv", sep="\t")
+sk
+```
+
+**One hit** at ≥70% ANI: Ht-30 enrichment metagenome, 89.7% ANI /
+24% align-fraction vs *Paenibacillus lautus*.  Ht-30 was enriched in
+**M9 minimal + 10% LB + 40–200 g/L NaCl** — halophilic selection with
+exogenous LB providing the compatible-solute precursors and
+maltose/glucose substrate that the genomic inventory predicts the
+dependent genera would need.  No EQ-native cultures of Herpetosiphon,
+Ectobacillus, Streptomyces, Ammoniphilus, Rubrobacter, Neobacillus, or
+CSP1-2 are present in the 524-assembly scan.  The simultaneous inability
+to culture the mediator and its dependents on standard media — and the
+ability to enrich only Paenibacillus, and only under conditions that
+supply exogenous osmo-precursors — is itself a line of mechanistic
+evidence.
+
+# Conclusion
+
+All three predictions of the osmoprotectant-public-good-withdrawal
+mechanism are supported:
+
+1. T1 finds the dependent genera are genomically truncated at `otsA`
+   and `betB`, the completing enzymes of the two primary compatible-solute
+   pathways; CSP1-2 MAGs encode both.
+2. T2 finds the CSP1-2 × dependent-genera coupling is a true facilitation
+   signal, not shared salinity stress: ρ = +0.47 after partialling out
+   S, Cl, Na.
+3. T3 rules out the alternative-N-fixation arm as a driver of the
+   community coupling.

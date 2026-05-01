@@ -39,3 +39,15 @@ cache/csp_mags/antismash/*/
 cache/csp_mags/*__SemiBin_*/
 cache/csp_mags/*__SemiBin_*_gapseq/gapseq_find.log
 cache/csp_mags/*__SemiBin_*_gapseq/gapseq_transport.log
+
+# Externally-sourced climate rasters — fetch on demand, do not commit
+# WorldClim 2.1 historical 10-arcmin bio variables (~21 MB zip):
+#   curl -L -o data/worldclim/wc2.1_10m_bio.zip \
+#     https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip
+#   (cd data/worldclim && unzip -o wc2.1_10m_bio.zip)
+# WorldClim 2.1 CMIP6 future bioclim (UKESM1-0-LL, 2081–2100, ~7-13 MB each):
+#   curl -L -o data/worldclim/wc2.1_10m_bioc_UKESM1-0-LL_ssp245_2081-2100.tif \
+#     https://geodata.ucdavis.edu/cmip6/10m/UKESM1-0-LL/ssp245/wc2.1_10m_bioc_UKESM1-0-LL_ssp245_2081-2100.tif
+#   curl -L -o data/worldclim/wc2.1_10m_bioc_UKESM1-0-LL_ssp370_2081-2100.tif \
+#     https://geodata.ucdavis.edu/cmip6/10m/UKESM1-0-LL/ssp370/wc2.1_10m_bioc_UKESM1-0-LL_ssp370_2081-2100.tif
+data/worldclim/

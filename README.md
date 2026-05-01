@@ -133,6 +133,47 @@ MAG-associated ASVs recovered from Empty-Quarter co-assemblies
 Raw fastqs (1.8 GB) are archived on Unimatrix at
 `/data/emptyquarter/ecology-paper-runs/crossdesert/raw/`.
 
+## Climate-impact and projection analyses (Figs 5–7)
+
+Three complementary climate-impact analyses extend the digital twin
+into present and future climate:
+
+| Stage | Script | Output | Manuscript |
+| --- | --- | --- | --- |
+| Pull NASA POWER 1995–2024 daily T and P at 60 sites | `scripts/fetch_power_historical.py` | `cache/climate_historical_1995_2024.parquet` | Fig 7 |
+| Per-site historical climate trends (Mann-Kendall + sign test) | `scripts/run_climate_trends.py` | `cache/climate_trends_per_site.tsv`, `figures/fig_climate_trends.pdf` | Fig 7 |
+| CMIP6 SSP × horizon scenarios on the Tier-3 hierarchical twin | `scripts/run_cmip6_projections.py` | `cache/cmip6_interventions.tsv`, `figures/fig_cmip6_projections.pdf` | Fig 5 |
+| CSP1-2 climate-niche projection on global 10-arcmin grid | `scripts/run_csp_niche_projection.py` | `cache/niche_model_coeffs.tsv`, `cache/niche_grid_summary.tsv`, `figures/fig_niche_projection.pdf` | Fig 6 |
+
+**Reproduction order** (each script is self-contained and depends only
+on the listed upstream artefacts):
+
+```bash
+# Per-site historical trends (Fig 7) — needs ~5 min of NASA POWER pulls
+uv run python scripts/fetch_power_historical.py
+uv run python scripts/run_climate_trends.py
+
+# CMIP6 projections via the Tier-3 twin (Fig 5)
+# Requires cache/causal_frame_tier1.parquet from notebook 11
+uv run python scripts/run_cmip6_projections.py
+
+# Global niche projection (Fig 6) — needs WorldClim historical + CMIP6 future rasters
+# (~80 MB; download commands in .gitignore comment under data/worldclim/)
+uv run python scripts/run_csp_niche_projection.py
+```
+
+`scripts/fetch_openmeteo_historical.py` is an alternative ERA5-archive
+historical fetcher for higher-resolution data; in practice the
+Open-Meteo free-tier rate limits made the NASA POWER fetcher more
+reliable for the 60-site batch, so it is the one used for Fig 7.
+
+CMIP6 ensemble Δ(T, P) values for the Arabian Peninsula are taken
+from Almazroui et al. 2020 (Earth Syst. Environ. 4:611–630).
+Climate-niche projections use WorldClim 2.1 historical 10-arcmin and
+WorldClim 2.1 CMIP6 future bioclim grids (UKESM1-0-LL, 2081–2100,
+SSP2-4.5 and SSP3-7.0); these are gitignored under `data/worldclim/`
+(re-fetch commands documented at the top of `.gitignore`).
+
 ## Quickstart
 
 ```bash

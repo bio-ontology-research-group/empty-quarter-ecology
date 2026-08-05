@@ -15,6 +15,10 @@ data_repo=${1:-"$root/../empty-quarter-data-paper"}
 output_dir=${2:-"$root/results/remote-validation-$(date -u +%Y%m%dT%H%M%SZ)"}
 data_repo=$(cd "$data_repo" && pwd)
 
+export RAPTOR_BOOTSTRAP_DIR=${RAPTOR_BOOTSTRAP_DIR:-"$data_repo/workflow/.raptor-bin"}
+bash "$data_repo/workflow/bin/bootstrap_raptor.sh"
+export PATH="$RAPTOR_BOOTSTRAP_DIR/bin:$PATH"
+
 if [[ -e "$output_dir" ]]; then
   printf 'refusing to overwrite existing output: %s\n' "$output_dir" >&2
   exit 73

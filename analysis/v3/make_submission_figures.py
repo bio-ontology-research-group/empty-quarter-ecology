@@ -14,12 +14,14 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import sys
 import xml.etree.ElementTree as ET
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib import ft2font
 import numpy as np
 import pandas as pd
 
@@ -39,6 +41,26 @@ PDF_METADATA = {
     "CreationDate": None,
     "ModDate": None,
 }
+EXPECTED_FIGURE_RUNTIME = {
+    "python": "3.11.14",
+    "matplotlib": "3.9.4",
+    "freetype": "2.14.3",
+}
+
+
+def require_figure_runtime() -> dict[str, str]:
+    """Fail before rendering when native font metrics are not reproducible."""
+    observed = {
+        "python": sys.version.split()[0],
+        "matplotlib": matplotlib.__version__,
+        "freetype": ft2font.__freetype_version__,
+    }
+    if observed != EXPECTED_FIGURE_RUNTIME:
+        raise RuntimeError(
+            "Figure runtime differs from environment/conda-linux-64.lock: "
+            f"expected {EXPECTED_FIGURE_RUNTIME}, observed {observed}"
+        )
+    return observed
 
 
 def sha256(path: Path) -> str:
@@ -754,6 +776,7 @@ def make_function_control_figure(
 
 
 def main() -> None:
+    figure_runtime = require_figure_runtime()
     parser = argparse.ArgumentParser()
     parser.add_argument("--core-dir", type=Path, required=True)
     # Retained as optional compatibility arguments for older workflow calls.
@@ -1158,6 +1181,18 @@ def main() -> None:
         )
     pd.DataFrame(rows).to_csv(
         output / "figure_manifest.tsv", sep="\t", index=False
+    )
+    (output / "figure_runtime.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "figure-runtime-v1",
+                **figure_runtime,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
     )
 
 

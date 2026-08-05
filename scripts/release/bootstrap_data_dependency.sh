@@ -36,6 +36,8 @@ require_digest file_manifest_sha256 FILE_MANIFEST.tsv
 require_digest bulk_manifest_sha256 BULK_ARTIFACTS.tsv
 require_digest release_manifest_sha256 PRE_RELEASE_MANIFEST.tsv
 require_digest environment_lock_sha256 environment/requirements.lock.txt
+require_digest conda_explicit_lock_sha256 environment/conda-linux-64.lock
+require_digest pip_overlay_lock_sha256 environment/pip-overlay.lock.txt
 require_digest workflow_sha256 workflow/main.nf
 
 bash "$data_repo/scripts/release/bootstrap_package_layout.sh" "$data_repo"

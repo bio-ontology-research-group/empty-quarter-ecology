@@ -19,6 +19,7 @@ FIGURES = (
     "fig3_function_controls.pdf",
     "figS_campaign_rainfall.pdf",
     "figure_manifest.tsv",
+    "figure_runtime.json",
 )
 
 
@@ -101,7 +102,7 @@ def main() -> int:
                     )
             return 1
 
-    print("PASS: all four figures and their manifest are byte-identical")
+    print("PASS: all four figures, manifest, and runtime are byte-identical")
     return 0
 
 

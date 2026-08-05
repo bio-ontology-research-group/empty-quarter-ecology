@@ -12,19 +12,32 @@ remote host.
 git clone git@github.com:bio-ontology-research-group/empty-quarter-data-paper.git
 git clone git@github.com:bio-ontology-research-group/empty-quarter-ecology-reproducibility.git
 cd empty-quarter-data-paper
-git checkout 23865e863177075cd05519f1c755bba0592901ba
+git checkout b657df1b82812bfe1d84b37accb7d8cf7dd37878
 bash scripts/release/download_bulk_artifacts.sh
 bash scripts/release/bootstrap_package_layout.sh .
 cd ../empty-quarter-ecology-reproducibility
 ```
 
 `scripts/release/bootstrap_data_dependency.sh` checks the data commit and all
-six pinned manifest digests before creating relative compatibility links. It
+seven pinned manifest and environment digests before creating relative
+compatibility links. It
 will not replace an existing path or accept a different data revision.
 
 ## 2. Recreate the environment
 
-The data repository carries the authoritative CPython 3.11 lock:
+The data repository carries the authoritative exact Linux/x86-64 environment.
+Create it before byte-level figure verification or the complete workflow:
+
+```bash
+cd ../empty-quarter-data-paper
+make env-linux-exact
+cd ../empty-quarter-ecology-reproducibility
+```
+
+The explicit lock fixes every Conda package build, including Matplotlib
+`3.9.4` and FreeType `2.14.3`; the small pip overlay is hash-locked and cannot
+replace Conda dependencies. A lighter CPython 3.11 environment remains
+available for numerical tests that do not render canonical PDFs:
 
 ```bash
 uv venv --python 3.11 .venv
@@ -32,10 +45,10 @@ uv pip sync --python .venv/bin/python \
   ../empty-quarter-data-paper/environment/requirements.lock.txt
 ```
 
-The Conda specification additionally pins Java, Groovy, R, MAFFT, FastTree,
-Raptor, and the other programs used by the complete workflow. Every executed
-remote workflow records the versions it actually found; an environment file
-alone is not treated as proof of execution.
+The editable Conda recipe additionally pins Java, Groovy, R, MAFFT, FastTree,
+and the other programs used by the complete workflow. Raptor is built from its
+checksum-pinned source archive. Every executed remote workflow records the
+versions it actually found and the explicit-lock digest.
 
 ## 3. Verify claims, figures, and papers
 
@@ -43,7 +56,7 @@ alone is not treated as proof of execution.
 make bootstrap DATA_REPO=../empty-quarter-data-paper
 make verify PYTHON=.venv/bin/python
 make test PYTHON=.venv/bin/python DATA_REPO=../empty-quarter-data-paper
-make figures PYTHON=.venv/bin/python
+make figures PYTHON=../empty-quarter-data-paper/.conda-env/bin/python
 make paper
 ```
 

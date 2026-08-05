@@ -105,6 +105,7 @@ def verify_manuscript(root: Path, failures: list[str]) -> None:
         "figures/fig3_function_controls.pdf",
         "figures/figS_campaign_rainfall.pdf",
         "figures/figure_manifest.tsv",
+        "figures/figure_runtime.json",
     ):
         if not (paper / required).is_file():
             failures.append(f"missing manuscript artifact: {required}")

@@ -35,13 +35,16 @@ then run:
 make bootstrap DATA_REPO=../empty-quarter-data-paper
 make verify
 make test DATA_REPO=../empty-quarter-data-paper
-make figures
+make figures PYTHON=../empty-quarter-data-paper/.conda-env/bin/python
 make paper
 ```
 
 `make figures` renders the four figures from the committed canonical result
 tables in a temporary directory and requires byte-identical PDFs and manifest
-entries. `make paper` builds only `main.tex` and `supplement.tex`; the main
+entries. Byte-level rendering uses the exact Linux environment in the data
+repository's `environment/conda-linux-64.lock`; the renderer fails before
+writing output if Python, Matplotlib, or FreeType differs. `make paper` builds
+only `main.tex` and `supplement.tex`; the main
 manuscript contains no included prose fragments. It fixes
 `SOURCE_DATE_EPOCH=1785888000` and `FORCE_SOURCE_DATE=1`, so repeated builds in
 the pinned TeX environment produce byte-identical PDFs.

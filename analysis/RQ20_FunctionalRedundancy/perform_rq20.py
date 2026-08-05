@@ -1,1 +1,0 @@
-/home/leechuck/Documents/papers/empty-quarter-amplicon/code-and-data/analysis/v2/RQ20_FunctionalRedundancy/perform_rq20.py

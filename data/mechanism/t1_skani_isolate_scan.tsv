@@ -1,2 +1,0 @@
-Ref_file	Query_file	ANI	Align_fraction_ref	Align_fraction_query	Ref_name	Query_name
-/data/emptyquarter/sequencing-results/enrichment/Ht-30/assembly/Ht-30_metaflye_assembly.fasta	/data/emptyquarter/ecology-paper-runs/t1_mechanism/refseq/genomes/Paenibacillus_GCF_003590055.1//GCF_003590055.1_ASM359005v1_genomic.fna	89.66	24.42	50.61	contig_1	NZ_CP032412.1 Paenibacillus lautus strain E7593-69 chromosome, complete genome

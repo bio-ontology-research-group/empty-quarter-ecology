@@ -1,0 +1,24 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  committed-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r environment/requirements.lock.txt
+      - run: python scripts/release/verify_repository.py .
+      - run: python scripts/release/render_figures.py .
+      - name: Confirm the remote-only KG guard
+        run: |
+          if bash workflow/run_on_remote.sh /tmp/missing /tmp/output; then
+            echo "remote-only guard unexpectedly permitted a GitHub runner" >&2
+            exit 1
+          fi

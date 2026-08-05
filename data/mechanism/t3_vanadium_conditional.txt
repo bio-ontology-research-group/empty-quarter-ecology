@@ -1,3 +1,0 @@
-CSP1-2 × Vanadium, Trip-5 samples with XRF (70 complete)
-raw Spearman:    ρ=+0.0502, p=0.6797, n=70
-partial(|S,Cl,Na): ρ=+0.0857, p=0.4807, n=70

@@ -1,7 +1,0 @@
-Name	Completeness	Contamination	Completeness_Model_Used	Translation_Table_Used	Coding_Density	Contig_N50	Average_Gene_Length	Genome_Size	GC_Content	Total_Coding_Sequences	Total_Contigs	Max_Contig_Length	Additional_Notes
-refined_v3a_gc25_len2k	93.14	5.1	Gradient Boost (General Model)	11	0.816	25776	270.5794416243655	3914285	0.43	3940	260	101453	None
-refined_v3b_gc20_len2k	93.13	5.29	Gradient Boost (General Model)	11	0.816	25776	271.63010809385713	3782385	0.43	3793	248	101453	None
-refined_v3c_gc25_cov25_len2k	93.14	5.1	Gradient Boost (General Model)	11	0.816	25794	270.4107188214376	3907027	0.43	3937	258	101453	None
-refined_v3d_gc25_tnf95	93.14	5.12	Gradient Boost (General Model)	11	0.815	25794	270.59525631216525	3896802	0.43	3921	255	101453	None
-refined_v3e_gc25_tnf90	92.36	4.9	Gradient Boost (General Model)	11	0.815	25794	271.12248581743165	3862835	0.43	3878	245	101453	None
-refined_v3f_gc20_cov20_tnf90_len3k	92.35	4.98	Gradient Boost (General Model)	11	0.816	25830	273.61873638344224	3685472	0.43	3672	221	101453	None

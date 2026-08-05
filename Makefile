@@ -1,68 +1,33 @@
-# Empty Quarter amplicon — reproducibility pipeline
-# Run `make help` for a tour.
+SHELL := /usr/bin/env bash
+PYTHON ?= python3
+DATA_REPO ?= ../empty-quarter-data-paper
+SOURCE_DATE_EPOCH ?= 1785888000
 
-PY := .venv/bin/python
-QUARTO := QUARTO_PYTHON=$(PY) ~/.local/bin/quarto
+.PHONY: bootstrap manifest verify test figures paper clean
 
-NOTEBOOKS := 00_load_and_qc 01_scale_and_phyla 02_assembly \
-             03_temporal 04_depth 05_distance_decay 06_function \
-             07_network 08_csp_mag \
-             09_causal_tier1 10_causal_tier2 11_causal_tier3 \
-             12_causal_nonlinear \
-             13_vegetation_mediation 14_keystone_knockout \
-             15_intervention_scenarios 16_cross_desert \
-             17_xrf_compartment \
-             18_compartment_trip_and_host_anova \
-             fig_main1_overview fig_main2_dynamics \
-             fig_main3_csp12 fig_main4_digital_twin \
-             99_audit
+bootstrap:
+	bash scripts/release/bootstrap_data_dependency.sh "$(DATA_REPO)"
 
-NB_OUTPUTS := $(addprefix _output/notebooks/,$(addsuffix .html,$(NOTEBOOKS)))
+manifest:
+	$(PYTHON) scripts/release/build_repository_manifest.py . --write
 
-.PHONY: help env cache figures check lock clean
+verify:
+	$(PYTHON) scripts/release/verify_repository.py .
 
-help:  ## print this help
-	@awk 'BEGIN{FS=":.*##"} /^[a-z_-]+:.*##/ {printf "%-12s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
+test: bootstrap
+	EQ_DATA_REPO="$$(realpath "$(DATA_REPO)")" \
+		$(PYTHON) -m pytest -q tests
 
-env:  ## create .venv and install all deps
-	uv venv --python 3.11 .venv
-	uv pip install --python $(PY) -e .
-	uv pip install --python $(PY) jupyter nbformat ipykernel jupyter-cache
+figures:
+	$(PYTHON) scripts/release/render_figures.py .
 
-cache: cache/feature_table.parquet  ## run QC notebook and cache analysis-ready tables
+paper:
+	cd empty-quarter-amplicon && \
+		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
+		latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+	cd empty-quarter-amplicon && \
+		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
+		latexmk -pdf -interaction=nonstopmode -halt-on-error supplement.tex
 
-cache/feature_table.parquet: notebooks/00_load_and_qc.qmd src/eq/loader.py src/eq/sample_id.py
-	$(QUARTO) render notebooks/00_load_and_qc.qmd
-
-figures: cache/feature_table.parquet  ## render all figure notebooks
-	@for nb in 01_scale_and_phyla 02_assembly 03_temporal 04_depth \
-	           05_distance_decay 06_function 07_network 08_csp_mag \
-	           09_causal_tier1 10_causal_tier2 11_causal_tier3 \
-	           12_causal_nonlinear 13_vegetation_mediation \
-	           14_keystone_knockout 15_intervention_scenarios \
-	           16_cross_desert 17_xrf_compartment \
-	           18_compartment_trip_and_host_anova \
-	           fig_main1_overview fig_main2_dynamics \
-	           fig_main3_csp12 fig_main4_digital_twin \
-	           99_audit; do \
-	   echo "=== rendering $$nb ==="; \
-	   $(QUARTO) render notebooks/$$nb.qmd || exit 1; \
-	done
-
-lock:  ## generate/refresh uv.lock
-	uv lock --python $(PY)
-
-check:  ## sanity checks on caches and figures
-	@echo "== cached tables =="
-	@ls -lh cache/*.parquet cache/*.json 2>/dev/null || echo "cache/ incomplete"
-	@echo "== figures =="
-	@bash -c 'ls figures/fig*.pdf 2>/dev/null | wc -l'
-	@echo "(expected 18+ figure PDFs — main-text figs 1-9e + 10,14,15 + supp)"
-	@echo "== notebook HTML =="
-	@ls _output/notebooks/*.html 2>/dev/null | wc -l
-	@echo "(expected 17 HTML outputs: 00-15 + 99_audit)"
-
-clean:  ## remove rendered notebooks and caches; keep raw inputs
-	rm -rf _output/ _freeze/ .quarto/
-	rm -f cache/*.parquet cache/*.json cache/*.tsv
-	@echo "cleaned rendered output + caches"
+clean:
+	cd empty-quarter-amplicon && latexmk -C main.tex && latexmk -C supplement.tex

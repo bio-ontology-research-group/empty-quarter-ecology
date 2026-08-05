@@ -1,0 +1,51 @@
+{
+  "dataset_version": "EQ-PH-SHARED-v1.0.0",
+  "inputs": [
+    {
+      "bytes": 2441,
+      "path": "analysis/v3/ph_shared_v1/summary.json",
+      "sha256": "97ebe64b1ff98f42643ff3748833ebe57f7f9455e8b5d055942f1b5632448ecc"
+    },
+    {
+      "bytes": 3137,
+      "path": "analysis/v3/ph_shared_v1/ecology/summary.json",
+      "sha256": "ce0922d164995e13e49a2d08c0471d7c683950067c7d967291574a9ef9a99d39"
+    },
+    {
+      "bytes": 502,
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_paired_position_contrasts.tsv",
+      "sha256": "7ffdcc46bcd333a1c13837aa32f5792837a58c1f15b9510b3ddd028be72835cf"
+    },
+    {
+      "bytes": 814,
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_composition_models.tsv",
+      "sha256": "10b22fd2a8bd56a5648393e05f9f60df9597b3b6d4fe4346760fd577090fb565"
+    },
+    {
+      "bytes": 418,
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_geographic_adjustment.tsv",
+      "sha256": "efb7bf619c4243f8b91252565b6a74ccdec379756a3f38af769ec926417e3a91"
+    },
+    {
+      "bytes": 770,
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_influence_sensitivity.tsv",
+      "sha256": "7aaea3973dca6eb89700686cb4234a67b0506467b9bdb35f374803e5ccc6618e"
+    },
+    {
+      "bytes": 1096,
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_coverage.tsv",
+      "sha256": "69c7e9f917269f2725566f56b6389d9ab43db2b3b9c04a61b907e055033022c0"
+    },
+    {
+      "bytes": 10862,
+      "path": "scripts/analysis/render_ph_ecology_tex.py",
+      "sha256": "1b783ccd8046de1bcff7dff007c1ffdae8f89acba030755f24baacd7f205e98e"
+    }
+  ],
+  "output": {
+    "bytes": 2868,
+    "path": "generated/ph_shared_v1_values.tex",
+    "sha256": "5df639ab089ef74ad6b6161b25c96391b3f9554762a73f087618edb2ec07d5b4"
+  },
+  "status": "GENERATED_FROM_FROZEN_ANALYSIS"
+}

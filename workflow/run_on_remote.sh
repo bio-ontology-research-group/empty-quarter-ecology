@@ -26,8 +26,11 @@ EQ_DATA_REPO="$data_repo" python3 -m pytest -q "$root/tests"
 python3 "$root/scripts/release/render_figures.py" "$root"
 
 python3 "$data_repo/scripts/manuscript/test_manuscript_consistency.py"
-EQ_ECOLOGY_PAPER="$root/empty-quarter-amplicon" \
-  python3 -m pytest -q "$data_repo/tests" "$data_repo/workflow/tests"
+(
+  cd "$data_repo"
+  EQ_ECOLOGY_PAPER="$root/empty-quarter-amplicon" \
+    python3 -m pytest -q tests workflow/tests
+)
 
 "$data_repo/workflow/bin/bootstrap_nextflow.sh" run \
   "$data_repo/workflow/main.nf" \

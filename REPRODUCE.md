@@ -12,7 +12,7 @@ remote host.
 git clone git@github.com:bio-ontology-research-group/empty-quarter-data-paper.git
 git clone git@github.com:bio-ontology-research-group/empty-quarter-ecology-reproducibility.git
 cd empty-quarter-data-paper
-git checkout 34f760fcab5eeb902f2d298ad2b85824eac1e727
+git checkout 6ff501f90d1c81b62cd77fa5d71f318634263012
 bash scripts/release/download_bulk_artifacts.sh
 bash scripts/release/bootstrap_package_layout.sh .
 cd ../empty-quarter-ecology-reproducibility

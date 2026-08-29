@@ -1,8 +1,8 @@
 # Rub' al-Khali bacterial biogeography
 
-This private BORG repository is the reproducible companion to the manuscript
+This public BORG repository is the reproducible companion to the manuscript
 *Landscape-scale bacterial biogeography across the Rub' al-Khali reveals
-recurring spatial and soil-position structure*. It contains the active paper
+recurring spatial and compartment structure*. It contains the active paper
 and supplement, the analysis programs used for their claims, the canonical
 machine-readable results, the four submitted figures, regression tests, and
 byte-verifiable copies of key methodological sources.
@@ -19,7 +19,7 @@ interpretation.
 
 Large biological inputs, sample and control metadata, climate products,
 geochemistry, pH measurements, and the knowledge graph live in the separate
-private repository
+public repository
 [`empty-quarter-data-paper`](https://github.com/bio-ontology-research-group/empty-quarter-data-paper).
 [`DATA_REPOSITORY.lock`](DATA_REPOSITORY.lock) pins its exact commit and the
 SHA-256 digests of its release, bulk-input, environment, and workflow
@@ -69,5 +69,5 @@ cross-paper rebuild.
 - `archive/` and `ecology-paper/`: explicit guards for retired manuscript
   material.
 
-This is a private submission candidate, not a public data deposit. Public
+This is a submission candidate, not a public data deposit. Public
 accessions, final licences, and a DOI remain author-controlled release gates.

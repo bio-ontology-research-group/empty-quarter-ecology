@@ -133,8 +133,8 @@ def make_landscape_figure(
 ) -> None:
     """Combine design, geography and climate into one landscape-scale figure."""
     fig, axes = plt.subplots(2, 3, figsize=(10.8, 7.2))
-    map_ax, coverage_ax, climate_ax = axes[0]
-    distance_ax, diversity_ax, genus_ax = axes[1]
+    map_ax, coverage_ax, distance_ax = axes[0]
+    climate_ax, diversity_ax, genus_ax = axes[1]
 
     coordinates = coordinates.sort_values("transect_km")
     boundary = read_kml_polygon(boundary_path)
@@ -234,7 +234,7 @@ def make_landscape_figure(
     coverage_ax.set(
         xlabel="Expedition",
         ylabel="Quality-controlled profiles",
-        title="(b) Repeated coverage across soil positions",
+        title="(b) Repeated coverage across compartments",
         xticks=range(1, 6),
         xticklabels=[
             "T1\nMar\n2023",
@@ -245,7 +245,10 @@ def make_landscape_figure(
         ],
     )
     coverage_ax.tick_params(axis="x", labelsize=7.0)
-    coverage_ax.legend(frameon=False, fontsize=7.0, loc="upper left")
+    coverage_ax.tick_params(axis="y", labelsize=7.0)
+    # Headroom keeps the legend clear of the tallest bar and its total label.
+    coverage_ax.set_ylim(0, 640)
+    coverage_ax.legend(frameon=False, fontsize=7.0, loc="upper right")
 
     climate_order = [
         "mean_air_temperature_c",
@@ -272,7 +275,7 @@ def make_landscape_figure(
     climate_ax.set(
         xlabel="West--east coordinate (km)",
         ylabel="Climate value relative to sites\n(standard deviations)",
-        title="(c) Climate changes along the route",
+        title="(d) Climate changes along the route",
     )
     climate_ax.legend(frameon=False, fontsize=7.4)
 
@@ -312,7 +315,7 @@ def make_landscape_figure(
     distance_ax.set(
         xlabel="Distance between sites (km)",
         ylabel="Difference in relative composition\n(Aitchison dissimilarity)",
-        title="(d) Communities diverge with distance",
+        title="(c) Communities diverge with distance",
     )
     distance_ax.legend(frameon=False, fontsize=7.3)
 
@@ -564,7 +567,7 @@ def make_soil_position_figure(
         xticklabels=[rf"$\it{{{name}}}$" for name in selected_genera],
         yticks=np.arange(len(comparison_order)),
         yticklabels=labels,
-        title="(d) Genera contributing most to position differences",
+        title="(d) Genera contributing most to compartment differences",
     )
     loading_ax.tick_params(axis="x", rotation=28, labelsize=8.0)
     loading_ax.tick_params(axis="y", labelsize=8.3)
@@ -631,7 +634,7 @@ def make_function_control_figure(
         yticks=y,
         yticklabels=contrast_labels,
         xlabel="Consistency of pathway shift\n(0 = cancelling, 1 = aligned)",
-        title="(a) Predicted pathway profiles\ndiffer by soil position",
+        title="(a) Predicted pathway profiles\ndiffer by compartment",
     )
     axes[0, 0].invert_yaxis()
 
@@ -669,7 +672,7 @@ def make_function_control_figure(
         fontsize=8.5,
     )
     axes[0, 1].set(
-        xlabel="Predicted vs shotgun gene-family ranking\n(Spearman $\\rho$)",
+        xlabel="Predicted vs shotgun\ngene-family ranking (Spearman $\\rho$)",
         ylabel="Matched samples",
         title="(b) Broad predictions agree\nwith shotgun ($n=125$)",
     )
@@ -704,6 +707,7 @@ def make_function_control_figure(
     axes[1, 0].set(
         xticks=[0, 1],
         xticklabels=["Untreated", "PMA treated"],
+        xlabel="Paired Trip 5 aliquots",
         ylabel="Expected richness",
         title="(c) PMA lowers richness in 8 of 9 pairs",
     )
@@ -770,7 +774,7 @@ def make_function_control_figure(
         fontsize=8.0,
     )
 
-    fig.tight_layout(h_pad=2.0, w_pad=2.2)
+    fig.tight_layout(h_pad=2.8, w_pad=2.2)
     fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
     plt.close(fig)
 

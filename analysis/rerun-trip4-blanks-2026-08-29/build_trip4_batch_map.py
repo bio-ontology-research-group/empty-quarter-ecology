@@ -25,7 +25,9 @@ from openpyxl import load_workbook
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-TRIP4_XLSX = HERE / "inputs" / "EB_Sample_Map_FourthTrip2 correct.xlsx"
+# Marwa's corrected workbook of 30 Aug 2026 (declared counts fixed, 28-site
+# not-sequenced note); the 26 Aug original is kept alongside for provenance.
+TRIP4_XLSX = HERE / "inputs" / "EB_Sample_Map_FourthTrip2_corrected_2026-08-30.xlsx"
 TRIP5_XLSX = ROOT / "data/metadata/samples/Sequenced_Samples_by_EB_FifthTrip.xlsx"
 CANONICAL = ROOT / "data/processed/taxonomy/taxon-tables/feature-table-trips1-5.tsv"
 ADDITIONAL = ROOT / "data/metadata/samplesheets/additional_fastqs_v2.tsv"
@@ -63,7 +65,9 @@ def main():
     unsequenced_note = ""
     for row in ws.iter_rows(values_only=True):
         label = str(row[0]).strip() if row[0] else ""
-        if re.fullmatch(r"EB\d*", label):
+        if re.fullmatch(r"S?EB\d*", label):
+            # the corrected workbook (30 Aug) labels the unnumbered blank "SEB"
+            label = "EB" if label == "SEB" else label
             trip4[label] = {
                 "index_code": str(row[1]).strip(),
                 "declared_count": int(row[2]) if row[2] is not None else None,

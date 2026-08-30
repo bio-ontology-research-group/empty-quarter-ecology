@@ -16,16 +16,7 @@
     ],
     "ambiguous": [],
     "duplicate_assignments": [],
-    "declared_vs_listed_mismatch": {
-      "EB": [
-        15,
-        13
-      ],
-      "EB4": [
-        26,
-        23
-      ]
-    },
+    "declared_vs_listed_mismatch": {},
     "canonical_trip4_profiles": 177,
     "canonical_trip4_profiles_without_sequenced_blank": 82,
     "uncovered_profiles": [
@@ -142,7 +133,7 @@
       59,
       60
     ],
-    "workbook_unsequenced_note": "The EB for three days extraction wasn't sequenced  sites 22,28,35,43,53,46,13,25,54,55,44,38,41,33,2,27,51,16,59,57,56,49,45",
+    "workbook_unsequenced_note": "The EB for three days extraction wasn't sequenced  sites 2, 13, 16, 18, 22, 25, 27, 28, 33, 35, 37, 38, 41, 43, 44, 45, 46, 47, 49, 51, 53, 54, 55, 56, 57, 58, 59(PRr1, 59Dr1), 60",
     "pcr_blank_index_code": "xGen 10nt UDI Index Pair 275"
   },
   "trip5": {

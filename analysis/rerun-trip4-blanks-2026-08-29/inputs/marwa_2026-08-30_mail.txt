@@ -1,0 +1,102 @@
+Dear Prof. Hoehndorf,
+
+Thank you for the thorough follow-up. Please find my responses to both emails below, along with the corrected workbook attached.
+
+From your first email:
+
+1. Trip 4 extraction batches — Please find the corrected batch list attached. To clarify the naming: the first extraction blank is labelled SEB in the sequencing file, using the "S" prefix assigned to all Trip 4 samples, while EB1–5 remain as they are. Additionally, as the same run included EBs from other projects, I named them EBK for Krish's samples and EBT for Tiannyu's samples to avoid confusion in case you will need this information in the future 
+
+2. Extraction days — For Trips 4 and 5, extraction days were strictly trip-specific. For Trips 1–3, I am still awaiting confirmation from Rund, as she repeated some extractions from those trips and may have combined samples from different trips on the same extraction day.
+
+3. Trip 4 PCR-stage controls — Neither the PCR blank nor the no-template negative control was sequenced in this run. As this run (250626_A01018_0375_AH2JLYDRX7) included samples from multiple trips, and to maximize the number of actual samples sequenced, both controls were excluded because their indices conflicted with samples from Trips 1, 2, and 3.
+
+4. Field negatives — For Trip 5, sterile soil samples were extracted and amplified prior to the trip, with no band detected, confirming sterility. These were sequenced as metagenomics only (16S was unfortunately missed). Trip 4 has no field negatives.
+
+For Trips 1–3, the following controls prepared by Rund were confirmed to have been sequenced in this run. Rund would be best placed to link them to their specific samples or plates and to confirm if these negative controls are the field ones.
+
+• M-25-0929 — Extraction-Ctrl-Pro-Trip1 (UDP0384)
+• M-25-0871 — Neg-Ctrl-2-Trip2 (SU0347)
+• M-25-0870 — Neg-Ctrl-1-Trip2 (SU0335)
+• M-25-0555 — PCR-Ctrl-Trip1 (UDP0374)
+• M-25-0323 — Ctrl-1-Trip1 (UDP0371)
+• M-25-0554 — Ctrl-3 (UDP0373)
+• M-25-0553 — Ctrl-2 (UDP0372)
+
+5. Trip 3 PCR blanks — Still awaiting Rund's input.
+
+From your second email:
+
+1. Trip 4 PCR blank (index pair 275) — As mentioned above, the PCR blank was not sequenced in this run, as the index assigned to it was shared with another sample from a different trip, and it was therefore excluded in favour of retaining the actual sample.
+
+2. Workbook corrections — Please find the corrected file attached. The counts and sample IDs for SEB, EB2, and EB4 have been verified and corrected. Regarding site 59 in SEB: S59Sr1 is covered by SEB, which was sequenced. However, the extraction blank for S59PRr1 and S59Dr1 was not sequenced, which is why the site is written in the 'not sequenced' note.
+3. S34Dr1 and S40PRr1 — Both are present in EB4 in the corrected workbook.
+
+4. Trip 5 “Negative” libraries — The Negative libraries (Negative1, Negative2, Negative4–7) are no-template controls, i.e. PCR-stage controls where water was used instead of a sample in the PCR reaction.
+
+Please let me know if I missed anything!
+
+Many thanks,
+Marwa
+
+﻿On 29/08/2026, 9:08 PM, "Robert Hoehndorf" <robert.hoehndorf@kaust.edu.sa <mailto:robert.hoehndorf@kaust.edu.sa>> wrote:
+
+
+Dear Marwa,
+
+
+Thank you very much for the corrected methods text and the EB map; 
+both are now in the manuscripts, and we are re-running the 
+contaminant screen with the Trip 4 extraction blanks linked 
+through your map. Before I change the numbers in the data paper, I 
+need to reconcile a few points where your text differs from what 
+our control audit recorded; I attach the audit tables we worked 
+from (control_analysis_roles.tsv, 
+trip5_extraction_batch_summary.tsv, summary.json).
+
+
+1. Trip 4 extraction batches. Your text says nine extraction 
+batches, three of them not sequenced, leaving 28 of the 60 Trip 4 
+sites without a sequenced extraction blank. Our audit has six 
+blanks (EB, EB1 to EB5) linked to 97 profiles and "all or part of 
+23 sites" without a sequenced blank. Could you send me the batch 
+list (batch, extraction date, samples, blank sequenced yes/no) so 
+that I can see where the 23 vs 28 and the 6 vs 9 come from?
+
+
+2. Extraction days. Your text says extraction days were 
+trip-specific; our earlier text said an extraction day could 
+contain samples from more than one expedition. Which is right for 
+Trips 1-3 and 5?
+
+
+3. Trip 4 PCR-stage controls. You write that one PCR blank was 
+sequenced "alongside a water-based negative control". Were both 
+sequenced, and if so what are their sample IDs? In the manuscript 
+I currently count 24 control profiles for Trip 4 (23 extraction 
+blanks plus one PCR blank); if the no-template control was also 
+sequenced the count changes.
+
+
+4. Field negatives. Your text says sterile-soil field negatives 
+were taken on Trips 1-3 and 5, extracted and amplified. We have no 
+sterile-bag inventory in the records, so the knowledge graph 
+currently asserts no field-blank sample. Do sequenced profiles 
+exist for these field negatives (IDs), or were they checked only 
+by PCR before the trips?
+
+
+5. Trip 3 PCR blanks: your placeholder "waiting for Rund's input" 
+is still in the text; please let me know once you have it.
+
+
+For the ecology paper I have kept the detailed amplification text 
+(two rounds, TaKaRa then the QIAGEN indexing PCR), so no separate 
+paragraph is needed.
+
+
+Thank you,
+Rob.
+
+
+
+

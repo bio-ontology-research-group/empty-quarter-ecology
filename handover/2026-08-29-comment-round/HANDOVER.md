@@ -147,3 +147,31 @@ Run dir `/ibex/user/hohndor/eq-trip4-blanks-2026-08-29/` (symlinked as
 pipeline_info, slurm log). Re-run the screen any time with
 `TRIP4_BLANK_TABLE=$PWD/ibex/results/trip4_blanks_md5.tsv bash run_rerun.sh`
 (MODE=pooled for a single 23-blank screen).
+
+## 7. Addendum, 30 Aug 2026 (assistant session)
+- Mail checked 30 Aug morning: no replies yet from Daniela/Marwa (flow cell,
+  controls) or the ten reminded co-authors; only Daniela's auto-reply.
+- Chrome extension still not connected; Overleaf comment threads (item 5.8)
+  remain unread.
+- GitHub `validate` CI was red on both repos (since 5 Aug, not caused by the
+  comment round). Ecology repo: setup-python `cache: pip` found no
+  requirements.txt; fixed with `cache-dependency-path` (commit 501f802). The
+  Trip 4 blank re-run had tracked three nextflow pipeline_info HTML reports,
+  which verify_repository.py rejects (blanket .html rule); untracked and
+  gitignored, files kept on disk. Local verify_repository.py passes.
+  Data repo: FILE_MANIFEST.tsv was stale after paper/ followed the Overleaf
+  tree (8 files added, 4 removed); rebuilt (commit 5a18615 in
+  ~/Public/software/empty-quarter-paper-repos/data-paper; the
+  ~/Documents/papers/empty-quarter-data-paper clone does not have it yet).
+  Neither commit is pushed.
+- Still red in the data repo: scripts/manuscript/test_manuscript_consistency.py
+  fails 17 tests + 1 error against the Overleaf-authoritative paper/ tree. The
+  tests expect statements the current manuscript no longer carries (nine
+  paired PMA aliquots, the F46Dr2 reconciliation, metadata/DATA_DICTIONARY.tsv
+  citation, pressure "multiplied by 100 and asserted in pascals", Field-XRF vs
+  lab-XRF separation, "two separately configured acquisitions" for climate,
+  value-to-quality relation directions, Zenodo staging row wording), the
+  removed paper/PRE_SUBMISSION_CHECKLIST.md, a stale env_table.tex, and
+  "Lopez Velazquez" where the co-author now writes "Lopez-Velazquez". Robert
+  to decide per test whether the manuscript lost reconciled content during the
+  Overleaf takeover (port it back) or the test is stale (update the test).

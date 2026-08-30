@@ -13,6 +13,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+          cache-dependency-path: environment/requirements.lock.txt
       - run: pip install -r environment/requirements.lock.txt
       - run: python scripts/release/verify_repository.py .
       - run: python scripts/release/render_figures.py .

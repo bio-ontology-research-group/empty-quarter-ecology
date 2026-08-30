@@ -9,14 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      # The figure renderer refuses any runtime other than the frozen conda
+      # environment (Python 3.11.14, matplotlib 3.9.4, FreeType 2.14.3), which
+      # the companion data repository pins in environment/conda-linux-64.lock.
+      - uses: actions/checkout@v4
         with:
-          python-version: "3.11"
-          cache: pip
-          cache-dependency-path: environment/requirements.lock.txt
-      - run: pip install -r environment/requirements.lock.txt
-      - run: python scripts/release/verify_repository.py .
-      - run: python scripts/release/render_figures.py .
+          repository: bio-ontology-research-group/empty-quarter-ecology-data
+          path: empty-quarter-data-paper
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: empty-quarter-data-paper/environment/conda-linux-64.lock
+          environment-name: eq-ecology
+          cache-environment: true
+      - name: Layer the pip-only packages onto the conda environment
+        shell: bash -el {0}
+        run: python -m pip install --no-deps --require-hashes -r empty-quarter-data-paper/environment/pip-overlay.lock.txt
+      - name: Verify the committed package
+        shell: bash -el {0}
+        run: python scripts/release/verify_repository.py .
+      - name: Render the submitted figures from committed evidence
+        shell: bash -el {0}
+        run: python scripts/release/render_figures.py .
       - name: Confirm the remote-only KG guard
         run: |
           if bash workflow/run_on_remote.sh /tmp/missing /tmp/output; then

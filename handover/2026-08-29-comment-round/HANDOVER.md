@@ -175,3 +175,23 @@ pipeline_info, slurm log). Re-run the screen any time with
   "Lopez Velazquez" where the co-author now writes "Lopez-Velazquez". Robert
   to decide per test whether the manuscript lost reconciled content during the
   Overleaf takeover (port it back) or the test is stale (update the test).
+
+## 8. Addendum, 30 Aug 2026 (second assistant session, ~/Documents clone)
+- Supersedes parts of section 7: the Chrome extension was connected in this
+  session; the KG paper's Overleaf Review panel holds only Michel's two
+  comments on 01_introduction.tex (applied 29 Aug, anchors confirmed). The
+  ecology project's panel was not opened here.
+- Ecology CI: the cache-path fix alone still fails at render_figures.py (the
+  renderer refuses any runtime but Python 3.11.14 / matplotlib 3.9.4 /
+  FreeType 2.14.3); validate.yml now checks out empty-quarter-ecology-data and
+  builds that runtime with setup-micromamba from its conda lock. Committed on
+  top of 501f802.
+- Data repo: the ~/Documents/papers/empty-quarter-data-paper clone carries the
+  manifest rebuild plus restored paper/README.md, PRE_SUBMISSION_CHECKLIST.md,
+  rebuilt PDFs, regenerated bibliography custody and environmental audit, and
+  ontology-identifier corrections to the manuscript listings (KG ledger,
+  "Applied 30 Aug 2026"). The unpushed 5a18615 in
+  ~/Public/software/empty-quarter-paper-repos/data-paper conflicts on
+  FILE_MANIFEST.tsv and should be dropped or rebased.
+- Public SPARQL endpoint serves older dna/xrf modules: all Section
+  "Technical validation" queries return 0 rows there; redeploy before submission.

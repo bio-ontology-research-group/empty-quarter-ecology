@@ -1,0 +1,4 @@
+compartment	compartment_label	n_sites	standardised_depth	mean_sorensen	mean_simpson_turnover	mean_nestedness_resultant	turnover_share_of_sorensen	turnover_share_jackknife_se	turnover_share_ci_low	turnover_share_ci_high	mean_bray_curtis_unstandardised	mean_balanced_variation_unstandardised	mean_abundance_gradient_unstandardised	abundance_gradient_vs_log_library_ratio_pearson_r
+Surface	Surface	60	12865	0.4005925983	0.2843509448	0.1162416535	0.7098257582	0.03937479507	0.6310369753	0.7886145412	0.5908967132	0.3496297702	0.241266943	0.7633273465
+Deep	Shallow subsurface	60	12865	0.4101351355	0.2854114487	0.1247236868	0.6958961182	0.04222019533	0.6114137025	0.7803785339	0.603733877	0.3912690147	0.2124648623	0.8284422558
+Rhizosphere	Root-adjacent	60	12865	0.3984725059	0.300242917	0.09822958892	0.7534846509	0.03458701743	0.6842761888	0.8226931129	0.6250001527	0.4624459675	0.1625541852	0.8288909824

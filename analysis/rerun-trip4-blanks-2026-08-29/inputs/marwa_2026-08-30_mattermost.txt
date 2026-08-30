@@ -1,0 +1,5 @@
+Mattermost DM, 30 Aug 2026 (Robert -> Marwa Abdelhakim, reply 14:53 Riyadh):
+Q: S34Dr1 and S40PRr1 are listed under EB4 in the corrected workbook but do not exist in the ASV table.
+A (Marwa): Neither was sequenced. S40PRr1: very low DNA concentration, intentionally excluded;
+three amplification attempts with increasing input all failed; final Qubit 0.346 ng/uL.
+S34Dr1: no technical reason; DNA concentration was good; most likely missed during the pooling step.

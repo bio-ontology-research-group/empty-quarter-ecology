@@ -1,0 +1,20 @@
+{
+  "libraries": [
+    "CTL_Ctrl1_Trip1",
+    "CTL_Ctrl2",
+    "CTL_Ctrl3",
+    "CTL_ExtractionCtrlPro_Trip1",
+    "CTL_NTC2",
+    "CTL_NegCtrl1_Trip2",
+    "CTL_NegCtrl2_Trip2",
+    "CTL_PCRCtrl_Trip1",
+    "TRIP4_EB1",
+    "TRIP4_EB2",
+    "TRIP4_EB3",
+    "TRIP4_EB4",
+    "TRIP4_EB5",
+    "TRIP4_SEB"
+  ],
+  "n_biological_profiles": 1247,
+  "n_asvs_total": 12736
+}

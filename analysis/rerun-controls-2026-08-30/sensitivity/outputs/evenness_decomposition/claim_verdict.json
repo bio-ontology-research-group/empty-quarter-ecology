@@ -1,0 +1,159 @@
+{
+  "input": {
+    "aggregation": "mean profiles within campaign x site x position, then mean campaign blocks within site x position; site is the paired bootstrap and Wilcoxon unit",
+    "blocks_with_evenness_sensitivity": 617,
+    "campaigns": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "path": "analysis/rerun-controls-2026-08-30/sensitivity/outputs/sensitivity_inputs/alpha.tsv",
+    "profiles_in_core_frame": 1227,
+    "profiles_with_evenness_sensitivity": 1171,
+    "profiles_with_hurlbert_richness": 1172,
+    "sha256": "e9f0c546f79f969e705e071c95df5c51a540cafc7f6cc64f5ff77877c0b375d1",
+    "site_campaign_position_blocks": 633,
+    "sites": 60
+  },
+  "interpretation": "The lower campaign-averaged Shannon entropy in root-adjacent soil is accompanied by a much clearer lower-evenness signal. Hurlbert expected richness at 25,000 reads shows no root-adjacent versus surface difference and mixed evidence for root-adjacent versus shallow subsurface (the bootstrap interval for the mean excludes zero, but the paired Wilcoxon q is 0.0878). The evenness direction persists in a campaign- and log-depth-adjusted GEE.",
+  "limitations": "Hurlbert expected richness is unavailable for 55 core-frame profiles below the 25,000-read standard, and normalized evenness is additionally undefined for one single-ASV profile. The corresponding GEE therefore uses 617 of 633 site-campaign-position blocks. All 60 sites contribute to the campaign-averaged paired contrasts, but some site means are based on fewer profiles or campaigns. The decomposition is post hoc.",
+  "metric_note": "The source column named pielou is exactly Shannon divided by log Hurlbert expected richness. Because expected standardized richness replaces observed richness in the denominator, the analysis calls it an evenness sensitivity rather than conventional Pielou evenness.",
+  "multiplicity": "The three position contrasts form one Benjamini-Hochberg family within each metric. The secondary observed-richness denominator is a separate sensitivity family.",
+  "permitted_wording": "In a post-hoc decomposition, the lower paired Shannon distribution in root-adjacent samples was accompanied by a clearer lower normalized-evenness signal than expected-richness signal: expected richness did not differ from surface, and its root-adjacent--shallow evidence was mixed across summaries. This describes the diversity profile and does not identify a root-mediated mechanism.",
+  "primary_results": {
+    "Deep-Surface": {
+      "evenness_depth_adjusted_gee": {
+        "ci": [
+          0.0025844416933643085,
+          0.02504540861726319
+        ],
+        "estimate": 0.013814925155313748,
+        "p": 0.015908614908942128,
+        "q_within_model": 0.015908614908942128
+      },
+      "evenness_sensitivity": {
+        "bootstrap_ci": [
+          0.00035226837466590614,
+          0.024541951627350362
+        ],
+        "fraction_positive": 0.6666666666666666,
+        "mean_difference": 0.011976249843662959,
+        "p": 0.013379732514095138,
+        "q_within_metric": 0.013379732514095138
+      },
+      "hurlbert_expected_richness_25000": {
+        "bootstrap_ci": [
+          40.73527259695198,
+          245.40472537193062
+        ],
+        "fraction_positive": 0.5666666666666667,
+        "mean_difference": 142.34965992161546,
+        "p": 0.022052724560650692,
+        "q_within_metric": 0.06615817368195208
+      },
+      "shannon": {
+        "bootstrap_ci": [
+          -0.0894842382747516,
+          0.2358939905290909
+        ],
+        "fraction_positive": 0.5666666666666667,
+        "mean_difference": 0.07581589837084352,
+        "p": 0.11181085778953141,
+        "q_within_metric": 0.11181085778953141
+      }
+    },
+    "Rhizosphere-Deep": {
+      "evenness_depth_adjusted_gee": {
+        "ci": [
+          -0.05436483500389361,
+          -0.028982028118542974
+        ],
+        "estimate": -0.04167343156121829,
+        "p": 1.228826322759527e-10,
+        "q_within_model": 3.6864789682785806e-10
+      },
+      "evenness_sensitivity": {
+        "bootstrap_ci": [
+          -0.05611499254920179,
+          -0.03026322937076223
+        ],
+        "fraction_positive": 0.13333333333333333,
+        "mean_difference": -0.04291202636562901,
+        "p": 1.1100756519178191e-07,
+        "q_within_metric": 3.3302269557534574e-07
+      },
+      "hurlbert_expected_richness_25000": {
+        "bootstrap_ci": [
+          -275.0652401780366,
+          -28.083734917587076
+        ],
+        "fraction_positive": 0.43333333333333335,
+        "mean_difference": -150.30026174788932,
+        "p": 0.05948786601845167,
+        "q_within_metric": 0.0892317990276775
+      },
+      "shannon": {
+        "bootstrap_ci": [
+          -0.3889754815874333,
+          0.006773846778355073
+        ],
+        "fraction_positive": 0.31666666666666665,
+        "mean_difference": -0.19751595630971852,
+        "p": 0.01257501844369198,
+        "q_within_metric": 0.01925754481570065
+      }
+    },
+    "Rhizosphere-Surface": {
+      "evenness_depth_adjusted_gee": {
+        "ci": [
+          -0.040684929979571155,
+          -0.015032082832237928
+        ],
+        "estimate": -0.02785850640590454,
+        "p": 2.072183981484852e-05,
+        "q_within_model": 3.108275972227278e-05
+      },
+      "evenness_sensitivity": {
+        "bootstrap_ci": [
+          -0.04398042715885939,
+          -0.018418361706937
+        ],
+        "fraction_positive": 0.2,
+        "mean_difference": -0.03093577652196607,
+        "p": 1.3707470779587177e-06,
+        "q_within_metric": 2.0561206169380766e-06
+      },
+      "hurlbert_expected_richness_25000": {
+        "bootstrap_ci": [
+          -132.5375027796418,
+          117.75561190043707
+        ],
+        "fraction_positive": 0.5,
+        "mean_difference": -7.950601826273888,
+        "p": 0.8309475279594561,
+        "q_within_metric": 0.8309475279594561
+      },
+      "shannon": {
+        "bootstrap_ci": [
+          -0.31107408890447025,
+          0.08622568301056455
+        ],
+        "fraction_positive": 0.3333333333333333,
+        "mean_difference": -0.12170005793887505,
+        "p": 0.0128383632104671,
+        "q_within_metric": 0.01925754481570065
+      }
+    }
+  },
+  "prohibited_wording": "Do not call H/log(E[S_25k]) conventional Pielou evenness, do not describe a causal rhizosphere filter, and do not treat post-hoc decomposition as a preregistered primary endpoint.",
+  "schema_version": "1.0",
+  "software": {
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "scipy": "1.14.1",
+    "statsmodels": "0.14.6"
+  },
+  "status": "post_hoc_evenness_decomposition_supported"
+}

@@ -1,0 +1,70 @@
+{
+  "candidates": {
+    "Trip4": 7,
+    "Trip5": 351
+  },
+  "candidates_union": 358,
+  "canonical_features": 351472,
+  "canonical_profiles": 1271,
+  "canonical_table_provenance_line": "# Constructed from biom file",
+  "extended_filtered_table_profiles": 312,
+  "extended_filtered_table_retained_features": 306508,
+  "generated_at": "2026-08-30T12:21:29.437748+00:00",
+  "input_sha256": {
+    "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/rerun-controls-2026-08-30/ibex/results/controls_md5.tsv": "350a1a28a58b221893befa366f261a1c3a39e15d781f75a17e632245ffba95e4",
+    "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/rerun-trip4-blanks-2026-08-29/inputs/extraction_batch_map_extended.tsv": "9fc9aa3d4fc77de231e81a156e1ddf2a0bd9bee352302cd934cc70e7fbbc3488",
+    "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v2/review/cache/alpha.tsv": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
+    "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/data/processed/taxonomy/taxon-tables/feature-table-trips1-5.tsv": "129f47d8f0db8d9afd6f8c67b8d80b5bead90155d8c91d2f43ea6a4139b0cb12",
+    "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/data/processed/taxonomy/taxon-tables/taxonomy-trips1-5.tsv": "fcf0a3ea0ca8ed956532fb4d7bffa0c20249e3048779a219155cc1bb7e483d35"
+  },
+  "mode": "per-trip",
+  "output_sha256": {
+    "mapped_feature_table_control_filtered.tsv.gz": "dff32b0aed127d34412ee57427614358c6460f6d00e3037560cccc8e9bcaffbb",
+    "trip5_mapped_feature_table_control_filtered.tsv.gz": "4a83ef6d7b83452fb2204db4116dc248b80ca784ced1c86c9e6be6589e304c2d"
+  },
+  "primary_method": "one-sided Fisher prevalence enrichment",
+  "primary_minimum_blank_prevalence_count": 2,
+  "primary_prevalence_score_threshold": 0.1,
+  "runtime_seconds": 125.918917,
+  "trip4_blank_only_features_not_in_canonical_table": 1364,
+  "trip4_blank_table": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/rerun-controls-2026-08-30/ibex/results/controls_md5.tsv",
+  "trip4_blanks_in_map": [
+    "EB",
+    "EB1",
+    "EB2",
+    "EB3",
+    "EB4",
+    "EB5"
+  ],
+  "trip4_mapped_profiles": 95,
+  "trip4_screen": "run",
+  "trip4_training_blanks": [
+    "EB",
+    "EB1",
+    "EB2",
+    "EB3",
+    "EB4",
+    "EB5"
+  ],
+  "trip5_filtered_table_retained_features": 301311,
+  "trip5_mapped_profiles": 217,
+  "trip5_training_blanks": [
+    "EB1",
+    "EB2",
+    "EB3",
+    "EB4",
+    "EB5",
+    "EB6",
+    "EB7",
+    "EB8",
+    "EB9",
+    "EB10",
+    "EB11",
+    "EB12",
+    "EB13",
+    "EB14",
+    "EB15",
+    "EB16",
+    "EB17"
+  ]
+}

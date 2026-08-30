@@ -1,0 +1,7 @@
+held_out_block	n_training_sites	n_heldout_sites	n_training_groups	extrapolation_block	fold_skill_r2
+0	50	10	505	true	0.1866376111
+1	50	10	517	false	0.3070807783
+2	50	10	521	false	0.3033088479
+3	50	10	529	false	0.3405283737
+4	50	10	530	false	0.03275216715
+5	50	10	548	true	0.2818690363

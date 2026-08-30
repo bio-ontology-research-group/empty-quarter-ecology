@@ -1,0 +1,4 @@
+group_type	group_value	biological_profile_count	total_reads	candidate_contaminant_reads	pooled_candidate_contaminant_read_fraction	median_candidate_contaminant_read_fraction	maximum_candidate_contaminant_read_fraction
+compartment	Deep	86	53889014	733229	0.01360628	0.00167387	0.26186671
+compartment	Rhizosphere	164	89237521	2402570	0.02692332	0.00269769	0.56595080
+compartment	Surface	62	40363371	129779	0.00321527	0.00052354	0.07593430

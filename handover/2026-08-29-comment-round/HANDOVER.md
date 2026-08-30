@@ -195,3 +195,27 @@ pipeline_info, slurm log). Re-run the screen any time with
   FILE_MANIFEST.tsv and should be dropped or rebased.
 - Public SPARQL endpoint serves older dna/xrf modules: all Section
   "Technical validation" queries return 0 rows there; redeploy before submission.
+
+## 8. Addendum, 30 Aug 2026 evening (assistant session; Robert's decisions applied)
+- Overleaf review panels cleared (Chrome connected): ecology 70 tracked changes accepted
+  (all Susana's, reviewed, none needing new action); KG paper: Michel's 2 comments resolved,
+  3 changes accepted. Abderahmane's 30 Aug Overleaf pass (rain -> rainfall, commas) kept;
+  his slips fixed (\label{fig: landscape}, west-east, landscape-scale).
+- Name policy applied to the ecology paper: Rub' al-Khali introduced once (Latin + Arabic
+  via arabtex, pdflatex; LaTeX \begin/\end restored after loading), Empty Quarter thereafter.
+  Data paper not yet harmonised.
+- Replies applied: Daniela (SP flow cell), Abderahmane and Kexin (approval + ORCID),
+  Marwa (controls; corrected workbook; S40PRr1 failed amplification, S34Dr1 dropped
+  without mention). Both papers pushed to Overleaf and GitHub after every change.
+- Controls: 14 control libraries of run novaseq_14_07_25 denoised on Ibex (job 51027761),
+  analysis/rerun-controls-2026-08-30. Trip 4 screen 7 candidates / 0.14 % pooled; all 25
+  conclusions stable with both screens. Reported in both papers. Finding: the Trips 1-3
+  controls were already in the July 2025 run with recorded roles; Ctrl_1_Trip1 is a Zymo
+  standard despite its negative label, Ctrl_2/Ctrl_3/Extraction_Ctrl_Pro are soil-like.
+- Mail: Robert sent the Marwa reply and the Rund mail (13:53). A corrected follow-up to
+  Rund (label discrepancies) is drafted in Gnus (*claude-mail-31*) for Robert to send.
+- Open: Rund's answers (extraction days Trips 1-3, plate links, the four mislabelled
+  libraries); grant numbers; shotgun BioProject; PRJEB accession; Sulaiman's ORCID;
+  ten co-authors still silent (Maxat, Mohammed, Hind, Michel, Raik, Krishnakumar,
+  Tiannyu, Magnus); data-paper consistency test (14 failures); public SPARQL endpoint
+  serves old modules (KG ledger).

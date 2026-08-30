@@ -30,3 +30,6 @@ __pycache__/
 /results/
 /work/
 /.nextflow*
+analysis/rerun-trip4-blanks-2026-08-29/outputs*/*.tsv.gz
+analysis/rerun-trip4-blanks-2026-08-29/**/__pycache__/
+analysis/rerun-trip4-blanks-2026-08-29/run.pid

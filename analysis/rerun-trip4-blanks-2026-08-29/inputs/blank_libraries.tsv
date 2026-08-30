@@ -1,0 +1,24 @@
+trip	blank_label	library_name	workbook_index_code	fastq_index_code	index_agrees	extraction_date	declared_sample_count	listed_sample_count	table_column	status	fastq_r1
+Trip4	EB	SEB	xGen 10nt UDI Index Pair 168	xGen 10nt UDI Index Pair 168	True		15	13	TRIP4_SEB	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0684_SEB_SU0168-SU0168_L002_R1_001.fastq.gz
+Trip4	EB1	EB1	xGen 10nt UDI Index Pair 216	xGen 10nt UDI Index Pair 216	True		22	22	TRIP4_EB1	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0770_EB1_SU0216-SU0216_L002_R1_001.fastq.gz
+Trip4	EB2	EB2	xGen 10nt UDI Index Pair 228	xGen 10nt UDI Index Pair 228	True		23	23	TRIP4_EB2	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0771_EB2_SU0228-SU0228_L002_R1_001.fastq.gz
+Trip4	EB3	EB3	xGen 10nt UDI Index Pair 240	xGen 10nt UDI Index Pair 240	True		7	7	TRIP4_EB3	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0772_EB3_SU0240-SU0240_L002_R1_001.fastq.gz
+Trip4	EB4	EB4	xGen 10nt UDI Index Pair 252	xGen 10nt UDI Index Pair 252	True		26	23	TRIP4_EB4	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0773_EB4_SU0252-SU0252_L002_R1_001.fastq.gz
+Trip4	EB5	EB5	xGen 10nt UDI Index Pair 264	xGen 10nt UDI Index Pair 264	True		9	9	TRIP4_EB5	sequenced_never_denoised_fastq_on_ibex	/ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/novaseq_14_07_25/raw_reads/M-25-0774_EB5_SU0264-SU0264_L002_R1_001.fastq.gz
+Trip5	EB1	EB1	xGen 10nt UDI Index Pair 307	xGen 10nt UDI Index Pair 307	True	2025-10-20	15	15	EB1	in_canonical_table	
+Trip5	EB2	EB2	xGen 10nt UDI Index Pair 410	xGen 10nt UDI Index Pair 410	True	2025-10-21	15	15	EB2	in_canonical_table	
+Trip5	EB3	EB3	xGen 10nt UDI Index Pair 319	xGen 10nt UDI Index Pair 319	True	2025-10-26	12	12	EB3	in_canonical_table	
+Trip5	EB4	EB4	xGen 10nt UDI Index Pair 331	xGen 10nt UDI Index Pair 331	True	2025-10-27	12	12	EB4	in_canonical_table	
+Trip5	EB5	EB5	xGen 10nt UDI Index Pair 422	xGen 10nt UDI Index Pair 422	True	2025-10-28	15	15	EB5	in_canonical_table	
+Trip5	EB6	EB6	xGen 10nt UDI Index Pair 343	xGen 10nt UDI Index Pair 343	True	2025-10-29	4	4	EB6	in_canonical_table	
+Trip5	EB7	EB7	xGen 10nt UDI Index Pair 355	xGen 10nt UDI Index Pair 355	True	2025-10-30	19	19	EB7	in_canonical_table	
+Trip5	EB8	EB8	xGen 10nt UDI Index Pair 434	xGen 10nt UDI Index Pair 434	True	2025-11-02	17	17	EB8	in_canonical_table	
+Trip5	EB9	EB9	xGen 10nt UDI Index Pair 446	xGen 10nt UDI Index Pair 446	True	2025-11-03	13	13	EB9	in_canonical_table	
+Trip5	EB10	EB10	xGen 10nt UDI Index Pair 458	xGen 10nt UDI Index Pair 458	True	2025-11-05	9	9	EB10	in_canonical_table	
+Trip5	EB11	EB11	xGen 10nt UDI Index Pair 470	xGen 10nt UDI Index Pair 470	True	2025-11-06	16	16	EB11	in_canonical_table	
+Trip5	EB12	EB12	xGen 10nt UDI Index Pair 387	xGen 10nt UDI Index Pair 387	True	2025-11-09	14	14	EB12	in_canonical_table	
+Trip5	EB13	EB13	xGen 10nt UDI Index Pair 399	xGen 10nt UDI Index Pair 399	True	2025-11-10	12	12	EB13	in_canonical_table	
+Trip5	EB14	EB14	xGen 10nt UDI Index Pair 411	xGen 10nt UDI Index Pair 411	True	2025-11-11	19	19	EB14	in_canonical_table	
+Trip5	EB15	EB15	xGen 10nt UDI Index Pair 423	xGen 10nt UDI Index Pair 423	True	2025-11-12	22	22	EB15	in_canonical_table	
+Trip5	EB16	EB16	xGen 10nt UDI Index Pair 435	xGen 10nt UDI Index Pair 435	True	2025-11-13	5	5	EB16	in_canonical_table	
+Trip5	EB17	EB17	xGen 10nt UDI Index Pair 447	xGen 10nt UDI Index Pair 447	True	2025-11-16	1	1	EB17	in_canonical_table	

@@ -1,0 +1,18 @@
+{
+    "input": "/ibex/user/hohndor/eq-trip4-blanks-2026-08-29/samplesheet_trip4_blanks.tsv",
+    "outdir": "/ibex/user/hohndor/eq-trip4-blanks-2026-08-29/results",
+    "FW_primer": "CCTACGGGNGGCWGCAG",
+    "RV_primer": "GGACTACNVGGGTWTCTAAT",
+    "illumina_novaseq": true,
+    "trunclenf": 240,
+    "trunclenr": 238,
+    "trunc_qmin": 25,
+    "trunc_rmin": 0.75,
+    "max_ee": 2,
+    "min_len": 50,
+    "sample_inference": "independent",
+    "seed": 100,
+    "dada_ref_taxonomy": "silva=138.2",
+    "exclude_taxa": "mitochondria,chloroplast",
+    "skip_qiime": true
+}

@@ -1,0 +1,18 @@
+Dear Marwa,
+
+Thank you very much for the corrected methods text and the EB map; both are now in the manuscripts, and we are re-running the contaminant screen with the Trip 4 extraction blanks linked through your map. Before I change the numbers in the data paper, I need to reconcile a few points where your text differs from what our control audit recorded; I attach the audit tables we worked from (control_analysis_roles.tsv, trip5_extraction_batch_summary.tsv, summary.json).
+
+1. Trip 4 extraction batches. Your text says nine extraction batches, three of them not sequenced, leaving 28 of the 60 Trip 4 sites without a sequenced extraction blank. Our audit has six blanks (EB, EB1 to EB5) linked to 97 profiles and "all or part of 23 sites" without a sequenced blank. Could you send me the batch list (batch, extraction date, samples, blank sequenced yes/no) so that I can see where the 23 vs 28 and the 6 vs 9 come from?
+
+2. Extraction days. Your text says extraction days were trip-specific; our earlier text said an extraction day could contain samples from more than one expedition. Which is right for Trips 1-3 and 5?
+
+3. Trip 4 PCR-stage controls. You write that one PCR blank was sequenced "alongside a water-based negative control". Were both sequenced, and if so what are their sample IDs? In the manuscript I currently count 24 control profiles for Trip 4 (23 extraction blanks plus one PCR blank); if the no-template control was also sequenced the count changes.
+
+4. Field negatives. Your text says sterile-soil field negatives were taken on Trips 1-3 and 5, extracted and amplified. We have no sterile-bag inventory in the records, so the knowledge graph currently asserts no field-blank sample. Do sequenced profiles exist for these field negatives (IDs), or were they checked only by PCR before the trips?
+
+5. Trip 3 PCR blanks: your placeholder "waiting for Rund's input" is still in the text; please let me know once you have it.
+
+For the ecology paper I have kept the detailed amplification text (two rounds, TaKaRa then the QIAGEN indexing PCR), so no separate paragraph is needed.
+
+Thank you,
+Rob.

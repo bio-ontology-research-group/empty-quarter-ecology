@@ -1,0 +1,14 @@
+Dear Marwa,
+
+A correction to my previous mail, and a few more questions, after we checked the sequencing records this evening.
+
+The six Trip 4 extraction blanks in your map (M-25-0684 SEB and M-25-0770 to M-25-0774 EB1 to EB5, run novaseq_14_07_25) were sequenced and passed QC, but they were never included in the denoising run of July 2025, so they are not in the ASV table at all. The EB1 to EB5 columns in our table are the Trip 5 blanks (same labels, different libraries), and all 24 control profiles in the table come from the Trip 5 run. So the contaminant screen could not have used the Trip 4 blanks, and I will correct the text accordingly. We are now denoising the six libraries on Ibex with the same pipeline and will re-run the screen per trip once they are in.
+
+Questions:
+1. The Trip 4 PCR blank (index pair 275): we find no FASTQ for it. Was it sequenced under a different name, or dropped before demultiplexing?
+2. Your workbook: sheet EB declares 15 samples but lists 13 (S59PRr1 and S59Dr1 are missing; site 59 is also in the "not sequenced" note); EB4 declares 26 but lists 23; EB2 says "19" in the sites column while the IDs are S14. Could you check these three?
+3. S34Dr1 and S40PRr1 (EB4 in your map) do not exist in the ASV table under those names. Were they sequenced under other IDs?
+4. In the Trip 5 run, the control libraries are EB1 to EB18 and Negative1, Negative2, Negative4 to Negative7. Are the "Negative" libraries extraction blanks or PCR-stage no-template controls?
+
+Thank you,
+Rob.

@@ -1,0 +1,13 @@
+Dear all,
+
+A short reminder on the two Empty Quarter manuscripts I circulated on 6 August (the ecology paper and the database/knowledge graph paper). Several of you have already sent comments, ORCIDs and approvals; thank you. I have not yet heard from you on these, and we would like to submit both papers and post the preprints in early September.
+
+Could you please reply with:
+1. a line confirming that you have read the manuscript(s) on which you are an author and agree with their submission to a journal and with posting a preprint on bioRxiv;
+2. your ORCID;
+3. any comments or corrections, ideally directly in the Overleaf projects.
+
+If I could have this by Friday, 4 September, that would be great. If you have edited the Overleaf directly (Michel, thank you), a one-line confirmation and your ORCID are all that is missing.
+
+Thank you and with best wishes,
+Robert.

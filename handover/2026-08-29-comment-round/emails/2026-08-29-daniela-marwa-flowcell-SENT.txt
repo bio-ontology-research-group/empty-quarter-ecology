@@ -1,0 +1,6 @@
+Dear Daniela, dear Marwa,
+
+One small inconsistency in the two Empty Quarter manuscripts that I would like to settle before submission. Daniela's wording says the amplicon pools were sequenced on the NovaSeq 6000 with an S1 v1.5 500-cycle reagent kit; Marwa's methods text says an SP flow cell with a 500-cycle kit. Which one is right (or were different runs on different flow cells)? If the latter, could you tell me which trips or pools went on which, so that we can state it correctly in both papers?
+
+Thank you and with best wishes,
+Rob.

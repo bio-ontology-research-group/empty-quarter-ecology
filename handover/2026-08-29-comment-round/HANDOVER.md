@@ -219,3 +219,49 @@ pipeline_info, slurm log). Re-run the screen any time with
   ten co-authors still silent (Maxat, Mohammed, Hind, Michel, Raik, Krishnakumar,
   Tiannyu, Magnus); data-paper consistency test (14 failures); public SPARQL endpoint
   serves old modules (KG ledger).
+
+## 9. Addendum, 31 Aug 2026 (assistant session; Rund's reply)
+
+Rund replied 31 Aug 11:47 (from ECCB; realistic target for her items: end of week,
+not Wednesday). Robert's reply drafted in Gnus (*claude-mail-5*): accepts Friday,
+pastes Marwa's Trip 4/5 answers (Rund cannot open Mattermost: previews only, no
+open/reply; Marwa's 25 Aug questions to her unread), reformulates Q1 as kit
+linkage, promises the index-728/run lookup.
+
+### Facts from Rund that fold into the papers
+- Trips 1-3 extraction blanks were per extraction KIT, not per extraction day:
+  one blank for PowerSoil and one for PowerSoil Pro. Presumably
+  Extraction-Ctrl-Pro-Trip1 (M-25-0929) is the Pro blank; whether a PowerSoil
+  blank was sequenced, and its ID, asked in Robert's reply. Supplement S2
+  ("Assay-aware control analysis", ~line 197-210) currently says one blank per
+  extraction day (true for Trip 5 workbook) and hedges Trips 1-3; once Q3 is
+  answered, S2 should state kit-level blanks for Trips 1-3 explicitly. Main text
+  only claims day linkage for Trip 5 (main.tex ~748), so no change there.
+- Trips 1 and 2 were extracted on the same days (cross-trip extraction batches);
+  confirms the S2 hedge "may have combined samples from different trips".
+- Nothing was sequenced on extraction days for Trips 1-3; no per-day
+  extraction blank exists or can be reconstructed. Do not wait for notebook
+  dates (Rund's notebooks not physically with her; Robert told her not to dig).
+- Trip 3 PCR blank: exactly one prepared, index "xGen 10nt UDI Index Pair 728".
+  Whether sequenced/library ID unknown; Robert owes the lookup (map index 728 in
+  run sample sheets; determine which run(s) carry Trip 3 samples). If Trip 3
+  samples sit on another run, Rund can find that run's blank index too.
+- Q3 (roles/contents of the 8 July-2025 control libraries, esp. the four
+  suspected mislabels Ctrl-1-Trip1, Ctrl-2, Ctrl-3, Extraction-Ctrl-Pro-Trip1):
+  Rund still checking. Marwa's catalogue answer (D6322 HMW standard used for
+  Trips 1-2) matches Ctrl-1-Trip1's Zymo profile, supporting a label swap.
+
+### Manuscript coordination
+- Rund is still editing the ecology manuscript on Overleaf and reconciling
+  inconsistencies between the two papers (sample/compartment descriptions,
+  methods wording). Her commit 651e276 (31 Aug) landed in Methods.
+- Cleanup needed in 651e276 (fix after she finishes or coordinate): empty
+  \ref{} main.tex:824; "campagin" typo twice (826-827); Unicode en-dash in
+  "Benjamini–Hochberg" (827); "Each sampling campaign covered 60 sites"
+  (~674) now sits oddly against the 4 Trip-1-only locations paragraph below.
+- She rewrote the environmental-measurements methods paragraph (site+campaign
+  averaging, campaign + linear/quadratic transect covariates, site-clustered
+  SEs, BH over nine tests): verify this matches the analysis actually run
+  before accepting.
+- Comms with Rund by email only until her Mattermost access is fixed; the
+  Marwa<->Rund Mattermost loop is broken in both directions.

@@ -265,3 +265,26 @@ linkage, promises the index-728/run lookup.
   before accepting.
 - Comms with Rund by email only until her Mattermost access is fixed; the
   Marwa<->Rund Mattermost loop is broken in both directions.
+
+### 31 Aug, later: index-728 lookup done (Ibex)
+- xGen UDI 728 = M-23-8667 "PCRCtrl": the Trip 3 PCR blank, sequenced. Rund's Q2
+  fully settled; no other index needed.
+- All Trip 3 libraries (M-23-8287..M-23-8676, 914 fastqs incl. fastQC pairs, in
+  /ibex/project/c2014/EmptyQuarter_Data/soil/amplicon_16S/Trip3/reads/) were
+  sequenced on one run: NovaSeq6000 A01018 run 0321, flowcell HVJY5DRX3 (from
+  fastq headers; raw BCL folder not in /ibex/project/c2014/BCL/NovaSeq6000/).
+- The Trip 3 run carried its own control set, all present in the
+  novaseq_14_07_25 analysis samplesheet as batch B (i.e. denoised):
+  FPosCtrl1 M-23-8294 (UDI 374), FPosCtrl2 M-23-8661 (704), FPosCtrl3
+  M-23-8665 (716), FNegCtrl1 M-23-8672 (751), FNegCtrl2 M-23-8676 (763),
+  "-Ctrl3" M-23-8649 (680), PCRCtrl M-23-8667 (728). Roles/contents asked of
+  Rund in follow-up (draft *claude-mail-14* in Gnus, 31 Aug): which standard
+  in the positives, whether FNeg are sterile-soil field negatives, what
+  "-Ctrl3" is.
+- Note for the samplesheet reading: the novaseq_14_07_25 samplesheet's "run"
+  column A/B separates the two source runs: A = 250626_A01018_0375 (M-25 libs,
+  L002), B = the Trip 3 run 0321/HVJY5DRX3 (M-23 libs, L001).
+- Paper implication once Rund confirms roles: supplement S2 coverage-gap text
+  can state Trip 3 had a sequenced PCR blank, 3 positives and 2 field
+  negatives on its own run; these could enter the control characterisation
+  (and possibly a Trip 3 screen) rather than being listed as gaps.

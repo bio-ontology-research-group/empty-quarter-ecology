@@ -74,7 +74,11 @@ def test_amplicon_filter_description_matches_the_canonical_branch(
     assert "depth >= 1000" in build_cache
     flat_main = _without_value_math(" ".join(main_tex.split()))
     flat_supplement = _without_value_math(" ".join(supplement_tex.split()))
-    assert "retained all 351,472 ASVs and 24 extraction blanks" in flat_main
+    assert (
+        "retained all 351,472 ASVs and 24 control profiles from the Trip~5 "
+        "sequencing run (18 extraction blanks and 6 no-template PCR controls)"
+        in flat_main
+    )
     assert "profiles below 1,000 reads" in flat_main
     assert "applied no rare-feature or contaminant filter" in " ".join(
         flat_supplement.split()
@@ -103,6 +107,9 @@ def test_section_order_matches_isme_communications(main_tex):
         "Results",
         "Discussion",
         "Materials and Methods",
+        # Added on Overleaf (Sep 2026); sits between Methods and the
+        # bibliography as ISME Communications back matter.
+        "Funding",
     ]
 
 
@@ -464,7 +471,7 @@ def test_rainfall_scope_is_consistent_across_the_whole_manuscript(
     flat = _without_value_math(" ".join(main_tex.split()))
     supplement_flat = _without_value_math(" ".join(supplement_tex.split()))
     assert "19,999 conditional rotations" in supplement_flat
-    assert "support an early association between rain and richness, not an exact delay" in flat
+    assert "support an early association between rainfall and richness, not an exact delay" in flat
     assert "does not require storms to recur across expeditions" in flat
     assert "rain caused" not in (flat + supplement_flat).lower()
     assert "figS_campaign_rainfall.pdf" not in flat
@@ -508,8 +515,15 @@ def test_relocated_detail_survives_in_the_supplement(main_tex, supplement_tex):
     # The detailed network and encoded-function methods left the main text.
     assert "Graphical Lasso" not in main_tex
     assert "intact genome annotation profiles among the fixed" not in main_tex
-    assert "eggNOG-mapper" not in main_tex
     assert "For KO-copy profiles, the observed median" not in main_tex
+    # The main Methods deliberately keep a short shotgun-provenance paragraph
+    # (added on Overleaf, Sep 2026) naming the companion metagenomic study
+    # and its eggNOG-mapper annotation, without the encoded-function detail.
+    flat_main = " ".join(main_tex.split())
+    assert "separate, ongoing metagenomic study of the same expeditions" in flat_main
+    assert "eggNOG-mapper v2.1.12 annotation of the genome catalogue" in flat_main
+    assert "its results will be reported separately" in flat_main
+    assert main_tex.count("eggNOG-mapper") == 2  # provenance paragraph + Software
     # The Supplement carries the shotgun/genomic-potential methods instead.
     assert "990" in normalized_supplement and "2,000" in normalized_supplement
 
@@ -522,12 +536,14 @@ def test_network_calibration_diagnostic_is_named_correctly(supplement_tex):
 
 
 def test_companion_title_is_consistent(main_tex, supplement_tex):
-    expected = (
-        "Landscape-scale bacterial biogeography across the Rub' al-Khali "
-        "reveals recurring spatial and soil-position structure"
-    )
-    assert expected in " ".join(main_tex.split())
-    assert expected in " ".join(supplement_tex.split())
+    expected = "Landscape-scale bacterial biogeography across the Rub' al-Khali"
+    flat_main = " ".join(main_tex.split())
+    flat_supplement = " ".join(supplement_tex.split())
+    assert "\\title{" + expected + "}" in flat_main
+    assert expected in flat_supplement
+    # The subtitle was dropped on 3 Sep 2026 at a co-author's suggestion.
+    assert "reveals recurring" not in flat_main
+    assert "reveals recurring" not in flat_supplement
     bibliography = (
         ROOT / "data-paper/sn-bibliography.bib"
     ).read_text(encoding="utf-8")

@@ -18,8 +18,7 @@
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \title{Supplementary Information\\
-\large Landscape-scale bacterial biogeography across the Rub' al-Khali
-reveals recurring spatial and soil-position structure}
+\large Landscape-scale bacterial biogeography across the Rub' al-Khali}
 \author{}
 \date{}
 
@@ -41,7 +40,9 @@ conditional lag rotations for each model. Its search covered $60$ candidate
 peak times and three diversity endpoints. Sampling and peak-selection
 intervals used $9{,}999$ whole-site bootstrap samples with seed $20260805$.
 The cross-desert context analysis used seed $20260804$, $9{,}999$ depth-zone
-label permutations and $100$ rarefactions per Atacama pit profile.
+label permutations and $100$ rarefactions per Atacama pit profile. The
+descriptive taxon-context module used seed $20260903$ and $20$ subsamples of
+$8{,}000$ reads per profile for the genus-set overlaps.
 The site-level climate analysis declares separate Benjamini--Hochberg families
 for nine diversity and $600$ genus tests. Its diversity intervals used
 $9{,}999$ paired-site bootstrap samples with seed $20260805$. The PICRUSt2
@@ -103,9 +104,14 @@ aggregated to $633$ site--campaign--position observations \\
 QC-passed alpha-diversity profiles & $1{,}237$ & Biological profiles with at
 least $1{,}000$ reads; $1{,}227$ profiles belong to the $60$-site repeated-inference
 cohort \\
+Quality-controlled profiles per expedition & T1 $325$; T2 $24$; T3 $478$;
+T4 $177$; T5 $233$ & The $1{,}237$ QC-passed profiles by expedition (surface,
+shallow-subsurface, root-adjacent: T1 $113$, $108$, $104$; T2 $6$, $7$, $11$;
+T3 $168$, $148$, $162$; T4 $60$, $59$, $58$; T5 $30$, $60$, $143$), as shown in
+main-text Figure~1b \\
 Canonical all-trip feature table & $1{,}271$ & Biological and control profiles;
 source for the $351{,}472$-ASV feature universe \\
-Complete field-XRF sessions & $71$ of $106$ log entries & Trip~$5$ in-situ handheld
+Complete field-XRF sessions & $71$ of $106$ log entries. Trip~$5$ in-situ handheld
 measurements retained at $58$ sites from a log spanning $59$ sites; the log links
 TestID to site but not to a physical aliquot or compartment \\
 Laboratory-XRF analytical records & $725$ & $547$ records from Trips~$1--4$ plus
@@ -118,7 +124,7 @@ Archived-soil pH/ecology joins & $\PHAlphaGroups$ alpha;
 $\PHCompositionGroups$ composition & Quality-controlled, incomplete
 shared archived-sample pH cohort (\PHDatasetVersion) \\
 Matched network cohort & $170$ per compartment & Same campaign--site groups in
-surface, shallow subsurface and root-adjacent soil; $60$ sites \\
+surface, shallow-subsurface, and root-adjacent soil; $60$ sites \\
 Resolution-matched encoded-function null & $150$ & $27$ surface, $44$ shallow
 subsurface and $79$ root-adjacent profiles; $990$ annotated genomes, $2{,}000$
 retained KOs and $28.5\,\%$ mean annotated-catalog fraction \\
@@ -130,14 +136,14 @@ Retained CBB-marker genome records & $132$ & RuBisCO plus
 phosphoribulokinase annotations; the complete upstream screened-genome
 manifest was not preserved, so no denominator or fraction is reported \\
 Rainfall pulse cohort & $617$ site--campaign--position groups & Technical means
-for $196$ surface, $203$ shallow-subsurface and $218$ root-adjacent groups across $60$
+for $196$ surface, $203$ shallow-subsurface, and $218$ root-adjacent groups across $60$
 sites; the paired bulk-soil sensitivity used $179$ pairs; $20$ distinct NASA POWER
 daily precipitation series \\
 PMA pairs & $9$ & Trip~$5$ treated-versus-untreated aliquots \\
 \end{longtable}
 \endgroup
 
-The PMA ASV count table, $150$ CoverM profiles and eggNOG-derived annotations
+The PMA ASV count table, $150$ CoverM profiles, and eggNOG-derived annotations
 used by the downstream analyses are enumerated with paths and checksums in the
 analysis manifests under \path{analysis/v3/}. Reproducing the upstream PMA and
 shotgun processing additionally requires the corresponding raw-read
@@ -188,12 +194,17 @@ or container digest. These items remain unknown rather than inferred.
 
 \subsection{Assay-aware control analysis}
 
-The $24$ control profiles in the canonical table comprise \texttt{EB1}--\texttt{EB18}
-and \texttt{Negative1}, \texttt{Negative2}, and
-\texttt{Negative4}--\texttt{Negative7}; all were extraction blanks. One blank
-was processed per extraction day, and an
-extraction day could include samples from several field trips. A trip value is
-therefore not applicable to an extraction blank. The extraction-day workbook
+The $24$ control profiles in the canonical table all come from the Trip~$5$
+sequencing run: \texttt{EB1}--\texttt{EB18} are extraction blanks and
+\texttt{Negative1}, \texttt{Negative2}, and \texttt{Negative4}--\texttt{Negative7}
+are no-template PCR controls (water in place of template). One blank was
+processed per extraction day. For Trips~$4$ and $5$ extraction days were
+trip-specific; for Trips~$1$--$3$ some extractions were repeated and may have
+combined samples from different trips on one day, so a trip value is not
+assigned to an extraction blank from the workbook alone. The six Trip~$4$
+extraction blanks (SEB, EB1--EB5) were sequenced on a separate run, are not in
+the canonical table, and were denoised from the raw reads with the same
+nf-core/ampliseq settings for the Trip~$4$ screen below. The extraction-day workbook
 maps EB1--EB17 to dates and $220$ Trip~$5$ biological profiles, of which $217$ occur
 in the canonical table. These links do not assign an EB exclusively to a trip.
 EB18 and the six \texttt{Negative}-labelled profiles
@@ -214,6 +225,18 @@ $-0.00340$; maximum absolute change $0.67805$), and raw richness had
 $\rho=0.99995$ (median change $-11$ ASVs; maximum absolute change $81$).
 All $25$ tracked headline metrics retained their scientific verdicts. Frequency
 modelling was not run because control DNA concentrations were unavailable.
+
+A second screen used the six Trip~$4$ extraction blanks against the $95$ Trip~$4$
+profiles linked through the corrected extraction-batch workbook ($28$ of the $60$
+Trip~$4$ sites have no sequenced blank). With the same thresholds it identified
+$7$ candidate ASVs (four unassigned at genus level, \textit{Nesterenkonia},
+\textit{Brevibacterium} and \textit{Alcaligenes}); $31$ of the $95$ profiles
+lost at least one read, with median removal $0.00\,\%$ (interquartile range
+$0.00$--$0.01\,\%$), maximum $14.31\,\%$ and $0.14\,\%$ pooled, and no profile
+fell below $25{,}000$ reads. Rerunning the $25$ tracked headline metrics with
+both screens applied together ($312$ filtered profiles) retained every
+verdict; the largest shifts were the paired Shannon $q$ ($0.0256$ to $0.0312$)
+and the paired distance-decay omnibus $p$ ($0.0053$ to $0.0075$).
 
 The positive-control design was trip-specific. Trips~$1$ and $2$ used purified-DNA
 ZymoBIOMICS HMW DNA Standard D6322, which can evaluate PCR, library and
@@ -241,7 +264,9 @@ indices and biological profiles, but overlap alone cannot distinguish natural
 occurrence, cross-contamination, index hopping or a mislabelled source
 library. The metadata-negative profile
 \texttt{e0323\_Ctrl\_1\_Trip1} was not promoted to a positive control from its
-name.
+name; re-denoised from the raw reads, it contained $24$ ASVs with $99.99\,\%$ of
+reads in the ZymoBIOMICS genera, so its recorded role is under review with the
+laboratory. It was never used to train the screen.
 
 The audit follows the principle that all available processing controls should
 be sequenced and reported, with positive controls reserved for evaluating
@@ -254,8 +279,9 @@ laboratory-metadata follow-up: confirm any additional reused or generic labels,
 their reaction or batch identifiers and the biological libraries amplified in
 the same batches. Until laboratory evidence confirms those links, PCR blanks remain separate from
 extraction blanks and cannot support a batch-linked PCR prevalence analysis.
-The material limits are that the Trip~$4$ blank covering a three-day extraction
-was not sequenced, affecting all or part of $23$ sites; Trip~$5$ has no positive
+The material limits are that the Trip~$4$ blanks of three extraction days
+were not sequenced, affecting all or part of $28$ sites, and that the Trip~$4$
+PCR blank and no-template control were not sequenced; Trip~$5$ has no positive
 control in the $16$S assay; and no sterile-bag inventory was recovered.
 
 \subsection{Two XRF measurement workflows}
@@ -547,20 +573,20 @@ $p=0.001$.
 
 Pairwise location tests used their respective pairwise-complete cohorts and
 sign-flipped the mean within-block CLR difference vector across sites.
-Standardized displacements were $0.3312$ for shallow subsurface minus surface
+Standardized displacements were $0.3312$ for shallow-subsurface minus surface
 ($n=183$ blocks), $0.4328$ for root-adjacent minus surface ($n=182$) and $0.4780$
-for root-adjacent minus shallow subsurface ($n=191$); each had permutation $p=0.001$
+for root-adjacent minus shallow-subsurface ($n=191$); each had permutation $p=0.001$
 and Benjamini--Hochberg $q=0.001$. The directions and location results
 persisted with $80$, $200$ or all $384$ eligible genera, three zero treatments and
 each leave-one-campaign refit. Because the test targets the paired mean
 difference vector, it is exact under the paired-symmetry null even when
 within-position dispersion differs.
 
-Dispersion increased monotonically from surface to shallow subsurface to
+Dispersion increased monotonically from surface to shallow-subsurface to
 root-adjacent soil. The shallow-subsurface--surface difference was $1.3776$
 (bootstrap $95\,\%$ CI [$0.4411$,$2.3748$], permutation $q=0.015$);
 root-adjacent--surface was $2.3866$ ([$1.5502$,$3.2123$], $q=0.003$); and
-root-adjacent--shallow subsurface was $1.0090$ ([$0.0556$,$2.0550$], $q=0.061$).
+root-adjacent--shallow-subsurface was $1.0090$ ([$0.0556$,$2.0550$], $q=0.061$).
 The last permutation contrast does not pass $q<0.05$, despite its bootstrap
 interval. The composition result describes the operational collection
 position and does not establish a plant selective filter.
@@ -571,11 +597,11 @@ For all-campaign paired contrasts, profiles were averaged within
 site--campaign--position and then across campaigns within site and position.
 Among $60$ sites, root-adjacent minus surface Shannon diversity had mean
 $-0.130$ (median $-0.250$, bootstrap $95\,\%$ CI [$-0.321$,$0.079$],
-Wilcoxon $q=0.0256$). Root-adjacent minus shallow subsurface had mean
+Wilcoxon $q=0.0256$). Root-adjacent minus shallow-subsurface had mean
 $-0.206$ (median $-0.430$, $95\,\%$ bootstrap CI
 [$-0.398$,$-0.001$], upper endpoint adjacent to zero, $q=0.0256$).
 The endpoint's sign is not used as evidence; the distributional claim is
-carried by the paired Wilcoxon result. Shallow subsurface minus surface had
+carried by the paired Wilcoxon result. shallow-subsurface minus surface had
 mean $0.075$ ($95\,\%$ CI
 [$-0.089$,$0.235$], $q=0.189$).
 
@@ -584,7 +610,7 @@ $H/\log(E[S_{25k}])$, where $E[S_{25k}]$ is Hurlbert expected richness at
 $25{,}000$ reads. This is a normalized-evenness sensitivity, not conventional
 Pielou evenness. Root-adjacent minus surface normalized evenness was
 $-0.03148$ ($95\,\%$ CI [$-0.04477$,$-0.01863$],
-$q=2.76\times10^{-6}$), root-adjacent minus shallow subsurface was
+$q=2.76\times10^{-6}$), root-adjacent minus shallow-subsurface was
 $-0.04398$ ([$-0.05717$,$-0.03131$], $q=2.13\times10^{-7}$), and shallow
 subsurface minus surface was $+0.01250$ ([$0.00084$,$0.02508$], $q=0.0121$).
 Campaign- and log-depth-adjusted GEE contrasts retained these directions:
@@ -648,10 +674,10 @@ Campaign-averaged position matrices over the same $60$ sites yield $1{,}770$
 geographic pairs. Whole-site permutations were applied simultaneously to all
 three matrices while geographic distance remained fixed; pairwise distances
 were not treated as independent observations. Aitchison dissimilarity slopes
-per $100$~km were $1.351$ for surface, $1.510$ for shallow subsurface and $1.180$ for
+per $100$~km were $1.351$ for surface, $1.510$ for shallow-subsurface and $1.180$ for
 root-adjacent soil (each $p=0.0001$; $9{,}999$ permutations). The omnibus
 position contrast gave $p=0.0053$. With maximum-statistic family-wise control,
-shallow subsurface minus root-adjacent was $+0.330$ per $100$~km
+shallow-subsurface minus root-adjacent was $+0.330$ per $100$~km
 ($p_{\mathrm{adj}}=0.0041$), whereas surface minus root-adjacent was
 $+0.171$ ($p_{\mathrm{adj}}=0.182$).
 
@@ -698,7 +724,7 @@ Compartment & Stable edges & Stable density & Positive fraction &
 Expected false fraction \\
 \midrule
 Surface & $180$ & $0.05696$ & $0.6278$ & $0.0096$ \\
-Shallow subsurface & $221$ & $0.06994$ & $0.5747$ & $0.0087$ \\
+shallow-subsurface & $221$ & $0.06994$ & $0.5747$ & $0.0087$ \\
 Root-adjacent & $237$ & $0.07500$ & $0.5865$ & $0.0104$ \\
 \bottomrule
 \end{tabular}
@@ -709,12 +735,40 @@ every compartment. The mean expected false fractions among stable edges are cali
 diagnostics, not formal false-discovery-rate estimates. Comparative density
 ordering was not stable: $95\,\%$
 site-cluster bootstrap intervals were [$-0.0142$,$0.0089$] for surface minus
-shallow subsurface, [$-0.0161$,$0.0070$] for surface minus root-adjacent and
-[$-0.0155$,$0.0104$] for shallow subsurface minus root-adjacent. Density
+shallow-subsurface, [$-0.0161$,$0.0070$] for surface minus root-adjacent and
+[$-0.0155$,$0.0104$] for shallow-subsurface minus root-adjacent. Density
 directions persisted in only $0.78$, $0.67$ and $0.67$ of nine taxon-count/penalty
 configurations. Campaign networks were not estimated because no common
 campaign comparison met the predeclared $80$-observation rule. The retained
 edges are descriptive regularized conditional associations, not interactions.
+
+\subsection{Taxon composition and transect replacement}
+
+Tables~\ref{tab:taxa-phyla} and \ref{tab:taxa-genera} summarize the phylum,
+class and genus composition of the $1{,}227$ core-site profiles as mean shares
+of total reads. Genus sums recomputed from the canonical feature table
+reproduce the cached genus table used by every inferential module (maximum
+absolute difference $0$ reads). Bacilli ($21.0\,\%$), Gammaproteobacteria
+($14.7\,\%$), Actinobacteria ($13.3\,\%$) and Alphaproteobacteria
+($12.2\,\%$) were the leading classes. \textit{Domibacillus} led every
+compartment and the western and central thirds; \textit{Bacillus} led the
+eastern third.
+
+Table~\ref{tab:taxa-replacement} lists the genera with the strongest monotonic
+change along the route among the $200$ genera of the route model, in the same
+site-level CLR coordinates as the geographic model. Of the $200$, $124$ passed
+Benjamini--Hochberg $q<0.05$: $77$ decreased and $47$ increased eastward. By
+phylum, the decreasing genera were $27$ Actinomycetota, $20$ Pseudomonadota,
+$9$ Bacteroidota, $4$ Acidobacteriota, $3$ Chloroflexota, $3$ Myxococcota,
+$3$ Planctomycetota, $2$ Gemmatimonadota and $6$ others; the increasing genera
+were $17$ Bacillota, $16$ Pseudomonadota, $6$ Actinomycetota,
+$4$ Planctomycetota, $3$ Bacteroidota and $1$ Deinococcota.
+Table~\ref{tab:route-gradients} gives the direction of the environmental
+gradients along the same route: temperature, humidity, rainfall and pH all
+increased from west to east. The correlations describe where genera change;
+they do not identify a cause, and the marker-gene shares are not cell counts.
+
+\input{generated/taxon_context_tables.tex}
 
 \section{Phylogenetic diagnostic}
 
@@ -1030,8 +1084,8 @@ shallow-subsurface and root-adjacent profiles. Each complete block was centred
 on its own three-position mean and then averaged within site, making the $60$
 sites the independent units. The omnibus position statistic was pseudo-$F=6.37$
 ($p=0.0001$). Standardized paired displacements were $0.453$ for root-adjacent
-minus shallow subsurface ($q=0.00015$), $0.429$ for root-adjacent minus surface
-($q=0.00015$), and $0.330$ for shallow subsurface minus surface ($q=0.0194$).
+minus shallow-subsurface ($q=0.00015$), $0.429$ for root-adjacent minus surface
+($q=0.00015$), and $0.330$ for shallow-subsurface minus surface ($q=0.0194$).
 The omnibus result and both root-adjacent contrasts passed every pathway-set,
 pseudocount and leave-one-campaign test. The shallow-subsurface--surface
 contrast did not pass when Trip~$3$ was omitted ($p=0.136$), so it is the weaker
@@ -1062,6 +1116,19 @@ pre-specified gene-level analysis rather than an interpretation added to this
 pathway screen. The complete $600$ position tests and $200$ geographic tests are
 in \path{analysis/v3/picrust2_ecology/}.
 
+The descriptive taxon-context module grouped the $462$ pathways by keywords in
+their MetaCyc descriptions (Table~\ref{tab:pathway-classes}). Biosynthesis
+pathways held $66.8\,\%$ of mean predicted pathway abundance, energy and
+central metabolism $17.2\,\%$, degradation or utilization $10.7\,\%$ and
+other pathways $5.3\,\%$. Aerobic respiration I (cytochrome $c$) was the most
+abundant pathway ($1.70\,\%$); the Calvin--Benson--Bassham cycle ranked $44$th
+($0.59\,\%$) and the reductive TCA cycle I $122$nd ($0.41\,\%$), and the
+PICRUSt2 MetaCyc set contains no light-reaction pathway
+(Table~\ref{tab:pathway-dominance}). Of the $92$ supported route correlations,
+$63$ were biosynthesis pathways ($54$ increasing eastward); of the $270$
+supported compartment contrasts, $208$ were biosynthesis pathways. The
+classes are keyword groupings, not MetaCyc ontology classes.
+
 Weighted NSTI had median $0.1648$ across the $1{,}227$ profiles (range
 $0.0053--0.7819$). The median was $0.2011$ in shallow-subsurface, $0.1681$ in surface
 and $0.1340$ in root-adjacent profiles. Lower NSTI means that the contributing
@@ -1090,7 +1157,7 @@ Encoded/taxonomic & Null median [$95\,\%$ interval] & $p_{\rm L}$ & $p_{\rm U}$ 
 \midrule
 KO copy count & All & $150$ & $0.82272$ & $0.13386$ & $0.16271$ &
 $0.08733$ [$0.08459$, $0.09067$] & $1.000$ & $0.001$ \\
- & Shallow subsurface & $44$ & $0.80929$ & $0.13270$ & $0.16397$ &
+ & shallow-subsurface & $44$ & $0.80929$ & $0.13270$ & $0.16397$ &
 $0.08400$ [$0.08029$, $0.08838$] & $1.000$ & $0.001$ \\
  & Root-adjacent & $79$ & $0.81810$ & $0.13348$ & $0.16316$ &
 $0.08889$ [$0.08567$, $0.09269$] & $1.000$ & $0.001$ \\
@@ -1099,7 +1166,7 @@ $0.08138$ [$0.07595$, $0.08765$] & $1.000$ & $0.001$ \\
 \addlinespace
 Within-genome relative & All & $150$ & $0.82272$ & $0.13659$ & $0.16602$ &
 $0.08882$ [$0.08592$, $0.09315$] & $1.000$ & $0.001$ \\
- & Shallow subsurface & $44$ & $0.80929$ & $0.13615$ & $0.16824$ &
+ & shallow-subsurface & $44$ & $0.80929$ & $0.13615$ & $0.16824$ &
 $0.08544$ [$0.08165$, $0.09040$] & $1.000$ & $0.001$ \\
  & Root-adjacent & $79$ & $0.81810$ & $0.13418$ & $0.16402$ &
 $0.09041$ [$0.08702$, $0.09523$] & $1.000$ & $0.001$ \\
@@ -1190,13 +1257,32 @@ depth as a recurring source of habitat structure; the diversity direction is
 not portable from one depth design to another.
 
 These comparisons do not identify a common cause. Soil relative humidity in
-the Atacama and a $49$-month atmospheric humidity mean in the Empty Quarter are
+the Atacama and a $49$-month atmospheric humidity mean in the Rub' al-Khali (Empty Quarter) are
 different exposures. The Atacama pit is one vertical profile sampled to
-$4.2$~m, whereas Empty Quarter positions span only $0--10$~cm and include loose
-root-adjacent soil. Exact inputs, parameters, software versions and checksums
+$4.2$~m, whereas the Empty Quarter compartments span only $0$--$10$~cm and
+include root-adjacent soil. Exact inputs, parameters, software versions and checksums
 are recorded under \path{analysis/v3/cross_desert_context/}. The archived
 Atacama-gradient table reproduces the site-level tests, but regeneration of
 that table from the original QIITA BIOM file remains an upstream step.
+
+\subsection{Genus-set overlap with the Atacama pit}
+
+To place the within-transect replacement against a between-desert difference
+under one detection rule, every Empty Quarter core profile and every Atacama
+pit profile (PRJEB39249; Bacteria and Archaea only) was subsampled $20$ times
+to $8{,}000$ reads (seed $20260903$), and a genus counted as detected in a set
+when it occurred in at least $10\,\%$ of subsampled profiles.
+Table~\ref{tab:genus-overlap} gives the overlaps. The western and eastern
+thirds of the transect shared $267$ of $418$ detected genera (Jaccard
+$0.639$), the adjacent thirds $0.825$ and $0.677$, and every one of the $50$
+leading genera of one end was detected at the other. The Empty Quarter and the
+pit shared $43$ of $397$ genera (Jaccard $0.108$; $0.091$ for Empty Quarter
+surface soil against the $2.5$--$10$~cm pit profiles); $17$ of the $50$ leading
+Empty Quarter genera and $31$ of the $50$ leading pit genera were detected in
+the other survey. The pit used V4 primers on intracellular DNA and sampled one
+vertical profile, so the between-desert difference is inflated by method; the
+comparison merges no feature tables and makes no claim about a shared
+mechanism.
 
 \subsection{Design boundaries in related studies}
 
@@ -1216,7 +1302,7 @@ Study & Design & Relevance to this manuscript \\
 \endhead
 McKay et al.\ $2016$, ``An Unusual Inverted Saline Microbial Mat Community in
 an Interdune Sabkha in the Rub' al Khali'' \cite{mckay2016sabkha} & One groundwater-fed Liwa sabkha,
-UAE; salt mat microbiology and geochemistry & Direct Rub' al-Khali precedent,
+UAE; salt mat microbiology and geochemistry & Direct Empty Quarter precedent,
 but a specialized saline mat rather than open Saudi landscape soils \\
 Yasir et al.\ $2015$, ``Composition of soil microbiome along elevation gradients
 in southwestern highlands of Saudi Arabia'' \cite{yasir2015elevation} & Ten soils across four
@@ -1295,10 +1381,10 @@ activity evidence missing from our marker inventory \\
 }
 
 This study is a large, repeated landscape survey of open sand, shallow
-subsurface and root-adjacent Saudi Rub' al-Khali soils,
+subsurface and root-adjacent Saudi Empty Quarter soils,
 joined to distinct field/laboratory XRF products and an analysis-ready shotgun
 subset. It is not
-the first Saudi arid-soil study, first Rub' al-Khali microbial study, proof of
+the first Saudi arid-soil study, first Empty Quarter microbial study, proof of
 a seasonal bloom, or evidence of active atmospheric chemosynthesis.
 
 \section{Uncertainty estimates for headline results}
@@ -1346,10 +1432,10 @@ Estimand & Estimate [interval or range] & Basis and independent unit \\
 \multicolumn{3}{l}{\textbf{Geography}} \\
 Quadratic transect partial $R^2$ & $0.402$ [$0.325$,$0.478$] & Site-jackknife CI; $60$ sites \\
 Aitchison slope per $100$~km, surface & $1.351$ [$0.905$,$1.796$] & Site-jackknife CI; $60$ sites \\
-Aitchison slope per $100$~km, shallow subsurface & $1.510$ [$1.092$,$1.929$] & Site-jackknife CI; $60$ sites \\
+Aitchison slope per $100$~km, shallow-subsurface & $1.510$ [$1.092$,$1.929$] & Site-jackknife CI; $60$ sites \\
 Aitchison slope per $100$~km, root-adjacent & $1.180$ [$0.698$,$1.662$] & Site-jackknife CI; $60$ sites \\
 Replacement share, surface & $0.715$ [$0.636$,$0.793$] & Site-jackknife CI; $60$ sites \\
-Replacement share, shallow subsurface & $0.692$ [$0.607$,$0.776$] & Site-jackknife CI; $60$ sites \\
+Replacement share, shallow-subsurface & $0.692$ [$0.607$,$0.776$] & Site-jackknife CI; $60$ sites \\
 Replacement share, root-adjacent & $0.747$ [$0.676$,$0.818$] & Site-jackknife CI; $60$ sites \\
 \addlinespace
 \multicolumn{3}{l}{\textbf{Soil position}} \\

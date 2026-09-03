@@ -114,9 +114,9 @@ def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
     ] is False
 
     for text in (
-        "Predicted metabolic pathways follow geography and soil position",
+        "Predicted metabolic pathways follow geography and compartment",
         "23.4\\,\\% of the difference among site-level pathway profiles",
-        "Of 600 tests covering 200 pathways and 3 position pairs, 270",
+        "Of 600 tests covering 200 pathways and 3 compartment pairs, 270",
         "pathways that produce the fatty acids cis-vaccenate and gondoate",
         "glucose and xylose degradation",
         "carbon and metabolite exchange near desert roots",

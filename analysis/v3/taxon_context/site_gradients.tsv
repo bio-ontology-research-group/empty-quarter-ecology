@@ -1,0 +1,5 @@
+variable	description	n_sites	spearman_rho_route_position	p_value	mean_west_third	mean_east_third
+mean_air_temperature_c	49-month mean air temperature	60	0.9820778575	9.789274775e-44	27.89460204	30.07216326
+mean_monthly_rain_mm	49-month mean monthly rainfall	60	0.5509259907	5.085361788e-06	2.159081633	3.671122449
+mean_relative_humidity_pct	49-month mean relative humidity	60	0.918891884	4.217888291e-25	24.71663265	31.81636735
+mean_ph	archived-soil pH (admitted measurements, site mean)	60	0.8174492915	1.610265081e-15	7.853400188	8.229425253

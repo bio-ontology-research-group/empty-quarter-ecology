@@ -20,8 +20,10 @@ import xml.etree.ElementTree as ET
 import matplotlib
 
 matplotlib.use("Agg")
+import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from matplotlib import ft2font
+from matplotlib import patheffects
 import numpy as np
 import pandas as pd
 
@@ -121,10 +123,25 @@ def read_kml_polygon(path: Path) -> np.ndarray:
     return np.asarray(coordinates, dtype=float)
 
 
+def read_background_image(path: Path) -> tuple[np.ndarray, tuple[float, float, float, float]]:
+    """Read the committed satellite crop and its geographic extent sidecar."""
+    sidecar = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
+    extent_degrees = sidecar["extent_degrees"]
+    image = mpimg.imread(path)
+    extent = (
+        float(extent_degrees["lon_min"]),
+        float(extent_degrees["lon_max"]),
+        float(extent_degrees["lat_min"]),
+        float(extent_degrees["lat_max"]),
+    )
+    return image, extent
+
+
 def make_landscape_figure(
     alpha: pd.DataFrame,
     coordinates: pd.DataFrame,
     boundary_path: Path,
+    background_path: Path,
     distance_pairs: pd.DataFrame,
     site: pd.DataFrame,
     alpha_correlations: pd.DataFrame,
@@ -138,27 +155,41 @@ def make_landscape_figure(
 
     coordinates = coordinates.sort_values("transect_km")
     boundary = read_kml_polygon(boundary_path)
-    map_ax.fill(
-        boundary[:, 0],
-        boundary[:, 1],
-        facecolor="#F2E2C4",
-        edgecolor="#9C7A4E",
-        linewidth=0.8,
+    background, extent = read_background_image(background_path)
+    map_ax.imshow(
+        background,
+        extent=extent,
+        origin="upper",
+        interpolation="none",
+        aspect="auto",
         zorder=0,
+    )
+    map_ax.plot(
+        np.append(boundary[:, 0], boundary[0, 0]),
+        np.append(boundary[:, 1], boundary[0, 1]),
+        color="#FFFFFF",
+        linewidth=0.9,
+        linestyle=(0, (3, 2)),
+        zorder=1,
     )
     map_ax.text(
         51.1,
         22.7,
         "Rub' al-Khali",
-        color="#7A5B36",
+        color="#FFFFFF",
         fontsize=8.0,
         ha="center",
+        path_effects=[
+            patheffects.withStroke(linewidth=1.6, foreground="#4A3520")
+        ],
+        zorder=3,
     )
     map_ax.plot(
         coordinates["longitude"],
         coordinates["latitude"],
-        color="#BBBBBB",
+        color="#FFFFFF",
         linewidth=0.9,
+        alpha=0.85,
         zorder=1,
     )
     map_ax.scatter(
@@ -166,8 +197,8 @@ def make_landscape_figure(
         coordinates["latitude"],
         color="#B56A2D",
         s=25,
-        edgecolor="#333333",
-        linewidth=0.35,
+        edgecolor="#FFFFFF",
+        linewidth=0.45,
         zorder=2,
     )
     for site_number, horizontal, vertical in ((1, "left", "top"), (30, "left", "bottom"), (60, "right", "top")):
@@ -182,6 +213,11 @@ def make_landscape_figure(
             ha=horizontal,
             va=vertical,
             fontsize=7.3,
+            color="#FFFFFF",
+            path_effects=[
+                patheffects.withStroke(linewidth=1.4, foreground="#4A3520")
+            ],
+            zorder=3,
         )
     map_ax.set_aspect(1 / np.cos(np.deg2rad(coordinates["latitude"].mean())))
     map_ax.set_xlim(boundary[:, 0].min() - 0.2, boundary[:, 0].max() + 0.2)
@@ -793,6 +829,7 @@ def main() -> None:
     parser.add_argument("--pma-dir", type=Path, default=None)
     parser.add_argument("--measured-function-dir", type=Path, default=None)
     parser.add_argument("--boundary-file", type=Path, default=None)
+    parser.add_argument("--background-image", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
 
@@ -835,6 +872,11 @@ def main() -> None:
             (candidate for candidate in boundary_candidates if candidate.is_file()),
             boundary_candidates[0],
         )
+    background_file = (
+        args.background_image.resolve()
+        if args.background_image is not None
+        else project_root / "metadata/geodata/bluemarble_arabia_200407_120ppd.png"
+    )
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
 
@@ -852,6 +894,8 @@ def main() -> None:
     input_paths = {
         "alpha_table": core / "cache/alpha.tsv",
         "empty_quarter_orientation_boundary": boundary_file,
+        "landscape_background_image": background_file,
+        "landscape_background_sidecar": background_file.with_suffix(".json"),
         "spatial_site_coordinates": (
             core
             / "spatial_turnover_rescue/results/site_coordinates.tsv"
@@ -1135,6 +1179,7 @@ def main() -> None:
         alpha,
         coordinates,
         boundary_file,
+        background_file,
         distance_pairs,
         climate_site,
         climate_alpha,

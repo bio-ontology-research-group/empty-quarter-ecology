@@ -1,0 +1,463 @@
+rank	pathway	description	mean_relative_abundance	prevalence	pathway_class	autotrophy_marker	mean_surface	mean_shallow_subsurface	mean_root_adjacent
+1	PWY-3781	aerobic respiration I (cytochrome c)	0.01696242515	1	energy_central_metabolism	False	0.01679764473	0.01751593164	0.01664683938
+2	PWY-7111	pyruvate fermentation to isobutanol (engineered)	0.01027552923	1	energy_central_metabolism	False	0.01041408628	0.01009412576	0.01031259991
+3	PWY-5101	L-isoleucine biosynthesis II	0.009324930167	1	biosynthesis	False	0.009331715698	0.009448962625	0.009219907838
+4	ILEUSYN-PWY	L-isoleucine biosynthesis I (from threonine)	0.009062232407	1	biosynthesis	False	0.009087482193	0.009155746599	0.008967249649
+5	VALSYN-PWY	L-valine biosynthesis	0.009062232407	1	biosynthesis	False	0.009087482193	0.009155746599	0.008967249649
+6	BRANCHED-CHAIN-AA-SYN-PWY	superpathway of branched amino acid biosynthesis	0.007961656569	1	biosynthesis	False	0.007912664259	0.00817205628	0.007830987474
+7	PWY-5973	cis-vaccenate biosynthesis	0.007587547935	1	biosynthesis	False	0.007393804091	0.007548154363	0.007771264518
+8	PWY-7663	gondoate biosynthesis (anaerobic)	0.007449251549	1	biosynthesis	False	0.007304915989	0.007379288293	0.007618763846
+9	FASYN-ELONG-PWY	fatty acid elongation -- saturated	0.007359001886	1	biosynthesis	False	0.007264704646	0.007293457542	0.007485691694
+10	TCA	TCA cycle I (prokaryotic)	0.007252496558	1	energy_central_metabolism	False	0.007245667683	0.007375780871	0.007158760309
+11	PWY-6969	TCA cycle V (2-oxoglutarate:ferredoxin oxidoreductase)	0.007169935829	0.9991850041	energy_central_metabolism	False	0.007133466553	0.007354733875	0.007050017084
+12	PWY-7094	fatty acid salvage	0.007139104671	0.9991850041	biosynthesis	False	0.007375081963	0.007230785955	0.006880214118
+13	PWY-5103	L-isoleucine biosynthesis III	0.007115289553	1	biosynthesis	False	0.007069174267	0.007266919012	0.007029601921
+14	PWY-5667	CDP-diacylglycerol biosynthesis I	0.006891133462	1	biosynthesis	False	0.006818360945	0.007088644729	0.006789487015
+15	PWY0-1319	CDP-diacylglycerol biosynthesis II	0.006891133462	1	biosynthesis	False	0.006818360945	0.007088644729	0.006789487015
+16	FAO-PWY	fatty acid &beta;-oxidation I	0.006834472366	1	energy_central_metabolism	False	0.00704147901	0.006848880098	0.006660430557
+17	PWY-7208	superpathway of pyrimidine nucleobases salvage	0.006707262584	1	biosynthesis	False	0.006636728426	0.006880161386	0.006623642885
+18	NONOXIPENT-PWY	pentose phosphate pathway (non-oxidative branch)	0.006697070274	1	energy_central_metabolism	False	0.006537677125	0.006855962769	0.006694446246
+19	PWY-7229	superpathway of adenosine nucleotides de novo biosynthesis I	0.006604910104	1	biosynthesis	False	0.006499267299	0.006800297308	0.006530767907
+20	PWY-5695	urate biosynthesis/inosine 5'-phosphate degradation	0.006565769571	1	degradation_utilization	False	0.006738507006	0.006425246945	0.006543155213
+21	PHOSLIPSYN-PWY	superpathway of phospholipid biosynthesis I (bacteria)	0.006542729244	1	biosynthesis	False	0.00645458292	0.006790171531	0.006413013889
+22	PWY-3001	superpathway of L-isoleucine biosynthesis I	0.006521620952	1	biosynthesis	False	0.006439505405	0.00667402009	0.006463568022
+23	REDCITCYC	TCA cycle VIII (helicobacter)	0.006493896836	0.9991850041	energy_central_metabolism	False	0.006653703914	0.006418900653	0.006428760365
+24	PWY-2942	L-lysine biosynthesis III	0.006446620385	1	biosynthesis	False	0.00635255508	0.006562496316	0.006427303009
+25	SER-GLYSYN-PWY	superpathway of L-serine and glycine biosynthesis I	0.006400593478	1	biosynthesis	False	0.006284812088	0.006468811527	0.00643662639
+26	PWY-7219	adenosine ribonucleotides de novo biosynthesis	0.006399335488	1	biosynthesis	False	0.00629366728	0.00662309667	0.006302406296
+27	PWY-6126	superpathway of adenosine nucleotides de novo biosynthesis II	0.006363447139	1	biosynthesis	False	0.006264859727	0.006557642431	0.006284725855
+28	PWY-7220	adenosine deoxyribonucleotides de novo biosynthesis II	0.006352154404	1	biosynthesis	False	0.006253510849	0.006510482726	0.00630230696
+29	PWY-7222	guanosine deoxyribonucleotides de novo biosynthesis II	0.006352154404	1	biosynthesis	False	0.006253510849	0.006510482726	0.00630230696
+30	P105-PWY	TCA cycle IV (2-oxoglutarate decarboxylase)	0.00628871282	0.9991850041	energy_central_metabolism	False	0.006303916284	0.006221256378	0.006331002305
+31	PWY-6121	5-aminoimidazole ribonucleotide biosynthesis I	0.006199885519	1	biosynthesis	False	0.006157818043	0.006342568306	0.006118212438
+32	PWY-6122	5-aminoimidazole ribonucleotide biosynthesis II	0.006191207213	1	biosynthesis	False	0.006100250631	0.006365785903	0.006122264951
+33	PWY-6277	superpathway of 5-aminoimidazole ribonucleotide biosynthesis	0.006191207213	1	biosynthesis	False	0.006100250631	0.006365785903	0.006122264951
+34	PWY0-162	superpathway of pyrimidine ribonucleotides de novo biosynthesis	0.006191165114	1	biosynthesis	False	0.006116008137	0.006389832014	0.006090461118
+35	PWY-5686	UMP biosynthesis	0.006182481876	1	biosynthesis	False	0.00610623558	0.006368651853	0.006092677786
+36	PWY4FS-7	phosphatidylglycerol biosynthesis I (plastidic)	0.006172027058	1	biosynthesis	False	0.006071989752	0.006427029707	0.006045566864
+37	PWY4FS-8	phosphatidylglycerol biosynthesis II (non-plastidic)	0.006172027058	1	biosynthesis	False	0.006071989752	0.006427029707	0.006045566864
+38	PWY-7228	superpathway of guanosine nucleotides de novo biosynthesis I	0.006141442771	1	biosynthesis	False	0.006063464631	0.006294522102	0.006079596025
+39	PWY-5097	L-lysine biosynthesis VI	0.006054765816	1	biosynthesis	False	0.005972296888	0.006146669648	0.006045616198
+40	PWY-841	superpathway of purine nucleotides de novo biosynthesis I	0.006041152356	1	biosynthesis	False	0.00596998093	0.006207765863	0.005963084898
+41	COMPLETE-ARO-PWY	superpathway of aromatic amino acid biosynthesis	0.00599397482	1	biosynthesis	False	0.005892768206	0.006178161534	0.005925353981
+42	PWY-6125	superpathway of guanosine nucleotides de novo biosynthesis II	0.005988805546	1	biosynthesis	False	0.005913163925	0.006147843202	0.005920335791
+43	ANAGLYCOLYSIS-PWY	glycolysis III (from glucose)	0.005981745881	1	energy_central_metabolism	False	0.005890311569	0.006140105908	0.005926215066
+44	CALVIN-PWY	Calvin-Benson-Bassham cycle	0.005873047503	1	energy_central_metabolism	True	0.005803901091	0.00601277969	0.005814997929
+45	THRESYN-PWY	superpathway of L-threonine biosynthesis	0.005871158203	1	biosynthesis	False	0.005763156466	0.006017423083	0.005838351719
+46	TRPSYN-PWY	L-tryptophan biosynthesis	0.005830687772	1	biosynthesis	False	0.005748260579	0.005973505624	0.00578058084
+47	PWY-7221	guanosine ribonucleotides de novo biosynthesis	0.005788569555	1	biosynthesis	False	0.005709384873	0.005939138081	0.005729687896
+48	PWY-5188	tetrapyrrole biosynthesis I (from glutamate)	0.005742831632	1	biosynthesis	False	0.005686595965	0.005885110786	0.005672602328
+49	P108-PWY	pyruvate fermentation to propanoate I	0.005737773654	0.9991850041	energy_central_metabolism	False	0.005637541758	0.005987798993	0.005615466927
+50	PWY-5659	GDP-mannose biosynthesis	0.005685831998	0.9991850041	biosynthesis	False	0.00565717539	0.006110633053	0.005366867981
+51	ARGSYNBSUB-PWY	L-arginine biosynthesis II (acetyl cycle)	0.005677522868	1	biosynthesis	False	0.005588269566	0.005879811226	0.005584970894
+52	ARO-PWY	chorismate biosynthesis I	0.005652586215	1	biosynthesis	False	0.00555642547	0.005831912355	0.005583912243
+53	GLYCOLYSIS	glycolysis I (from glucose 6-phosphate)	0.005593945133	1	energy_central_metabolism	False	0.005530784658	0.005654064341	0.005595190446
+54	PWY-5189	tetrapyrrole biosynthesis II (from glycine)	0.005567568105	1	biosynthesis	False	0.005548921222	0.005680106495	0.005491744296
+55	SALVADEHYPOX-PWY	adenosine nucleotides degradation II	0.005548357424	0.9991850041	degradation_utilization	False	0.005711874231	0.005281712598	0.005634356214
+56	PWY-6387	UDP-N-acetylmuramoyl-pentapeptide biosynthesis I (meso-diaminopimelate containing)	0.005505379733	1	biosynthesis	False	0.005455443612	0.005656471452	0.005423122965
+57	DTDPRHAMSYN-PWY	dTDP-L-rhamnose biosynthesis I	0.005492229808	1	biosynthesis	False	0.005567730731	0.005755193254	0.005221606567
+58	GLUCONEO-PWY	gluconeogenesis I	0.005489901273	1	energy_central_metabolism	False	0.005485562706	0.005507367419	0.005479266979
+59	SULFATE-CYS-PWY	superpathway of sulfate assimilation and cysteine biosynthesis	0.005482918896	1	degradation_utilization	False	0.005533131872	0.005387964518	0.005519835333
+60	PWY-6163	chorismate biosynthesis from 3-dehydroquinate	0.005446123452	1	biosynthesis	False	0.005346117549	0.005609719169	0.005393111274
+61	PEPTIDOGLYCANSYN-PWY	peptidoglycan biosynthesis I (meso-diaminopimelate containing)	0.00543875304	1	biosynthesis	False	0.005387183334	0.005593891646	0.005354525449
+62	COA-PWY	coenzyme A biosynthesis I	0.00543770862	1	biosynthesis	False	0.005366635878	0.005601497177	0.005361834401
+63	RIBOSYN2-PWY	flavin biosynthesis I (bacteria and plants)	0.005396202535	1	biosynthesis	False	0.005346397426	0.005534823048	0.005323867271
+64	PWY-6386	UDP-N-acetylmuramoyl-pentapeptide biosynthesis II (lysine-containing)	0.005384106323	1	biosynthesis	False	0.005339607432	0.005518221426	0.005311228123
+65	PWY-6608	guanosine nucleotides degradation III	0.005383914379	0.9991850041	degradation_utilization	False	0.005441242368	0.005196710407	0.005489396872
+66	GLUTORN-PWY	L-ornithine biosynthesis	0.005353096744	1	biosynthesis	False	0.005317353025	0.005538503417	0.005232119362
+67	PWY-6385	peptidoglycan biosynthesis III (mycobacteria)	0.005327146073	1	biosynthesis	False	0.005279359304	0.005470624726	0.005249321836
+68	PANTO-PWY	phosphopantothenate biosynthesis I	0.005326653017	1	biosynthesis	False	0.005278286059	0.005454936529	0.005261497934
+69	UDPNAGSYN-PWY	UDP-N-acetyl-D-glucosamine biosynthesis I	0.005300485482	1	biosynthesis	False	0.005171436188	0.005541203065	0.005208276491
+70	PENTOSE-P-PWY	pentose phosphate pathway	0.005293556075	1	energy_central_metabolism	False	0.005242670238	0.005309930308	0.005320330229
+71	PWY-6123	inosine-5'-phosphate biosynthesis I	0.005276868549	1	biosynthesis	False	0.005205268074	0.005437094838	0.005204271841
+72	PWY0-1261	anhydromuropeptides recycling	0.005255320724	0.9991850041	other	False	0.005242529322	0.004986948012	0.005481076852
+73	PWY0-1586	peptidoglycan maturation (meso-diaminopimelate containing)	0.005247673979	1	other	False	0.005141037062	0.005163234713	0.005399235779
+74	HISTSYN-PWY	L-histidine biosynthesis	0.005240076704	1	biosynthesis	False	0.005185896779	0.005394354003	0.005158589955
+75	DAPLYSINESYN-PWY	L-lysine biosynthesis I	0.00519824619	0.9991850041	biosynthesis	False	0.005236754119	0.0053273759	0.005064230645
+76	PWY-7197	pyrimidine deoxyribonucleotide phosphorylation	0.005195195393	1	other	False	0.005105047946	0.005383421335	0.005114648488
+77	HEMESYN2-PWY	heme biosynthesis II (anaerobic)	0.005153271738	1	biosynthesis	False	0.005149821052	0.00511423337	0.005187358813
+78	PANTOSYN-PWY	pantothenate and coenzyme A biosynthesis I	0.005152921208	1	biosynthesis	False	0.005109604385	0.005245286929	0.005112673358
+79	ARGSYN-PWY	L-arginine biosynthesis I (via L-ornithine)	0.005127500494	1	biosynthesis	False	0.004964801492	0.005308891302	0.005109386846
+80	PWY-5484	glycolysis II (from fructose 6-phosphate)	0.005117861912	1	energy_central_metabolism	False	0.005081543634	0.005095805497	0.005164093756
+81	PWY-7539	6-hydroxymethyl-dihydropterin diphosphate biosynthesis III (Chlamydia)	0.005111062819	1	biosynthesis	False	0.005116529199	0.005118289319	0.005100964108
+82	PWY-7400	L-arginine biosynthesis IV (archaebacteria)	0.005108617386	1	biosynthesis	False	0.004948359054	0.005289145103	0.005089282026
+83	TRNA-CHARGING-PWY	tRNA charging	0.005009369331	0.9991850041	other	False	0.004964674553	0.005111505342	0.004962349578
+84	PWY-7211	superpathway of pyrimidine deoxyribonucleotides de novo biosynthesis	0.004988539736	0.9991850041	biosynthesis	False	0.005042958061	0.004958261536	0.004970169225
+85	PWY-5121	superpathway of geranylgeranyl diphosphate biosynthesis II (via MEP)	0.004983343566	0.9991850041	biosynthesis	False	0.004852693367	0.005077324167	0.005010337797
+86	OANTIGEN-PWY	O-antigen building blocks biosynthesis (E. coli)	0.004949914583	1	biosynthesis	False	0.004967876082	0.005202037627	0.004733162352
+87	PWY-6147	6-hydroxymethyl-dihydropterin diphosphate biosynthesis I	0.004948847954	1	biosynthesis	False	0.00496647494	0.004982390514	0.004908052691
+88	NONMEVIPP-PWY	methylerythritol phosphate pathway I	0.004942059443	1	other	False	0.004887263264	0.005014946542	0.004926477573
+89	PWY-7560	methylerythritol phosphate pathway II	0.004942059443	1	other	False	0.004887263264	0.005014946542	0.004926477573
+90	SO4ASSIM-PWY	sulfate reduction I (assimilatory)	0.004935508284	1	other	False	0.005014240031	0.004780098068	0.004998637148
+91	PWY-7234	inosine-5'-phosphate biosynthesis III	0.004932131459	1	biosynthesis	False	0.004905005662	0.004944893363	0.004943162074
+92	PWY-6609	adenine and adenosine salvage III	0.004918702745	0.9991850041	biosynthesis	False	0.00466712649	0.005029916824	0.005026748743
+93	GLYCOLYSIS-TCA-GLYOX-BYPASS	superpathway of glycolysis, pyruvate dehydrogenase, TCA, and glyoxylate bypass	0.004892129135	0.9983700081	energy_central_metabolism	False	0.004923615541	0.004741836694	0.004988222968
+94	PWY-6353	purine nucleotides degradation II (aerobic)	0.004838533698	0.9983700081	degradation_utilization	False	0.004970743984	0.004730533984	0.004821583625
+95	PWY-6897	thiamin salvage II	0.004820558101	1	biosynthesis	False	0.004866040901	0.00502030348	0.004624307908
+96	PWY-5345	superpathway of L-methionine biosynthesis (by sulfhydrylation)	0.004808821344	0.9991850041	biosynthesis	False	0.004872214359	0.004732761223	0.004820206795
+97	PWY-7184	pyrimidine deoxyribonucleotides de novo biosynthesis I	0.004806393978	1	biosynthesis	False	0.004888785699	0.004752566213	0.004784998742
+98	POLYISOPRENSYN-PWY	polyisoprenoid biosynthesis (E. coli)	0.004784645926	1	biosynthesis	False	0.004751220448	0.004875139431	0.00473814013
+99	ANAEROFRUCAT-PWY	homolactic fermentation	0.004782086422	0.9991850041	energy_central_metabolism	False	0.004827522556	0.004795153074	0.004735924742
+100	P42-PWY	incomplete reductive TCA cycle	0.004742202465	0.9991850041	energy_central_metabolism	False	0.004361219257	0.004889886819	0.004922493636
+101	FOLSYN-PWY	superpathway of tetrahydrofolate biosynthesis and salvage	0.004733795317	1	biosynthesis	False	0.004789290718	0.004568117918	0.004823413039
+102	P4-PWY	superpathway of L-lysine, L-threonine and L-methionine biosynthesis I	0.004659198541	0.9991850041	biosynthesis	False	0.004657961204	0.004707799813	0.004621104038
+103	TCA-GLYOX-BYPASS	superpathway of glyoxylate bypass and TCA	0.004632541951	0.9991850041	energy_central_metabolism	False	0.004665698425	0.004346576154	0.004836378997
+104	PWY-5154	L-arginine biosynthesis III (via N-acetyl-L-citrulline)	0.004620927221	1	biosynthesis	False	0.004602470896	0.004599916961	0.004652299924
+105	PYRIDNUCSYN-PWY	NAD biosynthesis I (from aspartate)	0.004582560393	1	biosynthesis	False	0.004531722898	0.004815072462	0.004435565562
+106	PWY-5347	superpathway of L-methionine biosynthesis (transsulfuration)	0.004577274852	1	biosynthesis	False	0.004505782899	0.004604691803	0.004611344785
+107	GLYCOLYSIS-E-D	superpathway of glycolysis and Entner-Doudoroff	0.004559344499	0.9991850041	energy_central_metabolism	False	0.004632342234	0.00455199574	0.004507962052
+108	PWY0-166	superpathway of pyrimidine deoxyribonucleotides de novo biosynthesis (E. coli)	0.004513951911	1	biosynthesis	False	0.004577359677	0.004492293596	0.004481597753
+109	1CMET2-PWY	N10-formyl-tetrahydrofolate biosynthesis	0.004476183753	0.9991850041	biosynthesis	False	0.004494459753	0.004320770033	0.004586761718
+110	PWY-5918	superpathay of heme biosynthesis from glutamate	0.004467794515	0.9991850041	biosynthesis	False	0.004418840786	0.00449634015	0.004483268988
+111	MET-SAM-PWY	superpathway of S-adenosyl-L-methionine biosynthesis	0.004446554598	1	biosynthesis	False	0.004390375083	0.00446330122	0.004477183958
+112	HSERMETANA-PWY	L-methionine biosynthesis III	0.004445119631	0.9991850041	biosynthesis	False	0.004660349165	0.004417867881	0.004298110201
+113	PWY0-781	aspartate superpathway	0.004413671825	0.9991850041	other	False	0.004378127233	0.004435883946	0.004423713535
+114	PWY-6612	superpathway of tetrahydrofolate biosynthesis	0.004370878403	1	biosynthesis	False	0.004425549942	0.004148225776	0.004506939243
+115	PWY-5913	TCA cycle VI (obligate autotrophs)	0.004245276135	0.9991850041	energy_central_metabolism	False	0.004421458417	0.004278911686	0.004079970324
+116	PWY-7200	superpathway of pyrimidine deoxyribonucleoside salvage	0.00422150887	0.9991850041	biosynthesis	False	0.004217936038	0.004189829234	0.004249776876
+117	PWY-6700	queuosine biosynthesis	0.004218185673	1	biosynthesis	False	0.004185268274	0.004209336907	0.004251132197
+118	PWY-7196	superpathway of pyrimidine ribonucleosides salvage	0.004209656052	0.9983700081	biosynthesis	False	0.004114359734	0.004162370935	0.004322453225
+119	GLYOXYLATE-BYPASS	glyoxylate cycle	0.004173047864	0.9991850041	energy_central_metabolism	False	0.00420257699	0.003971378233	0.004311974645
+120	GLYCOGENSYNTH-PWY	glycogen biosynthesis I (from ADP-D-Glucose)	0.00411464114	0.9983700081	biosynthesis	False	0.004123873713	0.004151868421	0.004077472128
+121	PWY-7323	superpathway of GDP-mannose-derived O-antigen building blocks biosynthesis	0.004101561433	0.9991850041	biosynthesis	False	0.004220268249	0.004357970861	0.003802297873
+122	P23-PWY	reductive TCA cycle I	0.004095606713	0.9959250204	energy_central_metabolism	True	0.003921126889	0.004641151134	0.003794033022
+123	PWY-7392	taxadiene biosynthesis (engineered)	0.00408373582	0.9983700081	biosynthesis	False	0.004043450924	0.004011869513	0.004173117768
+124	PWY-6703	preQ0 biosynthesis	0.003876902005	1	biosynthesis	False	0.00387106056	0.003889235943	0.003871572442
+125	HOMOSER-METSYN-PWY	L-methionine biosynthesis I	0.003701493404	1	biosynthesis	False	0.003656439283	0.003692683819	0.003743933457
+126	PWY-6317	galactose degradation I (Leloir pathway)	0.003698333856	0.9975550122	degradation_utilization	False	0.003719672629	0.003673060551	0.003701901588
+127	HEME-BIOSYNTHESIS-II	heme biosynthesis I (aerobic)	0.003623648971	1	biosynthesis	False	0.003556355605	0.003558428439	0.003728885585
+128	PWY-7199	pyrimidine deoxyribonucleosides salvage	0.003611559941	0.9991850041	biosynthesis	False	0.003636363181	0.003458933159	0.003714775127
+129	PWY-6628	superpathway of L-phenylalanine biosynthesis	0.003540459585	0.9991850041	biosynthesis	False	0.00383002814	0.003385879168	0.003437454599
+130	PWY-6630	superpathway of L-tyrosine biosynthesis	0.003520079738	0.9991850041	biosynthesis	False	0.003808812666	0.003371376791	0.003413006265
+131	HISDEG-PWY	L-histidine degradation I	0.00339634792	1	degradation_utilization	False	0.003426699255	0.0032610968	0.003481242392
+132	PWY0-1296	purine ribonucleosides degradation	0.003380548041	0.9991850041	degradation_utilization	False	0.003284957453	0.003297727542	0.00352213941
+133	PWY-7254	TCA cycle VII (acetate-producers)	0.003373206551	0.9991850041	energy_central_metabolism	False	0.003392089443	0.002964279379	0.003687081692
+134	PWY-4984	urea cycle	0.003349397127	1	other	False	0.003268155596	0.003354273807	0.003409236441
+135	PWY-5104	L-isoleucine biosynthesis IV	0.003281251743	0.9991850041	biosynthesis	False	0.003003721312	0.003810564068	0.00307360053
+136	PWYG-321	mycolate biosynthesis	0.003232553407	0.9991850041	biosynthesis	False	0.003414364035	0.002987220527	0.003287064532
+137	COBALSYN-PWY	adenosylcobalamin salvage from cobinamide I	0.003222859967	0.9991850041	biosynthesis	False	0.003261366992	0.003260481149	0.003162399453
+138	PWY-6901	superpathway of glucose and xylose degradation	0.0032053659	0.9967400163	energy_central_metabolism	False	0.003266806753	0.002999413147	0.003322690799
+139	COLANSYN-PWY	colanic acid building blocks biosynthesis	0.003170361732	0.9991850041	biosynthesis	False	0.003276002373	0.003273627748	0.003004448925
+140	PWY-5920	superpathway of heme biosynthesis from glycine	0.003125289957	0.9991850041	biosynthesis	False	0.00320943158	0.002996029336	0.003163154119
+141	GLYCOCAT-PWY	glycogen degradation I (bacterial)	0.003113692397	0.9991850041	degradation_utilization	False	0.003173624136	0.00331609981	0.002903962796
+142	PWY-7664	oleate biosynthesis IV (anaerobic)	0.003093819501	0.9991850041	biosynthesis	False	0.003268979097	0.002860820357	0.003143636599
+143	PYRIDNUCSAL-PWY	NAD salvage pathway I	0.003080626196	0.9991850041	biosynthesis	False	0.003172812168	0.003047153515	0.003035182968
+144	LEU-DEG2-PWY	L-leucine degradation I	0.003056174563	0.9991850041	degradation_utilization	False	0.00328077763	0.003015110109	0.002912911306
+145	PWY0-1297	superpathway of purine deoxyribonucleosides degradation	0.002937598189	0.9983700081	degradation_utilization	False	0.002866023171	0.002902660037	0.003021854185
+146	PWY-5989	stearate biosynthesis II (bacteria and plants)	0.002923198958	0.9991850041	biosynthesis	False	0.003112316897	0.002692817778	0.002959957093
+147	PWY-6737	starch degradation V	0.00291193093	0.9991850041	degradation_utilization	False	0.003004017626	0.003089575685	0.002696869953
+148	FERMENTATION-PWY	mixed acid fermentation	0.002858949814	0.9991850041	energy_central_metabolism	False	0.002894659912	0.002766230137	0.002905452009
+149	PWY-6282	palmitoleate biosynthesis I (from (5Z)-dodec-5-enoate)	0.002854649009	0.9991850041	biosynthesis	False	0.003027496303	0.002629943268	0.002899614607
+150	PWY-6151	S-adenosyl-L-methionine cycle I	0.002850956365	1	other	False	0.002871427447	0.002618740942	0.003021544623
+151	PWY-5022	4-aminobutanoate degradation V	0.002837859979	0.9975550122	degradation_utilization	False	0.002748664361	0.002790367119	0.002946036245
+152	PWY-5505	L-glutamate and L-glutamine biosynthesis	0.002821487028	0.9991850041	biosynthesis	False	0.002688252513	0.00274955786	0.002983867307
+153	PWY0-862	(5Z)-dodec-5-enoate biosynthesis	0.0027892496	0.9991850041	biosynthesis	False	0.002962070233	0.002581178265	0.002820865429
+154	PWY-6895	superpathway of thiamin diphosphate biosynthesis II	0.002783929921	0.9975550122	biosynthesis	False	0.002709172682	0.002699820134	0.002910207394
+155	PWY-5840	superpathway of menaquinol-7 biosynthesis	0.002780665232	0.9975550122	biosynthesis	False	0.002694991105	0.002730331983	0.002888360891
+156	PWY0-1415	superpathway of heme biosynthesis from uroporphyrinogen-III	0.002779050448	0.9975550122	biosynthesis	False	0.002851196725	0.002606498456	0.002861126173
+157	DENOVOPURINE2-PWY	superpathway of purine nucleotides de novo biosynthesis II	0.002775358564	0.9991850041	biosynthesis	False	0.002741305743	0.002928859898	0.002678699578
+158	ARG+POLYAMINE-SYN	superpathway of arginine and polyamine biosynthesis	0.002756578583	0.9975550122	biosynthesis	False	0.002713461875	0.00262915877	0.002892836736
+159	PRPP-PWY	superpathway of histidine, purine, and pyrimidine biosynthesis	0.002723593953	0.9983700081	biosynthesis	False	0.002694099952	0.002832617345	0.002659108417
+160	THISYN-PWY	superpathway of thiamin diphosphate biosynthesis I	0.002708152919	0.9959250204	biosynthesis	False	0.002785551051	0.00281196137	0.002563969112
+161	PWY-5838	superpathway of menaquinol-8 biosynthesis I	0.002693046093	0.9967400163	biosynthesis	False	0.002627716	0.002670400996	0.002762519883
+162	PWY-5897	superpathway of menaquinol-11 biosynthesis	0.002692731898	0.9975550122	biosynthesis	False	0.002610722324	0.002640207127	0.002799313121
+163	PWY-5898	superpathway of menaquinol-12 biosynthesis	0.002692731898	0.9975550122	biosynthesis	False	0.002610722324	0.002640207127	0.002799313121
+164	PWY-5899	superpathway of menaquinol-13 biosynthesis	0.002692731898	0.9975550122	biosynthesis	False	0.002610722324	0.002640207127	0.002799313121
+165	PWY-6545	pyrimidine deoxyribonucleotides de novo biosynthesis III	0.002664835506	0.9951100244	biosynthesis	False	0.00263634096	0.002983515363	0.002431044251
+166	PWY-5855	ubiquinol-7 biosynthesis (prokaryotic)	0.002630836395	0.9991850041	biosynthesis	False	0.002856682888	0.002507291861	0.002552894565
+167	PWY-5856	ubiquinol-9 biosynthesis (prokaryotic)	0.002630836395	0.9991850041	biosynthesis	False	0.002856682888	0.002507291861	0.002552894565
+168	PWY-5857	ubiquinol-10 biosynthesis (prokaryotic)	0.002630836395	0.9991850041	biosynthesis	False	0.002856682888	0.002507291861	0.002552894565
+169	PWY-6708	ubiquinol-8 biosynthesis (prokaryotic)	0.002630836395	0.9991850041	biosynthesis	False	0.002856682888	0.002507291861	0.002552894565
+170	PWY-6269	adenosylcobalamin salvage from cobinamide II	0.00260904583	0.9991850041	biosynthesis	False	0.002665991257	0.002581853272	0.002586211792
+171	PWY-5509	adenosylcobalamin biosynthesis from cobyrinate a,c-diamide I	0.002605373635	0.9991850041	biosynthesis	False	0.002658084816	0.002579178325	0.002585061091
+172	PWY0-1061	superpathway of L-alanine biosynthesis	0.002581209825	0.9983700081	biosynthesis	False	0.002853020703	0.002354798341	0.002549878873
+173	PWY0-1298	superpathway of pyrimidine deoxyribonucleosides degradation	0.00255683162	0.9991850041	degradation_utilization	False	0.002476200397	0.002504747794	0.002661976667
+174	UBISYN-PWY	superpathway of ubiquinol-8 biosynthesis (prokaryotic)	0.002529146905	0.9991850041	biosynthesis	False	0.002757498449	0.002395230517	0.002457575955
+175	FASYN-INITIAL-PWY	superpathway of fatty acid biosynthesis initiation (E. coli)	0.002526595712	0.9991850041	biosynthesis	False	0.002704192744	0.002313623885	0.002558401978
+176	PWY-2941	L-lysine biosynthesis II	0.002496821358	0.9975550122	biosynthesis	False	0.002320507333	0.0022607313	0.002824962981
+177	PWY0-1479	tRNA processing	0.002435865682	0.9975550122	other	False	0.002723182843	0.002352362614	0.002277495818
+178	PWY-6467	Kdo transfer to lipid IVA III (Chlamydia)	0.00243233963	0.9991850041	degradation_utilization	False	0.00254136022	0.002509103897	0.002285076244
+179	NAGLIPASYN-PWY	lipid IVA biosynthesis	0.002419450985	0.9991850041	biosynthesis	False	0.00250647472	0.002465254457	0.002314337161
+180	PWY-1269	CMP-3-deoxy-D-manno-octulosonate biosynthesis I	0.002360318321	0.9991850041	biosynthesis	False	0.002469016692	0.002402502065	0.002241103552
+181	PROTOCATECHUATE-ORTHO-CLEAVAGE-PWY	protocatechuate degradation II (ortho-cleavage pathway)	0.002344293383	0.9991850041	degradation_utilization	False	0.002401111293	0.002286015886	0.002346545416
+182	PWY-5100	pyruvate fermentation to acetate and lactate II	0.002215537863	0.9983700081	energy_central_metabolism	False	0.002074055986	0.002376509116	0.002197185987
+183	PWY-5971	palmitate biosynthesis II (bacteria and plants)	0.002180389139	0.9804400978	biosynthesis	False	0.002035149365	0.002089317924	0.002367577597
+184	PWY-5861	superpathway of demethylmenaquinol-8 biosynthesis	0.002176765835	0.9967400163	biosynthesis	False	0.002115026399	0.002137537308	0.002256751361
+185	PWY-7187	pyrimidine deoxyribonucleotides de novo biosynthesis II	0.002138155275	0.9991850041	biosynthesis	False	0.002149702748	0.002217162034	0.002065587269
+186	PWY-7328	superpathway of UDP-glucose-derived O-antigen building blocks biosynthesis	0.002075462694	0.9967400163	biosynthesis	False	0.002181728962	0.001968226158	0.002078260306
+187	P161-PWY	acetylene degradation	0.002065126736	0.9991850041	degradation_utilization	False	0.001795941915	0.002174938066	0.002188119641
+188	BIOTIN-BIOSYNTHESIS-PWY	biotin biosynthesis I	0.002031894655	0.9983700081	biosynthesis	False	0.002252625746	0.001887755133	0.001974521643
+189	PWY-7242	D-fructuronate degradation	0.002000982117	1	degradation_utilization	False	0.002016555185	0.001717234724	0.00221683565
+190	POLYAMSYN-PWY	superpathway of polyamine biosynthesis I	0.001963773502	0.9975550122	biosynthesis	False	0.001935758519	0.001816588007	0.002104067273
+191	PWY-6519	8-amino-7-oxononanoate biosynthesis I	0.00196261274	0.9983700081	biosynthesis	False	0.002194809457	0.001808556447	0.001904212464
+192	PWY-181	photorespiration	0.001957679499	0.9951100244	energy_central_metabolism	False	0.002115944017	0.00180777961	0.001953961055
+193	PWY-1861	formaldehyde assimilation II (RuMP Cycle)	0.001956539427	0.9959250204	degradation_utilization	False	0.001842280239	0.001750264183	0.002212014714
+194	PWY-7431	aromatic biogenic amine degradation (bacteria)	0.001954182074	1	degradation_utilization	False	0.001981137592	0.001856045393	0.002011909127
+195	PWY-5863	superpathway of phylloquinol biosynthesis	0.001934324951	0.9975550122	biosynthesis	False	0.001848042705	0.001864798305	0.002057925473
+196	ASPASN-PWY	superpathway of L-aspartate and L-asparagine biosynthesis	0.001869568681	1	biosynthesis	False	0.001757634421	0.001690133435	0.002101645418
+197	PWY-6263	superpathway of menaquinol-8 biosynthesis II	0.001853780918	0.9934800326	biosynthesis	False	0.001747681577	0.002064648336	0.001767554058
+198	P124-PWY	Bifidobacterium shunt	0.001839045225	0.9967400163	energy_central_metabolism	False	0.001856299839	0.001839208907	0.001825372063
+199	PWY-5837	1,4-dihydroxy-2-naphthoate biosynthesis I	0.001799378492	0.9975550122	biosynthesis	False	0.001723698474	0.001725603181	0.001918073345
+200	PWY-7237	myo-, chiro- and scillo-inositol degradation	0.001705460263	1	degradation_utilization	False	0.001864421956	0.001513865551	0.001734708862
+201	GALACTUROCAT-PWY	D-galacturonate degradation I	0.001620054408	0.9991850041	degradation_utilization	False	0.00167347509	0.001438931192	0.001723715699
+202	PWY-5304	superpathway of sulfur oxidation (Acidianus ambivalens)	0.001618404062	0.9991850041	energy_central_metabolism	False	0.001381629153	0.001601987425	0.00181742306
+203	TYRFUMCAT-PWY	L-tyrosine degradation I	0.001561905059	0.9991850041	degradation_utilization	False	0.001846633751	0.001424432352	0.001448947312
+204	PWY-5845	superpathway of menaquinol-9 biosynthesis	0.001531824185	0.9918500407	biosynthesis	False	0.001699359794	0.001491468399	0.001432778422
+205	PWY-5850	superpathway of menaquinol-6 biosynthesis I	0.001531123257	0.9918500407	biosynthesis	False	0.001699359794	0.001491468399	0.001430963992
+206	PWY-5896	superpathway of menaquinol-10 biosynthesis	0.001531123257	0.9918500407	biosynthesis	False	0.001699359794	0.001491468399	0.001430963992
+207	RUMP-PWY	formaldehyde oxidation I	0.001528682667	0.9959250204	energy_central_metabolism	False	0.001456555515	0.001355585646	0.001724423733
+208	PWY-621	sucrose degradation III (sucrose invertase)	0.001495105754	0.9983700081	degradation_utilization	False	0.001517358201	0.001212457051	0.001704834119
+209	PWY-6891	thiazole biosynthesis II (Bacillus)	0.001462539597	0.9975550122	biosynthesis	False	0.001377371488	0.001286989523	0.001670487097
+210	ALL-CHORISMATE-PWY	superpathway of chorismate metabolism	0.001441911389	0.9820700896	other	False	0.001544964584	0.00140931594	0.001387234339
+211	P164-PWY	purine nucleobases degradation I (anaerobic)	0.001415293007	0.9763651182	degradation_utilization	False	0.001340071426	0.0018407907	0.001132313697
+212	P122-PWY	heterolactic fermentation	0.001390617795	0.9951100244	energy_central_metabolism	False	0.001426561146	0.001361481276	0.001385828948
+213	POLYAMINSYN3-PWY	superpathway of polyamine biosynthesis II	0.001314665411	0.9951100244	biosynthesis	False	0.00129670705	0.001232557647	0.001394757327
+214	PWY0-1241	ADP-L-glycero-&beta;-D-manno-heptose biosynthesis	0.001247179166	0.9991850041	biosynthesis	False	0.001195561999	0.001304421467	0.001241677624
+215	PWY-5676	acetyl-CoA fermentation to butanoate II	0.001178239626	0.9991850041	energy_central_metabolism	False	0.00120607683	0.001174225731	0.001159619065
+216	PWY-7527	L-methionine salvage cycle III	0.001172679712	0.9967400163	biosynthesis	False	0.001102196277	0.001104916335	0.001282463855
+217	P562-PWY	myo-inositol degradation I	0.001161626446	1	degradation_utilization	False	0.001196163975	0.001069568992	0.001208516591
+218	PWY-6892	thiazole biosynthesis I (E. coli)	0.001160770578	0.9959250204	biosynthesis	False	0.001177946243	0.001192230063	0.001122003887
+219	PWY-5862	superpathway of demethylmenaquinol-9 biosynthesis	0.001145889155	0.9918500407	biosynthesis	False	0.00127825998	0.001108952071	0.001071693127
+220	PWY-5860	superpathway of demethylmenaquinol-6 biosynthesis I	0.001145401661	0.9918500407	biosynthesis	False	0.00127825998	0.001108952071	0.001070431195
+221	PWY-5028	L-histidine degradation II	0.001134442375	0.9991850041	degradation_utilization	False	0.001339405346	0.001046176665	0.001044533116
+222	GLUCUROCAT-PWY	superpathway of &beta;-D-glucuronide and D-glucuronate degradation	0.001093950179	0.9959250204	degradation_utilization	False	0.001100990614	0.0008981770892	0.001245786689
+223	PWY-6383	mono-trans, poly-cis decaprenyl phosphate biosynthesis	0.001081203042	0.9934800326	biosynthesis	False	0.001132142653	0.001022361247	0.001088522005
+224	PWY-4361	S-methyl-5-thio-&alpha;-D-ribose 1-phosphate degradation	0.001067341776	0.9975550122	degradation_utilization	False	0.001009895681	0.0009329497992	0.001220449984
+225	PWY-6507	4-deoxy-L-threo-hex-4-enopyranuronate degradation	0.001062435426	0.9951100244	degradation_utilization	False	0.001154836241	0.0008957424168	0.001123905749
+226	PWY-5180	toluene degradation I (aerobic) (via o-cresol)	0.001037617197	0.9959250204	degradation_utilization	False	0.0009608686199	0.001022726927	0.001109819019
+227	PWY-5182	toluene degradation II (aerobic) (via 4-methylcatechol)	0.001037617197	0.9959250204	degradation_utilization	False	0.0009608686199	0.001022726927	0.001109819019
+228	PWY1G-0	mycothiol biosynthesis	0.001036715186	0.9926650367	biosynthesis	False	0.001022553509	0.001115217291	0.0009847296208
+229	PWY-6471	peptidoglycan biosynthesis IV (Enterococcus faecium)	0.001020295982	0.9869600652	biosynthesis	False	0.0009189664079	0.0007040865599	0.001353988792
+230	P461-PWY	hexitol fermentation to lactate, formate, ethanol and acetate	0.001014172723	0.9967400163	energy_central_metabolism	False	0.000883284481	0.0009098463343	0.001200752427
+231	PWY-7376	cob(II)yrinate a,c-diamide biosynthesis II (late cobalt incorporation)	0.0009965818765	0.9983700081	biosynthesis	False	0.000942585363	0.0009357968958	0.001087817701
+232	PWY-6478	GDP-D-glycero-&alpha;-D-manno-heptose biosynthesis	0.0009846594991	0.9902200489	biosynthesis	False	0.001040421436	0.001212325907	0.0007578992842
+233	PWY-7007	methyl ketone biosynthesis	0.0009365525435	0.9926650367	biosynthesis	False	0.0009318533882	0.0008295624799	0.001026238831
+234	RHAMCAT-PWY	L-rhamnose degradation I	0.0009312696625	0.9967400163	degradation_utilization	False	0.0009437525974	0.0008690314201	0.0009714998705
+235	PWY-7371	1,4-dihydroxy-6-naphthoate biosynthesis II	0.0009229521581	0.9934800326	biosynthesis	False	0.0008481455689	0.001051997788	0.0008779345761
+236	HEXITOLDEGSUPER-PWY	superpathway of hexitol degradation (bacteria)	0.0009099923237	0.9934800326	degradation_utilization	False	0.000865964818	0.0009142707214	0.0009411065907
+237	PWY-6588	pyruvate fermentation to acetone	0.0009009913852	0.9991850041	energy_central_metabolism	False	0.0008557032958	0.0009361807027	0.0009082488519
+238	ENTBACSYN-PWY	enterobactin biosynthesis	0.0008835936327	0.9869600652	biosynthesis	False	0.000882869399	0.0008370653188	0.0009215613597
+239	ARGORNPROST-PWY	arginine, ornithine and proline interconversion	0.000853020265	0.9959250204	degradation_utilization	False	0.0008997465069	0.0009003749269	0.0007782854799
+240	GALACT-GLUCUROCAT-PWY	superpathway of hexuronide and hexuronate degradation	0.0008325910702	0.9959250204	degradation_utilization	False	0.0009092864844	0.0007124953262	0.0008689323876
+241	PWY0-1533	methylphosphonate degradation I	0.0008191109056	0.9983700081	degradation_utilization	False	0.0007877654368	0.0007498665811	0.0008993695596
+242	PWY-7255	ergothioneine biosynthesis I (bacteria)	0.0008158736209	0.989405053	biosynthesis	False	0.0007927105155	0.0008764877059	0.0007853308125
+243	PWY-6590	superpathway of Clostridium acetobutylicum acidogenic fermentation	0.000811772529	0.9926650367	energy_central_metabolism	False	0.0007675389236	0.0007935675896	0.0008611205947
+244	PWY-5747	2-methylcitrate cycle II	0.00078091249	0.9983700081	other	False	0.0008705770248	0.0006897621112	0.0007838092989
+245	PWY-7616	methanol oxidation to carbon dioxide	0.0007656868397	0.9902200489	energy_central_metabolism	False	0.0008040627314	0.0007166823096	0.0007749587687
+246	PWY-7374	1,4-dihydroxy-6-naphthoate biosynthesis I	0.0007502139386	0.9926650367	biosynthesis	False	0.0007205131285	0.0008122214833	0.0007236819276
+247	PWY-5415	catechol degradation I (meta-cleavage pathway)	0.000744962054	0.9959250204	degradation_utilization	False	0.0006735126356	0.0007169989746	0.0008235129337
+248	PWY-3661	glycine betaine degradation I	0.0007417654955	0.9853300733	degradation_utilization	False	0.0008674875385	0.0007123018033	0.0006667804043
+249	P221-PWY	octane oxidation	0.0007352940899	0.9951100244	energy_central_metabolism	False	0.0007262387136	0.0007298262586	0.0007467958698
+250	PWY0-321	phenylacetate degradation I (aerobic)	0.0007263509815	0.9975550122	degradation_utilization	False	0.0006938772696	0.000635334667	0.0008249953626
+251	PWY0-845	superpathway of pyridoxal 5'-phosphate biosynthesis and salvage	0.0007213810243	0.988590057	biosynthesis	False	0.0006419691489	0.0005955792453	0.0008848234197
+252	P281-PWY	3-phenylpropanoate degradation	0.0007178504905	0.9983700081	degradation_utilization	False	0.0007786855226	0.0007165610807	0.0006711429655
+253	P441-PWY	superpathway of N-acetylneuraminate degradation	0.0007126948157	0.9918500407	degradation_utilization	False	0.0005811097692	0.0007005333371	0.0008257394584
+254	GLUCOSE1PMETAB-PWY	glucose and glucose-1-phosphate degradation	0.0007119290305	0.9934800326	degradation_utilization	False	0.00086471189	0.0005432114343	0.000727638272
+255	NADSYN-PWY	NAD biosynthesis II (from tryptophan)	0.0007100713025	0.988590057	biosynthesis	False	0.0007805619424	0.0006324221345	0.0007171637392
+256	PPGPPMET-PWY	ppGpp biosynthesis	0.0007014455534	0.9991850041	biosynthesis	False	0.0006372401624	0.0006034530177	0.0008306007465
+257	PWY-5384	sucrose degradation IV (sucrose phosphorylase)	0.0006991947819	0.9967400163	degradation_utilization	False	0.0008457939572	0.0005325693531	0.0007180753623
+258	PWY-5705	allantoin degradation to glyoxylate III	0.0006974230514	0.9991850041	energy_central_metabolism	False	0.0006876780827	0.0005889737361	0.0007922422866
+259	CENTFERM-PWY	pyruvate fermentation to butanoate	0.0006801424182	0.9926650367	energy_central_metabolism	False	0.0006426198141	0.000664183764	0.0007224180638
+260	PWY-7332	superpathway of UDP-N-acetylglucosamine-derived O-antigen building blocks biosynthesis	0.0006719669994	0.9820700896	biosynthesis	False	0.0006459630797	0.0008129343319	0.0005790659539
+261	PWY0-42	2-methylcitrate cycle I	0.0006708775756	0.9983700081	other	False	0.0007171770143	0.0006016570804	0.0006901805662
+262	P125-PWY	superpathway of (R,R)-butanediol biosynthesis	0.0006566498767	0.9975550122	biosynthesis	False	0.000658432235	0.0005675287798	0.0007268863758
+263	PWY-5181	toluene degradation III (aerobic) (via p-cresol)	0.0006333989141	0.9967400163	degradation_utilization	False	0.0006094779367	0.0005646358607	0.0007074439076
+264	PWY-6470	peptidoglycan biosynthesis V (&beta;-lactam resistance)	0.0006110495172	0.9812550937	biosynthesis	False	0.0005163180609	0.0004204769943	0.0008385774348
+265	P101-PWY	ectoine biosynthesis	0.000609810062	0.9918500407	biosynthesis	False	0.0004013937828	0.000541371669	0.0008283878756
+266	TEICHOICACID-PWY	teichoic acid (poly-glycerol) biosynthesis	0.0005980040394	0.9926650367	biosynthesis	False	0.000691441701	0.0005871777475	0.0005333753624
+267	PWY-6071	superpathway of phenylethylamine degradation	0.0005753735892	0.9951100244	degradation_utilization	False	0.0005299994167	0.0004971232448	0.0006738811281
+268	PWY-6396	superpathway of 2,3-butanediol biosynthesis	0.0005673257101	0.9951100244	biosynthesis	False	0.0006664220582	0.0004896841207	0.0005519620055
+269	PWY-5420	catechol degradation II (meta-cleavage pathway)	0.0005518264262	0.9967400163	degradation_utilization	False	0.0005291860317	0.0005259080213	0.0005904279854
+270	PWY-5419	catechol degradation to 2-oxopent-4-enoate II	0.0005445867368	0.9991850041	degradation_utilization	False	0.0005578768957	0.0004982197621	0.0005714261425
+271	PYRIDOXSYN-PWY	pyridoxal 5'-phosphate biosynthesis I	0.000505353936	0.988590057	biosynthesis	False	0.0004121000991	0.0003976409048	0.0006651199532
+272	CATECHOL-ORTHO-CLEAVAGE-PWY	catechol degradation to &beta;-ketoadipate	0.0004927638652	0.9959250204	degradation_utilization	False	0.0005478180708	0.0003919749263	0.000530570661
+273	PWY-5651	L-tryptophan degradation to 2-amino-3-carboxymuconate semialdehyde	0.00048861124	0.988590057	degradation_utilization	False	0.0005403203195	0.0004274287487	0.0004972077625
+274	P381-PWY	adenosylcobalamin biosynthesis II (late cobalt incorporation)	0.0004503584078	0.9755501222	biosynthesis	False	0.0004126097604	0.0003949038288	0.0005245581787
+275	PWY-5741	ethylmalonyl-CoA pathway	0.0004499804274	0.9910350448	other	False	0.0004350854836	0.0004633107266	0.0004509552693
+276	PWY-6182	superpathway of salicylate degradation	0.0004498522508	0.9951100244	degradation_utilization	False	0.0004804757718	0.0003788579765	0.0004828836194
+277	PWY-5417	catechol degradation III (ortho-cleavage pathway)	0.0004417831152	0.9951100244	degradation_utilization	False	0.0004767812571	0.0003633485299	0.00047736174
+278	PWY-5431	aromatic compounds degradation via &beta;-ketoadipate	0.0004417831152	0.9951100244	degradation_utilization	False	0.0004767812571	0.0003633485299	0.00047736174
+279	PWY490-3	nitrate reduction VI (assimilatory)	0.0004201776815	0.9983700081	other	False	0.000467176226	0.0004366950032	0.0003700161664
+280	P163-PWY	L-lysine fermentation to acetate and butanoate	0.0004143091601	0.9837000815	energy_central_metabolism	False	0.0004276209079	0.0004597282134	0.0003673542456
+281	PWY-7003	glycerol degradation to butanol	0.0004016803317	0.9869600652	degradation_utilization	False	0.0003428172794	0.0003571130763	0.0004836996983
+282	PWY-6185	4-methylcatechol degradation (ortho cleavage)	0.0003774737003	0.9902200489	degradation_utilization	False	0.0003752584625	0.0003272211416	0.0004196051208
+283	3-HYDROXYPHENYLACETATE-DEGRADATION-PWY	4-hydroxyphenylacetate degradation	0.0003723021102	0.9918500407	degradation_utilization	False	0.0003326519657	0.0003029198274	0.0004591892484
+284	CODH-PWY	reductive acetyl coenzyme A pathway	0.0003660085837	0.9845150774	energy_central_metabolism	True	0.0002890211568	0.0004464785145	0.0003617475694
+285	PWY-7295	L-arabinose degradation IV	0.0003437246728	0.9494702526	degradation_utilization	False	0.000460973028	0.0002414505088	0.0003339146905
+286	PWY-5655	L-tryptophan degradation IX	0.0003425650537	0.9837000815	degradation_utilization	False	0.0003594806258	0.000308482094	0.0003566853381
+287	AST-PWY	L-arginine degradation II (AST pathway)	0.0003424083965	0.9910350448	degradation_utilization	False	0.0004030795872	0.0002271900269	0.0003874052654
+288	CRNFORCAT-PWY	creatinine degradation I	0.0003181226471	0.97799511	degradation_utilization	False	0.0003500709028	0.0002821102795	0.0003219959825
+289	PWY-7013	L-1,2-propanediol degradation	0.000316759577	0.9706601467	degradation_utilization	False	0.0004135621412	0.0002869203522	0.0002647726376
+290	PWY-6876	isopropanol biosynthesis	0.0003133084789	0.9910350448	biosynthesis	False	0.0003735357508	0.0003201299624	0.0002605584148
+291	PWY-5005	biotin biosynthesis II	0.0003073842981	0.9739201304	biosynthesis	False	0.000385021716	0.0002000621587	0.0003327189303
+292	METHYLGALLATE-DEGRADATION-PWY	methylgallate degradation	0.0003010467076	0.9861450693	degradation_utilization	False	0.0003013845694	0.0002918197535	0.0003081981526
+293	DENITRIFICATION-PWY	nitrate reduction I (denitrification)	0.0002974381655	0.9926650367	other	False	0.0003539675964	0.0002946748321	0.000255294456
+294	GLCMANNANAUT-PWY	superpathway of N-acetylglucosamine, N-acetylmannosamine and N-acetylneuraminate degradation	0.0002942195654	0.9918500407	degradation_utilization	False	0.0002287928928	0.0002826885171	0.0003548357081
+295	PWY-5941	glycogen degradation II (eukaryotic)	0.0002863221522	0.967400163	degradation_utilization	False	0.0002723292541	0.0002184477466	0.0003518611957
+296	PWY-6505	L-tryptophan degradation XII (Geobacillus)	0.0002781231018	0.9828850856	degradation_utilization	False	0.0002907235954	0.0002501371589	0.000290729137
+297	PWY-5654	2-amino-3-carboxymuconate semialdehyde degradation to 2-oxopentenoate	0.000269630667	0.9877750611	degradation_utilization	False	0.0002724186256	0.000236861245	0.0002937826272
+298	SUCSYN-PWY	sucrose biosynthesis I (from photosynthesis)	0.0002572559751	0.9747351263	energy_central_metabolism	False	0.0002153313563	0.0002484760165	0.000297216149
+299	PWY-6728	methylaspartate cycle	0.0002475683414	0.9437652812	energy_central_metabolism	False	0.0002896114711	0.0002425321798	0.0002186205213
+300	GALLATE-DEGRADATION-I-PWY	gallate degradation II	0.0002467460746	0.9861450693	degradation_utilization	False	0.000246786284	0.0002390004945	0.0002529403956
+301	PWY-6339	syringate degradation	0.0002453378685	0.6373268134	degradation_utilization	False	0.0002703385521	0.0002184788141	0.0002473063187
+302	PWY-5647	2-nitrobenzoate degradation I	0.0002424149526	0.9861450693	degradation_utilization	False	0.0002563980337	0.0002079802283	0.0002591194332
+303	P184-PWY	protocatechuate degradation I (meta-cleavage pathway)	0.0002414851316	0.9682151589	degradation_utilization	False	0.0002638513617	0.0002610748659	0.0002081857087
+304	PWY-5392	reductive TCA cycle II	0.0002391345575	0.9364303178	energy_central_metabolism	True	0.0002344196425	0.000325559851	0.0001733664383
+305	PWY-6749	CMP-legionaminate biosynthesis I	0.0002364732337	0.9837000815	biosynthesis	False	0.0003162444945	0.0002533152557	0.0001603303658
+306	KETOGLUCONMET-PWY	ketogluconate metabolism	0.0002067387902	0.989405053	other	False	0.0001877147204	0.0001442370368	0.0002719078239
+307	PWY0-1277	3-phenylpropanoate and 3-(3-hydroxyphenyl)propanoate degradation	0.0002027023533	0.9543602282	degradation_utilization	False	0.0001754940532	0.0001941426142	0.0002309359993
+308	NAD-BIOSYNTHESIS-II	NAD salvage pathway II	0.0001990602895	0.9918500407	biosynthesis	False	0.0002138336312	0.0001663296767	0.0002137748051
+309	PWY-7090	UDP-2,3-diacetamido-2,3-dideoxy-&alpha;-D-mannuronate biosynthesis	0.0001976580999	0.9788101059	biosynthesis	False	0.0002396268558	0.0001781955326	0.0001803645577
+310	PWY-5910	superpathway of geranylgeranyldiphosphate biosynthesis I (via mevalonate)	0.0001885212339	0.9869600652	biosynthesis	False	0.0001642905706	0.0001707310521	0.000221837407
+311	PWY-6562	norspermidine biosynthesis	0.0001837619601	0.989405053	biosynthesis	False	0.0001546398868	0.0001434482474	0.0002390213184
+312	PWY-5430	meta cleavage pathway of aromatic compounds	0.0001773692329	0.9722901385	degradation_utilization	False	0.0001706664793	0.0001679680027	0.000190186307
+313	GLUCARDEG-PWY	D-glucarate degradation I	0.0001769712475	0.9942950285	degradation_utilization	False	0.000156626621	0.0001696749933	0.0001988026271
+314	P241-PWY	coenzyme B biosynthesis	0.0001695737254	0.9763651182	biosynthesis	False	0.0001942369978	0.0002078638244	0.0001194402548
+315	PWY-5178	toluene degradation IV (aerobic) (via catechol)	0.0001653278641	0.9682151589	degradation_utilization	False	0.0001646192165	0.0001600330799	0.000170139952
+316	PWY-6641	superpathway of sulfolactate degradation	0.000160382904	0.9747351263	degradation_utilization	False	0.0001870680736	0.0001729055047	0.000129374478
+317	PWY-3801	sucrose degradation II (sucrose synthase)	0.0001591049145	0.8777506112	degradation_utilization	False	0.0001256734758	0.0001473355776	0.0001948024093
+318	GALACTARDEG-PWY	D-galactarate degradation I	0.0001585407151	0.9951100244	degradation_utilization	False	0.0001501516998	0.0001509023548	0.0001712641939
+319	GLUCARGALACTSUPER-PWY	superpathway of D-glucarate and D-galactarate degradation	0.0001585407151	0.9951100244	degradation_utilization	False	0.0001501516998	0.0001509023548	0.0001712641939
+320	PWY-5266	p-cymene degradation	0.0001571341338	0.2249388753	degradation_utilization	False	0.0001215871503	0.0001385380789	0.0001999792284
+321	PWY-5273	p-cumate degradation	0.0001571341338	0.2249388753	degradation_utilization	False	0.0001215871503	0.0001385380789	0.0001999792284
+322	PWY-1541	superpathway of taurine degradation	0.0001461631792	0.9608801956	degradation_utilization	False	0.0001863336398	0.0001418978659	0.0001180654431
+323	ORNDEG-PWY	superpathway of ornithine degradation	0.0001421245437	0.5949470253	degradation_utilization	False	0.0001769700673	0.0001199128754	0.0001326311067
+324	PWY-6210	2-aminophenol degradation	0.0001415725328	0.9812550937	degradation_utilization	False	0.0001514529446	0.0001222684433	0.0001493348639
+325	KDO-NAGLIPASYN-PWY	superpathway of (Kdo)2-lipid A biosynthesis	0.0001377171256	0.9494702526	degradation_utilization	False	0.000121305045	0.000127932629	0.0001584622462
+326	PWY-922	mevalonate pathway I	0.0001358276013	0.9869600652	other	False	0.0001177922364	0.0001236037517	0.0001598074377
+327	PWY-7315	dTDP-N-acetylthomosamine biosynthesis	0.0001343594925	0.9820700896	biosynthesis	False	0.000141327782	0.0001226585132	0.0001382959258
+328	FUCCAT-PWY	fucose degradation	0.0001295316124	0.9788101059	degradation_utilization	False	0.000105293961	0.000119756132	0.0001564110731
+329	PWY-5531	chlorophyllide a biosynthesis II (anaerobic)	0.0001273203877	0.9584352078	biosynthesis	False	0.000156079022	0.0001212264454	0.0001096486155
+330	PWY-7159	chlorophyllide a biosynthesis III (aerobic, light independent)	0.0001273203877	0.9584352078	biosynthesis	False	0.000156079022	0.0001212264454	0.0001096486155
+331	GALLATE-DEGRADATION-II-PWY	gallate degradation I	0.0001252526533	0.9706601467	degradation_utilization	False	0.0001049833331	9.006577075e-05	0.0001694433482
+332	PWY-1622	formaldehyde assimilation I (serine pathway)	0.0001204704296	0.8989405053	degradation_utilization	False	7.94460346e-05	9.461635864e-05	0.000173448227
+333	PWY-7098	vanillin and vanillate degradation II	0.0001163934956	0.9519152404	degradation_utilization	False	0.0001210290623	0.000104827633	0.0001220520669
+334	PWY-6404	superpathway of mycolyl-arabinogalactan-peptidoglycan complex biosynthesis	0.0001162379956	0.7791361043	biosynthesis	False	9.005008601e-05	9.69580406e-05	0.0001522877113
+335	PWY-6107	chlorosalicylate degradation	0.0001113932913	0.9853300733	degradation_utilization	False	0.0001643878851	0.0001172793706	6.507138172e-05
+336	PWY-6338	superpathway of vanillin and vanillate degradation	0.0001052037501	0.9519152404	degradation_utilization	False	0.0001090917808	9.472218509e-05	0.0001105774396
+337	PWY-7097	vanillin and vanillate degradation I	0.0001052037501	0.9519152404	degradation_utilization	False	0.0001090917808	9.472218509e-05	0.0001105774396
+338	PWY-5183	superpathway of aerobic toluene degradation	9.908955395e-05	0.923390383	degradation_utilization	False	0.0001012468925	6.777589498e-05	0.0001225662926
+339	PWY-7347	sucrose biosynthesis III	9.508668672e-05	0.9747351263	biosynthesis	False	7.50961189e-05	9.3125234e-05	0.0001123520975
+340	PWY-5529	superpathway of bacteriochlorophyll a biosynthesis	9.30772503e-05	0.9225753871	biosynthesis	False	0.0001207758751	9.617273117e-05	6.885094936e-05
+341	P621-PWY	nylon-6 oligomer degradation	8.61452769e-05	0.9812550937	degradation_utilization	False	0.0001202540789	9.283725682e-05	5.399734714e-05
+342	PWY-7456	mannan degradation	8.583899785e-05	0.9095354523	degradation_utilization	False	6.141809582e-05	9.32523987e-05	9.904589623e-05
+343	DHGLUCONATE-PYR-CAT-PWY	glucose degradation (oxidative)	8.438131099e-05	0.8435207824	degradation_utilization	False	5.841260082e-05	4.147946962e-05	0.0001392462092
+344	HCAMHPDEG-PWY	3-phenylpropanoate and 3-(3-hydroxyphenyl)propanoate degradation to 2-oxopent-4-enoate	7.650462681e-05	0.9543602282	degradation_utilization	False	6.305533852e-05	7.393105575e-05	8.912839437e-05
+345	PWY-6690	cinnamate and 3-hydroxycinnamate degradation to 2-oxopent-4-enoate	7.650462681e-05	0.9543602282	degradation_utilization	False	6.305533852e-05	7.393105575e-05	8.912839437e-05
+346	PWY-6992	1,5-anhydrofructose degradation	7.513420922e-05	0.9543602282	degradation_utilization	False	7.161049783e-05	8.097712164e-05	7.320313538e-05
+347	PWY-6397	mycolyl-arabinogalactan-peptidoglycan complex biosynthesis	7.375278277e-05	0.945395273	biosynthesis	False	6.353208258e-05	6.737123309e-05	8.690356526e-05
+348	P261-PWY	coenzyme M biosynthesis I	6.845969085e-05	0.9413202934	biosynthesis	False	5.345048563e-05	6.455924544e-05	8.337423525e-05
+349	PWY-6944	androstenedione degradation	6.461288945e-05	0.8948655257	degradation_utilization	False	4.877790638e-05	6.183041825e-05	7.927688782e-05
+350	GOLPDLCAT-PWY	superpathway of glycerol degradation to 1,3-propanediol	6.384718186e-05	0.9690301548	degradation_utilization	False	6.30773956e-05	6.312334293e-05	6.50331378e-05
+351	CHLOROPHYLL-SYN	chlorophyllide a biosynthesis I (aerobic, light-dependent)	6.146012997e-05	0.9290953545	biosynthesis	False	7.81035872e-05	6.0246094e-05	4.937401522e-05
+352	PWY0-41	allantoin degradation IV (anaerobic)	5.986957548e-05	0.9470252649	degradation_utilization	False	6.972296213e-05	4.079554262e-05	6.746819718e-05
+353	PWY-5507	adenosylcobalamin biosynthesis I (early cobalt insertion)	5.736534988e-05	0.9062754686	biosynthesis	False	7.879253387e-05	5.1341551e-05	4.539099319e-05
+354	PWY-6957	mandelate degradation to acetyl-CoA	5.548458284e-05	0.8769356153	energy_central_metabolism	False	7.006153787e-05	5.014144582e-05	4.833924092e-05
+355	FUC-RHAMCAT-PWY	superpathway of fucose and rhamnose degradation	5.230554153e-05	0.8989405053	degradation_utilization	False	5.985647395e-05	3.930984162e-05	5.682540399e-05
+356	PWY-7024	superpathway of the 3-hydroxypropanoate cycle	5.224809987e-05	0.8679706601	other	False	6.884513669e-05	5.444435605e-05	3.745723214e-05
+357	PWY-7377	cob(II)yrinate a,c-diamide biosynthesis I (early cobalt insertion)	4.784042029e-05	0.9160554197	biosynthesis	False	6.199786434e-05	4.59030622e-05	3.828675837e-05
+358	PWY-6629	superpathway of L-tryptophan biosynthesis	4.782454399e-05	0.2412387938	biosynthesis	False	7.662624324e-05	2.701681776e-05	4.194587642e-05
+359	PWY-722	nicotinate degradation I	4.760555466e-05	0.9551752241	degradation_utilization	False	5.638083384e-05	4.84964728e-05	4.000250894e-05
+360	PWY-5743	3-hydroxypropanoate cycle	4.491026924e-05	0.8679706601	other	True	6.035301227e-05	4.676297014e-05	3.130145185e-05
+361	PWY-6174	mevalonate pathway II (archaea)	4.318665197e-05	0.924205379	other	False	3.877327446e-05	5.373348131e-05	3.81728006e-05
+362	PWY-5744	glyoxylate assimilation	3.861692462e-05	0.8679706601	energy_central_metabolism	True	5.052833351e-05	4.028956451e-05	2.792426659e-05
+363	PWY-7391	isoprene biosynthesis II (engineered)	3.775476254e-05	0.923390383	biosynthesis	False	3.221215686e-05	3.870129321e-05	4.134383665e-05
+364	PWY-1501	mandelate degradation I	3.72931191e-05	0.9054604727	degradation_utilization	False	4.713406572e-05	4.14892472e-05	2.619700738e-05
+365	PWY-5265	peptidoglycan biosynthesis II (staphylococci)	3.586448689e-05	0.4751426243	biosynthesis	False	6.049169783e-05	1.792689695e-05	3.095499172e-05
+366	LACTOSECAT-PWY	lactose and galactose degradation I	3.228709832e-05	0.8378158109	degradation_utilization	False	3.133107034e-05	2.218748069e-05	4.115544583e-05
+367	GLYCOL-GLYOXDEG-PWY	superpathway of glycol metabolism and degradation	3.058185098e-05	0.8989405053	degradation_utilization	False	3.343327332e-05	1.97676573e-05	3.703644736e-05
+368	LIPASYN-PWY	phospholipases	2.777994021e-05	0.8630806846	other	False	3.162100376e-05	1.945713696e-05	3.145528283e-05
+369	PWY-7446	sulfoglycolysis	2.775743014e-05	0.8671556642	energy_central_metabolism	False	2.910146639e-05	1.955554354e-05	3.329527257e-05
+370	PWY-6731	starch degradation III	2.566854325e-05	0.891605542	degradation_utilization	False	3.139345511e-05	1.852841942e-05	2.691478791e-05
+371	PWY-6906	chitin derivatives degradation	2.504152284e-05	0.792991035	degradation_utilization	False	3.43942492e-05	2.41760257e-05	1.839709289e-05
+372	THREOCAT-PWY	superpathway of L-threonine metabolism	2.358768195e-05	0.4694376528	other	False	3.743901353e-05	1.367526131e-05	2.068459526e-05
+373	ARGDEG-PWY	superpathway of L-arginine, putrescine, and 4-aminobutanoate degradation	2.24116869e-05	0.6169519152	degradation_utilization	False	2.600921921e-05	1.381488475e-05	2.64983949e-05
+374	ORNARGDEG-PWY	superpathway of L-arginine and L-ornithine degradation	2.24116869e-05	0.6169519152	degradation_utilization	False	2.600921921e-05	1.381488475e-05	2.64983949e-05
+375	ECASYN-PWY	enterobacterial common antigen biosynthesis	2.066434714e-05	0.6536267319	biosynthesis	False	2.605867283e-05	1.250006041e-05	2.299325871e-05
+376	PWY-1882	superpathway of C1 compounds oxidation to CO2	2.057000283e-05	0.8541157294	energy_central_metabolism	False	1.472591453e-05	1.477683867e-05	2.98130332e-05
+377	PWY-6919	neopentalenoketolactone and pentalenate biosynthesis	1.999292165e-05	0.8076609617	biosynthesis	False	1.550109995e-05	1.62848201e-05	2.649871146e-05
+378	PWY-2221	Entner-Doudoroff pathway III (semi-phosphorylative)	1.929080591e-05	0.7538712306	energy_central_metabolism	False	2.385389874e-05	2.260636747e-05	1.304460446e-05
+379	PWY0-1338	polymyxin resistance	1.548903681e-05	0.6674816626	other	False	1.84918104e-05	9.926645838e-06	1.760346546e-05
+380	METHGLYUT-PWY	superpathway of methylglyoxal degradation	1.485545616e-05	0.8060309698	degradation_utilization	False	1.609654758e-05	1.183910812e-05	1.630596797e-05
+381	PWY-6948	sitosterol degradation to androstenedione	1.464310551e-05	0.7766911165	degradation_utilization	False	1.007587051e-05	1.030967898e-05	2.171071505e-05
+382	PWY-7210	pyrimidine deoxyribonucleotides biosynthesis from CTP	1.396294682e-05	0.62999185	biosynthesis	False	7.42046066e-06	1.482720954e-05	1.840286403e-05
+383	PWY-6915	pentalenolactone biosynthesis	1.284709143e-05	0.5900570497	biosynthesis	False	9.40176126e-06	1.065163253e-05	1.731572573e-05
+384	PWY-7385	1,3-propanediol biosynthesis (engineered)	1.250291089e-05	0.8019559902	biosynthesis	False	1.245820803e-05	1.167657641e-05	1.320219972e-05
+385	METH-ACETATE-PWY	methanogenesis from acetate	1.2426528e-05	0.8443357783	energy_central_metabolism	False	9.667936564e-06	1.672237351e-05	1.113850874e-05
+386	LPSSYN-PWY	superpathway of lipopolysaccharide biosynthesis	1.055976187e-05	0.2453137734	biosynthesis	False	1.631558013e-05	6.152750346e-06	9.584882131e-06
+387	PWY-7373	superpathway of demethylmenaquinol-6 biosynthesis II	1.036471759e-05	0.6063569682	biosynthesis	False	1.009553891e-05	4.574707718e-06	1.522996702e-05
+388	PWY-7198	pyrimidine deoxyribonucleotides de novo biosynthesis IV	9.67182702e-06	0.6234718826	biosynthesis	False	5.071295077e-06	1.029373671e-05	1.278248164e-05
+389	PWY-5198	factor 420 biosynthesis	9.149590586e-06	0.4449877751	biosynthesis	False	9.837011788e-06	9.797486938e-06	8.089318017e-06
+390	PWY-622	starch biosynthesis	8.361383972e-06	0.5264873676	biosynthesis	False	5.102800132e-06	6.06930792e-06	1.276111849e-05
+391	VALDEG-PWY	L-valine degradation I	7.577686992e-06	0.662591687	degradation_utilization	False	8.608106413e-06	1.005449133e-05	4.778154342e-06
+392	PWY-7084	nitrifier denitrification	6.97625189e-06	0.4286878566	other	False	1.812756219e-05	1.843269655e-06	2.350468769e-06
+393	PWY-5656	mannosylglycerate biosynthesis I	6.523823318e-06	0.7538712306	biosynthesis	False	8.116777539e-06	7.386197675e-06	4.580482389e-06
+394	AEROBACTINSYN-PWY	aerobactin biosynthesis	6.081828196e-06	0.7204563977	biosynthesis	False	5.088975251e-06	5.939251084e-06	6.975632364e-06
+395	PWY-5677	succinate fermentation to butanoate	5.53435907e-06	0.7261613692	energy_central_metabolism	False	3.343929378e-06	5.913881046e-06	6.948371669e-06
+396	PWY-1361	benzoyl-CoA degradation I (aerobic)	5.509109017e-06	0.6756316218	degradation_utilization	False	5.310301928e-06	6.678651138e-06	4.725059837e-06
+397	PWY-7398	coumarins biosynthesis (engineered)	4.621814609e-06	0.5501222494	biosynthesis	False	3.174144124e-06	2.956361436e-06	7.096648109e-06
+398	PWY-1422	vitamin E biosynthesis (tocopherols)	4.328978164e-06	0.37000815	biosynthesis	False	6.101410875e-06	3.560124882e-06	3.555957345e-06
+399	PWY-5088	L-glutamate degradation VIII (to propanoate)	4.174231322e-06	0.6544417278	degradation_utilization	False	5.297401496e-06	2.908063037e-06	4.310498859e-06
+400	PWY-3941	&beta;-alanine biosynthesis II	3.969936835e-06	0.662591687	biosynthesis	False	4.371775109e-06	4.282228654e-06	3.403550716e-06
+401	PWY-4722	creatinine degradation II	3.838906569e-06	0.1841890791	degradation_utilization	False	3.999344828e-06	9.134639979e-07	6.064456332e-06
+402	PWY-5823	superpathway of CDP-glucose-derived O-antigen building blocks biosynthesis	3.442276581e-06	0.06927465363	biosynthesis	False	6.594504665e-06	1.846966471e-06	2.250682287e-06
+403	PWY-6167		3.42177348e-06	0.1140994295	other	False	5.75695234e-08	7.225956633e-06	3.004242026e-06
+404	PWY-7046	4-coumarate degradation (anaerobic)	3.223969511e-06	0.7595762021	degradation_utilization	False	2.696284486e-06	2.752800681e-06	4.016826375e-06
+405	PWY-6581	spirilloxanthin and 2,2'-diketo-spirilloxanthin biosynthesis	2.874962113e-06	0.5150774246	biosynthesis	False	2.142976208e-06	2.62081372e-06	3.653715898e-06
+406	P162-PWY	L-glutamate degradation V (via hydroxyglutarate)	2.863640434e-06	0.1801140994	degradation_utilization	False	2.487801497e-06	4.380200334e-06	1.939595629e-06
+407	PWY-6654		2.711888783e-06	0.1776691117	other	False	1.692887194e-07	5.332887455e-06	2.600594963e-06
+408	PWY-6486	D-galacturonate degradation II	2.511803575e-06	0.2355338223	degradation_utilization	False	1.904300864e-06	1.013946214e-06	4.192551809e-06
+409	PWY-6145	superpathway of sialic acids and CMP-sialic acids biosynthesis	2.188152927e-06	0.08557457213	biosynthesis	False	3.13768899e-06	2.362630617e-06	1.302702684e-06
+410	PWY-5532	adenosine nucleotides degradation IV	2.059239217e-06	0.1792991035	degradation_utilization	False	2.488254504e-07	3.162729631e-06	2.593087473e-06
+411	PWY-5177	glutaryl-CoA degradation	1.890293897e-06	0.1801140994	degradation_utilization	False	1.293764139e-06	3.521150204e-06	1.047578322e-06
+412	PWY-6349		1.745293819e-06	0.1776691117	other	False	1.915245503e-07	2.903847359e-06	2.033465274e-06
+413	P341-PWY	glycolysis V (Pyrococcus)	1.703581278e-06	0.3594132029	energy_central_metabolism	False	1.151746817e-06	1.69937725e-06	2.140045739e-06
+414	PWY-6350		1.700949933e-06	0.1776691117	other	False	1.891365277e-07	2.916056933e-06	1.910736472e-06
+415	PWY-7286		1.584313707e-06	0.1752241239	other	False	1.076647843e-07	3.232733635e-06	1.418206969e-06
+416	PWY-6993	nicotine degradation II (pyrrolidine pathway)	1.437308498e-06	0.5990220049	degradation_utilization	False	1.68321839e-06	1.381711279e-06	1.289004828e-06
+417	PWY-7415	tylosin biosynthesis	1.176191108e-06	0.2412387938	biosynthesis	False	4.473945011e-07	3.390708655e-07	2.421033197e-06
+418	PWY-6713	L-rhamnose degradation II	9.942334453e-07	0.2559087205	degradation_utilization	False	8.595869573e-07	1.377490996e-06	7.91843924e-07
+419	PWY-7316	dTDP-N-acetylviosamine biosynthesis	9.847176378e-07	0.2029339853	biosynthesis	False	3.537378422e-07	3.333284876e-07	2.003501921e-06
+420	PWY-7274	D-cycloserine biosynthesis	8.776402533e-07	0.0847595762	biosynthesis	False	1.167804125e-07	1.134058416e-07	2.089060447e-06
+421	PWY-6942	dTDP-D-desosamine biosynthesis	7.66853694e-07	0.1980440098	biosynthesis	False	2.578086582e-07	2.581726498e-07	1.575233929e-06
+422	PWY-6148	tetrahydromethanopterin biosynthesis	6.678132692e-07	0.1043194784	biosynthesis	False	2.197027265e-08	1.486179561e-06	5.168766398e-07
+423	PWY-7644	heparin degradation	5.646769597e-07	0.1067644662	degradation_utilization	False	2.589802136e-07	1.347599801e-07	1.150157042e-06
+424	PWY-7014	paromamine biosynthesis I	4.727412209e-07	0.1776691117	biosynthesis	False	1.029955521e-07	8.08338744e-08	1.077935499e-06
+425	PWY-7413	dTDP-6-deoxy-&alpha;-D-allose biosynthesis	4.104881366e-07	0.07986960065	biosynthesis	False	4.768288771e-07	2.701592066e-07	4.712192904e-07
+426	PWY-6165	chorismate biosynthesis II (archaea)	4.060299324e-07	0.1515892421	biosynthesis	False	1.359405241e-07	3.654410371e-07	6.506240865e-07
+427	PWY-5519	D-arabinose degradation III	4.007876685e-07	0.1858190709	degradation_utilization	False	2.144318654e-07	2.594447941e-07	6.606526346e-07
+428	PWY-6572	chondroitin sulfate degradation I (bacterial)	2.293358245e-07	0.1572942135	degradation_utilization	False	1.585122523e-07	3.61750878e-07	1.784839964e-07
+429	PWY-5634	superpathway of penicillin, cephalosporin and cephamycin biosynthesis	1.603847398e-07	0.008964955175	biosynthesis	False	3.261818377e-09	4.011352588e-07	9.018174207e-08
+430	PWY-6143	CMP-pseudaminate biosynthesis	1.570970172e-07	0.02689486553	biosynthesis	False	6.329495997e-10	1.193983108e-08	3.965685806e-07
+431	PWY-5737	(5R)-carbapenem carboxylate biosynthesis	1.494216111e-07	0.008964955175	biosynthesis	False	2.489080084e-09	3.796092357e-07	7.971151941e-08
+432	PWY-7209	superpathway of pyrimidine ribonucleosides degradation	1.046981644e-07	0.0488997555	degradation_utilization	False	4.759261131e-08	8.436808114e-08	1.658564503e-07
+433	PWY-5499	vitamin B6 degradation	1.008747024e-07	0.1687041565	degradation_utilization	False	6.639138731e-08	3.985151198e-08	1.769878433e-07
+434	PWY-6977	superpathway of erythromycin biosynthesis	9.319686299e-08	0.1157294214	biosynthesis	False	5.958460826e-08	4.725285084e-08	1.565057815e-07
+435	PWY-7110	superpathway of megalomicin A biosynthesis	9.27595118e-08	0.1157294214	biosynthesis	False	5.896720816e-08	4.690447567e-08	1.561382159e-07
+436	METHANOGENESIS-PWY	methanogenesis from H2 and CO2	8.881437595e-08	0.07579462103	energy_central_metabolism	False	4.511350027e-09	8.005311895e-08	1.620185206e-07
+437	PWY-7106	erythromycin D biosynthesis	6.976323386e-08	0.1157294214	biosynthesis	False	4.235283733e-08	3.435512229e-08	1.197361411e-07
+438	PWY-6975	superpathway of erythromycin biosynthesis (without sugar biosynthesis)	6.733197653e-08	0.1157294214	biosynthesis	False	4.13015295e-08	3.32747836e-08	1.151360204e-07
+439	PWY-6956	naphthalene degradation to acetyl-CoA	6.359689721e-08	0.007334963325	energy_central_metabolism	False	2.910970198e-08	4.740570444e-09	1.379713637e-07
+440	PWY-6565	superpathway of polyamine biosynthesis III	6.223457156e-08	0.0162999185	biosynthesis	False	8.449206069e-08	8.739899602e-08	2.453956802e-08
+441	PWY-5679	clavulanate biosynthesis	5.269916136e-08	0.01874490628	biosynthesis	False	7.840875139e-09	1.603996531e-07	1.33501608e-09
+442	CENTBENZCOA-PWY	benzoyl-CoA degradation II (anaerobic)	4.043895925e-08	0.03748981255	degradation_utilization	False	4.908130219e-09	1.064483666e-07	1.526571912e-08
+443	PWY-7185	UTP and CTP dephosphorylation I	3.496056207e-08	0.01711491443	other	False	5.061822456e-08	2.82738507e-08	2.804703166e-08
+444	PWY5F9-12	biphenyl degradation	3.429373535e-08	0.04074979625	degradation_utilization	False	1.331667011e-08	1.06512909e-08	6.976048558e-08
+445	PWY-5427	naphthalene degradation (aerobic)	3.323809355e-08	0.007334963325	degradation_utilization	False	1.478461143e-08	2.375985973e-09	7.252745713e-08
+446	PWY-6660	2-heptyl-3-hydroxy-4(1H)-quinolone biosynthesis	2.107341394e-08	0.00488997555	biosynthesis	False	3.77366366e-08	0	2.493470483e-08
+447	PWY-3081	L-lysine biosynthesis V	1.44367763e-08	0.01711491443	biosynthesis	False	4.441877566e-09	3.573764983e-08	5.15928582e-09
+448	PWY-5179	toluene degradation V (aerobic) (via toluene-cis-diol)	7.513752055e-09	0.01059494703	degradation_utilization	False	5.955036776e-09	1.638532548e-08	1.606099332e-09
+449	PWY-7002	4-hydroxyacetophenone degradation	5.464692149e-09	0.004074979625	degradation_utilization	False	1.075352167e-08	0	5.706470896e-09
+450	PWY-6141		4.744351259e-09	0.00814995925	other	False	0	0	1.22812637e-08
+451	PWY-7528		4.503607598e-09	0.0032599837	other	False	0	1.330022239e-09	1.058900432e-08
+452	PWY-5757	fosfomycin biosynthesis	3.617634945e-09	0.004074979625	biosynthesis	False	6.744256032e-09	2.754196449e-09	1.857860732e-09
+453	PWY-7354	aclacinomycin biosynthesis	2.17458966e-09	0.01059494703	biosynthesis	False	7.036148653e-10	1.299085453e-09	4.032753641e-09
+454	PWY-7022		9.269456402e-10	0.01548492258	other	False	7.031359327e-11	4.899645654e-10	1.950483427e-09
+455	BENZCOA-PWY	anaerobic aromatic compound degradation (Thauera aromatica)	8.897220463e-10	0.004074979625	degradation_utilization	False	8.396363312e-10	0	1.644186151e-09
+456	PWY-7015		7.809167422e-10	0.01548492258	other	False	7.031359327e-11	3.957459652e-10	1.648204585e-09
+457	PWY-7020		7.426614718e-10	0.01548492258	other	False	7.031359327e-11	3.703512555e-10	1.569588905e-09
+458	PWY-7019		6.487141191e-10	0.01548492258	other	False	7.031359327e-11	3.376969065e-10	1.352643557e-09
+459	PWY-5184	toluene degradation VI (anaerobic)	3.293654827e-10	0.000814995925	degradation_utilization	False	0	0	8.5259799e-10
+460	PWY-5789	3-hydroxypropanoate/4-hydroxybutanate cycle	2.934692021e-10	0.000814995925	other	True	0	0	7.596766056e-10
+461	PWY-7031		2.289506979e-10	0.000814995925	other	False	0	0	5.926635155e-10
+462	PWY-7401		3.504842676e-11	0.000814995925	other	False	0	1.128724925e-10	0

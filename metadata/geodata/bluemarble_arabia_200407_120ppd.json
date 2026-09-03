@@ -1,0 +1,24 @@
+{
+  "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73751/world.topo.bathy.200407.3x21600x21600.C1.jpg",
+  "source_sha256": "ee8490ab1eb35d620d8d1ad8e69b3234c0b050e4eddb80e7232a2d165e475aa0",
+  "source_product": "NASA Blue Marble Next Generation with topography and bathymetry, July 2004, tile C1; public domain (NASA Earth Observatory)",
+  "crop_pixels_in_tile": [
+    10560,
+    15600,
+    13680,
+    17760
+  ],
+  "extent_degrees": {
+    "lon_min": 44.0,
+    "lon_max": 57.0,
+    "lat_min": 16.0,
+    "lat_max": 25.0
+  },
+  "pixels_per_degree": 120,
+  "size_pixels": [
+    1560,
+    1080
+  ],
+  "resample": "Lanczos, exact factor 2",
+  "output_sha256": "237b58c1e087e2ac86268e74c499a50d1e1e94eab7c1d3a7eabf7e9e17a71ac8"
+}

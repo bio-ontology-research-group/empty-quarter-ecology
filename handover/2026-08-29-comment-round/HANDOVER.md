@@ -288,3 +288,31 @@ linkage, promises the index-728/run lookup.
   can state Trip 3 had a sequenced PCR blank, 3 positives and 2 field
   negatives on its own run; these could enter the control characterisation
   (and possibly a Trip 3 screen) rather than being listed as gaps.
+
+## 10. Addendum, 3 Sep 2026 (assistant session; Raik's review, CI)
+- Mail read 3 Sep: Raik Gruenberg approved both papers (ORCID 0000-0001-9532-6043),
+  edited both Overleaf projects (own affiliation now BioMed), left 8 comments on the
+  ecology paper (read via Chrome) and a mail asking for more biology and pathway
+  content; Michel Dumontier approved (ORCID 0000-0003-4727-9435); Susana left four
+  KG-paper Overleaf comments on 31 Aug (three non-existent references: pato,
+  hitzler_modularity, biodigitaltwin; and the digital-twin granularity claim).
+  All applied; see both comment ledgers (3 Sep sections).
+- Ecology title shortened to "Landscape-scale bacterial biogeography across the
+  Rub' al-Khali" (Robert approved). Data-paper bib entry ecology_companion and
+  cross-paper check to follow the same title (data repo, 3 Sep commit).
+- Raik's items 3-10 addressed with a new descriptive module
+  (analysis/v3/taxon_context.py, seed 20260903) and a satellite Figure 1a
+  (NASA Blue Marble crop, scripts/figures/prepare_bluemarble_crop.py); details in
+  the ecology ledger. Frozen conda environment now exists locally at
+  ~/Public/software/empty-quarter-paper-repos/data-paper/.conda-env (micromamba,
+  from environment/conda-linux-64.lock); use it for figure rendering so the CI
+  byte-identity check passes.
+- CI: both GitHub validate workflows were red. Ecology repo: FILE_MANIFEST stale
+  (two files) -> rebuilt. Data repo: 15 consistency tests written against the
+  pre-Overleaf wording -> reconciled test by test (ledger section "3 Sep 2026,
+  consistency tests"). Repo pytest suite likewise reconciled to the co-author
+  wording (soil position -> compartment, name policy, Funding section, author
+  changes).
+- Open: Rund's Q3 and kit-blank IDs (end of week); silent co-authors Alarawi,
+  Sivakumar, Wang, Rueping; Sulaiman's ORCID; grant numbers; shotgun BioProject
+  (\todo remains in Methods); public SPARQL endpoint redeploy; reply to Raik.

@@ -1,8 +1,7 @@
 # Rub' al-Khali bacterial biogeography
 
 This public BORG repository is the reproducible companion to the manuscript
-*Landscape-scale bacterial biogeography across the Rub' al-Khali reveals
-recurring spatial and compartment structure*. It contains the active paper
+*Landscape-scale bacterial biogeography across the Rub' al-Khali*. It contains the active paper
 and supplement, the analysis programs used for their claims, the canonical
 machine-readable results, the four submitted figures, regression tests, and
 byte-verifiable copies of key methodological sources.

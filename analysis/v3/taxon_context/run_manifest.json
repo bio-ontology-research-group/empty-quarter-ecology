@@ -1,0 +1,447 @@
+{
+  "schema_version": "1.0",
+  "scope": "Descriptive taxon and predicted-pathway context; presence-based genus-set overlap only; no feature-table merging across surveys and no mechanism claim.",
+  "status": "descriptive_context_complete",
+  "cohort": {
+    "quality_controlled_profiles": 1237,
+    "core_site_profiles": 1227,
+    "core_sites": 60,
+    "asvs_in_feature_table": 351472,
+    "genera_in_cache": 1604,
+    "genus_sum_max_abs_difference_vs_cache": 0.0,
+    "picrust_profiles": 1227,
+    "pathways": 462,
+    "grouped_profiles": 630,
+    "primary_genera": 200,
+    "transect_thirds": {
+      "west": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "central": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "east": [
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ]
+    },
+    "rarefied_profiles": {
+      "west": 469,
+      "central": 426,
+      "east": 309,
+      "all": 1204,
+      "surface": 368,
+      "atacama_pit_all": 58,
+      "atacama_pit_upper": 4
+    }
+  },
+  "parameters": {
+    "seed": 20260903,
+    "rarefaction_depth": 8000,
+    "rarefaction_draws": 20,
+    "detection_prevalence": 0.1,
+    "minimum_group_reads": 2000,
+    "group_prevalence": 0.2,
+    "top_genera": 200,
+    "pseudocount": 0.5,
+    "pathway_class_rules": {
+      "energy_central_metabolism": "respiration|fermentation|glycolysis|gluconeogenesis|TCA cycle|Calvin|photosynthesis|pentose phosphate|Entner|glyoxylate|methanogenesis|oxidation|reductive|electron|acetyl-CoA|superpathway of glucose|Bifidobacterium shunt|heterolactic|incomplete reductive|methylaspartate cycle|glycolate",
+      "degradation_utilization": "degradation|utilization|assimilation|catabolism|cleavage|Kdo|hydrolysis|conversion|interconversion",
+      "biosynthesis": "biosynthesis|salvage|elongation"
+    }
+  },
+  "headline": {
+    "top_phyla": [
+      {
+        "phylum": "Pseudomonadota",
+        "mean_relative_abundance": 0.26880536643972264
+      },
+      {
+        "phylum": "Bacillota",
+        "mean_relative_abundance": 0.22497443766396286
+      },
+      {
+        "phylum": "Actinomycetota",
+        "mean_relative_abundance": 0.18747622898459165
+      },
+      {
+        "phylum": "Chloroflexota",
+        "mean_relative_abundance": 0.08570040128201614
+      },
+      {
+        "phylum": "Bacteroidota",
+        "mean_relative_abundance": 0.07137724241633746
+      },
+      {
+        "phylum": "Planctomycetota",
+        "mean_relative_abundance": 0.03245734826304292
+      },
+      {
+        "phylum": "Gemmatimonadota",
+        "mean_relative_abundance": 0.026880679554187083
+      },
+      {
+        "phylum": "Acidobacteriota",
+        "mean_relative_abundance": 0.023171482066928845
+      }
+    ],
+    "cyanobacteriota_mean_relative_abundance": 0.0044447972058642435,
+    "leading_genera_all": [
+      {
+        "stratum": "all_core_profiles",
+        "rank_in_stratum": 1,
+        "genus": "Domibacillus",
+        "phylum": "Bacillota",
+        "mean_relative_abundance": 0.06220266254733344
+      },
+      {
+        "stratum": "all_core_profiles",
+        "rank_in_stratum": 2,
+        "genus": "Massilia",
+        "phylum": "Pseudomonadota",
+        "mean_relative_abundance": 0.035481442452100165
+      },
+      {
+        "stratum": "all_core_profiles",
+        "rank_in_stratum": 3,
+        "genus": "Bacillus",
+        "phylum": "Bacillota",
+        "mean_relative_abundance": 0.029722004959067995
+      },
+      {
+        "stratum": "all_core_profiles",
+        "rank_in_stratum": 4,
+        "genus": "Microvirga",
+        "phylum": "Pseudomonadota",
+        "mean_relative_abundance": 0.024082086037314234
+      },
+      {
+        "stratum": "all_core_profiles",
+        "rank_in_stratum": 5,
+        "genus": "Flavisolibacter",
+        "phylum": "Bacteroidota",
+        "mean_relative_abundance": 0.020486437990992052
+      }
+    ],
+    "route_supported_genera": 124,
+    "route_increasing_eastward": 47,
+    "route_decreasing_eastward": 77,
+    "genus_set_overlap": [
+      {
+        "set_a": "Empty Quarter west third",
+        "set_b": "Empty Quarter east third",
+        "n_profiles_a": 469,
+        "n_profiles_b": 309,
+        "n_genera_a": 368,
+        "n_genera_b": 317,
+        "n_shared": 267,
+        "jaccard": 0.638755980861244,
+        "fraction_of_a_in_b": 0.7255434782608695,
+        "fraction_of_b_in_a": 0.8422712933753943,
+        "top50_a_detected_in_b": 50,
+        "top50_b_detected_in_a": 44,
+        "note": "Same primers, workflow and taxonomy; genera detected in at least 10% of profiles after 20 subsamples to 8000 reads."
+      },
+      {
+        "set_a": "Empty Quarter west third",
+        "set_b": "Empty Quarter central third",
+        "n_profiles_a": 469,
+        "n_profiles_b": 426,
+        "n_genera_a": 368,
+        "n_genera_b": 364,
+        "n_shared": 331,
+        "jaccard": 0.8254364089775561,
+        "fraction_of_a_in_b": 0.8994565217391305,
+        "fraction_of_b_in_a": 0.9093406593406593,
+        "top50_a_detected_in_b": 50,
+        "top50_b_detected_in_a": 50,
+        "note": "Same primers, workflow and taxonomy; genera detected in at least 10% of profiles after 20 subsamples to 8000 reads."
+      },
+      {
+        "set_a": "Empty Quarter central third",
+        "set_b": "Empty Quarter east third",
+        "n_profiles_a": 426,
+        "n_profiles_b": 309,
+        "n_genera_a": 364,
+        "n_genera_b": 317,
+        "n_shared": 275,
+        "jaccard": 0.6773399014778325,
+        "fraction_of_a_in_b": 0.7554945054945055,
+        "fraction_of_b_in_a": 0.8675078864353313,
+        "top50_a_detected_in_b": 50,
+        "top50_b_detected_in_a": 45,
+        "note": "Same primers, workflow and taxonomy; genera detected in at least 10% of profiles after 20 subsamples to 8000 reads."
+      },
+      {
+        "set_a": "Empty Quarter all core profiles",
+        "set_b": "Atacama pit all depths (PRJEB39249)",
+        "n_profiles_a": 1204,
+        "n_profiles_b": 58,
+        "n_genera_a": 364,
+        "n_genera_b": 76,
+        "n_shared": 43,
+        "jaccard": 0.10831234256926953,
+        "fraction_of_a_in_b": 0.11813186813186813,
+        "fraction_of_b_in_a": 0.5657894736842105,
+        "top50_a_detected_in_b": 17,
+        "top50_b_detected_in_a": 31,
+        "note": "Different primers (V3-V4 versus V4), DNA fraction (total versus intracellular), depth range and site design; same SILVA 138.2 nomenclature and the same detection rule. Presence comparison only."
+      },
+      {
+        "set_a": "Empty Quarter surface",
+        "set_b": "Atacama pit 2.5-10 cm (PRJEB39249)",
+        "n_profiles_a": 368,
+        "n_profiles_b": 4,
+        "n_genera_a": 336,
+        "n_genera_b": 61,
+        "n_shared": 33,
+        "jaccard": 0.09065934065934066,
+        "fraction_of_a_in_b": 0.09821428571428571,
+        "fraction_of_b_in_a": 0.5409836065573771,
+        "top50_a_detected_in_b": 15,
+        "top50_b_detected_in_a": 32,
+        "note": "Different primers (V3-V4 versus V4), DNA fraction (total versus intracellular), depth range and site design; same SILVA 138.2 nomenclature and the same detection rule. Presence comparison only."
+      }
+    ],
+    "site_gradients": [
+      {
+        "variable": "mean_air_temperature_c",
+        "description": "49-month mean air temperature",
+        "n_sites": 60,
+        "spearman_rho_route_position": 0.9820778575021295,
+        "p_value": 9.789274775155693e-44,
+        "mean_west_third": 27.894602040999995,
+        "mean_east_third": 30.0721632645
+      },
+      {
+        "variable": "mean_monthly_rain_mm",
+        "description": "49-month mean monthly rainfall",
+        "n_sites": 60,
+        "spearman_rho_route_position": 0.5509259907254245,
+        "p_value": 5.0853617882461464e-06,
+        "mean_west_third": 2.1590816327,
+        "mean_east_third": 3.6711224490000007
+      },
+      {
+        "variable": "mean_relative_humidity_pct",
+        "description": "49-month mean relative humidity",
+        "n_sites": 60,
+        "spearman_rho_route_position": 0.918891883985837,
+        "p_value": 4.217888290971531e-25,
+        "mean_west_third": 24.716632652999998,
+        "mean_east_third": 31.816367347499998
+      },
+      {
+        "variable": "mean_ph",
+        "description": "archived-soil pH (admitted measurements, site mean)",
+        "n_sites": 60,
+        "spearman_rho_route_position": 0.8174492914698528,
+        "p_value": 1.6102650807583637e-15,
+        "mean_west_third": 7.853400188414527,
+        "mean_east_third": 8.229425252525253
+      }
+    ],
+    "pathway_class_share": [
+      {
+        "pathway_class": "biosynthesis",
+        "share_of_predicted_pathway_abundance": 0.667846968587831,
+        "n_pathways": 231
+      },
+      {
+        "pathway_class": "energy_central_metabolism",
+        "share_of_predicted_pathway_abundance": 0.1716616309637275,
+        "n_pathways": 55
+      },
+      {
+        "pathway_class": "degradation_utilization",
+        "share_of_predicted_pathway_abundance": 0.1072850687144097,
+        "n_pathways": 135
+      },
+      {
+        "pathway_class": "other",
+        "share_of_predicted_pathway_abundance": 0.0532063317340318,
+        "n_pathways": 41
+      }
+    ],
+    "autotrophy_pathways": [
+      {
+        "rank": 44,
+        "pathway": "CALVIN-PWY",
+        "description": "Calvin-Benson-Bassham cycle",
+        "mean_relative_abundance": 0.0058730475025805,
+        "prevalence": 1.0
+      },
+      {
+        "rank": 122,
+        "pathway": "P23-PWY",
+        "description": "reductive TCA cycle I",
+        "mean_relative_abundance": 0.00409560671300978,
+        "prevalence": 0.9959250203748982
+      },
+      {
+        "rank": 284,
+        "pathway": "CODH-PWY",
+        "description": "reductive acetyl coenzyme A pathway",
+        "mean_relative_abundance": 0.0003660085837243585,
+        "prevalence": 0.9845150774246129
+      },
+      {
+        "rank": 304,
+        "pathway": "PWY-5392",
+        "description": "reductive TCA cycle II",
+        "mean_relative_abundance": 0.00023913455745215234,
+        "prevalence": 0.9364303178484108
+      },
+      {
+        "rank": 360,
+        "pathway": "PWY-5743",
+        "description": "3-hydroxypropanoate cycle",
+        "mean_relative_abundance": 4.491026924438149e-05,
+        "prevalence": 0.8679706601466992
+      },
+      {
+        "rank": 362,
+        "pathway": "PWY-5744",
+        "description": "glyoxylate assimilation",
+        "mean_relative_abundance": 3.8616924620248887e-05,
+        "prevalence": 0.8679706601466992
+      },
+      {
+        "rank": 460,
+        "pathway": "PWY-5789",
+        "description": "3-hydroxypropanoate/4-hydroxybutanate cycle",
+        "mean_relative_abundance": 2.934692021455133e-10,
+        "prevalence": 0.0008149959250203749
+      }
+    ]
+  },
+  "inputs": {
+    "atacama_pit_asv_table": {
+      "path": "data/metadata/comparators/atacama/pit/ASV_table.tsv",
+      "bytes": 1480567,
+      "sha256": "0ccc857ae41b929c280f876f827f67559154378cc9e0927b11f4971125626c1e"
+    },
+    "atacama_pit_depth_map": {
+      "path": "data/metadata/comparators/atacama/pit/sample_depth_map.tsv",
+      "bytes": 1530,
+      "sha256": "48214b4912729005498aa3f0f0e9332f10602d56fff7bd7c6abef8aa8041e985"
+    },
+    "atacama_pit_taxonomy": {
+      "path": "data/metadata/comparators/atacama/pit/ASV_tax.silva_138_2.tsv",
+      "bytes": 3340348,
+      "sha256": "835aa7811d9669378f579bf034de1f5731ef5eefd9122db4eddd7e48ca998014"
+    },
+    "climate_site_summary": {
+      "path": "analysis/v3/environment_associations/climate_site_summary.tsv",
+      "bytes": 6762,
+      "sha256": "f1e5c44b47d603d8f9f199500db95ed033ef37e17822049d28b24eebad0327c3"
+    },
+    "feature_table": {
+      "path": "data/metadata/taxonomy/feature-table-trips1-5.tsv",
+      "bytes": 1801512613,
+      "sha256": "129f47d8f0db8d9afd6f8c67b8d80b5bead90155d8c91d2f43ea6a4139b0cb12"
+    },
+    "genus_counts": {
+      "path": "analysis/v2/review/cache/genus_counts.tsv",
+      "bytes": 8401418,
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "ph_sample_profile_join": {
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_sample_profile_join.tsv",
+      "bytes": 168698,
+      "sha256": "3f66a8bef066a8476500e09b707e8824efdc81b011e4ba7be33230f5a3791ea7"
+    },
+    "picrust_descriptions": {
+      "path": "data/processed/functional/picrust2/path_abun_unstrat_descriptions.tsv",
+      "bytes": 7402205,
+      "sha256": "cf7d23ac7d03d6174f5ee3cd919cfedc6f827927a0df0b1ac977a18aa6f7bdc3"
+    },
+    "picrust_geographic_correlations": {
+      "path": "analysis/v3/picrust2_ecology/pathway_geographic_correlations.tsv",
+      "bytes": 20672,
+      "sha256": "a2f9f5528b17987d8f53d6e61fdf0facc559e7d11146a6bdecadfcec530d8ce5"
+    },
+    "picrust_pathways": {
+      "path": "data/processed/functional/picrust2/merged/path_abun_unstrat.tsv",
+      "bytes": 9333373,
+      "sha256": "41bf98b763fa4b7dc392fcf25e2d4ccd37c5f7d351f7ce87002dea0ab3c6fa1d"
+    },
+    "picrust_position_effects": {
+      "path": "analysis/v3/picrust2_ecology/pathway_position_effects.tsv",
+      "bytes": 68117,
+      "sha256": "8d45dabcc13c7f74b7170122c59d041597da6a6d5d6e45296b95021fb416e67f"
+    },
+    "site_coordinates": {
+      "path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "bytes": 3812,
+      "sha256": "0baced56bb5ccc80a0d1df4c5be3d66778c58c1da5e7ad674cd0a0724ab045a6"
+    },
+    "taxonomy": {
+      "path": "data/metadata/taxonomy/taxonomy-trips1-5.tsv",
+      "bytes": 39741062,
+      "sha256": "fcf0a3ea0ca8ed956532fb4d7bffa0c20249e3048779a219155cc1bb7e483d35"
+    }
+  },
+  "software": {
+    "python": "3.11.14",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "scipy": "1.14.1"
+  }
+}

@@ -63,7 +63,9 @@ def test_soil_position_figure_adds_descriptive_taxon_context() -> None:
     )[0]
     assert "add_gridspec(2, 3" in figure
     assert "paired_displacement_loadings" in script
-    assert "Genera contributing most to position differences" in figure
+    # Panel title follows the co-authors' rename of "soil position" to
+    # "compartment" (Overleaf, Sep 2026); the figure script is authoritative.
+    assert "Genera contributing most to compartment differences" in figure
     assert "do not test each genus separately" in " ".join(MAIN.split())
     manifest = pd.read_csv(
         ROOT / "empty-quarter-amplicon/figures/figure_manifest.tsv", sep="\t"

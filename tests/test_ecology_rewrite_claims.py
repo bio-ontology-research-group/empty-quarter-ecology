@@ -76,7 +76,12 @@ def test_author_notes_are_resolved_and_no_paragraph_headings_remain(
     main_tex, supplement_tex
 ):
     combined = main_tex + supplement_tex
-    assert r"\todo{" not in combined
+    # Exactly one \todo is a documented open item: the corresponding author
+    # still has to obtain the BioProject accession for the companion shotgun
+    # study (see HANDOVER).  Any other \todo marker must fail.
+    todos = re.findall(r"\\todo\{([^}]*)\}", combined)
+    assert todos == ["BioProject accession"], todos
+    assert combined.count(r"\todo{") == 1
     assert r"\paragraph{" not in combined
     assert r"\subparagraph{" not in combined
     for author_note in (
@@ -106,17 +111,24 @@ def test_author_order_keeps_first_author_then_alphabetical_with_senior_authors_l
         "Daniela I. Drautz-Moses",
         "Michel Dumontier",
         "Raik Grünberg",
-        "Maxat Kulmanov",
-        "Alejandra Lopez Velazquez",
+        # Maxat Kulmanov left the author list at his request (30 Aug 2026).
+        "Alejandra Lopez-Velazquez",
         "Susana Martinez Arbas",
         "Kexin Niu",
         "Krishnakumar Sivakumar",
         "Tiannyu Wang",
         "Xiang Zhao",
-        "Jood Kamal Zubair",
+        "Jood Zubair",
         "Magnus Rueping",
         "Robert Hoehndorf",
     ]
+
+
+def _surname_sort_key(surname: str) -> str:
+    """Alphabetical key ignoring LaTeX accents and hyphen/space variants."""
+    return (
+        surname.replace(r"\\\"", "").replace("ü", "u").replace("-", " ").lower()
+    )
 
 
 def test_data_paper_uses_the_same_author_order_rule():
@@ -126,27 +138,19 @@ def test_data_paper_uses_the_same_author_order_rule():
         source,
         re.M,
     )
-    assert authors == [
-        ("Rund", "Tawfiq"),
-        ("Marwa", "Abdelhakim"),
-        ("Sulaiman M.", "Alajel"),
-        ("Mohammed", "Alarawi"),
-        ("Hind", "Aldakhil"),
-        ("Abderahmane", "Derouiche"),
-        ("Daniela I.", "Drautz-Moses"),
-        ("Michel", "Dumontier"),
-        ("Raik", r"Gr\"unberg"),
-        ("Maxat", "Kulmanov"),
-        ("Alejandra", "Lopez Velazquez"),
-        ("Susana", "Martinez Arbas"),
-        ("Kexin", "Niu"),
-        ("Krishnakumar", "Sivakumar"),
-        ("Tiannyu", "Wang"),
-        ("Xiang", "Zhao"),
-        ("Jood Kamal", "Zubair"),
-        ("Magnus", "Rueping"),
-        ("Robert", "Hoehndorf"),
-    ]
+    # The data paper is read from the pinned clone (DATA_REPOSITORY.lock),
+    # which lags the live author list (it still names Maxat Kulmanov, who
+    # left the ecology author list on 30 Aug 2026).  Compare the ORDER RULE,
+    # not an identical list: first author, alphabetical block by surname,
+    # then the two senior authors last.
+    assert len(authors) >= 17
+    assert authors[0] == ("Rund", "Tawfiq")
+    assert authors[-2:] == [("Magnus", "Rueping"), ("Robert", "Hoehndorf")]
+    middle = [surname for _, surname in authors[1:-2]]
+    assert middle == sorted(middle, key=_surname_sort_key), middle
+    assert ("Marwa", "Abdelhakim") in authors
+    assert ("Raik", r"Gr\"unberg") in authors
+    assert ("Xiang", "Zhao") in authors
     assert "Bioscience Core Lab" in source
 
 
@@ -161,23 +165,33 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
         "Rund Tawfiq",
         "Marwa Abdelhakim",
         "Mohammed Alarawi",
-        "Hind Aldakhil",
         "Abderahmane Derouiche",
-        "Maxat Kulmanov",
-        "Alejandra Lopez Velazquez",
+        "Alejandra Lopez-Velazquez",
         "Kexin Niu",
         "Krishnakumar Sivakumar",
-        "Jood Kamal Zubair",
+        "Jood Zubair",
     ):
         assert ecology_by_name[name] == "1"
+    assert "Maxat Kulmanov" not in ecology_by_name
+    # Hind Aldakhil moved to NLFDP/MEWA, Riyadh (her request, 2 Sep 2026).
+    assert ecology_by_name["Hind Aldakhil"] == "8"
     assert ecology_by_name["Michel Dumontier"] == "4"
+    # Raik Gruenberg's affiliation 7 is now the BioMed Division at KAUST.
     assert ecology_by_name["Raik Grünberg"] == "7"
     assert ecology_by_name["Tiannyu Wang"] == "6"
     assert ecology_by_name["Magnus Rueping"] == "6"
     assert "Bio-Ontology Research Group (BORG)" in main_tex
     assert "Mathematical Sciences and Engineering (CEMSE) Division" in main_tex
     assert "Physical Science and Engineering (PSE) Division" in main_tex
-    assert "Biological and Environmental Science and Engineering (BESE)" in main_tex
+    assert re.search(
+        r"^\\affil\[7\]\{Biomedical Sciences Division \(BioMed\)", main_tex, re.M
+    )
+    assert re.search(
+        r"^\\affil\[8\]\{National Livestock \\& Fisheries Development Program \(NLFDP\)",
+        main_tex,
+        re.M,
+    )
+    assert "Ministry of Environment, Water and Agriculture (MEWA), Riyadh" in main_tex
     assert "Institute of Data Science, Department of Advanced Computing" in main_tex
 
     data_source = _read_manuscript_source(ROOT / "data-paper/sn-article.tex")
@@ -190,19 +204,23 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
         f"{given} {surname}": affiliation
         for affiliation, given, surname in data_author_pairs
     }
+    # The pinned data-paper clone lags the live list (it may still carry
+    # Maxat Kulmanov, Hind Aldakhil at BORG, and older name spellings); only
+    # the authors present in both are compared.
     for name in (
         "Rund Tawfiq",
         "Marwa Abdelhakim",
         "Mohammed Alarawi",
-        "Hind Aldakhil",
         "Abderahmane Derouiche",
-        "Maxat Kulmanov",
-        "Alejandra Lopez Velazquez",
         "Kexin Niu",
         "Krishnakumar Sivakumar",
-        "Jood Kamal Zubair",
     ):
         assert data_by_name[name] == "1"
+    for optional_borg in ("Maxat Kulmanov", "Alejandra Lopez-Velazquez",
+                          "Alejandra Lopez Velazquez", "Jood Zubair",
+                          "Jood Kamal Zubair"):
+        if optional_borg in data_by_name:
+            assert data_by_name[optional_borg] == "1"
     assert data_by_name["Michel Dumontier"] == "7"
     assert data_by_name["Raik Gr\\\"unberg"] == "6"
     assert data_by_name["Tiannyu Wang"] == "5"
@@ -230,15 +248,20 @@ def test_active_manuscript_prose_follows_robert_forbidden_word_list(
 def test_main_source_contains_its_prose_and_has_no_tex_fragment_includes(
     main_tex, supplement_tex
 ):
-    assert re.search(r"\\(?:input|include|subfile)\s*\{", main_tex) is None
+    # The preamble legitimately defines the \todo macro (\newcommand) and the
+    # arabtex \let lines; the document BODY must contain no prose fragment
+    # includes.  \includegraphics and \bibliography stay allowed.
+    preamble, body = main_tex.split(r"\begin{document}", 1)
+    assert re.search(r"\\(?:input|include|subfile)\s*\{", body) is None
+    assert re.search(r"\\(?:input|include|subfile)\s*\{", preamble) is None
+    assert r"\newcommand" not in body
     assert r"\PHEcologyMethods" not in main_tex
     assert r"\PHEcologyResults" not in main_tex
     assert r"\PHEcologyDiscussion" not in main_tex
-    assert r"\newcommand" not in main_tex
     assert re.search(r"\\PH[A-Za-z]+", main_tex) is None
     flat_main = _without_value_math(_flat(main_tex))
     for visible_prose in (
-        "We measured pH in 767 archived-soil specimens",
+        "We measured pH in 767 archived soil samples from all campaigns",
         "In total, 712 measurements passed",
         "Quality-controlled pH measurements matched 702 profiles",
         "pH and location therefore described substantial overlapping variation",
@@ -282,10 +305,11 @@ def test_control_method_explains_training_scope(main_tex, supplement_tex):
     flat_main = _without_value_math(_flat(main_tex))
     flat_supplement = _without_value_math(_flat(supplement_tex))
     assert "17 sequenced extraction blanks" in flat_main
-    assert "linked by extraction day to 217 canonical Trip~5 profiles" in flat_main
-    assert "PCR blanks were kept separate" in flat_main
+    assert "could be linked by extraction day to 217 Trip~5 profiles" in flat_main
+    assert "extraction blanks could train the contaminant sensitivity for Trips~4 and 5 only" in flat_main
+    assert "they were kept separate because their biological batch links were incomplete" in flat_main
     assert "Positive standards were used only to assess" in flat_main
-    assert "an extraction day could include samples from several field trips" in flat_supplement
+    assert "may have combined samples from different trips on one day" in flat_supplement
     assert "maps EB1--EB17 to dates and 220 Trip~5 biological profiles" in flat_supplement
     assert "217 occur in the canonical table" in flat_supplement
     assert "six \\texttt{Negative}-labelled profiles" in flat_supplement
@@ -300,7 +324,8 @@ def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
     )[0]
     assert "world's largest continuous sand desert" in introduction
     assert "Yet the bacteria in its open interior have not been surveyed" in introduction
-    assert "None covers the open Rub' al-Khali at landscape scale" in introduction
+    # Naming policy: Rub' al-Khali is introduced once, then "Empty Quarter".
+    assert "None covers the open Empty Quarter at landscape scale" in introduction
     assert "The only direct microbial study" not in introduction
     assert "support more than 38\\,\\% of the world's population" not in introduction
 
@@ -308,13 +333,13 @@ def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
         r"\subsection*{Bacterial communities change across the landscape}"
     )
     paired = flat.index(
-        r"\subsection*{Soil position shapes bacterial composition and evenness}"
+        r"\subsection*{Compartment shapes bacterial composition and evenness}"
     )
     environment = flat.index(
         r"\subsection*{Climate and soil properties track bacterial variation}"
     )
     function = flat.index(
-        r"\subsection*{Predicted metabolic pathways follow geography and soil position}"
+        r"\subsection*{Predicted metabolic pathways follow geography and compartment}"
     )
     assert geography < paired < environment < function
     assert (
@@ -625,14 +650,14 @@ def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable(
         assert "14,822" not in text
         assert "2.8684" not in text
     assert (
-        "repeated 25 geographic, environmental and soil-position conclusions"
+        "repeated 25 geographic, environmental and compartment conclusions"
         in _without_value_math(_flat(main_tex))
     )
     assert "25 tracked headline" in _without_value_math(supplement_tex)
     flat = _flat(main_tex)
     assert "unfiltered biological table was the primary analysis input" in flat
     flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "could include samples from several field trips" in flat_supplement
+    assert "may have combined samples from different trips on one day" in flat_supplement
     assert "Positive controls were excluded from training" in flat_supplement
     assert "Trip~5 also used D6300" in flat_supplement
 
@@ -684,7 +709,10 @@ def test_distance_decay_is_surfaced_and_uses_whole_site_permutations(
     main_flat = _without_value_math(_flat(main_tex))
     for value in ("1.351", "1.510", "1.180", "p=0.0053"):
         assert value in main_flat
-    assert "Replacement accounted for 69--75\\,\\%" in main_flat
+    assert (
+        "Replacement represented 69--75\\,\\% of the average difference in every compartment"
+        in main_flat
+    )
     assert "randomly reassigned location labels to whole sites" in main_flat
     assert "pairs of sites were not treated as independent observations" in main_flat
 

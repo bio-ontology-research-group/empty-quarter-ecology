@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "status": "trait_gene_screen_complete",
+  "scope": "Fixed trait KO list; two gene sources reported separately (genome catalogue with CoverM abundance; PICRUSt2 predictions); presence and predicted share are potential, not activity.",
+  "genomes": {
+    "catalogue": 991,
+    "annotated": 990,
+    "analysed": 975
+  },
+  "libraries": {
+    "coverm": 150,
+    "parsed": 150,
+    "unparsed": [],
+    "by_position": {
+      "Rhizosphere": 79,
+      "Deep": 44,
+      "Surface": 27
+    },
+    "matched_to_picrust": 119
+  },
+  "picrust_profiles": 1227,
+  "parameters": {
+    "seed": 20260904,
+    "permutations": 9999,
+    "traits": {
+      "coxL_CO_dehydrogenase": [
+        "K03520"
+      ],
+      "NiFe_hydrogenase_large": [
+        "K06281",
+        "K18008",
+        "K00436"
+      ],
+      "rbcL_RuBisCO": [
+        "K01601"
+      ],
+      "psbA_photosystem_II": [
+        "K02703"
+      ],
+      "nifH_nitrogenase": [
+        "K02588"
+      ],
+      "amoA_pmoA_ammonia_monooxygenase": [
+        "K10944"
+      ],
+      "nirK_nirS_nitrite_reductase": [
+        "K00368",
+        "K15864"
+      ],
+      "nosZ_N2O_reductase": [
+        "K00376"
+      ],
+      "ureC_urease": [
+        "K01428"
+      ],
+      "otsA_otsB_trehalose": [
+        "K00697",
+        "K01087"
+      ],
+      "treY_treZ_trehalose": [
+        "K06044",
+        "K01236"
+      ],
+      "ectABC_ectoine": [
+        "K06718",
+        "K00836",
+        "K06720"
+      ],
+      "crtB_phytoene_synthase": [
+        "K02291"
+      ],
+      "spo0A_sporulation": [
+        "K07699"
+      ],
+      "phrB_photolyase": [
+        "K01669"
+      ],
+      "uvrA_excision_repair": [
+        "K03701"
+      ],
+      "recA_recombination_repair": [
+        "K03553"
+      ],
+      "katE_katG_catalase": [
+        "K03781",
+        "K03782"
+      ],
+      "sodA_superoxide_dismutase": [
+        "K04564"
+      ],
+      "dps_DNA_protection": [
+        "K04047"
+      ]
+    }
+  },
+  "inputs": {
+    "coverm_profiles": {
+      "path": "data/metadata/metagenome/coverm_profiles.tar.gz",
+      "bytes": 710534,
+      "sha256": "a33923313f0d648a092259848a21b1951b7fdee7678414b03d7913f58b4f9aba"
+    },
+    "eggnog_annotations": {
+      "path": "data/metadata/metagenome/eq.emapper.annotations.gz",
+      "bytes": 338664615,
+      "sha256": "b79dc4827d1908af7aef724dbf6904187aa119890d10fe3abd313dee36ed77d6"
+    },
+    "genus_counts": {
+      "path": "analysis/v2/review/cache/genus_counts.tsv",
+      "bytes": 8401418,
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "measured_function_inputs": {
+      "path": "data/metadata/metagenome/measured_function_inputs.tar.gz",
+      "bytes": 120244429,
+      "sha256": "08d8b84ab7331e8bcc62fa6cf0539e4008e6399a39c4bb4f9da5fde3b29bd46a"
+    },
+    "picrust_ko": {
+      "path": "data/processed/functional/picrust2/merged/ko_metagenome_unstrat.tsv",
+      "bytes": 245158740,
+      "sha256": "c71c22560ef0b96a58b7f227c7bb781b1c22fa517c000ac75dcb6da5ddd11254"
+    },
+    "site_coordinates": {
+      "path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "bytes": 3812,
+      "sha256": "0baced56bb5ccc80a0d1df4c5be3d66778c58c1da5e7ad674cd0a0724ab045a6"
+    }
+  },
+  "software": {
+    "python": "3.11.14",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "scipy": "1.14.1"
+  }
+}

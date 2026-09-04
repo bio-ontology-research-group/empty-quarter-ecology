@@ -42,7 +42,9 @@ intervals used $9{,}999$ whole-site bootstrap samples with seed $20260805$.
 The cross-desert context analysis used seed $20260804$, $9{,}999$ depth-zone
 label permutations and $100$ rarefactions per Atacama pit profile. The
 descriptive taxon-context module used seed $20260903$ and $20$ subsamples of
-$8{,}000$ reads per profile for the genus-set overlaps.
+$8{,}000$ reads per profile for the genus-set overlaps. The biology-context
+and trait-gene modules used seed $20260904$, $9{,}999$ permutations or sign
+flips and $2{,}000$ site bootstraps.
 The site-level climate analysis declares separate Benjamini--Hochberg families
 for nine diversity and $600$ genus tests. Its diversity intervals used
 $9{,}999$ paired-site bootstrap samples with seed $20260805$. The PICRUSt2
@@ -591,6 +593,16 @@ The last permutation contrast does not pass $q<0.05$, despite its bootstrap
 interval. The composition result describes the operational collection
 position and does not establish a plant selective filter.
 
+Testing every one of the $200$ genera in the same block-centred site tensor
+(three paired contrasts, $600$ sign-flip tests, one Benjamini--Hochberg
+family) supported $295$ differences: $72$ in the shallow-subsurface--surface
+contrast ($33$ higher below the surface, $39$ higher at the surface), $109$ in
+the root-adjacent--surface contrast ($54$ and $55$) and $114$ in the
+root-adjacent--shallow-subsurface contrast ($53$ and $61$). The per-genus
+means reproduce the displacement loadings of Figure~2d exactly.
+Table~\ref{tab:compartment-genera} lists the leading genera per contrast and
+direction.
+
 \subsection{Alpha diversity and post-hoc normalized evenness}
 
 For all-campaign paired contrasts, profiles were averaged within
@@ -769,6 +781,44 @@ increased from west to east. The correlations describe where genera change;
 they do not identify a cause, and the marker-gene shares are not cell counts.
 
 \input{generated/taxon_context_tables.tex}
+
+\subsection{Landform, route gradients and core occupancy}
+
+Each core site carries one field landform label (Table~\ref{tab:landform-alpha}):
+$44$ sand dunes, $9$ saline pans, $3$ oases and one gravel plain, dune slack,
+aeolian lake and oil-spill site. Saline pans lie at both ends of the route
+(three western, one central, five eastern sites) and the oases in the east.
+Table~\ref{tab:landform-sensitivity} gives the dune versus saline-pan
+composition contrast in the site-level CLR coordinates of the route model,
+with and without adjustment for route position, the route model and route
+genus correlations refitted on dune sites, and the nine climate-diversity
+correlations on dune sites. Unadjusted, $16$ genera differed between dunes and
+saline pans (for example \textit{Herpetosiphon}, \textit{Oxalophagus},
+\textit{Opitutus} and \textit{Symbiobacterium} higher in dunes,
+\textit{Thermobaculum}, \textit{Truepera} and \textit{Enterococcus} higher in
+pans); after route adjustment none passed $q<0.05$. On dune sites the six
+temperature and humidity correlations remained supported and the three
+rainfall correlations did not.
+
+Tables~\ref{tab:xrf-genera} and \ref{tab:ph-genera} list the element loadings
+of the laboratory-XRF axis and the genera whose site-level CLR values track
+the axis and site-mean archived-soil pH. Both gradients follow the route
+(axis $\rho=0.73$, pH $\rho=0.82$ with route position), and $104$ of the $117$
+pH-tracking genera are also route-supported, so the three descriptions name
+one gradient rather than three. Table~\ref{tab:core-genera} gives genus
+occupancy per compartment after pooling campaigns within site and
+subsampling to $12{,}865$ reads. Root-adjacent soil had the largest core
+($85$ genera at $\geq 90\,\%$ of sites) and the most genera per site;
+$59$ core genera were shared by all three compartments. Genera in the
+root-adjacent core only included \textit{Brevundimonas},
+\textit{Novosphingobium}, \textit{Mesobacillus} and \textit{Terribacillus};
+in the surface core only \textit{Kineococcus}, \textit{Conexibacter},
+\textit{Cystobacter} and \textit{Nitrospira}; and in the shallow-subsurface
+core only \textit{Marmoricola}, \textit{Anaeromyxobacter} and
+\textit{Sporocytophaga}. These occupancy counts describe the pools behind
+the distance-decay slopes and do not test a hypothesis.
+
+\input{generated/biology_context_tables.tex}
 
 \section{Phylogenetic diagnostic}
 
@@ -1128,6 +1178,8 @@ PICRUSt2 MetaCyc set contains no light-reaction pathway
 $63$ were biosynthesis pathways ($54$ increasing eastward); of the $270$
 supported compartment contrasts, $208$ were biosynthesis pathways. The
 classes are keyword groupings, not MetaCyc ontology classes.
+Table~\ref{tab:compartment-pathways} lists the five largest supported
+pathway contrasts per compartment pair and direction.
 
 Weighted NSTI had median $0.1648$ across the $1{,}227$ profiles (range
 $0.0053--0.7819$). The median was $0.2011$ in shallow-subsurface, $0.1681$ in surface
@@ -1228,6 +1280,34 @@ atmospheric oxidation; \emph{mcrA} and \emph{nifH} non-detections are bounded
 by recovery and annotation sensitivity. No profile-HMM, catalytic-motif,
 phylogenetic, synteny or direct-read confirmation was included, so no
 trace-gas pathway or activity claim is made.
+
+\subsection{Trait-gene screen}
+
+For a fixed list of $20$ trait genes (trace-gas oxidation, carbon fixation,
+nitrogen cycling, osmolytes, pigments, sporulation, DNA repair and
+oxidative-stress defence; KO membership in
+\path{analysis/v3/trait_genes/trait_definitions.tsv}) we report two gene
+sources separately. Table~\ref{tab:trait-genomes} gives, for the $975$
+annotated genomes of the companion shotgun catalogue, the fraction of genomes
+carrying each trait, the abundance-weighted share of the recruited community
+carrying it in the $150$ shotgun libraries by compartment, and the leading
+carrier phylum. Table~\ref{tab:trait-picrust} gives the PICRUSt2 predicted
+share of KO abundance by compartment, the paired site-level fold changes
+between compartments, the route correlation, and the agreement between the
+two sources in the $119$ matched libraries. The two sources agree best for
+the trace-gas ($\rho=0.71$ and $0.74$), Dps ($0.76$), superoxide dismutase
+($0.66$), ectoine ($0.65$), catalase ($0.57$), trehalose \textit{otsA}/\textit{otsB}
+($0.53$) and sporulation ($0.51$) traits and poorly for genes that are near
+universal (\textit{uvrA}, \textit{recA}) or rare (\textit{nifH},
+\textit{psbA}, \textit{nosZ}). The catalogue holds $59$ Bacillota genomes
+against $345$ Actinomycetota, so it under-represents the endospore formers
+that supply $22.5\,\%$ of amplicon reads; its compartment shares are
+descriptive and most libraries are root-adjacent. The hydrogenase trait pools
+group 1 KOs (\textit{hyaB}, \textit{hhyL}, \textit{hoxH}) and cannot single
+out the high-affinity group 1h enzyme. Gene presence and predicted share are
+potential, not activity.
+
+\input{generated/trait_gene_tables.tex}
 
 \section{Cross-desert and regional context}
 

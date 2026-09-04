@@ -194,7 +194,11 @@ led every compartment. Endospore-forming Bacillota and Actinomycetota therefore
 supplied over $40\,\%$ of reads, whereas Acidobacteriota and
 Verrucomicrobiota, which rank among the most abundant phyla in global soil
 surveys \cite{delgadobaquerizo2018global,fierer2017embracing}, together held
-$3.3\,\%$. These shares describe the marker-gene profile, not cell counts.
+$3.3\,\%$. Reads without a genus assignment made up $35.6\,\%$ of the total,
+archaea $0.02\,\%$, and the Cyanobacteriota were no more abundant at the
+surface ($0.40\,\%$) than below it ($0.41\,\%$) or near roots ($0.51\,\%$),
+so the bulk soil sampled carried no biocrust signature. These shares describe
+the marker-gene profile, not cell counts.
 
 We investigated whether community composition changed gradually across the
 sampled transect. The model allowed two broad patterns: a steady change from west to east,
@@ -220,7 +224,12 @@ the landscape. The slope was $1.351$ ($95\,\%$ CI, $0.905$--$1.796$), $1.510$
 $100\,\mathrm{km}$ in surface, shallow-subsurface and root-adjacent soil, respectively
 (each $p=0.0001$; Figure~\ref{fig:landscape}c). The slopes differed among
 compartments ($p=0.0053$): composition changed fastest below the surface and
-slowest next to roots.
+slowest next to roots. Genus occupancy followed the same order. After pooling
+expeditions within site and subsampling every site to $12{,}865$ reads,
+root-adjacent soil had $85$ genera present at $90\,\%$ or more of the sites,
+surface soil $82$ and shallow-subsurface soil $69$, and the median number of
+genera per site was $299$, $274$ and $284$ (Supplementary Section~S5.7). The
+compartment with the largest shared pool changed most slowly with distance.
 
 Finally, we asked what kind of change produced these differences. After
 comparing every sample at the same read coverage, we used Sørensen
@@ -253,6 +262,38 @@ also the warmer, more humid and more alkaline end of the route (site means:
 Spearman $\rho$ with route position $0.98$ for temperature, $0.92$ for humidity
 and $0.82$ for pH), so these genera mark the environmental gradient without
 identifying its cause.
+
+Landform did not create this pattern. Field notes assign each site one
+landform: $44$ sand-dune sites, $9$ saline pans ($3$ in the west, $1$ central,
+$5$ in the east), $3$ oases in the east, and one gravel plain, dune slack,
+aeolian lake and oil-spill site each (Supplementary Section~S5.7). Saline-pan
+sites differed from dune sites in composition before adjustment for route
+position (pseudo-$F=4.56$, $p=0.0013$; $16$ genera at $q<0.05$) but barely
+after it (pseudo-$F=1.74$, $p=0.036$; no genus at $q<0.05$), and their
+diversity did not differ from that of dune sites ($p\geq0.28$). The three
+oasis sites had the lowest diversity (mean Shannon $4.25$ against $5.77$ at
+dune sites). On the $44$ dune sites alone, the route model explained
+$34.2\,\%$ of composition ($40.2\,\%$ on all sites), $70$ of the $71$ genera
+with a supported route correlation on dune sites changed in the same direction
+as on all sites, and the temperature and humidity associations with diversity
+remained supported. The west-to-east replacement is therefore a property of
+the dune soils, not of the saline pans and oases scattered along the route.
+
+Landform did not create this pattern. Field notes assign each site one
+landform: $44$ sand-dune sites, $9$ saline pans ($3$ in the west, $1$ central,
+$5$ in the east), $3$ oases in the east, and one gravel plain, dune slack,
+aeolian lake and oil-spill site each (Supplementary Section~S5.7). Saline-pan
+sites differed from dune sites in composition before adjustment for route
+position (pseudo-$F=4.56$, $p=0.0013$; $16$ genera at $q<0.05$) but barely
+after it (pseudo-$F=1.74$, $p=0.036$; no genus at $q<0.05$), and their
+diversity did not differ from that of dune sites ($p\geq0.28$). The three
+oasis sites had the lowest diversity (mean Shannon $4.25$ against $5.77$ at
+dune sites). On the $44$ dune sites alone, the route model explained
+$34.2\,\%$ of composition ($40.2\,\%$ on all sites), $70$ of the $71$ genera
+with a supported route correlation on dune sites changed in the same direction
+as on all sites, and the temperature and humidity associations with diversity
+remained supported. The west-to-east replacement is therefore a property of
+the dune soils, not of the saline pans and oases scattered along the route.
 
 \begin{figure}[!htbp]
 \centering
@@ -316,12 +357,26 @@ did not show the same order. Compartment therefore changed which taxa
 dominated more consistently than it changed how many taxa were detected.
 Because the read abundances are relative, we compared each genus with the
 geometric mean abundance across all genera on a logarithmic scale. This avoids
-treating the reads as absolute cell counts. The largest descriptive genus
-shifts involved contrasts such as
-\textit{Pelagibacterium}, \textit{Bradyrhizobium}, \textit{Deinococcus} and
-\textit{Planococcus} (Figure~\ref{fig:soil-position}d). These values locate the
-genera that contributed most to the overall composition difference; they do
-not test each genus separately.
+treating the reads as absolute cell counts. Testing the $200$ route-model
+genera in each of the $3$ paired contrasts ($600$ tests) supported $295$
+differences after correction (Supplementary Section~S5.1). Surface soil held
+more \textit{Deinococcus}, \textit{Kineococcus}, \textit{Kocuria},
+\textit{Planococcus} and \textit{Rufibacter} than shallow-subsurface soil and
+more \textit{Deinococcus}, \textit{Rubrobacter}, \textit{Geodermatophilus} and
+\textit{Blastococcus} than root-adjacent soil, genera known for pigmentation
+and tolerance of radiation and desiccation. Root-adjacent soil held more
+\textit{Pelagibacterium}, \textit{Neorhizobium}, \textit{Devosia},
+\textit{Metabacillus}, \textit{Pseudomonas} and the Saccharibacteria lineage
+TM7a than either bulk compartment, and more \textit{Brevundimonas} and
+\textit{Pantoea} than shallow-subsurface soil; \textit{Domibacillus}, the
+leading genus overall, was also highest near roots. Shallow-subsurface soil
+held more of the nitrifiers \textit{Nitrospira} and MND1 (Nitrosomonadaceae)
+than either other compartment, and more \textit{Gaiella},
+\textit{Symbiobacterium} and \textit{Caldilinea} than root-adjacent soil.
+\textit{Bradyrhizobium}, a root-nodule genus, was lower near roots than in
+either bulk compartment (Figure~\ref{fig:soil-position}d). These contrasts
+describe which genera carry the compartment difference; they do not identify
+a mechanism.
 
 \begin{figure}[!htbp]
 \centering
@@ -384,7 +439,16 @@ explained $84.6\,\%$ of pH variation ($p\leq0.001$). Among the same $702$ matche
 profiles, the share of bacterial composition explained by location fell from
 $35.8\,\%$ to $19.6\,\%$ after pH adjustment. Excluding the group with the
 highest pH, or its entire site, gave $18.7$--$19.6\,\%$. pH and location therefore
-described substantial overlapping variation.
+described substantial overlapping variation. The genera that tracked site pH
+were the genera of the route: $117$ of the $200$ genera correlated with
+site-mean pH ($q<0.05$), $104$ of them also with route position.
+\textit{Polygonibacillus}, \textit{Sediminibacillus},
+\textit{Halalkalibacter}, \textit{Gracilibacillus}, \textit{Halomonas} and
+\textit{Aquibacillus} increased with pH ($\rho=0.71$--$0.81$);
+\textit{Pirellula}, \textit{Roseisolibacter}, \textit{Gemmatimonas},
+\textit{Steroidobacter}, \textit{Gaiella}, \textit{Sphingomonas} and
+\textit{Streptomyces} decreased ($\rho=-0.60$ to $-0.68$; Supplementary
+Section~S5.7).
 
 X-ray fluorescence (XRF) measured $11$ elements in at least $75\,\%$ of $725$ specimens.
 Because the elements changed together, we combined them into one summary
@@ -394,6 +458,24 @@ bacterial composition, $0.358\,\%$ ($p=0.010$). Planned changes to the included
 taxa and treatment of zero values
 gave estimates from $0.311$ to $0.543\,\%$ (Supplementary Sections~S2--S3). This
 range shows sensitivity to analysis choices; it is not a confidence interval.
+The gradient loaded positively on Ca, Mg, Na, S, Cl, Fe and Ti and negatively
+on Si, so it separates sand rich in carbonate, sulfate and chloride minerals
+from quartz-rich sand; it followed the route (Spearman $\rho=0.73$ with route
+position) and does not measure soluble ions. $118$ genera tracked it, with the
+same Bacillota (\textit{Polygonibacillus}, \textit{Sediminibacillus},
+\textit{Aquibacillus}, \textit{Halalkalibacter}, \textit{Gracilibacillus}) on
+the Ca, Mg, Na, S and Cl side and \textit{Steroidobacter},
+\textit{Caldilinea}, \textit{Streptomyces}, \textit{Roseisolibacter} and
+\textit{Gemmatimonas} on the Si side (Supplementary Section~S5.7).
+The gradient loaded positively on Ca, Mg, Na, S, Cl, Fe and Ti and negatively
+on Si, so it separates sand rich in carbonate, sulfate and chloride minerals
+from quartz-rich sand; it followed the route (Spearman $\rho=0.73$ with route
+position) and does not measure soluble ions. $118$ genera tracked it, with the
+same Bacillota (\textit{Polygonibacillus}, \textit{Sediminibacillus},
+\textit{Aquibacillus}, \textit{Halalkalibacter}, \textit{Gracilibacillus}) on
+the Ca, Mg, Na, S and Cl side and \textit{Steroidobacter},
+\textit{Caldilinea}, \textit{Streptomyces}, \textit{Roseisolibacter} and
+\textit{Gemmatimonas} on the Si side (Supplementary Section~S5.7).
 
 \subsection*{Bacterial richness shows a short association with recent rainfall}
 
@@ -480,8 +562,13 @@ root-adjacent and shallow-subsurface soil ($0.453$) and between root-adjacent
 and surface soil ($0.429$; both adjusted $p=0.00015$ after correction for $3$
 comparisons; Figure~\ref{fig:function-controls}a). Of $600$ tests covering
 $200$ pathways and $3$ compartment pairs, $270$ remained supported after
-correction. They included pathways for amino acids, cofactors, carbohydrates
-and cell envelopes; Supplementary Section~S8.1 gives the complete results.
+correction. Root-adjacent soil had the largest increases for formaldehyde
+assimilation through the ribulose monophosphate cycle, palmitate and lysine
+biosynthesis, menaquinol biosynthesis, and glucose, xylose and fructuronate
+degradation; shallow-subsurface soil for isoleucine biosynthesis IV, the
+incomplete reductive TCA cycle, GDP-mannose biosynthesis and starch
+degradation; and surface soil for alanine and biotin biosynthesis and tRNA
+processing. Supplementary Section~S8.1 gives the complete results.
 
 From west to east along the transect, $2$ pathways that produce the fatty
 acids cis-vaccenate and gondoate
@@ -490,6 +577,33 @@ had higher predictions for glucose and xylose degradation and for
 several polyamine and thiamin pathways. These patterns identify
 candidates for tests of membrane adaptation and carbon and metabolite
 exchange near desert roots; they do not show that these processes occurred.
+
+We then asked a narrower question of a fixed list of $20$ trait genes that
+matter in hyperarid soil, using two independent gene sources (Supplementary
+Section~S8.3). In the $975$ annotated genomes of the companion shotgun
+catalogue, $38.5\,\%$ carried the aerobic CO dehydrogenase \textit{coxL} and
+$22.6\,\%$ a group 1 [NiFe]-hydrogenase large subunit, most of them
+Actinomycetota; $24.6\,\%$ carried RuBisCO, $0.2\,\%$ photosystem II and
+$1.0\,\%$ nitrogenase (\textit{nifH}). Osmolyte synthesis was widespread
+(trehalose in $70$--$73\,\%$ of genomes, ectoine in $36\,\%$), as were
+carotenoid synthesis ($49\,\%$), DNA repair (\textit{uvrA} $95\,\%$,
+\textit{recA} $92\,\%$) and oxidative-stress genes (catalase $77\,\%$,
+superoxide dismutase $83\,\%$). Weighted by genome abundance in the $150$
+shotgun libraries, hydrogenase carriers made up $32\,\%$ of the recruited
+community in shallow-subsurface soil against $17\,\%$ at the surface and
+$15\,\%$ near roots, whereas carotenoid and photolyase carriers were most
+abundant at the surface ($61$ and $34\,\%$). The PICRUSt2 predictions agreed
+with the genome-derived shares for the trace-gas, ectoine, trehalose
+(\textit{otsA}/\textit{otsB}), sporulation, catalase, superoxide dismutase and
+Dps traits (Spearman $\rho=0.51$--$0.76$ across $119$ matched libraries) and
+gave the same compartment pattern: predicted hydrogenase and \textit{coxL}
+shares were lowest near roots ($0.67$ and $0.74$ of the shallow-subsurface
+value), whereas sporulation (\textit{spo0A}, $1.4$--$1.5$-fold), catalase,
+superoxide dismutase and Dps were highest there. Along the route, predicted
+trehalose-synthesis and carotenoid genes decreased eastward ($\rho=-0.71$ and
+$-0.59$) while ectoine, \textit{spo0A} and superoxide dismutase genes increased
+($0.36$, $0.56$ and $0.70$). Gene presence is potential, not activity, and the
+hydrogenase KOs do not single out the high-affinity group 1h enzyme.
 
 Prediction quality depends on how closely the sampled bacteria resemble
 organisms with sequenced reference genomes. PICRUSt2 summarizes this distance
@@ -560,7 +674,10 @@ genera such as \textit{Cellulomonas}, \textit{Marmoricola},
 \textit{Blastocatella} and \textit{Roseisolibacter} gave way eastward to
 Bacillota, with \textit{Bacillus} and genera typical of saline and alkaline
 soils gaining most, in the direction in which temperature, humidity and pH
-increased. Distance decay
+increased. The saline pans and oases along the route did not drive this
+replacement: the same genera changed in the same direction on the $44$ dune
+sites alone, and saline pans differed little from dunes once route position
+was accounted for. Distance decay
 also occurs in Negev soils \cite{bay2020negev}, and Namib dune systems
 show habitat-specific community structure across dune zones \cite{ronca2015namib}.
 Different primers, distances and soils prevent a merged numerical comparison,
@@ -610,7 +727,17 @@ and subsurface soil
 \cite{horstmann2024atacama,pombubpa2020mojave}. The Empty Quarter adds
 repeated comparisons of surface, $5$--$10\,\mathrm{cm}$ and root-adjacent
 soil. Root-adjacent communities were less even rather than simply poorer, so
-fewer taxa carried more reads. This pattern is consistent with a stronger
+fewer taxa carried more reads. The genera behind this pattern form three
+recognizable guilds. The surface is enriched in pigmented, radiation- and
+desiccation-tolerant Actinomycetota and Deinococcota (\textit{Deinococcus},
+\textit{Rubrobacter}, \textit{Geodermatophilus}, \textit{Blastococcus},
+\textit{Kocuria}), the shallow subsurface in nitrifiers (\textit{Nitrospira},
+Nitrosomonadaceae MND1; the genome catalogue also holds ammonia-oxidizing
+Thermoproteota) and in slow-growing \textit{Gaiella}, and root-adjacent soil
+in copiotrophic Rhizobiales (\textit{Pelagibacterium}, \textit{Neorhizobium},
+\textit{Devosia}), \textit{Pseudomonas} and Bacillota, with the highest
+predicted sporulation and oxidative-stress gene shares and the lowest
+trace-gas oxidation potential. This pattern is consistent with a stronger
 selective environment near roots: plants change carbon and nutrient supply,
 and studies of desert plants have found host- and root-compartment-specific
 recruitment \cite{philippot2013roots,eida2018desertplants,
@@ -629,7 +756,17 @@ respiration through cytochrome $c$ and the biosynthesis of amino acids, fatty
 acids and cofactors led the profiles, while carbon-fixation pathways and
 Cyanobacteriota were minor. This is the profile expected for an
 endospore-rich community that lives on scarce, episodic organic input rather
-than on photoautotrophic crusts \cite{makhalanyane2015microbial}. Along the
+than on photoautotrophic crusts \cite{makhalanyane2015microbial}. The gene
+screen refines this picture: over a third of the recovered genomes carry the
+aerobic CO dehydrogenase and a fifth a group 1 [NiFe]-hydrogenase, mostly in
+Actinomycetota, and these carriers are most abundant in bulk
+shallow-subsurface soil and least abundant near roots. Oxidation of
+atmospheric H$_2$ and CO sustains desert soil bacteria between wetting events
+\cite{tribbia2026tracegas}; our data show that the genetic potential is
+widespread and concentrated where organic carbon input is smallest. The
+osmolyte genes also shift along the route, from trehalose synthesis in the
+west to ectoine and sporulation genes in the east where Bacillota rise, in
+line with the warmer and more alkaline conditions there. Along the
 route, most of the $92$ pathways that changed monotonically were biosynthesis
 pathways that increased eastward ($54$ of $63$), including unsaturated
 fatty-acid pathways, whereas near roots the supported differences included
@@ -1090,6 +1227,20 @@ with route position to state the direction of the gradients. These summaries
 are descriptive and add no claim to the tracked conclusions
 (\path{analysis/v3/taxon_context/}).
 
+For each of the $200$ genera we also tested the $3$ paired compartment
+contrasts in the same block-centred site tensor as the composition test
+(sign-flip over sites; Benjamini--Hochberg over $600$ tests; site bootstrap
+intervals), correlated site-level CLR values with site-mean pH and with the
+laboratory-XRF elemental axis (Spearman; Benjamini--Hochberg over $200$ tests
+each), and compared the $44$ sand-dune and $9$ saline-pan sites, using the
+field landform recorded for each site, with a label-permutation pseudo-$F$
+and per-genus Mann-Whitney tests, without and with adjustment for route
+position. The route model, the genus route correlations and the
+climate-diversity correlations were refitted on the dune sites. Genus
+occupancy per compartment used counts pooled across expeditions within site
+and subsampled $20$ times to $12{,}865$ reads (seed $20260904$;
+\path{analysis/v3/biology_context/}).
+
 \subsection*{Predicted functional potential and shotgun comparison}
 
 PICRUSt2 v2.4.1 predicted KEGG Ortholog groups and MetaCyc pathways from the ASV
@@ -1112,7 +1263,16 @@ expressed each pathway as a share of predicted pathway abundance per profile,
 averaged across the $1{,}227$ core profiles, and grouped pathways by keywords
 in their MetaCyc descriptions into biosynthesis, degradation or utilization,
 energy and central metabolism, and other; the rules and the ranks of the
-carbon-fixation pathways are archived with the results.
+carbon-fixation pathways are archived with the results. For a fixed list of
+$20$ trait genes (KO identifiers in the repository), we counted carriers among
+the $975$ annotated genomes of the companion catalogue (eggNOG-mapper KO
+annotations), weighted them by CoverM genome abundance in the $150$ shotgun
+libraries, and summed the predicted abundance of the same KOs in the PICRUSt2
+profiles as a share of all KO abundance. Compartment contrasts used site-level
+paired $\log_{10}$ ratios with sign-flip tests (Benjamini--Hochberg over $60$
+tests), route correlations used Spearman over site means ($20$ tests), and
+agreement between the two sources used Spearman over $119$ matched libraries
+(\path{analysis/v3/trait_genes/}).
 
 For each predicted profile, the weighted nearest-sequenced-taxon index (NSTI)
 summarized the distance between its ASVs and sequenced reference genomes. A

@@ -523,7 +523,8 @@ def test_relocated_detail_survives_in_the_supplement(main_tex, supplement_tex):
     assert "separate, ongoing metagenomic study of the same expeditions" in flat_main
     assert "eggNOG-mapper v2.1.12 annotation of the genome catalogue" in flat_main
     assert "its results will be reported separately" in flat_main
-    assert main_tex.count("eggNOG-mapper") == 2  # provenance paragraph + Software
+    # provenance paragraph + trait-gene Methods (Sep 2026) + Software
+    assert main_tex.count("eggNOG-mapper") == 3
     # The Supplement carries the shotgun/genomic-potential methods instead.
     assert "990" in normalized_supplement and "2,000" in normalized_supplement
 

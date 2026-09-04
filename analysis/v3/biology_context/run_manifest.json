@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0",
+  "status": "descriptive_biology_context_complete",
+  "scope": "Descriptive taxon-level context for tracked results; declared BH families (600 compartment genus tests; 200 tests each for landform, dune-only route, XRF axis and pH); no tracked conclusion changed.",
+  "landform": {
+    "sites_per_landform": {
+      "sand dune": 44,
+      "saline pan": 9,
+      "desert oasis": 3,
+      "aeolian lake": 1,
+      "dune slack": 1,
+      "gravel": 1,
+      "oilspill": 1
+    },
+    "saline_pan_sites_by_third": {
+      "east": 5,
+      "west": 3,
+      "central": 1
+    },
+    "omnibus": [
+      {
+        "adjustment": "none",
+        "n_dune_sites": 44,
+        "n_saline_pan_sites": 9,
+        "pseudo_f": 4.556620522058284,
+        "permutation_p": 0.0013,
+        "permutations": 9999
+      },
+      {
+        "adjustment": "route_linear_quadratic",
+        "n_dune_sites": 44,
+        "n_saline_pan_sites": 9,
+        "pseudo_f": 1.7395755438923113,
+        "permutation_p": 0.0362,
+        "permutations": 9999
+      }
+    ],
+    "supported_genera_unadjusted": 16,
+    "supported_genera_route_adjusted": 0,
+    "route_model": [
+      {
+        "cohort": "all_60_sites",
+        "n_sites": 60,
+        "route_r2": 0.401609500942688,
+        "supported_route_genera_all_sites": NaN,
+        "supported_route_genera_dune_sites": NaN,
+        "supported_in_both": NaN,
+        "supported_in_both_same_sign": NaN
+      },
+      {
+        "cohort": "sand_dune_sites",
+        "n_sites": 44,
+        "route_r2": 0.3423999437065087,
+        "supported_route_genera_all_sites": 124.0,
+        "supported_route_genera_dune_sites": 71.0,
+        "supported_in_both": 70.0,
+        "supported_in_both_same_sign": 70.0
+      }
+    ],
+    "climate_diversity_dune_all_nine_supported": false
+  },
+  "compartment_family": {
+    "n_tests": 600,
+    "n_supported": 295,
+    "supported_by_contrast_and_direction": {
+      "Deep-Surface:shallow_subsurface": 33,
+      "Deep-Surface:surface": 39,
+      "Rhizosphere-Deep:root_adjacent": 53,
+      "Rhizosphere-Deep:shallow_subsurface": 61,
+      "Rhizosphere-Surface:root_adjacent": 54,
+      "Rhizosphere-Surface:surface": 55
+    },
+    "max_abs_deviation_from_committed_loadings": 4.970073241850059e-10
+  },
+  "xrf_axis": {
+    "positive_loading_elements": [
+      "Ca",
+      "Mg",
+      "Na",
+      "S",
+      "Cl",
+      "Fe",
+      "Ti"
+    ],
+    "negative_loading_elements": [
+      "Si"
+    ],
+    "n_sites": 60,
+    "spearman_rho_axis_vs_route": 0.7284801333703808,
+    "p_axis_vs_route": 4.1904635727601714e-11,
+    "supported_genera": 118
+  },
+  "ph": {
+    "n_sites": 60,
+    "supported_genera": 117,
+    "supported_also_route_supported": 104
+  },
+  "core": {
+    "depth": 12865,
+    "occupancy_threshold": 0.9,
+    "core_genera_per_compartment": {
+      "surface": 82,
+      "shallow_subsurface": 69,
+      "root_adjacent": 85
+    },
+    "core_shared_by_all_three": [
+      "Acidiferrimicrobium",
+      "Adhaeribacter",
+      "Ammoniphilus",
+      "Archangium",
+      "Arthrobacter",
+      "Azospirillum",
+      "Bacillus",
+      "Blastococcus",
+      "Candidatus Alysiosphaera",
+      "Chelativorans",
+      "Chthoniobacter",
+      "Croceibacterium",
+      "Cytophaga",
+      "Deinococcus",
+      "Devosia",
+      "Domibacillus",
+      "Ectobacillus",
+      "Ellin6055",
+      "Flavisolibacter",
+      "Gemmatimonas",
+      "Geodermatophilus",
+      "Herpetosiphon",
+      "Kocuria",
+      "Lysinibacillus",
+      "Lysobacter",
+      "Massilia",
+      "Metabacillus",
+      "Microvirga",
+      "Mycobacterium",
+      "Neobacillus",
+      "Nibribacter",
+      "Nitrolancea",
+      "Nocardioides",
+      "Noviherbaspirillum",
+      "OM27 clade",
+      "Paenibacillus",
+      "Parviterribacter",
+      "Peredibacter",
+      "Phenylobacterium",
+      "Pir4 lineage",
+      "Pirellula",
+      "Planococcus",
+      "Pontibacter",
+      "Pseudomonas",
+      "Pseudonocardia",
+      "Ramlibacter",
+      "Roseicella",
+      "Roseomonas",
+      "Rubellimicrobium",
+      "Rubrobacter",
+      "Solirubrobacter",
+      "Sphingoaurantiacus",
+      "Sphingomonas",
+      "Steroidobacter",
+      "Streptomyces",
+      "Sumerlaea",
+      "Symbiobacterium",
+      "Telluribacter",
+      "Tumebacillus"
+    ]
+  },
+  "parameters": {
+    "seed": 20260904,
+    "permutations": 9999,
+    "bootstrap": 2000,
+    "core_draws": 20
+  },
+  "inputs": {
+    "climate_alpha_correlations": {
+      "path": "analysis/v3/environment_associations/climate_alpha_correlations.tsv",
+      "bytes": 1510,
+      "sha256": "6091025b75bdfb8636e0ea0f2fcbe44a24ad86c67a5d31df050eec6e682c53d3"
+    },
+    "climate_site_summary": {
+      "path": "analysis/v3/environment_associations/climate_site_summary.tsv",
+      "bytes": 6762,
+      "sha256": "f1e5c44b47d603d8f9f199500db95ed033ef37e17822049d28b24eebad0327c3"
+    },
+    "displacement_loadings": {
+      "path": "analysis/v3/compartment_composition/paired_displacement_loadings.tsv",
+      "bytes": 25786,
+      "sha256": "d8b2a6d5775c48eda3181a9ff6b844cce0e06a08a0290e769026c1989f715428"
+    },
+    "genus_composition": {
+      "path": "analysis/v3/taxon_context/genus_composition.tsv",
+      "bytes": 315593,
+      "sha256": "b05b3c4ae8e9ab97aca2d7252d28bdb8a9ce62d3ca58b20d63b93c5afa33759a"
+    },
+    "genus_counts": {
+      "path": "analysis/v2/review/cache/genus_counts.tsv",
+      "bytes": 8401418,
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "pathway_position_effects": {
+      "path": "analysis/v3/picrust2_ecology/pathway_position_effects.tsv",
+      "bytes": 68117,
+      "sha256": "8d45dabcc13c7f74b7170122c59d041597da6a6d5d6e45296b95021fb416e67f"
+    },
+    "ph_sample_profile_join": {
+      "path": "analysis/v3/ph_shared_v1/ecology/ph_sample_profile_join.tsv",
+      "bytes": 168698,
+      "sha256": "3f66a8bef066a8476500e09b707e8824efdc81b011e4ba7be33230f5a3791ea7"
+    },
+    "sample_metadata": {
+      "path": "data/processed/functional/picrust2/merged/sample_metadata.tsv",
+      "bytes": 155089,
+      "sha256": "4f6b4f67a54bd06f66a74e566e463ae5225116b53a23aa6f7b08002f6e2cb082"
+    },
+    "site_coordinates": {
+      "path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "bytes": 3812,
+      "sha256": "0baced56bb5ccc80a0d1df4c5be3d66778c58c1da5e7ad674cd0a0724ab045a6"
+    },
+    "transect_replacement": {
+      "path": "analysis/v3/taxon_context/transect_replacement.tsv",
+      "bytes": 44788,
+      "sha256": "84cc32b518955613dfd0b5835e37008568e46437343b40b242abaa3239065fbb"
+    },
+    "xrf_axis": {
+      "path": "analysis/v3/xrf_community_rescue/laboratory_xrf_axis.tsv",
+      "bytes": 37817,
+      "sha256": "5cc9008bcd24b6c284339d684d05ee55bacc4f12d44b77549d5a9286d4718d6a"
+    },
+    "xrf_loadings": {
+      "path": "analysis/v3/xrf_community_rescue/elemental_pc1_loadings.tsv",
+      "bytes": 428,
+      "sha256": "747bc732bee6255a601260bbea1ba9363da8d989f80fb40e5a7858d4e65815ad"
+    }
+  },
+  "software": {
+    "python": "3.11.14",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "scipy": "1.14.1"
+  }
+}

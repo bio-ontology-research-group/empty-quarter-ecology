@@ -1,0 +1,3 @@
+cohort	n_sites	route_r2	supported_route_genera_all_sites	supported_route_genera_dune_sites	supported_in_both	supported_in_both_same_sign
+all_60_sites	60	0.4016095009				
+sand_dune_sites	44	0.3423999437	124	71	70	70

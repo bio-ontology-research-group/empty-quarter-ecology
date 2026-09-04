@@ -1,0 +1,61 @@
+trait	category	contrast	n_sites	mean_log10_ratio	fold_change	sign_flip_p	q_bh	supported_q_lt_0_05
+coxL_CO_dehydrogenase	trace gas	shallow_subsurface-surface	60	0.0381685172	1.091863925	0.0262	0.04623529412	True
+coxL_CO_dehydrogenase	trace gas	root_adjacent-surface	60	-0.1069315486	0.7817510106	0.0001	0.000375	True
+coxL_CO_dehydrogenase	trace gas	root_adjacent-shallow_subsurface	60	-0.1331326524	0.7359822623	0.0001	0.000375	True
+NiFe_hydrogenase_large	trace gas	shallow_subsurface-surface	60	0.06604586367	1.164248973	0.0069	0.0138	True
+NiFe_hydrogenase_large	trace gas	root_adjacent-surface	60	-0.1148520556	0.7676229391	0.0003	0.0009473684211	True
+NiFe_hydrogenase_large	trace gas	root_adjacent-shallow_subsurface	60	-0.1722643946	0.6725670788	0.0001	0.000375	True
+rbcL_RuBisCO	carbon fixation	shallow_subsurface-surface	60	0.002902961639	1.006706706	0.8593	0.8731	False
+rbcL_RuBisCO	carbon fixation	root_adjacent-surface	60	-0.09163643127	0.8097735157	0.0001	0.000375	True
+rbcL_RuBisCO	carbon fixation	root_adjacent-shallow_subsurface	60	-0.0847123597	0.822787415	0.0002	0.0006666666667	True
+psbA_photosystem_II	carbon fixation	shallow_subsurface-surface	60	0.09724142604	1.250954247	0.4072	0.509	False
+psbA_photosystem_II	carbon fixation	root_adjacent-surface	60	-0.04523941441	0.9010742636	0.7213	0.7776428571	False
+psbA_photosystem_II	carbon fixation	root_adjacent-shallow_subsurface	60	-0.09157282588	0.8098921213	0.3448	0.450893617	False
+nifH_nitrogenase	nitrogen	shallow_subsurface-surface	60	0.07651758829	1.192662566	0.7258	0.7776428571	False
+nifH_nitrogenase	nitrogen	root_adjacent-surface	60	0.07527168033	1.189245948	0.7506	0.7901052632	False
+nifH_nitrogenase	nitrogen	root_adjacent-shallow_subsurface	60	0.01671887628	1.039247232	0.8731	0.8731	False
+amoA_pmoA_ammonia_monooxygenase	nitrogen	shallow_subsurface-surface	60	0.1231772834	1.327936424	0.2801	0.3819545455	False
+amoA_pmoA_ammonia_monooxygenase	nitrogen	root_adjacent-surface	60	0.1334940453	1.359859518	0.3526	0.450893617	False
+amoA_pmoA_ammonia_monooxygenase	nitrogen	root_adjacent-shallow_subsurface	60	0.08371208183	1.212584694	0.5716	0.6724705882	False
+nirK_nirS_nitrite_reductase	nitrogen	shallow_subsurface-surface	60	-0.01558099388	0.9647593719	0.2561	0.3573488372	False
+nirK_nirS_nitrite_reductase	nitrogen	root_adjacent-surface	60	-0.05358844958	0.8839171299	0.0007	0.00168	True
+nirK_nirS_nitrite_reductase	nitrogen	root_adjacent-shallow_subsurface	60	-0.03312822177	0.9265562251	0.0935	0.1516216216	False
+nosZ_N2O_reductase	nitrogen	shallow_subsurface-surface	60	0.004256629481	1.009849441	0.7075	0.7776428571	False
+nosZ_N2O_reductase	nitrogen	root_adjacent-surface	60	-0.02029122595	0.9543524089	0.2043	0.2989756098	False
+nosZ_N2O_reductase	nitrogen	root_adjacent-shallow_subsurface	60	-0.0236055846	0.9470969007	0.1641	0.24615	False
+ureC_urease	nitrogen	shallow_subsurface-surface	60	-0.03764639699	0.9169667815	0.0001	0.000375	True
+ureC_urease	nitrogen	root_adjacent-surface	60	-0.009143068488	0.9791673677	0.2385	0.3407142857	False
+ureC_urease	nitrogen	root_adjacent-shallow_subsurface	60	0.0316304525	1.075549623	0.0064	0.01324137931	True
+otsA_otsB_trehalose	osmolyte	shallow_subsurface-surface	60	0.003058779459	1.007067961	0.7773	0.8041034483	False
+otsA_otsB_trehalose	osmolyte	root_adjacent-surface	60	-0.06527504428	0.8604486464	0.0004	0.001043478261	True
+otsA_otsB_trehalose	osmolyte	root_adjacent-shallow_subsurface	60	-0.06027088144	0.8704205153	0.0002	0.0006666666667	True
+treY_treZ_trehalose	osmolyte	shallow_subsurface-surface	60	-0.02258223318	0.9493312274	0.1287	0.198	False
+treY_treZ_trehalose	osmolyte	root_adjacent-surface	60	-0.07367656255	0.8439630587	0.0001	0.000375	True
+treY_treZ_trehalose	osmolyte	root_adjacent-shallow_subsurface	60	-0.04304576738	0.9056371568	0.0435	0.07457142857	False
+ectABC_ectoine	osmolyte	shallow_subsurface-surface	60	0.08348601354	1.211953657	0.0001	0.000375	True
+ectABC_ectoine	osmolyte	root_adjacent-surface	60	0.08483035235	1.215711017	0.0045	0.009642857143	True
+ectABC_ectoine	osmolyte	root_adjacent-shallow_subsurface	60	0.01990647762	1.04690308	0.4928	0.6034285714	False
+crtB_phytoene_synthase	pigment	shallow_subsurface-surface	60	-0.01327178005	0.9699028153	0.114	0.18	False
+crtB_phytoene_synthase	pigment	root_adjacent-surface	60	-0.03806947694	0.916073928	0.0004	0.001043478261	True
+crtB_phytoene_synthase	pigment	root_adjacent-shallow_subsurface	60	-0.02509927838	0.9438450915	0.0186	0.0354375	True
+spo0A_sporulation	dormancy	shallow_subsurface-surface	60	-0.04090098866	0.9101207402	0.6643	0.7520377358	False
+spo0A_sporulation	dormancy	root_adjacent-surface	60	0.1493430991	1.410402597	0.0004	0.001043478261	True
+spo0A_sporulation	dormancy	root_adjacent-shallow_subsurface	60	0.1732203979	1.490117098	0.0004	0.001043478261	True
+phrB_photolyase	DNA repair	shallow_subsurface-surface	60	0.01387114455	1.03245503	0.0927	0.1516216216	False
+phrB_photolyase	DNA repair	root_adjacent-surface	60	-0.02552191827	0.942927022	0.0189	0.0354375	True
+phrB_photolyase	DNA repair	root_adjacent-shallow_subsurface	60	-0.03383737476	0.9250444998	0.0005	0.00125	True
+uvrA_excision_repair	DNA repair	shallow_subsurface-surface	60	0.0141833752	1.033197568	0.0008	0.001846153846	True
+uvrA_excision_repair	DNA repair	root_adjacent-surface	60	-0.005439926352	0.9875522292	0.3532	0.450893617	False
+uvrA_excision_repair	DNA repair	root_adjacent-shallow_subsurface	60	-0.01895528024	0.9572926396	0.0023	0.005111111111	True
+recA_recombination_repair	DNA repair	shallow_subsurface-surface	60	0.01884654213	1.044351133	0.0001	0.000375	True
+recA_recombination_repair	DNA repair	root_adjacent-surface	60	-0.002135201351	0.9950955833	0.6157	0.7104230769	False
+recA_recombination_repair	DNA repair	root_adjacent-shallow_subsurface	60	-0.02052246072	0.9538444109	0.0001	0.000375	True
+katE_katG_catalase	oxidative stress	shallow_subsurface-surface	60	-0.04124407393	0.9094020441	0.0001	0.000375	True
+katE_katG_catalase	oxidative stress	root_adjacent-surface	60	0.03649215067	1.087657479	0.0001	0.000375	True
+katE_katG_catalase	oxidative stress	root_adjacent-shallow_subsurface	60	0.07757811033	1.195578538	0.0001	0.000375	True
+sodA_superoxide_dismutase	oxidative stress	shallow_subsurface-surface	60	0.001948937126	1.004497678	0.5428	0.65136	False
+sodA_superoxide_dismutase	oxidative stress	root_adjacent-surface	60	0.0271092491	1.064410743	0.0001	0.000375	True
+sodA_superoxide_dismutase	oxidative stress	root_adjacent-shallow_subsurface	60	0.02665717997	1.063303345	0.0001	0.000375	True
+dps_DNA_protection	oxidative stress	shallow_subsurface-surface	60	-0.01488459758	0.9663076159	0.0237	0.04309090909	True
+dps_DNA_protection	oxidative stress	root_adjacent-surface	60	0.02753420261	1.065452769	0.0001	0.000375	True
+dps_DNA_protection	oxidative stress	root_adjacent-shallow_subsurface	60	0.04325923315	1.104737848	0.0001	0.000375	True

@@ -66,7 +66,9 @@ def test_soil_position_figure_adds_descriptive_taxon_context() -> None:
     # Panel title follows the co-authors' rename of "soil position" to
     # "compartment" (Overleaf, Sep 2026); the figure script is authoritative.
     assert "Genera contributing most to compartment differences" in figure
-    assert "do not test each genus separately" in " ".join(MAIN.split())
+    # The Figure 2d caption keeps the descriptive boundary; the Results text now
+    # reports the per-genus family (analysis/v3/biology_context, Sep 2026).
+    assert "does not test genera separately" in " ".join(MAIN.split())
     manifest = pd.read_csv(
         ROOT / "empty-quarter-amplicon/figures/figure_manifest.tsv", sep="\t"
     )

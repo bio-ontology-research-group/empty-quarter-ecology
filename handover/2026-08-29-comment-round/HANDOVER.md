@@ -316,3 +316,27 @@ linkage, promises the index-728/run lookup.
 - Open: Rund's Q3 and kit-blank IDs (end of week); silent co-authors Alarawi,
   Sivakumar, Wang, Rueping; Sulaiman's ORCID; grant numbers; shotgun BioProject
   (\todo remains in Methods); public SPARQL endpoint redeploy; reply to Raik.
+
+## 11. Addendum, 4 Sep 2026 (assistant session; second "missing biology" round)
+- Robert asked for more cases like Raik's comments; nine fixed (landform, compartment
+  genus family, named compartment pathways, trait-gene screen from genome catalogue +
+  PICRUSt2, XRF-axis genera, pH genera, unclassified/archaea/cyanobacteria shares,
+  core occupancy per compartment); PMA taxa blocked (no taxonomy or sequences for the
+  PMA ASV table locally). Modules analysis/v3/biology_context.py and
+  analysis/v3/trait_genes.py, tables in generated/, tests/test_biology_context.py;
+  details in the ecology ledger (4 Sep section).
+- Key biology now in the paper: landform (44 dune / 9 saline pan / 3 oasis sites) does
+  not drive the west-east replacement; surface radiation-tolerant guild, shallow
+  nitrifier guild, root-adjacent copiotroph guild; trace-gas oxidation genes (coxL
+  38.5 %, group 1 [NiFe]-hydrogenase 22.6 % of genomes, Actinomycetota) most abundant
+  in bulk shallow subsurface and least near roots; osmolyte strategy shifts
+  west (trehalose) to east (ectoine, sporulation).
+- Explored but NOT added (Robert to decide): season (T3->T4 shift equals inter-annual
+  T1->T3 drift; T5 distinct with Aeromonas contaminant signature), rainfall phylum
+  shifts (inconsistent, confounded with site location), fertile-soil comparator (open
+  data inadequate; crude MGnify agricultural comparison Jaccard 0.35). Scratch script:
+  the session scratchpad explore_season_rain.py (not committed).
+- Trait-gene module needs the bulk input ko_metagenome_unstrat.tsv extracted from
+  measured_function_inputs.tar.gz into data/processed/functional/picrust2/merged/
+  (done locally; untracked bulk file by design). CI does not run the analysis
+  scripts, only the tests on committed outputs.

@@ -1,0 +1,21 @@
+trait	category	description	kos
+coxL_CO_dehydrogenase	trace gas	aerobic CO dehydrogenase large subunit (coxL)	K03520
+NiFe_hydrogenase_large	trace gas	[NiFe]-hydrogenase large subunit (group 1/1h KOs hyaB, hhyL, hoxH)	K06281,K18008,K00436
+rbcL_RuBisCO	carbon fixation	RuBisCO large subunit (rbcL/cbbL)	K01601
+psbA_photosystem_II	carbon fixation	photosystem II D1 protein (psbA)	K02703
+nifH_nitrogenase	nitrogen	nitrogenase iron protein (nifH)	K02588
+amoA_pmoA_ammonia_monooxygenase	nitrogen	ammonia/methane monooxygenase subunit A (amoA/pmoA)	K10944
+nirK_nirS_nitrite_reductase	nitrogen	dissimilatory nitrite reductase (nirK, nirS)	K00368,K15864
+nosZ_N2O_reductase	nitrogen	nitrous-oxide reductase (nosZ)	K00376
+ureC_urease	nitrogen	urease alpha subunit (ureC)	K01428
+otsA_otsB_trehalose	osmolyte	trehalose synthesis (otsA, otsB)	K00697,K01087
+treY_treZ_trehalose	osmolyte	trehalose from maltooligosaccharides (treY, treZ)	K06044,K01236
+ectABC_ectoine	osmolyte	ectoine synthesis (ectA, ectB, ectC)	K06718,K00836,K06720
+crtB_phytoene_synthase	pigment	phytoene synthase (crtB), carotenoid pigments	K02291
+spo0A_sporulation	dormancy	sporulation master regulator (spo0A)	K07699
+phrB_photolyase	DNA repair	deoxyribodipyrimidine photolyase (phrB)	K01669
+uvrA_excision_repair	DNA repair	UvrABC system protein A (uvrA)	K03701
+recA_recombination_repair	DNA repair	recombinase A (recA)	K03553
+katE_katG_catalase	oxidative stress	catalase (katE) and catalase-peroxidase (katG)	K03781,K03782
+sodA_superoxide_dismutase	oxidative stress	Fe/Mn superoxide dismutase (sodA)	K04564
+dps_DNA_protection	oxidative stress	DNA protection during starvation protein (dps)	K04047

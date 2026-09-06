@@ -340,3 +340,24 @@ linkage, promises the index-728/run lookup.
   measured_function_inputs.tar.gz into data/processed/functional/picrust2/merged/
   (done locally; untracked bulk file by design). CI does not run the analysis
   scripts, only the tests on committed outputs.
+
+## 12. Addendum, 6 Sep 2026 (assistant session; Rund's control answers)
+- Rund replied 6 Sep 14:11 (Q1 and Q3 answered as far as her records allow; free
+  for a call weekdays 9-16 Saudi except Tuesday). Facts and where they went:
+  ecology ledger "6 Sep 2026, later", data ledger same heading, and the data repo's
+  evidence/controls/author_control_confirmation_20260906.md.
+- Her (a)/(b) question on M-25-0929 was answered from the data: neither. The blank
+  is nearest to 46Dr1 (M-25-0917, same re-run series; BC 0.389), not to 60Dr3
+  (0.944) nor to a mixture of M-25-0925..0928. Scratch scripts nn_test.py and
+  nn_calib.py in the 6 Sep session scratchpad (not committed); inputs are
+  analysis/rerun-controls-2026-08-30/ibex/results/controls_md5.tsv and the
+  canonical table.
+- Manuscripts: ecology S2 (kit-level blanks, laboratory record on Ctrl-1/2/3,
+  contaminated Pro blank, Trip 3 control roles, FPosCtrl1 flagged), Methods and
+  Discussion one sentence each; data paper 02_methods (six edits, \todo on Trips
+  1-3 extraction days removed, kit sentence replaced by ledger counts).
+- Reply to Rund drafted in Gnus (test result, FPosCtrl1, ORCID, call slots: Mon
+  9-13 or after 15:30, Wed, Thu). Calendar checked for 7-10 Sep.
+- Open for Robert: confirm the kit-count sentence with Marwa; decide whether
+  Ctrl-2/Ctrl-3 stay in the positive-recovery table; send the reply; schedule the
+  call; Rund's ORCID still unconfirmed.

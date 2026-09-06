@@ -309,7 +309,7 @@ def test_control_method_explains_training_scope(main_tex, supplement_tex):
     assert "extraction blanks could train the contaminant sensitivity for Trips~4 and 5 only" in flat_main
     assert "they were kept separate because their biological batch links were incomplete" in flat_main
     assert "Positive standards were used only to assess" in flat_main
-    assert "may have combined samples from different trips on one day" in flat_supplement
+    assert "one extraction blank per extraction kit rather than per day" in flat_supplement
     assert "maps EB1--EB17 to dates and 220 Trip~5 biological profiles" in flat_supplement
     assert "217 occur in the canonical table" in flat_supplement
     assert "six \\texttt{Negative}-labelled profiles" in flat_supplement
@@ -657,7 +657,7 @@ def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable(
     flat = _flat(main_tex)
     assert "unfiltered biological table was the primary analysis input" in flat
     flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "may have combined samples from different trips on one day" in flat_supplement
+    assert "one extraction blank per extraction kit rather than per day" in flat_supplement
     assert "Positive controls were excluded from training" in flat_supplement
     assert "Trip~5 also used D6300" in flat_supplement
 

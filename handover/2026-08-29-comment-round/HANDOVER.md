@@ -361,3 +361,7 @@ linkage, promises the index-728/run lookup.
 - Open for Robert: confirm the kit-count sentence with Marwa; decide whether
   Ctrl-2/Ctrl-3 stay in the positive-recovery table; send the reply; schedule the
   call; Rund's ORCID still unconfirmed.
+- Robert's decision (6 Sep, later): uncertain controls stay out of both papers
+  (Ctrl-1/2/3, FPosCtrl1, index discrepancy, swap reasoning removed); only the
+  contaminated Pro blank is described. Four positives now evaluated in the text;
+  the repo's control_audit tables still list seven. Reply to Rund is *claude-mail-36*.

@@ -291,18 +291,19 @@ identifiers of the PCR controls and the biological libraries amplified with
 them were not recorded, so PCR blanks remain separate from extraction blanks
 and cannot support a batch-linked PCR prevalence analysis.
 
-The sequenced Trips~$1$--$3$ extraction blank does not serve its purpose.
-\path{e0929_Extraction_Ctrl_Pro_Trip1} (M-25-0929) is the PowerSoil Pro kit
-blank. Re-denoised from the raw reads, it yielded $408{,}918$ reads and
-$1{,}165$ ASVs with $84\,\%$ of reads in ASVs shared with biological
-profiles; its nearest canonical profile, a Trip~$1$ shallow-subsurface sample,
-lies at Bray--Curtis $0.39$, within the range of Trip~$1$ same-site replicate
-pairs (median $0.53$). The blank therefore carries soil template and was not
-used to screen any profile. Trips~$1$--$3$ consequently have no usable
-sequenced extraction blank.
+The one sequenced Trips~$1$--$3$ extraction blank,
+\path{e0929_Extraction_Ctrl_Pro_Trip1} (the PowerSoil Pro kit blank), could
+not be used: re-denoised from the raw reads, it held $408{,}918$ reads in
+$1{,}165$ ASVs with $84\,\%$ of reads in ASVs shared with biological profiles,
+a soil profile rather than a reagent profile. It lies at Bray--Curtis $0.39$
+from a single Trip~$1$ profile, within the range of same-site replicate pairs,
+but at $0.93$--$0.98$ from the four libraries prepared alongside it, which
+points to an isolated transfer into the blank rather than a batch-wide
+process. It was not used to screen any profile, so Trips~$1$--$3$ have no
+usable sequenced extraction blank.
 
-The material limits are that the Trips~$1$--$3$ PowerSoil kit blank was not
-sequenced and the PowerSoil Pro kit blank is contaminated; that the Trip~$4$
+The material limits are that Trips~$1$--$3$ have no usable extraction
+blank; that the Trip~$4$
 blanks of three extraction days were not sequenced, affecting all or part of
 $28$ sites, and that the Trip~$4$ PCR blank and no-template control were not
 sequenced; that Trip~$5$ has no positive control in the $16$S assay; and that

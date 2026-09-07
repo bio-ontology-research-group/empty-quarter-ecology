@@ -371,3 +371,10 @@ linkage, promises the index-728/run lookup.
   (batch_adjacency_test.py, batch_meta.tsv, table gz; outputs
   batch_adjacency_results.json, batch_adjacency_profiles.tsv, braycurtis_1237.npy).
   Result to go into S2 and, if null, into the ledger as positive evidence.
+- 7 Sep, later: Ibex job 51426151 finished (394 s). Trips 1 and 3 show no excess
+  similarity between co-prepared profiles (delta -0.003 p 0.15; +0.007 p 1.0) and no
+  yield dependence; Trip 5 (screened) shows a small batch signal (-0.022 p 0.001).
+  Archived in analysis/batch-adjacency-2026-09-07 (README, script, inputs, outputs,
+  Bray-Curtis matrix); reported in S2, one Discussion clause, data-paper Methods.
+  All pushed (ecology Overleaf ffb052c, repo dec24b7, data repo 27fb2e9, data
+  Overleaf 119d202).

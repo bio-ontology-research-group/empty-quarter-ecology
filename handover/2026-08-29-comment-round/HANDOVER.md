@@ -365,3 +365,9 @@ linkage, promises the index-728/run lookup.
   (Ctrl-1/2/3, FPosCtrl1, index discrepancy, swap reasoning removed); only the
   contaminated Pro blank is described. Four positives now evaluated in the text;
   the repo's control_audit tables still list seven. Reply to Rund is *claude-mail-36*.
+- 7 Sep: Robert kept the contaminated Pro blank in S2 (three sentences, isolated
+  transfer evidence), main text says "no usable blank" only. Library-order neighbour
+  test submitted on IBEX: job 51426151, /ibex/user/hohndor/eq-batch-test-2026-09-07
+  (batch_adjacency_test.py, batch_meta.tsv, table gz; outputs
+  batch_adjacency_results.json, batch_adjacency_profiles.tsv, braycurtis_1237.npy).
+  Result to go into S2 and, if null, into the ledger as positive evidence.

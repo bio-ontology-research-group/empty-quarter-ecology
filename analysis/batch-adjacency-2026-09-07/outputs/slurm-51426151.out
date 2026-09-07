@@ -1,0 +1,16 @@
+Loading module for Python
+Python 3.9.16 is now loaded
+ -----------------------------
+To install additional python libraries/packages (to YOUR $HOME directory), please do the following:
+   mkdir -p $PYTHON_LIBS
+   pip install --prefix=$PYTHON_LIBS <your python_lib name>
+   Example: 
+           pip install --prefix=$PYTHON_LIBS biopython
+ -----------------------------
+table read: 1237 profiles x 337575 ASVs, 117s
+Bray-Curtis done, 372s
+{"trip": "1", "series": "JUL_M25", "n_profiles": 325, "n_pairs_diff_site": 48693, "n_adjacent_pairs": 318, "adjacent_definition": "|rank diff| <= 2", "mean_bc_adjacent": 0.7982265949249268, "mean_bc_nonadjacent": 0.8442732691764832, "delta_stratified": -0.003463514008612003, "null_mean": 6.105094868515266e-05, "null_sd": 0.0031757750830279288, "p_adjacent_more_similar": 0.145, "ols_coef_adjacent": 0.04073397603159932, "ols_coef_log_geodist": 0.043360684913224326, "ols_coef_same_compartment": -0.023258353968766538, "n_profiles_with_yield": 238, "spearman_logconc_vs_neighbour_excess": 0.10843033253001103, "spearman_p": 0.09513743778275177, "mean_excess_low_yield_tertile": 0.006436701118946076, "mean_excess_high_yield_tertile": 0.026173344627022744}
+{"trip": "3", "series": "JUL_M23", "n_profiles": 449, "n_pairs_diff_site": 98976, "n_adjacent_pairs": 716, "adjacent_definition": "|rank diff| <= 2", "mean_bc_adjacent": 0.8136729598045349, "mean_bc_nonadjacent": 0.8604728579521179, "delta_stratified": 0.007090063900920932, "null_mean": 3.8295016838229e-06, "null_sd": 0.002471248257209972, "p_adjacent_more_similar": 0.997, "ols_coef_adjacent": 0.03219156315697524, "ols_coef_log_geodist": 0.03690870112782624, "ols_coef_same_compartment": -0.022050586241037288, "n_profiles_with_yield": 401, "spearman_logconc_vs_neighbour_excess": 0.07837795084503466, "spearman_p": 0.11710788178447727, "mean_excess_low_yield_tertile": 0.00153684571607789, "mean_excess_high_yield_tertile": 0.013899728878220515}
+{"trip": "4", "series": "JUL_M25", "n_profiles": 177, "n_pairs_diff_site": 15402, "n_adjacent_pairs": 177, "adjacent_definition": "|rank diff| <= 2", "mean_bc_adjacent": 0.8721373677253723, "mean_bc_nonadjacent": 0.8659823536872864, "delta_stratified": 0.016315508360243113, "null_mean": 2.313472053592775e-05, "null_sd": 0.0037492242301675606, "p_adjacent_more_similar": 1.0, "ols_coef_adjacent": 0.018302749737210713, "ols_coef_log_geodist": 0.032658307048322587, "ols_coef_same_compartment": -0.017896634119553834, "n_profiles_with_yield": 0, "spearman_logconc_vs_neighbour_excess": NaN, "spearman_p": NaN, "mean_excess_low_yield_tertile": NaN, "mean_excess_high_yield_tertile": NaN}
+{"trip": "5", "series": "T5_M25", "n_profiles": 233, "n_pairs_diff_site": 26531, "n_adjacent_pairs": 453, "adjacent_definition": "|rank diff| <= 2", "mean_bc_adjacent": 0.8714345693588257, "mean_bc_nonadjacent": 0.8912642598152161, "delta_stratified": -0.021805623246081353, "null_mean": 0.0002050673187299612, "null_sd": 0.002935487355982298, "p_adjacent_more_similar": 0.001, "ols_coef_adjacent": -0.021723828983191522, "ols_coef_log_geodist": 0.029008493155320586, "ols_coef_same_compartment": -0.00018639299509394766, "n_profiles_with_yield": 11, "spearman_logconc_vs_neighbour_excess": NaN, "spearman_p": NaN, "mean_excess_low_yield_tertile": NaN, "mean_excess_high_yield_tertile": NaN}
+done, 394s

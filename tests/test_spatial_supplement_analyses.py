@@ -18,8 +18,11 @@ from distance_decay_turnover import (  # noqa: E402
     upper_triangle,
 )
 from spatial_resolution_sensitivity import (  # noqa: E402
+    DEFAULT_COORDINATES,
     NEIGHBOUR_COUNTS,
-    align_to_reference_groups,
+    asv_counts_on_reference_groups,
+    load_site_coordinates,
+    reference_sample_ids,
 )
 
 ASV_DIR = ROOT / "analysis/v3/spatial_resolution_sensitivity"
@@ -80,30 +83,104 @@ def test_two_sided_p_is_centred_on_the_null_mean():
     assert two_sided_p(9.0, null) == pytest.approx(0.01)
 
 
-def test_align_to_reference_groups_intersects_on_the_reference_keys():
+def test_asv_counts_follow_the_reference_cohort_exactly(tmp_path):
+    """Groups come from the genus cohort; low-depth profiles are excluded."""
+    # e0001_1Sr1 and e0002_1Sr2 form campaign-1 site-1 Surface; e0003_1Sr3
+    # is a profile the genus cache dropped (below the cleaning threshold);
+    # e0004_T2Dr1 is a group the genus cohort did not retain.
+    asv = pd.DataFrame(
+        {
+            "e0001_1Sr1": [10, 0, 5],
+            "e0002_1Sr2": [1, 2, 3],
+            "e0003_1Sr3": [100, 100, 100],
+            "e0004_T2Dr1": [7, 7, 7],
+            "e0005_5Dr1": [0, 1, 0],
+        },
+        index=["asv_a", "asv_b", "asv_c"],
+    )
+    asv_path = tmp_path / "asv.tsv"
+    asv.to_csv(asv_path, sep="\t")
     reference = pd.DataFrame(
         {
-            "campaign": [1, 1, 2],
-            "site": [1, 2, 1],
-            "compartment": ["Surface", "Surface", "Deep"],
+            "campaign": [1, 1],
+            "site": [1, 5],
+            "compartment": ["Surface", "Deep"],
         }
     )
-    metadata = pd.DataFrame(
-        {
-            "campaign": [1, 1, 5],
-            "site": [1, 2, 9],
-            "compartment": ["Surface", "Surface", "Deep"],
-        }
+    reference_samples = {"e0001_1Sr1", "e0002_1Sr2", "e0005_5Dr1", "e0004_T2Dr1"}
+    counts, metadata, info = asv_counts_on_reference_groups(
+        asv_path, reference_samples, reference
     )
-    counts = pd.DataFrame(np.arange(9).reshape(3, 3), index=["a", "b", "c"])
-    aligned_counts, aligned_metadata, info = align_to_reference_groups(
-        counts, metadata, reference
-    )
-    assert info["groups_dropped_from_asv_cache"] == 1
-    assert info["reference_groups_absent_from_asv_cache"] == 1
+    assert counts.shape == (3, 2)
+    assert list(counts.index) == ["asv_a", "asv_b", "asv_c"]
+    # The excluded profile's reads never enter the group sum.
+    assert counts.iloc[:, 0].tolist() == [11, 2, 8]
+    assert counts.iloc[:, 1].tolist() == [0, 1, 0]
+    assert metadata[["campaign", "site", "compartment"]].equals(reference)
+    assert info["reference_groups"] == 2
     assert info["aligned_groups"] == 2
-    assert aligned_counts.shape == (3, 2)
-    assert len(aligned_metadata) == 2
+    assert info["profiles_excluded_as_absent_from_genus_cache"] == ["e0003_1Sr3"]
+    assert info["profiles_used"] == 4
+    assert info["asv_cache_groups_outside_reference_cohort"] == [
+        "campaign 2, site 2, Deep"
+    ]
+    assert info["filtered_asv_reads_per_group_min"] == 1
+    assert set(info["reference_groups_below_2000_filtered_asv_reads"]) == {
+        "campaign 1, site 1, Surface",
+        "campaign 1, site 5, Deep",
+    }
+
+
+def test_asv_counts_refuse_a_reference_group_without_profiles(tmp_path):
+    asv = pd.DataFrame({"e0001_1Sr1": [1, 2]}, index=["asv_a", "asv_b"])
+    asv_path = tmp_path / "asv.tsv"
+    asv.to_csv(asv_path, sep="\t")
+    reference = pd.DataFrame(
+        {"campaign": [1, 1], "site": [1, 2], "compartment": ["Surface", "Surface"]}
+    )
+    with pytest.raises(ValueError, match="no ASV profile"):
+        asv_counts_on_reference_groups(asv_path, {"e0001_1Sr1"}, reference)
+
+
+def test_reference_sample_ids_are_the_genus_cache_columns(tmp_path):
+    genus_path = tmp_path / "genus.tsv"
+    pd.DataFrame({"s1": [1], "s2": [2]}, index=["g"]).to_csv(genus_path, sep="\t")
+    assert reference_sample_ids(genus_path) == {"s1", "s2"}
+
+
+def test_site_coordinate_table_must_hold_the_sixty_core_sites(tmp_path):
+    columns = ["site", "latitude", "longitude", "x_km", "y_km", "transect_km"]
+    good = pd.DataFrame(
+        {
+            "site": range(60, 0, -1),
+            **{column: np.linspace(0, 1, 60) for column in columns[1:]},
+        }
+    )
+    path = tmp_path / "coordinates.tsv"
+    good.to_csv(path, sep="\t", index=False)
+    loaded = load_site_coordinates(path)
+    assert loaded["site"].tolist() == list(range(1, 61))
+    good.iloc[:-1].to_csv(path, sep="\t", index=False)
+    with pytest.raises(ValueError, match="60 core sites"):
+        load_site_coordinates(path)
+    good.drop(columns=["transect_km"]).to_csv(path, sep="\t", index=False)
+    with pytest.raises(ValueError, match="transect_km"):
+        load_site_coordinates(path)
+
+
+@pytest.mark.skipif(
+    not (ROOT / DEFAULT_COORDINATES).exists(),
+    reason="corrected coordinate table not staged",
+)
+def test_default_coordinates_carry_the_site_52_correction():
+    coordinates = load_site_coordinates(ROOT / DEFAULT_COORDINATES)
+    site_52 = coordinates.set_index("site").loc[52]
+    assert site_52["latitude"] == pytest.approx(20.82784, abs=1e-5)
+    assert site_52["longitude"] == pytest.approx(53.57835, abs=1e-5)
+    # Site 52 must no longer share the uncorrected campaign-1/3 position of
+    # site 53.
+    site_53 = coordinates.set_index("site").loc[53]
+    assert abs(site_52["longitude"] - site_53["longitude"]) > 0.1
 
 
 @pytest.mark.skipif(
@@ -115,35 +192,75 @@ def test_asv_resolution_supports_the_genus_primary_result():
     genus = frame[frame["resolution"] == "genus"].iloc[0]
     asv = frame[frame["resolution"] == "asv"]
     assert len(asv) >= 2
-    assert genus["n_groups"] == 630
-    # The ASV arm runs on the intersected canonical cohort, not on the
-    # independently grouped 631-profile cache.
-    assert (asv["n_groups"] <= 630).all()
+    assert genus["n_groups"] == 630 and genus["n_sites"] == 60
+    # Both arms run on the primary cohort: the same 630 groups at 60 sites.
+    assert (asv["n_groups"] == 630).all() and (asv["n_sites"] == 60).all()
     assert (asv["partial_r2"] > 0.5 * genus["partial_r2"]).all()
     assert (asv["permutation_p"] < 0.05).all()
+    assert (asv["partial_r2_ci_low"] < asv["partial_r2"]).all()
+    assert (asv["partial_r2_ci_high"] > asv["partial_r2"]).all()
 
 
 @pytest.mark.skipif(
     not (ASV_DIR / "claim_verdict.json").exists(),
     reason="ASV sensitivity not staged",
 )
-def test_asv_group_alignment_is_stated_exactly():
-    """The two caches do not cover identical groups; say so precisely."""
+def test_genus_arm_reproduces_the_corrected_primary_fit():
+    """The genus comparison value is the corrected-coordinate primary fit."""
     frame = pd.read_csv(ASV_DIR / "asv_resolution_sensitivity.tsv", sep="\t")
     verdict = json.loads((ASV_DIR / "claim_verdict.json").read_text())
-    alignment = verdict["asv_alignment"]
-    assert alignment["reference_groups"] == 630
-    assert alignment["aligned_groups"] == 629
-    assert alignment["reference_groups_absent_from_asv_cache"] == 1
-    assert alignment["groups_dropped_from_asv_cache"] == 2
+    primary = json.loads(
+        (ROOT / "analysis/v3/spatial_turnover_rescue/results/claim_verdict.json")
+        .read_text()
+    )
+    genus = frame[frame["resolution"] == "genus"].iloc[0]
+    assert genus["partial_r2"] == pytest.approx(
+        primary["primary_partial_r2"], abs=1e-9
+    )
+    assert verdict["genus_primary_partial_r2"] == pytest.approx(
+        primary["primary_partial_r2"], abs=1e-9
+    )
+    assert verdict["genus_primary_partial_r2_95_jackknife_ci"] == pytest.approx(
+        primary["primary_partial_r2_95_jackknife_ci"], abs=1e-9
+    )
+    assert genus["residual_moran_i"] == pytest.approx(
+        primary["primary_residual_moran_i"], abs=1e-9
+    )
+    assert verdict["input"]["coordinates_path"].endswith(
+        str(DEFAULT_COORDINATES)
+    )
+
+
+@pytest.mark.skipif(
+    not (ASV_DIR / "claim_verdict.json").exists(),
+    reason="ASV sensitivity not staged",
+)
+def test_asv_cohort_is_the_full_primary_cohort_and_fully_described():
+    frame = pd.read_csv(ASV_DIR / "asv_resolution_sensitivity.tsv", sep="\t")
+    verdict = json.loads((ASV_DIR / "claim_verdict.json").read_text())
+    cohort = verdict["asv_cohort"]
+    assert cohort["reference_groups"] == 630
+    assert cohort["aligned_groups"] == 630
     asv_groups = set(frame[frame["resolution"] == "asv"]["n_groups"])
-    assert asv_groups == {alignment["aligned_groups"]}
+    assert asv_groups == {630}
+    # The ASV cache's extra material is named, not silently absorbed: nine
+    # core-site profiles below the cleaning threshold, and three groups whose
+    # retained profiles fall short of 2,000 genus-assigned reads.
+    assert len(cohort["profiles_excluded_as_absent_from_genus_cache"]) == 9
+    assert cohort["asv_cache_groups_outside_reference_cohort"] == [
+        "campaign 1, site 46, Rhizosphere",
+        "campaign 2, site 1, Deep",
+        "campaign 4, site 53, Deep",
+    ]
+    assert cohort["reference_groups_below_2000_filtered_asv_reads"] == {
+        "campaign 3, site 54, Rhizosphere": 894
+    }
 
     wording = verdict["permitted_wording"]
-    assert "629-group intersection" in wording
-    assert "629 of the 630 genus-reference groups" in wording
-    # The two arms are not on identical groups, so this claim is forbidden.
-    assert "on the same groups" not in wording
+    assert "same 630 site-campaign-compartment groups" in wording
+    assert "corrected site coordinates" in wording
+    for stale in ("archived", "intersection", "earlier coordinate", "629"):
+        assert stale not in wording
 
 
 @pytest.mark.skipif(

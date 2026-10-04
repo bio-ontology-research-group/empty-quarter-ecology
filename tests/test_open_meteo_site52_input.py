@@ -74,3 +74,15 @@ def test_five_product_agreement_matches_reported_ranges():
     assert len(table) == 10
     assert round(table.pearson_r.min(), 3) == 0.501 and round(table.pearson_r.max(), 3) == 0.917
     assert round(table.spearman_rho.min(), 3) == 0.554 and round(table.spearman_rho.max(), 3) == 0.881
+
+
+def test_current_rainfall_inputs_match_the_pinned_data_repository():
+    from manuscript_paths import locked_data_bytes
+    selector = json.loads(locked_data_bytes("metadata/climate/current_analysis_inputs.json"))
+    pairs = [("daily_open_meteo", CORRECTED),
+             ("trip1_five_product_exposures", PRODUCTS / "rain_event_product_exposures.tsv")]
+    for key, local in pairs:
+        entry = selector["inputs"][key]
+        packaged = locked_data_bytes(entry["path"])
+        assert packaged == local.read_bytes()
+        assert hashlib.sha256(packaged).hexdigest() == entry["sha256"]

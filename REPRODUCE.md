@@ -110,16 +110,19 @@ genome provenance requirements are listed in the companion data repository.
 
 Current coordinate-dependent results use Site 52 at 20.82784 N, 53.57835 E.
 The October finalization replays the XRF/environment associations, control-filter
-sensitivity and batch-adjacency analyses on that geometry. The shared data pin
-still contains a daily Open-Meteo series fetched at an average that included the
-old position. The explicit replacement is
+sensitivity and batch-adjacency analyses on that geometry. The shared data pin packages the current rainfall inputs under
+`metadata/climate/current_analysis_inputs.json`. Its corrected daily Open-Meteo
+series is byte-identical to the ecology input at
 `analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv`.
 Its package records the original source hash, corrected request and response,
 and verifies that every non-Site-52 row is unchanged. The rainfall refit and
 its current sensitivity consumers use this replacement. The five-product Trip 1
 comparison uses the corrected grid-cell extraction in
 `analysis/v3/rain_event_product_exposures_site52_corrected_20261004/`,
-rebuilt from the 21 hash-verified original climate files.
+rebuilt from the 21 hash-verified original climate files and also packaged in
+the shared data pin. Frozen historical climate inputs retain their acquisition
+provenance. The companion data descriptor documents KG v3.0.1
+(https://doi.org/10.5281/zenodo.23134168).
 
 The reported rainfall model is `analysis/v3/rain_calendar_refit_20260909/`,
 including its complete six-member calendar-year permutation orbit and full

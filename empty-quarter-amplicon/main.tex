@@ -461,7 +461,7 @@ Since the environmental measurements we obtained capture weather at a point in t
 \subsubsection*{Soil measurements}
 We measured pH from $767$ stored soil samples from all campaigns. We suspended air dried soil sieved to $\le 2$~mm in $0.01$~M CaCl$_2$ at a $1$:$2.5$ (w/v) ratio, mixed on a hula mixer for 30 min, and left them to stand for 30 min. We measured pH using an Accumet AB315 meter fitted with a Fisher Scientific Accumet electrode (cat. no.\ 13-620-112), which we calibrated at the start of each session and rinsed with Milli-Q water between measurements. We retained only measurements with a valid calibration defined as an electrode slope of $95$--$102\,\%$, and a pH $10$ buffer read-back of $9.9$--$10.1$ and a value within the physical range. pH coverage was incomplete and non-random across campaigns (Supplementary Section~\ref{si-sup:pH}).
 
-In the laboratory we measured total elements in $725$ stored soil samples from all campaigns using a Vanta Handheld XRF Analyzer in Fast Mode. A seperate in-situ field XRF workflow (only in T5) was used as a descriptive diagnostic and is reported in Supplementary Section~\ref{si-sup:XRF}. We retained the $11$ elements
+In the laboratory we measured total elements in $725$ stored soil samples from all campaigns using a Vanta Handheld XRF Analyzer in Fast Mode. A separate in-situ field XRF workflow (only in T5) was used as a descriptive diagnostic and is reported in Supplementary Section~\ref{si-sup:XRF}. We retained the $11$ elements
 detected in at least $75\,\%$ of samples and applied a $\log(1+x)$ transformation. We standardized the values within each campaign to reduce between-campaign differences. We summarized the standardized element values by principal component analysis (PCA) and used the first component as a single elemental score per sample.
 %We then tested whether this score explained bacterial composition beyond campaign, compartment, and site using $999$ within-site permutations. We assessed sensitivity to the elements included, the treatment of zero values, and the amount of compositional value retained.
 
@@ -548,7 +548,13 @@ maintained in the dedicated reproducibility repository at
 \href{https://github.com/bio-ontology-research-group/empty-quarter-ecology}{the ecology reproducibility repository}.
 The repository links each analysis to its exact input, machine-readable result,
 random seed and checksum, and links shared data products to the companion
-resource. The public repository provides the staged inputs and downstream analyses. Its release checklist identifies the upstream amplicon, PMA, shotgun-read and genome resources required for a complete raw-read replay, together with the outstanding archival and public-download checks.
+resource. The shared knowledge graph, KG v3.0.1, is archived at
+\href{https://doi.org/10.5281/zenodo.23134168}{Zenodo} with its original modules,
+asserted export and rebuild kit. The public repository provides the staged
+inputs and downstream analyses, including the corrected Site~52 rainfall
+packages shared with the data descriptor. Its release checklist identifies
+the upstream amplicon, PMA, shotgun-read and genome resources and execution
+records required for a complete raw-read replay.
 
 \subsection*{Software}
 Amplicon reads were processed with nf-core/Ampliseq v2.14.0 (Nextflow; DADA2

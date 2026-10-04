@@ -1,0 +1,7 @@
+KG v3.0.1 cross-paper alignment, 4 October 2026
+Baseline ecology Overleaf: 7e745a8fcf12095bc25b325b2fa96af88aac83ea
+
+Main: identify shared KG v3.0.1 DOI and corrected rainfall packages; clarify raw-read replay requirements; fix separate typo.
+Supplement: reconcile routine QIAcube use from Trip 4 with earlier-campaign re-extractions.
+No numerical ecological result changed.
+Reproducibility repository: update shared data pin and verify byte-identical rainfall inputs.

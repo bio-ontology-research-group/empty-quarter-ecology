@@ -1,0 +1,41 @@
+diff --git a/main.tex b/main.tex
+index 1241d13..479c7ec 100644
+--- a/main.tex
++++ b/main.tex
+@@ -461,7 +461,7 @@ Since the environmental measurements we obtained capture weather at a point in t
+ \subsubsection*{Soil measurements}
+ We measured pH from $767$ stored soil samples from all campaigns. We suspended air dried soil sieved to $\le 2$~mm in $0.01$~M CaCl$_2$ at a $1$:$2.5$ (w/v) ratio, mixed on a hula mixer for 30 min, and left them to stand for 30 min. We measured pH using an Accumet AB315 meter fitted with a Fisher Scientific Accumet electrode (cat. no.\ 13-620-112), which we calibrated at the start of each session and rinsed with Milli-Q water between measurements. We retained only measurements with a valid calibration defined as an electrode slope of $95$--$102\,\%$, and a pH $10$ buffer read-back of $9.9$--$10.1$ and a value within the physical range. pH coverage was incomplete and non-random across campaigns (Supplementary Section~\ref{si-sup:pH}).
+ 
+-In the laboratory we measured total elements in $725$ stored soil samples from all campaigns using a Vanta Handheld XRF Analyzer in Fast Mode. A seperate in-situ field XRF workflow (only in T5) was used as a descriptive diagnostic and is reported in Supplementary Section~\ref{si-sup:XRF}. We retained the $11$ elements
++In the laboratory we measured total elements in $725$ stored soil samples from all campaigns using a Vanta Handheld XRF Analyzer in Fast Mode. A separate in-situ field XRF workflow (only in T5) was used as a descriptive diagnostic and is reported in Supplementary Section~\ref{si-sup:XRF}. We retained the $11$ elements
+ detected in at least $75\,\%$ of samples and applied a $\log(1+x)$ transformation. We standardized the values within each campaign to reduce between-campaign differences. We summarized the standardized element values by principal component analysis (PCA) and used the first component as a single elemental score per sample.
+ %We then tested whether this score explained bacterial composition beyond campaign, compartment, and site using $999$ within-site permutations. We assessed sensitivity to the elements included, the treatment of zero values, and the amount of compositional value retained.
+ 
+@@ -548,7 +548,13 @@ maintained in the dedicated reproducibility repository at
+ \href{https://github.com/bio-ontology-research-group/empty-quarter-ecology}{the ecology reproducibility repository}.
+ The repository links each analysis to its exact input, machine-readable result,
+ random seed and checksum, and links shared data products to the companion
+-resource. The public repository provides the staged inputs and downstream analyses. Its release checklist identifies the upstream amplicon, PMA, shotgun-read and genome resources required for a complete raw-read replay, together with the outstanding archival and public-download checks.
++resource. The shared knowledge graph, KG v3.0.1, is archived at
++\href{https://doi.org/10.5281/zenodo.23134168}{Zenodo} with its original modules,
++asserted export and rebuild kit. The public repository provides the staged
++inputs and downstream analyses, including the corrected Site~52 rainfall
++packages shared with the data descriptor. Its release checklist identifies
++the upstream amplicon, PMA, shotgun-read and genome resources and execution
++records required for a complete raw-read replay.
+ 
+ \subsection*{Software}
+ Amplicon reads were processed with nf-core/Ampliseq v2.14.0 (Nextflow; DADA2
+diff --git a/supplement.tex b/supplement.tex
+index 7c880fe..061cc5b 100644
+--- a/supplement.tex
++++ b/supplement.tex
+@@ -213,7 +213,7 @@ The two measures agree in direction throughout but differ in magnitude. The pair
+ \input{tables/compartment_differences.tex}
+ 
+ \subsubsection{Potential confounds}\label{sup:alphadiversity_confounds}
+-To check whether read depth variation and DNA extraction kit differences contribute to compartment differences, we refitted the Shannon contrasts with Gaussian generalized estimating equations (GEEs) that included log read depth, campaign, and extraction kit, and used an exchangeable working correlation to account for repeated sampling of each site. The normalized Shannon contrasts, adjusted for campaign and log read depth, retained their direction and significance. A campaign $\times$ compartment interaction was significant for Shannon diversity before adjustment for read depth (Wald, $p = 0.008$) but not after ($p = 0.175$), indicating that part of the between-campaign variation in the Shannon contrasts may be attributed to read depth differences. The Shannon root-adjacent versus shallow subsurface contrast remained significant in every model we fitted for extraction kit, whereas the root-adjacent versus surface contrast in only three of the six (additive unadjusted, additive depth-adjusted, and extraction kit-matched pairs). We treat these adjustments as a sensitivity analysis rather than definitive controls, because extraction kit was recorded for $858$ of the samples and was partly confounded with campaign (one automated DNA extraction instrument was only used for samples from the last two campaigns), so sample processing, season, and campaign cannot be fully separated.
++To check whether read depth variation and DNA extraction kit differences contribute to compartment differences, we refitted the Shannon contrasts with Gaussian generalized estimating equations (GEEs) that included log read depth, campaign, and extraction kit, and used an exchangeable working correlation to account for repeated sampling of each site. The normalized Shannon contrasts, adjusted for campaign and log read depth, retained their direction and significance. A campaign $\times$ compartment interaction was significant for Shannon diversity before adjustment for read depth (Wald, $p = 0.008$) but not after ($p = 0.175$), indicating that part of the between-campaign variation in the Shannon contrasts may be attributed to read depth differences. The Shannon root-adjacent versus shallow subsurface contrast remained significant in every model we fitted for extraction kit, whereas the root-adjacent versus surface contrast in only three of the six (additive unadjusted, additive depth-adjusted, and extraction kit-matched pairs). We treat these adjustments as a sensitivity analysis rather than definitive controls, because extraction kit was recorded for $858$ of the samples and was partly confounded with campaign (automated DNA extraction was used routinely from Trip~4 onward, with earlier-campaign re-extractions also processed on the instrument), so sample processing, season, and campaign cannot be fully separated.
+ 
+ \subsubsection{Climate associations}\label{sup:alphadiversity_climate}
+ We first tested the correlation between our field weather measurements (air temperature, relative humidity, barometric pressure) and the three diversity indices. We averaged the measurements within site and campaign, and found that pressure correlated negatively with all diversity indices and humidity with Shannon diversity and richness, but none of the field-weather associations remained after correction when campaign and quadratic transect term were included with site-clustered standard errors. This is consistent with our assumption that these field measurements capture transient conditions rather than the climate under which microbial communities assemble.

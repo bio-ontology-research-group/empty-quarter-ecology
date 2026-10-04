@@ -60,7 +60,7 @@
       "n_tests": 9,
       "method": "Benjamini-Hochberg",
       "source": "environment_associations/field_weather_adjusted_models.tsv",
-      "source_sha256": "ac0ef8e73644fa93e53a491c2761e44d3669f96914621fc39e2eee726f7ce84b",
+      "source_sha256": "7c1676a6245a152caa9cd7e2d0ea1003b805fd4716d276d15e709c2c3ab8f01c",
       "p_column": "p_value",
       "q_column": "q_global_9",
       "filter": {}
@@ -416,10 +416,11 @@
       }
     }
   ],
-  "script_sha256": "b9417f882a3b84285371acd78d78b057cc4105ee1e11c11f54b812c792ad37d0",
+  "script_sha256": "d993e0f65b4aaaa8aa7cff9bb9eb8886afa990d42874969a443da5c2c04b06f0",
   "other_tests": {
     "omnibus_tests": "Reported individually with their permutation scheme",
-    "rainfall_search": "Maximum statistic over 3 endpoints x 60 peak lags; shared circular shifts within expedition; 19,999 draws; seed 20260804",
+    "rainfall_search": "Primary: calendar-year refit in rain_calendar_refit_20260909. Maximum statistic over both daily rainfall products (NASA POWER, Open-Meteo), 3 endpoints x 60 peak lags; exact reference distribution of all 6 permutations of the eligible 2023-2025 December-November annual rainfall fields, collection month and day preserved, one year map shared by all sites, products and campaigns (smallest attainable p = 1/6); whole-site bootstrap refits with seed 20260910.",
+    "rainfall_search_historical": "Superseded diagnostic only, not used for reported inference: shared circular shifts within expedition, 19,999 draws, seed 20260804 (rain_pulse_response* outputs).",
     "distance_slope_contrasts": "Maximum statistic over two compartment slope contrasts; 9,999 whole-site-label permutations"
   }
 }

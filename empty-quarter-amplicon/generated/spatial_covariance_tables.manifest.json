@@ -1,0 +1,28 @@
+{
+  "generator": {
+    "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/render_spatial_covariance_tex.py",
+    "sha256": "22917972be85402882f825bd597901125f755def087c456f5cc93e435d07d2f7"
+  },
+  "inputs": [
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/spatial_covariance_sensitivity_20260909/spatial_covariance_tests.tsv",
+      "sha256": "3bf91c1eed5bda403d76033cfeca8785d53fdd08bee077675a802606993abe57"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/spatial_covariance_sensitivity_20260909/null_calibration.tsv",
+      "sha256": "8cb0a0a1b0e286fffb3a275bec33788b27649839768e02ecfc7a6734827676e3"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/spatial_covariance_sensitivity_20260909/frozen_design.json",
+      "sha256": "6bc763ded4ef44f3a2228394151ba9990d804729fd5f99bacf152b1bd1ee8322"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/spatial_covariance_sensitivity_20260909/frozen_design_addendum.json",
+      "sha256": "7c8c733b4dbcaeb2f352586fa7b43ae0be9bdbbc44917eb9feedeff7ca6ca7be"
+    }
+  ],
+  "output": {
+    "path": "/home/leechuck/Documents/papers/empty-quarter-ecology-overleaf/generated/spatial_covariance_tables.tex",
+    "sha256": "1b1a2ddc392df7b7f781d0dab7db20a27da363d2dba63134d59b3cf92ca3439c"
+  }
+}

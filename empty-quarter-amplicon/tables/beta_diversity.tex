@@ -1,0 +1,64 @@
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Genera with the largest compartment differences: $8$ largest paired mean CLR differences ($|\Delta$CLR$|$) in each direction for each pair of compartments. All genera shown have $q\leq0.003$. These differences make up the displacement vectors shown in Figure~\ref{main-fig:soil-position}d. Names without italics are uncultured clades without a genus name.}
+\label{tab:compartment_genera}
+\begin{tabular}{llrllr}
+\toprule
+Genus & Phylum & $|\Delta$CLR$|$ & Genus & Phylum & $|\Delta$CLR$|$ \\
+\midrule
+\multicolumn{3}{l}{\textit{Higher in shallow-subsurface than surface}} & \multicolumn{3}{l}{\textit{Higher in surface than shallow-subsurface}} \\
+\textit{Polycyclovorans}     & Pseudomonadota    & 1.79 & \textit{Planococcus}      & Bacillota      & 1.75 \\
+\textit{Opitutus}            & Verrucomicrobiota & 1.16 & \textit{Nibribacter}      & Bacteroidota   & 1.48 \\
+\textit{Thermosipho}         & Thermotogota      & 1.02 & \textit{Kineococcus}      & Actinomycetota & 1.36 \\
+\textit{Nordella}            & Pseudomonadota    & 0.92 & \textit{Deinococcus}      & Deinococcota   & 1.30 \\
+\textit{Acidiferrimicrobium} & Actinomycetota    & 0.89 & \textit{Saccharibacillus} & Bacillota      & 1.27 \\
+MND1                         & Pseudomonadota    & 0.89 & \textit{Kineosporia}      & Actinomycetota & 1.20 \\
+I-8                          & Planctomycetota   & 0.85 & \textit{Rufibacter}       & Bacteroidota   & 1.20 \\
+\textit{Aureibacillus}       & Bacillota         & 0.84 & \textit{Kocuria}          & Actinomycetota & 1.13 \\
+\addlinespace
+\multicolumn{3}{l}{\textit{Higher in root-adjacent than surface}} & \multicolumn{3}{l}{\textit{Higher in surface than root-adjacent}} \\
+TM7a                     & Patescibacteria & 2.07 & \textit{Bradyrhizobium} & Pseudomonadota & 2.27 \\
+\textit{Pelagibacterium} & Pseudomonadota  & 1.86 & \textit{Deinococcus}    & Deinococcota   & 2.01 \\
+\textit{Arsenicitalea}   & Pseudomonadota  & 1.67 & \textit{Oxalophagus}    & Bacillota      & 1.75 \\
+\textit{Ohtaekwangia}    & Bacteroidota    & 1.60 & \textit{Blastococcus}   & Actinomycetota & 1.73 \\
+\textit{Neorhizobium}    & Pseudomonadota  & 1.51 & \textit{Vallicoccus}    & Actinomycetota & 1.64 \\
+DSSF69                   & Pseudomonadota  & 1.47 & \textit{Rubrobacter}    & Actinomycetota & 1.58 \\
+\textit{Litchfieldia}    & Bacillota       & 1.43 & \textit{Limnobacter}    & Pseudomonadota & 1.55 \\
+\textit{Metabacillus}    & Bacillota       & 1.41 & \textit{Cystobacter}    & Myxococcota    & 1.54 \\
+\addlinespace
+\multicolumn{3}{l}{\textit{Higher in root-adjacent than shallow-subsurface}} & \multicolumn{3}{l}{\textit{Higher in shallow-subsurface than root-adjacent}} \\
+\textit{Pelagibacterium} & Pseudomonadota  & 2.37 & \textit{Bradyrhizobium}  & Pseudomonadota & 2.18 \\
+TM7a                     & Patescibacteria & 2.01 & MND1                     & Pseudomonadota & 2.03 \\
+\textit{Planococcus}     & Bacillota       & 1.99 & \textit{Nitrospira}      & Nitrospirota   & 2.01 \\
+\textit{Brevundimonas}   & Pseudomonadota  & 1.95 & \textit{Thermosipho}     & Thermotogota   & 1.99 \\
+\textit{Devosia}         & Pseudomonadota  & 1.95 & \textit{Gaiella}         & Actinomycetota & 1.94 \\
+\textit{Pseudomonas}     & Pseudomonadota  & 1.87 & \textit{Oxalophagus}     & Bacillota      & 1.79 \\
+\textit{Neorhizobium}    & Pseudomonadota  & 1.76 & \textit{Symbiobacterium} & Bacillota      & 1.76 \\
+\textit{Nibribacter}     & Bacteroidota    & 1.75 & \textit{Rubrobacter}     & Actinomycetota & 1.63 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{False-positive rates (\%) of three tests of the transect trend,
+estimated from $500$ simulated datasets. A correctly calibrated test rejects
+about $5\,\%$ at $p\leq0.05$; with $500$ datasets, the exact binomial $95\,\%$
+interval is $3.3$--$7.3\,\%$ around $5\,\%$ and $0$--$0.7\,\%$ around $0\,\%$.
+Site permutation: the test used for the primary RDA. True covariance: a test
+using the covariance that generated the data (not available for real data).
+Most conservative model: the largest probability across all $73$ spatial
+covariance models. --, not evaluated.}
+\label{tab:spatial_calibration}
+\begin{tabular}{lrrr}\toprule
+Simulated spatial structure & Site permutation & True covariance & Most conservative model \\
+\midrule
+Independent sites & $5.4$ & $4.2$ & $0.0$ \\
+Independent sample-level noise & $3.6$ & $5.4$ & $0.0$ \\
+Heavy-tailed sample-level noise & $4.8$ & -- & $0.0$ \\
+\addlinespace
+Exponential, $203$~km range, $50\,\%$ noise & $90.2$ & $5.0$ & $0.0$ \\
+Mat\'ern $3/2$, $507$~km range, $10\,\%$ noise & $100.0$ & $5.6$ & $0.0$ \\
+Range and noise not in the model set & $97.8$ & $3.8$ & $0.0$ \\
+Spatial structure varying across the transect & $84.4$ & $5.0$ & $0.0$ \\
+Different spatial structure for each genus & $84.0$ & -- & $0.0$ \\
+\bottomrule\end{tabular}\end{table}

@@ -5,12 +5,12 @@
       "sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/climate/nasa_power_daily_precipitation.tsv.gz",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/climate/nasa_power_daily_precipitation.tsv.gz",
       "sha256": "71d11a8c930760b0dfcb45b59017d3f00321f75ade4f01ad50ea8f1b47379cc2"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/climate/daily_weather_canonical.tsv",
-      "sha256": "6cb570e7a8a85a9508fdc910ae0a11bf7db614ef05e0d22fd6fd6a599966581a"
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv",
+      "sha256": "494acfb4b01728d00bdaea3cafc481dab2f4730386f5cd3e6c2734edfd5ac3de"
     },
     {
       "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit.py",
@@ -25,23 +25,23 @@
       "sha256": "2ebf7ae6538fa82eac0ef240529003b86806b046203c68e49aca128ae7cf3b54"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/geodata/trip1_geodata.tsv",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/geodata/trip1_geodata.tsv",
       "sha256": "2682d26bd83cc928b89abe637335cc09479ce61b9f52118c07b0538013a89ee2"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/geodata/trip2_geodata.tsv",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/geodata/trip2_geodata.tsv",
       "sha256": "5935cde2684936a653ab3f1358209ff8dbe6d090cb8d618e136123fb84120855"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/geodata/trip3_geodata.tsv",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/geodata/trip3_geodata.tsv",
       "sha256": "af9834366a56c3bc537410aeccfa1495cd3e249115a832728c5dcedc45251ae1"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/geodata/trip4_geodata.tsv",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/geodata/trip4_geodata.tsv",
       "sha256": "d60d815a0b0ec8a471513fef4ae367bd6b49b88178daedf178613b2430123237"
     },
     {
-      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/geodata/trip5_geodata.tsv",
+      "path": "/tmp/eq-finalization-20261004/data-corrected/metadata/geodata/trip5_geodata.tsv",
       "sha256": "3d94c3d63ba81932af72fdfcbdff5d97a9ae9a6d2c4c02142ccb9d0193cf1fc7"
     }
   ],
@@ -55,11 +55,11 @@
   "outputs": {
     "analysis_cohort.tsv": "5c050d1ffcf3cd9b51c6607bad3b31d95fa606ca50f8e1df101451a94641f438",
     "analysis_plan.json": "abede24a0bb6a3018277c390f1c249791cef4db94724c06101de49e94a9ed43b",
-    "calendar_null_calibration.tsv": "a94f1842703dfc9e5125f797509a6e2a399d7eceb1d2e5e94b9abc5de9c7fe7b",
-    "calendar_year_orbit.tsv": "eb59b76658a2dae737eb2f84a538d17bcd399893976473157a0eca1cb148608c",
-    "refitted_site_bootstrap.tsv.gz": "1fa27e48b5b30dfe0d88e3784b9ff1f1d8a42d85088be3e4411337641e65b31d",
-    "refitted_site_bootstrap_summary.tsv": "3f0a41e24ff052c9975f3507a039a0f49c76fece5941e42d7546ab7398cce2d5",
-    "summary.json": "779edc72bed6e58f72acfbba711d7fa29606980ba412f63537a66105d3873d92",
-    "wet_spell_deletion.tsv": "1d6b223ed618e500836cff82b44b31f8e7f357797b69b66ee6f1ea4d9d84a940"
+    "calendar_null_calibration.tsv": "9b91468e67d8d6a0d9f39bcc75a59b4d921d198116739f7201204f02be47afae",
+    "calendar_year_orbit.tsv": "67d1e7e47bf50a6512f1dc39e1000ae784b2be90f656eab0260687d00cc90be9",
+    "refitted_site_bootstrap.tsv.gz": "e60574446630185bc2902a7439946471caca0be4585456c81179025b212a758d",
+    "refitted_site_bootstrap_summary.tsv": "436866df25f23a684abbeb1955a0db5ddeedc7d773a453b39d7c52836c50674d",
+    "summary.json": "6fd4ec18c3d804a3062f518a10f87523b7ef1795921a5fe4008955c36fec5f7a",
+    "wet_spell_deletion.tsv": "27f603b197d9379a5a92ca61addb7c299c72424d2d6e90c18b1b67d6ad32743b"
   }
 }

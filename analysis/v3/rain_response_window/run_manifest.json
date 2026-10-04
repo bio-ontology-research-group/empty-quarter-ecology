@@ -16,7 +16,7 @@
     "max_absolute_t_richness_hurlbert_25000": 4786,
     "max_absolute_t_shannon": 4786
   },
-  "git_head": "be0f9afa9d159ed0540a5201f3b801e40aeeeadf",
+  "git_head": "fa9ceb49ed20cf6b271ed9176b6d74fa4a69886a",
   "inputs": {
     "alpha_control_filtered": {
       "path": "analysis/v3/control_audit/sensitivity_inputs/alpha.tsv",
@@ -42,8 +42,8 @@
         "2022-01-01",
         "2026-02-01"
       ],
-      "path": "data/processed/climate/daily_weather_canonical.tsv",
-      "sha256": "6cb570e7a8a85a9508fdc910ae0a11bf7db614ef05e0d22fd6fd6a599966581a"
+      "path": "analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv",
+      "sha256": "494acfb4b01728d00bdaea3cafc481dab2f4730386f5cd3e6c2734edfd5ac3de"
     }
   },
   "lag_bins_complete_days_before_sampling": [
@@ -152,7 +152,7 @@
   "sampling_day_primary": "excluded",
   "schema_version": "1.0",
   "script": "analysis/v3/rain_response_window.py",
-  "script_sha256": "2ebf7ae6538fa82eac0ef240529003b86806b046203c68e49aca128ae7cf3b54",
+  "script_sha256": "8fed9270fb56c542ee5cfbbc48ea5017f796ac1531e151b139fce4fbb2e5857b",
   "seed": 20260803,
   "software": {
     "matplotlib": "3.9.4",

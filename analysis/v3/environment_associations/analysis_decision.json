@@ -11,6 +11,24 @@
     "monthly_records": 2940,
     "months_per_site": 49
   },
+  "coordinate_input_sha256": {
+    "trip1_geodata": "2682d26bd83cc928b89abe637335cc09479ce61b9f52118c07b0538013a89ee2",
+    "trip2_geodata": "5935cde2684936a653ab3f1358209ff8dbe6d090cb8d618e136123fb84120855",
+    "trip3_geodata": "af9834366a56c3bc537410aeccfa1495cd3e249115a832728c5dcedc45251ae1",
+    "trip4_geodata": "d60d815a0b0ec8a471513fef4ae367bd6b49b88178daedf178613b2430123237",
+    "trip5_geodata": "3d94c3d63ba81932af72fdfcbdff5d97a9ae9a6d2c4c02142ccb9d0193cf1fc7"
+  },
+  "data_repository": {
+    "bulk_manifest_sha256": "66c0a66ad2f15058828fbf915947f94c8264e486f5d8d729b3ad332a5c121631",
+    "commit": "5a17782c1ec3c7d511bf5f8ae934086b950f6ae1",
+    "conda_explicit_lock_sha256": "d3bdc7b6b0731126691d046eb8250622bad54b3fc5767cd6ab182208ad07923a",
+    "environment_lock_sha256": "b10cf25f9bd92fb75a13c46ed71c2aaf6d4debd4f9faed3dc2a759bdd3617fa0",
+    "file_manifest_sha256": "f3416f96aa088f4ed18911422ea294478aae7367a98c101452a45e7eaa5ca45e",
+    "pip_overlay_lock_sha256": "aa9a85ebbee6440d7c8eebc9a2e9234f8100b90724b4233bac33324ea623c3b9",
+    "release_manifest_sha256": "a61afc0aecc95de3b198c3070ef2014fb7d8ec99a328a8cebbb56f8522c22d58",
+    "repository": "git@github.com:bio-ontology-research-group/empty-quarter-data-paper.git",
+    "workflow_sha256": "500722d0e3c7d721eac378e7d9286e039f8b6e46b0e379025a848fc804524ece"
+  },
   "field_weather_scope": "Air temperature, pressure and relative humidity recorded at collection describe site-visit conditions rather than soil microclimate. Raw and geography-adjusted models are supplementary diagnostics.",
   "genus_tests": 600,
   "genus_tests_q_lt_0_05_by_climate": {
@@ -20,7 +38,7 @@
   },
   "input_sha256": {
     "alpha": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
-    "field_weather": "1b8cb5c71fa05f6d15cee34c489105d755a0c42b900ec36fe4007f7cd19c5559",
+    "field_weather": "51177fb6b21e4b10712daaa731cdf3783d0fc351c536f562851efd233386573f",
     "genus_counts": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481",
     "monthly_climate": "cde0a115147408bb846919a1e61e55cf88df7942f0e81f921de3305b49e33f9d"
   },
@@ -34,7 +52,7 @@
     "bootstrap_seed": 20260805,
     "random_operations": true,
     "script": "analysis/v3/environment_associations.py",
-    "script_sha256": "945df0ff89bcf8ab679c99dbcdc37e728c4d557cd74f599d25d80f00695990a5",
+    "script_sha256": "b590f5eea422b75e1ddcf302991c3e87bef79814a6f3102d889efe82a407abad",
     "software": {
       "numpy": "2.1.3",
       "pandas": "2.2.3",

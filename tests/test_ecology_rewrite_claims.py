@@ -15,6 +15,8 @@ from pathlib import Path
 import pandas as pd
 import pytest
 from manuscript_paths import PAPER
+import manuscript_text as mt
+from manuscript_text import fmt, has_number, pct
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -229,46 +231,51 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
     assert "Institute of Data Science, Department of Advanced Computing" in data_source
 
 
-def test_active_manuscript_prose_follows_robert_forbidden_word_list(
-    main_tex, supplement_tex
-):
+def test_active_manuscript_prose_follows_robert_forbidden_word_list():
+    # Rund's prose is preserved; stylistic preferences (thus, very,
+    # interestingly, utilize, unique) are not enforced. Words that overstate
+    # the evidence remain forbidden in claims.
     forbidden = re.compile(
-        r"\b(?:thus|fortunately|unfortunately|interestingly|surprisingly|"
-        r"clearly|obviously|very|quite|really|basic|basically|comprehensive|"
-        r"unique|uniquely|rigorous|robust|utili[sz](?:e|ed|es|ing)|"
-        r"demonstrat(?:e|ed|es|ing))\b",
+        r"\b(?:clearly|obviously|prove[sn]?|proof|demonstrat(?:e|ed|es|ing)|"
+        r"comprehensive|rigorous|definitively|conclusively)\b",
         re.I,
     )
-    # "Robust covariance" is the technical sandwich-estimator term.
-    prose = (main_tex + supplement_tex).replace("robust covariance", "sandwich covariance")
-    assert forbidden.search(prose) is None
+    prose = mt.combined().replace("robust covariance", "sandwich covariance")
+    match = forbidden.search(prose)
+    assert match is None, prose[max(0, match.start() - 80): match.end() + 80]
 
 
-def test_main_source_contains_its_prose_and_has_no_tex_fragment_includes(
-    main_tex, supplement_tex
-):
-    # The preamble legitimately defines the \todo macro (\newcommand) and the
-    # arabtex \let lines; the document BODY must contain no prose fragment
-    # includes.  \includegraphics and \bibliography stay allowed.
-    preamble, body = main_tex.split(r"\begin{document}", 1)
+def test_main_source_contains_its_prose_and_has_no_tex_fragment_includes(ph_values_tex):
+    main_source = mt.strip_comments(_read_manuscript_source(MAIN_PATH))
+    preamble, body = main_source.split(r"\begin{document}", 1)
     assert re.search(r"\\(?:input|include|subfile)\s*\{", body) is None
     assert re.search(r"\\(?:input|include|subfile)\s*\{", preamble) is None
     assert r"\newcommand" not in body
-    assert r"\PHEcologyMethods" not in main_tex
-    assert r"\PHEcologyResults" not in main_tex
-    assert r"\PHEcologyDiscussion" not in main_tex
-    assert re.search(r"\\PH[A-Za-z]+", main_tex) is None
-    flat_main = _without_value_math(_flat(main_tex))
-    for visible_prose in (
-        "The archived workbook contained 767 pH measurements from all campaigns",
-        "In total, 712 measurements passed",
-        "Of 712 accepted measurements, 709 linked to ecology groups",
-        "Each percentage uses the variance of its own residual response as the denominator",
-    ):
-        assert visible_prose in flat_main
-    # Rows and columns are valid terms for actual tables/matrix operations.
-    assert "702 profiles" not in flat_main
-    assert "563" in flat_main and "560" in flat_main and "1,086" in flat_main
+    assert re.search(r"\\PH[A-Za-z]+", main_source) is None
+    # pH accounting stated in prose matches the frozen shared dataset.
+    values = dict(re.findall(r"\\newcommand\{\\(PH[A-Za-z]+)\}\{([^}]*)\}", ph_values_tex))
+    summary = _json("analysis/v3/ph_group_linkage_20260909/summary.json")
+    counts = summary["counts"]
+    dispositions = summary["ingest_dispositions"]
+    assert int(values["PHAdmitted"]) == counts["accepted_ph_specimens"] == 712
+    assert int(values["PHMatchedSpecimens"]) == counts["group_linked_ph_measurements"] == 709
+    assert int(values["PHCompositionGroups"]) == counts["composition_groups"] == 560
+    assert dispositions["QUARANTINED_DATE"] == 36 and dispositions["QUARANTINED_QC"] == 19
+    measured = 712 + 36 + 19
+    assert measured == 767
+    assert "We measured pH from 767 stored soil samples" in mt.text("main")
+    soil_ph = mt.section("supplement", "Soil pH", "Soil XRF")
+    assert "767 measurements, of which 712 met quality-control criteria" in soil_ph
+    assert "36 with ambiguous dates and 19 that failed one or more session criteria" in soil_ph
+    coverage = mt.section("supplement", r"\labeltab:ph-coverage", r"\endtable")
+    rows = re.findall(r"(\d) & ([\d,]+) & ([\d,]+) & ([\d,]+) & ([\d,]+) & ([\d,]+) \\\\", coverage)
+    assert len(rows) == 5
+    columns = list(zip(*[[int(v.replace(",", "")) for v in row[1:]] for row in rows]))
+    target, measured_by, passed, missing, excluded = (sum(c) for c in columns)
+    assert (measured_by, passed, excluded) == (767, 712, 55)
+    assert target == measured_by + missing
+    assert "709 pH measurements were linked to 560 campaign × site × compartment groups" in mt.text("supplement")
+    assert "702 profiles" not in mt.combined()
 
 
 def test_shared_ph_helper_contains_only_generated_scalar_constants(
@@ -297,94 +304,113 @@ def test_shared_ph_helper_contains_only_generated_scalar_constants(
         assert len(line) < 120
 
 
-def test_control_method_explains_training_scope(main_tex, supplement_tex):
-    flat_main = _without_value_math(_flat(main_tex))
-    flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "17 sequenced extraction blanks" in flat_main
-    assert "could be linked by extraction day to 217 Trip~5 profiles" in flat_main
-    assert "95 Trip~4 profiles" in flat_main and "7 candidate ASVs" in flat_main
-    assert "they were kept separate because their biological batch links were incomplete" in flat_main
-    assert "Positive standards were used only to assess" in flat_main
-    assert "one extraction blank per extraction kit" in flat_supplement
-    assert "maps EB1--EB17 to dates and 220 Trip~5 biological profiles" in flat_supplement
-    assert "217 occur in the canonical table" in flat_supplement
-    assert "six \\texttt{Negative}-labelled profiles" in flat_supplement
-    assert "no-template PCR controls (water in place of template)" in flat_supplement
-    assert "not sequenced" in flat_supplement
+def test_control_method_explains_training_scope():
+    audit = _json("analysis/v3/control_audit/summary.json")
+    assert len(audit["training_extraction_blanks"]) == 17
+    assert audit["mapped_biological_profiles_in_canonical_table"] == 217
+    assert audit["mapped_biological_profiles_in_workbook"] == 220
+    assert audit["primary_candidate_contaminant_features"] == 351
+    assert audit["primary_minimum_blank_prevalence_count"] == 2
+    assert audit["primary_prevalence_score_threshold"] == 0.1
+    assert audit["positive_controls_in_training"] == 0
+    t4 = json.loads((PAPER / "validation/t4-control-diversity/summary.json").read_text())
+    assert t4["n_profiles"] == 95 and t4["called_asvs"] == 7
+    kit = mt.section("supplement", "DNA extraction kit controls", "Microbial community standard controls")
+    assert "present in at least 2 blanks" in kit and "Fisher test (p<0.1)" in kit
+    assert "17 extraction blanks linked to 217 samples" in kit
+    assert "351 candidate contaminant ASVs" in kit
+    assert "6 extraction blanks linked to 95 samples" in kit and "7 candidate contaminant ASVs" in kit
+    assert f"ρ={fmt(t4['shannon_spearman'], 5)}" in kit
+    table = mt.section("supplement", r"\labeltab:controls", r"\endtable")
+    assert "17 mapped T5 blanks linked to 217 biological profiles" in table
+    assert "Six blanks linked to 95 biological profiles" in table
+    # Positive standards estimate genus recovery; they do not train the screen.
+    assert "used for genus recovery" in table
+    main = mt.text("main")
+    assert "217 linked T5 profiles" in main
+    assert "Control samples did not cover all campaigns and sample processing stages" in main
 
 
-def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
-    flat = _flat(main_tex)
-    introduction = flat.split(r"\section*{Introduction}", 1)[1].split(
-        r"\section*{Results}", 1
-    )[0]
+def test_geography_first_results_order_and_regional_novelty_opener():
+    introduction = mt.section("main", r"\section*Introduction", r"\section*Results")
     assert "world's largest continuous sand desert" in introduction
-    assert "regional context for a repeated survey of the open Empty Quarter" in introduction
-    # Naming policy: Rub' al-Khali is introduced once, then "Empty Quarter".
-    assert "Sampling the same sites and soil compartments across campaigns" in introduction
+    assert "has not yet been surveyed across its landscape or over repeated visits" in introduction
+    # Unsupported novelty or population claims stay out of the opener.
     assert "The only direct microbial study" not in introduction
-    assert "support more than 38\\,\\% of the world's population" not in introduction
-
-    geography = flat.index(
-        r"\subsection*{Bacterial communities change across the landscape}"
-    )
-    paired = flat.index(
-        r"\subsection*{Compartment differences in composition and normalized Shannon diversity}"
-    )
-    environment = flat.index(
-        r"\subsection*{Climate gradients track bacterial diversity and composition}"
-    )
-    function = flat.index(
-        r"\subsection*{Predicted metabolic pathways follow geography and compartment}"
-    )
-    assert geography < paired < environment < function
-    assert (
-        r"\subsection*{Relic-DNA and low-biomass controls preserve the main patterns}"
-        not in flat
-    )
-    controls = flat.index(r"\subsection*{Assay controls and sensitivity analyses}")
-    methods = flat.index(r"\section*{Materials and Methods}")
-    assert methods < controls
-    headings = re.findall(r"\\subsection\*\{([^}]+)\}", flat)
+    assert "38% of the world's population" not in introduction
+    assert not re.search(r"\b(?:the )?first (?:survey|study|description)\b", introduction, re.I)
+    headings = re.findall(r"\\subsection\*\{([^}]+)\}", mt.source("main"))
+    assert headings
     assert all("baseline" not in heading.lower() for heading in headings)
-    assert r"\subsection*{No " not in flat
+    assert not any(heading.startswith("No ") for heading in headings)
+    # Results lead with composition and geography before environment and function.
+    results = mt.section("main", r"\section*Results", r"\section*Discussion")
+    order = [results.index(marker) for marker in (
+        "Microbial communities change across the landscape",
+        "Compartment differences in composition and diversity within sites",
+        "Climate covaries with the geographic pattern",
+        "Predicted functional potential follows geography and compartment",
+    )]
+    assert order == sorted(order)
 
 
-def test_abstract_leads_with_science_and_keeps_resource_subordinate(main_tex):
-    abstract = re.search(
-        r"\\begin\{abstract\}(.*?)\\end\{abstract\}", main_tex, re.S
-    ).group(1)
-    flat = _flat(abstract)
-    assert "distant sites contained more different communities" in flat
-    assert "taxon replacement accounted for most incidence dissimilarity" in flat
-    assert "root-adjacent communities differed from bulk soil" in flat
-    assert "regional biological baseline" in flat
+def test_abstract_leads_with_science_and_keeps_resource_subordinate():
+    flat = mt.abstract()
+    assert "dissimilarity increased with geographic distance in all sampled compartments" in flat
+    assert "Replacement of taxa between sites accounted for most of the dissimilarity" in flat
+    assert "root-adjacent soil had the lowest alpha diversity and harbored communities distinct from bulk soil" in flat
+    assert "baseline for the Empty Quarter soil microbiome" in flat
     assert "knowledge graph" not in flat.lower()
-    assert flat.index("distant sites") < flat.index("linked resource")
+    assert flat.index("geographic distance") < flat.index("linked data resource")
+    turnover = pd.read_csv(
+        ROOT / "analysis/v3/distance_decay_turnover/turnover_nestedness_components.tsv", sep="\t"
+    )
+    assert (turnover["turnover_share_of_sorensen"] > 0.5).all()
 
 
-def test_pH_attenuation_is_bounded_and_negative_diagnostics_are_supplementary(
-    main_tex, supplement_tex
-):
-    flat = _without_value_math(_flat(main_tex))
-    flat_supplement = _without_value_math(_flat(supplement_tex))
+def test_pH_attenuation_is_bounded_and_negative_diagnostics_are_supplementary():
     summary = _json("analysis/v3/ph_group_linkage_20260909/summary.json")
     counts = summary["counts"]
     assert counts["group_linked_ph_measurements"] == 709
     assert counts["site_campaign_position_groups"] == 563
     assert counts["composition_groups"] == 560
-    geo = summary["geographic_same_cohort"]
-    for key in ("without_ph_adjustment_partial_r2", "with_ph_adjustment_partial_r2"):
-        assert f"{100 * geo[key]:.1f}" in flat
-    assert "Each percentage uses the variance of its own residual response as the denominator" in flat
-    assert "no stable direct composition association" not in flat
-    assert "group-linked" in flat_supplement
-    assert "fig:environment-spatial" not in main_tex
+    composition = summary["composition_primary"]
+    geography = _json("analysis/v3/ph_group_linkage_20260909/summary.json")["geographic_same_cohort"]
+    # The two archived residual-response R2 values have different
+    # denominators; their difference is not an explained fraction.
+    assert geography["legacy_partial_r2_fields_are_residual_response_r2"] is True
+    partition_dir = ROOT / "analysis/v3/ph_partition_20261004/results"
+    partitions = pd.read_csv(partition_dir / "partitions.tsv", sep="\t").set_index("analysis")
+    site = partitions.loc["site_averaged_common_adjustment"]
+    grouped = partitions.loc["primary_equal_site_weight"]
+    fractions = ("unique_ph", "unique_geography", "shared", "unexplained")
+    assert abs(sum(site[f] for f in fractions) - 1) < 1e-9
+    main = mt.section("main", "Soil pH tracks the west-to-east change", "Soil chemical composition")
+    supplement = mt.section("supplement", "Soil pH\\labelsup:beta_ph", "Laboratory XRF elemental axis")
+    printed_site = [pct(site[f], 2) for f in fractions]
+    for text in (main, supplement):
+        for value in printed_site:
+            assert has_number(text, value), value
+    for value in (pct(grouped[f], 2) for f in fractions):
+        assert has_number(supplement, value), value
+    assert "common variance denominator" in main and "common response denominator" in supplement
+    assert "about half" not in main and "accounted for about half" not in mt.combined()
+    # The conditional within-site association is small and not significant.
+    assert f"partial RDA, {pct(composition['partial_r2'], 2)}% of variation, p={fmt(composition['p'], 3)}" in main
+    assert f"pH explained {pct(composition['partial_r2'], 3)}% of the remaining compositional variation (p={fmt(composition['p'], 3)})" in supplement
+    # Sensitivity ranges for the shared component and leave-one-site-out.
+    between = pd.read_csv(partition_dir / "between_site_bootstrap_intervals.tsv", sep="\t").set_index(["method", "fraction"])
+    whole = between.loc[("site_cluster", "shared")]
+    block = between.loc[("noncircular_block_15", "shared")]
+    assert f"ranged from {pct(whole['percentile_2_5'], 2)} to {pct(whole['percentile_97_5'], 2)}%" in supplement
+    assert f"from {pct(block['percentile_2_5'], 2)} to {pct(block['percentile_97_5'], 2)}% with 15-site blocks" in supplement
+    loo = pd.read_csv(partition_dir / "leave_site_out.tsv", sep="\t")["between_site_unique_ph"]
+    assert f"{pct(loo.min(), 2)}–{pct(loo.max(), 2)}%" in supplement
+    assert "analysis/v3/ph_partition_20261004/" in supplement
+    assert "fig:environment-spatial" not in mt.source("main")
 
 
-def test_paired_composition_claims_match_the_canonical_verdict(
-    main_tex, supplement_tex
-):
+def test_paired_composition_claims_match_the_canonical_verdict():
     verdict = _json("analysis/v3/compartment_composition/claim_verdict.json")
     omnibus = verdict["omnibus"]
     contrasts = verdict["contrasts"]
@@ -393,34 +419,36 @@ def test_paired_composition_claims_match_the_canonical_verdict(
     assert omnibus["n_blocks"] == 170
     assert round(omnibus["pseudo_f"], 2) == 17.28
     assert omnibus["permutation_p"] == 0.001
-    for text in (main_tex, supplement_tex):
-        assert "170 complete" in _without_value_math(text)
-        assert "pseudo-$F" in text
-    assert f"{omnibus['pseudo_f']:.2f}" in main_tex
-    assert f"{omnibus['pseudo_f']:.4f}" in supplement_tex
-
-    expected_displacements = {
-        "Deep-Surface": "0.331",
-        "Rhizosphere-Surface": "0.433",
-        "Rhizosphere-Deep": "0.478",
+    main = mt.section("main", "Compartment differences in composition and diversity within sites", "We next identified the genera")
+    supplement = mt.section("supplement", "Compartment differences\\labelsup:beta_compartment", "Genus-level contrasts")
+    for text in (main, supplement):
+        assert f"pseudo-F={omnibus['pseudo_f']:.2f}, p={fmt(omnibus['permutation_p'], 3)}" in text
+        assert "170" in text
+    labels = {
+        "Deep-Surface": "shallow-subsurface versus surface",
+        "Rhizosphere-Surface": "root-adjacent versus surface",
+        "Rhizosphere-Deep": "root-adjacent versus shallow-subsurface",
     }
-    for contrast, printed in expected_displacements.items():
+    for contrast, label in labels.items():
         result = contrasts[contrast]
-        assert f"{result['standardized_displacement']:.3f}" == printed
         assert result["permutation_p"] == 0.001
         assert result["q_within_primary_family"] == 0.001
-        assert printed in supplement_tex
-    assert "All three comparisons remained supported after correction for three tests" in _without_value_math(_flat(main_tex))
-    assert "fig2_soil_position.pdf" in main_tex
+        assert result["direction_stable"] and result["leave_one_campaign_supported"]
+        assert f"{result['standardized_displacement']:.3f} ({label})" in supplement
+        assert has_number(main, fmt(result["standardized_displacement"], 2))
+        assert f"{result['n_blocks']} blocks for {label}" in supplement or (
+            f"{result['n_blocks']} for {label}" in supplement
+        )
+    assert "every pair of compartments differed in composition (q=0.001" in main
+    assert "fig2_soil_position.pdf" in mt.source("main")
+    methods = mt.section("main", "Compartment differences.", "Turnover and nestedness")
+    assert "paired sign flip permutation tests (999) on the mean within-site difference vector" in methods
+    assert "assume sign symmetry of the site-level difference vectors under the null" in main
+    # Compartments are operational: root distance and host plants were not recorded.
+    assert "distance from root were not recorded" in mt.text("main")
 
-    assert "sign-flipped the mean within-block CLR difference vector" in supplement_tex
-    assert "centrally symmetric paired-difference null" in _flat(supplement_tex)
-    assert "root distance" in main_tex
 
-
-def test_evenness_decomposition_is_numerically_and_semantically_bounded(
-    main_tex, supplement_tex
-):
+def test_evenness_decomposition_is_numerically_and_semantically_bounded():
     verdict = _json("analysis/v3/evenness_decomposition/claim_verdict.json")
     results = verdict["primary_results"]
     root_surface = results["Rhizosphere-Surface"]["evenness_sensitivity"]
@@ -428,18 +456,19 @@ def test_evenness_decomposition_is_numerically_and_semantically_bounded(
 
     assert f"{root_surface['mean_difference']:.5f}" == "-0.03148"
     assert f"{root_shallow['mean_difference']:.5f}" == "-0.04398"
-    for value in ("-0.03148", "-0.04398"):
-        assert value not in main_tex
-        assert value in supplement_tex
-
-    assert "$H/\\log(E[S_{25k}])$" in main_tex
-    assert "$H/\\log(E[S_{25k}])$" in supplement_tex
-    assert "custom mixed-depth index" in _flat(main_tex)
-    assert "custom normalized index" in _flat(supplement_tex)
-    assert "An additional analysis of normalized Shannon diversity" in _flat(main_tex)
-    assert "617 of the 633" not in main_tex
-    assert "617 of 633" in _without_value_math(supplement_tex)
     assert verdict["input"]["blocks_with_evenness_sensitivity"] == 617
+    for value in ("-0.03148", "-0.04398"):
+        assert value not in mt.text("main")
+    # The index is defined explicitly as a mixed-depth ratio.
+    assert "H/\\log(E[S_25k])" in mt.text("main")
+    indices = mt.section("supplement", "Diversity indices and rarefaction", "Marginal and paired compartment contrasts")
+    assert "H/\\log(E[S_25k])" in indices
+    assert "mixed-depth ratio" in indices and "can exceed 1" in indices
+    manifest = _json("analysis/v3/paired_alpha_sensitivity_20260909/manifest.json")
+    low, high = manifest["normalized_shannon_range"]
+    assert f"ranged from {fmt(low, 3)} to {fmt(high, 3)}" in indices
+    assert f"ρ = {fmt(manifest['normalized_shannon_depth_spearman'], 3)}" in indices
+    assert "617 of the 633" not in mt.text("main")
 
 
 def test_geographic_transport_detail_is_relocated_and_interpretation_bounded(
@@ -465,9 +494,7 @@ def test_geographic_transport_detail_is_relocated_and_interpretation_bounded(
         assert legacy not in main_tex
 
 
-def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale(
-    main_tex, supplement_tex
-):
+def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale():
     verdict = _json(
         "analysis/v3/spatial_resolution_sensitivity/claim_verdict.json"
     )
@@ -484,29 +511,64 @@ def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale(
     assert table.iloc[-1]["permutation_p"] == 0.243
     assert verdict["neighbour_counts_with_detected_autocorrelation"] == [3, 4, 5, 6]
     assert verdict["neighbour_counts_without_detected_autocorrelation"] == [8, 10]
-    flat_supplement = _flat(supplement_tex)
-    for current in ("$0.1101$", "$-0.0098$", "$p=0.243$", "$p=0.050$"):
-        assert current in flat_supplement
-    for stale in (
-        "0.1104",
-        "-0.0097",
-        "$p=0.241$ at",
-        "through $k=8$",
-        "earlier coordinate version",
-        "629",
-    ):
-        assert stale not in flat_supplement
+    primary = pd.read_csv(
+        ROOT / "analysis/v3/spatial_turnover_rescue/results/spatial_model_results.tsv", sep="\t"
+    ).query("analysis == 'primary' and taxon_count == 200 and trend_degree == 2").iloc[0]
+    moran = f"Moran's I={fmt(primary['residual_moran_i'], 3)}, p={fmt(primary['residual_moran_p'], 3)}"
+    # The Moran statistic is reported with the neighbourhood it was tested on.
+    assert moran in mt.text("main")
+    assert moran + ", five-nearest-neighbour graph" in mt.text("supplement")
+    assert "5-nearest neighbor graph" in mt.text("main")
+    combined = mt.combined()
+    for stale in ("0.1104", "-0.0097", "p=0.241 at", "through k=8", "earlier coordinate version"):
+        assert stale not in combined
 
-    # Current inference propagates corrected coordinates through specified
-    # row covariances.
+    # Inference under specified spatial covariances (73 models).
     current = _json("analysis/v3/spatial_covariance_sensitivity_20260909/summary.json")
     assert current["model_count"] == 73
     assert current["original_descriptive_r2"] == pytest.approx(0.40073421629965933)
     assert current["family_p_min"] == 0.0001 and current["family_p_max"] == 1.0
-    assert "73" in main_tex and "0.0001" in main_tex and "1.0000" in main_tex
-    assert "specified spatial covariance" in _flat(main_tex)
-    assert "Moran's $I=0.06464$" in supplement_tex
-    assert "neighbour-count diagnostics" in _flat(supplement_tex)
+    errors = mt.section("supplement", "Residual spatial autocorrelation", r"\\begintable")
+    # Neighbour-count sensitivity of the residual Moran statistic.
+    detected = table[table.neighbours_k.isin([3, 4, 5, 6])]
+    assert (
+        f"With 3–6 neighbours, I={fmt(detected.residual_moran_i.min(), 3)}–"
+        f"{fmt(detected.residual_moran_i.max(), 3)} (p≤{fmt(detected.permutation_p.max(), 3)})"
+    ) in errors
+    k8, k10 = (table.set_index("neighbours_k").loc[k, "permutation_p"] for k in (8, 10))
+    assert f"with 8 and 10 neighbours, p={fmt(k8, 3)} and {fmt(k10, 3)}" in errors
+    assert "this gave 73 models" in errors
+    tests = pd.read_csv(
+        ROOT / "analysis/v3/spatial_covariance_sensitivity_20260909/spatial_covariance_tests.tsv", sep="\t"
+    ).dropna(subset=["range_km"])
+    table_s = mt.section("supplement", r"\labeltab:spatial_covariance", r"\endtable")
+    kernels = {"exponential": "Exponential", "matern_3_2": "Mat\\'ern 3/2", "matern_5_2": "Mat\\'ern 5/2"}
+    for kernel, label in kernels.items():
+        block = table_s.split(label + " &", 1)[1].split(r"\addlinespace", 1)[0]
+        for range_km, rows in tests[tests.kernel == kernel].groupby("range_km"):
+            line = block.split(f"{range_km:.1f} &", 1)[1].split(r"\\", 1)[0]
+            printed = [cell.strip() for cell in line.split("&")]
+            expected = [f"{p:.4f}" for p in rows.sort_values("group_noise_fraction")["rotation_p"]]
+            assert printed == expected, (kernel, range_km)
+    shortest = tests.range_km.min()
+    supported = tests[(tests.range_km == shortest) | (tests.group_noise_fraction == 0.9)]
+    assert (supported.rotation_p == 0.0001).all()
+    assert f"supported (p=0.0001) at the {shortest:.1f}-km range and whenever 90% of variance was independent noise" in errors
+    half = tests[(tests.group_noise_fraction == 0.5) & (tests.range_km > 200)]
+    assert (
+        f"With 50% noise, p ranged from {half.rotation_p.min():.4f} to {fmt(half.rotation_p.max(), 3)} "
+        f"at ranges of {half.range_km.min():.0f} km or more"
+    ) in errors
+    low = tests[(tests.group_noise_fraction <= 0.1) & (tests.range_km > 50)]
+    assert (
+        f"with ≤10% noise and ranges of {round(low.range_km.min(), -1):.0f} km or more, "
+        f"p ranged from {low.rotation_p.min():.4f} to {fmt(low.rotation_p.max(), 3)}"
+    ) in errors
+    # Main text: support is lost at ranges of about 50 km, not only over
+    # hundreds of kilometres.
+    statement = mt.section("main", "When we accounted for this spatial autocorrelation", "We therefore report")
+    assert "hundreds of kilometres" not in statement
+    assert f"ranges of {round(low.range_km.min(), -1):.0f} km or more" in statement
 
 
 def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
@@ -530,23 +592,24 @@ def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
     assert "(c) The samples available" not in main_tex
 
 
-def test_xrf_non_detection_is_not_written_as_evidence_of_absence(
-    main_tex, supplement_tex
-):
-    flat_main = _flat(main_tex)
-    flat_supplement = _flat(supplement_tex)
-    assert "did not track within-site Shannon diversity" not in flat_main
-    assert r"0.358\,\%" in flat_main and "within-site composition model" in flat_main
-    assert "$p=0.990$" in flat_supplement and "Shannon" in flat_supplement
-    assert "$p=0.990$" not in flat_main
-    assert "Its adjusted association with Shannon diversity was null" not in flat_main
-    assert "It had no conditional association with Shannon diversity" not in flat_main
-    assert "no adjusted Shannon association;" not in flat_supplement
+def test_xrf_non_detection_is_not_written_as_evidence_of_absence():
+    claim = _json("analysis/v3/xrf_community_rescue/xrf_claim_summary.json")
+    assert round(claim["alpha_primary"]["p"], 2) == 0.99
+    combined = mt.combined()
+    # A null Shannon association is not reported as evidence of absence.
+    for phrase in (
+        "did not track within-site Shannon diversity",
+        "Its adjusted association with Shannon diversity was null",
+        "It had no conditional association with Shannon diversity",
+        "no adjusted Shannon association;",
+    ):
+        assert phrase not in combined
+    # The reported association is the bounded within-site composition model.
+    assert "Within sites, the elemental axis explained a small but significant share" in mt.text("main")
+    assert "less than 1% of compositional variation within sites" in mt.text("main")
 
 
-def test_depth_adjusted_claims_match_the_canonical_verdict(
-    main_tex, supplement_tex
-):
+def test_depth_adjusted_claims_match_the_canonical_verdict():
     verdict = _json("analysis/v3/depth_extraction/claim_verdict.json")
     interaction = verdict["campaign_by_position_interaction"]
     supported = verdict["contrasts"]["Rhizosphere-Deep"]
@@ -559,39 +622,41 @@ def test_depth_adjusted_claims_match_the_canonical_verdict(
     assert f"{supported['depth_adjusted_ci'][0]:.3f}" == "-0.424"
     assert f"{supported['depth_adjusted_ci'][1]:.3f}" == "-0.122"
     assert f"{direction_only['depth_adjusted_estimate']:.3f}" == "0.103"
-    assert "sequencing-depth and extraction-method adjustments" in _flat(main_tex)
-    for value in ("0.00831", "0.17476", "$-0.273$"):
-        assert value in supplement_tex
-    assert "$+0.103$" in supplement_tex
-    assert "laboratory batch were incompletely recorded" in _flat(main_tex)
     assert sensitivity_dependent["status"] == "sensitivity_dependent"
-    assert sensitivity_dependent["direction_stable_across_models"] is True
-    assert sum(
-        sensitivity_dependent["interval_excludes_zero_by_model"].values()
-    ) == 3
-    assert "root-adjacent and surface soil" in _flat(main_tex)
-    flat_supplement = _flat(supplement_tex)
-    assert "root-adjacent minus surface" in flat_supplement or (
-        "root-adjacent--surface" in flat_supplement
+    assert all(c["direction_stable_across_models"] for c in verdict["contrasts"].values())
+    assert sum(sensitivity_dependent["interval_excludes_zero_by_model"].values()) == 3
+    assert all(supported["interval_excludes_zero_by_model"].values())
+    assert verdict["join_audit"]["profiles_with_recorded_kit"] == 858
+    confounds = mt.section("supplement", "Potential confounds", "Climate associations")
+    assert "root-adjacent versus shallow subsurface contrast remained significant in every model" in confounds
+    assert "root-adjacent versus surface contrast in only three of the six" in confounds
+    assert "extraction kit was recorded for 858 of the samples" in confounds
+    assert "partly confounded with campaign" in confounds
+    # Normalized Shannon was adjusted for campaign and read depth only (no kit term).
+    evenness = pd.read_csv(ROOT / "analysis/v3/evenness_decomposition/evenness_depth_sensitivity.tsv", sep="\t")
+    assert not evenness["formula"].str.contains("kit").any()
+    assert evenness["formula"].str.contains("log_sequencing_depth").any()
+    sentence = re.search(r"[^.]*normalized Shannon contrasts[^.]*\.", confounds, re.I)
+    assert sentence and "depth" in sentence.group(0), (
+        "state that normalized Shannon contrasts were adjusted for campaign and read depth (not kit)"
     )
-    assert "three of the six" in flat_supplement or "only three fits" in flat_supplement
-    assert "Extraction kit was recorded" in flat_supplement and "complete cases" in flat_supplement
-    assert "expected richness retained a depth-adjusted interaction" not in (
-        main_tex + supplement_tex
-    )
+    # Main text: direction is stable; no claim beyond direction for all endpoints.
+    main = mt.text("main")
+    assert "did not change the direction of any contrast" in main
+    assert "expected richness retained a depth-adjusted interaction" not in mt.combined()
 
 
-def test_consolidation_removes_untraceable_between_site_xrf_numbers(main_tex):
-    flat = _flat(main_tex)
-    assert "PC1 and Shannon diversity had $\\rho=-0.68$" not in flat
-    assert "partial $\\rho=-0.30$" not in flat
+def test_consolidation_removes_untraceable_between_site_xrf_numbers():
+    flat = mt.text("main")
+    assert "PC1 and Shannon diversity had ρ=-0.68" not in flat
+    assert "partial ρ=-0.30" not in flat
     assert "block size increased from 3 to 20 sites" not in flat
-    assert r"0.358\,\%" in flat and "within-site composition model" in flat
+    verdict = _json("analysis/v3/xrf_community_clr/claim_verdict.json")["primary"]
+    assert f"{pct(verdict['partial_r2'], 2)}%" in flat
+    assert f"{pct(verdict['partial_r2'], 3)}%" in mt.text("supplement")
 
 
-def test_campaign_omission_is_bounded_as_an_influence_analysis(
-    main_tex, supplement_tex
-):
+def test_campaign_omission_is_bounded_as_an_influence_analysis():
     cohort = pd.read_csv(
         ROOT / "analysis/v3/compartment_composition/cohort_accounting.tsv",
         sep="\t",
@@ -607,17 +672,18 @@ def test_campaign_omission_is_bounded_as_an_influence_analysis(
         27.9,
         17.5,
     ]
-    main_flat = _flat(main_tex)
-    assert "leave-one-campaign-out refits" in main_flat
-    flat_supplement = _flat(supplement_tex)
-    assert "These influence analyses omit one campaign at a time" in flat_supplement
-    for value in ("25.2", "2.5", "26.8", "27.9", "17.5"):
-        assert value in flat_supplement
+    preparation = mt.section("supplement", "Data preparation, resampling and multiple testing", "Transect model")
+    assert "Campaigns contributed " + ", ".join(fmt(v, 1) for v in shares[:-1]) + f" and {fmt(shares.iloc[-1], 1)}%" in preparation
+    spatial = pd.read_csv(
+        ROOT / "analysis/v3/spatial_turnover_rescue/results/spatial_model_results.tsv", sep="\t"
+    )
+    loco = spatial[spatial.analysis == "leave_one_campaign_out"]
+    assert len(loco) == 5 and (loco.permutation_p <= 0.001).all()
+    assert "omitted any one campaign" in mt.text("main")
+    assert "after excluding each campaign in turn; all fits gave p=0.001" in mt.text("supplement")
 
 
-def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable(
-    main_tex, supplement_tex
-):
+def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable():
     audit = _json("analysis/v3/control_audit/summary.json")
     sensitivity = _json(
         "analysis/v3/control_audit/sensitivity_inputs/summary.json"
@@ -655,30 +721,25 @@ def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable(
     assert spillover["interpretation_limit"].startswith(
         "Exact-ASV overlap does not distinguish"
     )
-
-    assert "351,472" in _without_value_math(main_tex)
-    for value in ("351", "351,472", "217"):
-        assert value in _without_value_math(supplement_tex)
-    for text in (main_tex, supplement_tex):
-        assert "14,822" not in text
-        assert "2.8684" not in text
-    # The 25-verdict source above remains an archived sensitivity. Current
-    # claims additionally use corrected coordinates and calibrated tests.
-    assert "25 tracked metrics" in _without_value_math(_flat(supplement_tex))
-    assert "312 filtered profiles" in _without_value_math(_flat(supplement_tex))
-    assert "0.0256" in supplement_tex and "0.0312" in supplement_tex
-    assert "candidate ASVs were removed only from profiles linked to their extraction blanks" in _flat(main_tex)
-    flat = _flat(main_tex)
-    assert "unfiltered biological table was the primary analysis input" in flat
-    flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "one extraction blank per extraction kit" in flat_supplement
-    assert "Positive controls were excluded from training" in flat_supplement
-    assert "Trip~5 also used D6300" in flat_supplement
+    removed = sensitivity["removed_read_fraction"]
+    main = mt.text("main")
+    kit = mt.section("supplement", "DNA extraction kit controls", "Microbial community standard controls")
+    assert f"{pct(removed['pooled'], 2)}% of pooled reads in 217 linked T5 profiles" in main
+    assert f"{pct(removed['pooled'], 1)}% of pooled reads and a median of {pct(removed['median'], 2)}% per profile" in kit
+    assert f"maximum {pct(removed['maximum'], 2)}%" in kit
+    assert f"ρ = {fmt(sensitivity['shannon']['spearman_before_after'], 3)}" in main
+    assert "no profile fell below the rarefaction depth" in mt.text("supplement")
+    headline = pd.read_csv(ROOT / "analysis/v3/control_sensitivity/headline_result_sensitivity.tsv", sep="\t")
+    shannon_q = headline[(headline.claim == "paired Shannon distribution") & (headline.metric == "Rhizosphere-Surface_q")].iloc[0]
+    assert f"from {fmt(shannon_q['canonical_value'], 3)} to {fmt(shannon_q['control_adjusted_value'], 3)}" in mt.text("supplement")
+    combined = mt.combined()
+    for stale in ("14,822", "2.8684"):
+        assert stale not in combined
+    assert has_number(main, "351,472")
+    assert "retained all ASVs in downstream analyses" in main
 
 
-def test_functional_top_k_sensitivity_matches_all_three_canonical_tables(
-    supplement_tex,
-):
+def test_functional_top_k_sensitivity_matches_all_three_canonical_tables():
     rows = [
         _all_row(
             "analysis/v3/functional_redundancy_sensitivity/"
@@ -698,16 +759,13 @@ def test_functional_top_k_sensitivity_matches_all_three_canonical_tables(
     assert observed == ["0.1005", "0.1339", "0.1721"]
     assert nulls == ["0.0671", "0.0873", "0.1174"]
     assert all(row["upper_tail_p"] == 0.001 for row in rows)
-
-    for value in observed:
-        assert value in supplement_tex
-    # The prose rounds the first null median to 0.0670.
-    for value in ("0.0670", "0.0873", "0.1174"):
-        assert value in supplement_tex
-    assert "$p_{\\rm U}=0.001$ throughout" in supplement_tex
+    # Observed functional dissimilarity exceeds the null in every top-k set, so
+    # no functional-redundancy claim is supported; none is made.
+    assert all(row["observed_functional_median_bray"] > row["null_median"] for row in rows)
+    assert "functional redundancy" not in mt.combined().lower()
 
 
-def test_distance_decay_is_surfaced_and_uses_whole_site_permutations(main_tex, supplement_tex):
+def test_distance_decay_is_surfaced_and_uses_whole_site_permutations():
     current = _json("analysis/v3/distance_decay_turnover/claim_verdict.json")
     assert current["site_pairs"] == 1770
     assert current["matched_sites"] == 60
@@ -715,25 +773,36 @@ def test_distance_decay_is_surfaced_and_uses_whole_site_permutations(main_tex, s
     assert current["permutations"] == 9999
     assert current["omnibus_p"] == 0.0051
     slopes = pd.read_csv(ROOT / "analysis/v3/distance_decay_turnover/distance_decay_slopes.tsv", sep="\t")
-    flat = _without_value_math(_flat(supplement_tex))
-    main = _without_value_math(_flat(main_tex))
-    assert "1,770 geographic pairs" in flat
-    assert "Whole-site permutations were applied simultaneously" in flat
-    assert "site labels defined the permutation unit" in flat
+    supplement = mt.text("supplement")
+    decay = mt.section("supplement", "Distance decay\\labelsup:beta_decay", "Compartment differences")
+    main_table = mt.section("main", r"\labeltab:decay", r"\endtable")
+    main = mt.text("main")
+    assert "(1,770 site pairs)" in decay
     for row in slopes[slopes.family == "aitchison"].itertuples():
-        assert f"{row.slope_per_100km:.3f}" in flat
-        assert f"{row.slope_per_100km:.3f}" in main
+        assert f"{row.slope_per_100km:.3f}" in decay
+        interval = (
+            f"{fmt(row.slope_per_100km, 2)} [{fmt(row.jackknife_ci_low_per_100km, 2)}, "
+            f"{fmt(row.jackknife_ci_high_per_100km, 2)}]"
+        )
+        assert interval in main_table, interval
         assert row.two_sided_p == 0.0001
-    assert "p=0.0051" in flat and "p=0.0051" in main
+    assert "p=0.0051" in decay and "p=0.0051" in main
     contrast = slopes.query("family == 'contrast' and response == 'Deep-Rhizosphere'").iloc[0]
     assert contrast.max_t_adjusted_p == 0.0039
-    assert r"p_{\mathrm{adj}}=0.0039" in flat
+    assert "p_adj=0.0039" in decay and "p_adj=0.004" in main
+    other = slopes.query("family == 'contrast' and response == 'Surface-Rhizosphere'").iloc[0]
+    assert "p_adj=0.173" in main and other.max_t_adjusted_p == pytest.approx(0.1728)
     for row in slopes[slopes.family.isin(["simpson_turnover", "nestedness"])].itertuples():
-        assert f"{row.slope_per_100km:.4f}" in flat
-    assert r"69--75\,\% of Sørensen dissimilarity" in flat
-    assert "Replacement supplied most mean dissimilarity" in flat
-    assert "randomly reassigned location labels to whole sites" in main
-    assert "keeping all 1,770 pairwise distances attached to their site identities" in main
+        assert f"{row.slope_per_100km:.4f}" in supplement
+        assert f"({row.slope_per_100km:.4f})" in main_table
+    shares = pd.read_csv(
+        ROOT / "analysis/v3/distance_decay_turnover/turnover_nestedness_components.tsv", sep="\t"
+    )["turnover_share_of_sorensen"]
+    span = f"{pct(shares.min(), 0)}–{pct(shares.max(), 0)}%"
+    assert span in main and span + " of Sørensen dissimilarity" in supplement
+    methods = mt.section("main", "Distance decay.", "Compartment differences.")
+    assert "permuting site labels (9,999 permutations) rather than individual distances" in methods
+    assert "applied each permutation to all three compartment matrices at once" in methods
 
 
 def test_new_methodological_citations_have_byte_verifiable_source_custody():

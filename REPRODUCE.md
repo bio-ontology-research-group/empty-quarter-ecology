@@ -12,13 +12,13 @@ checksums.
 ## 1. Obtain the exact repositories
 
 ```bash
-git clone https://github.com/bio-ontology-research-group/empty-quarter-ecology-reproducibility.git
+git clone https://github.com/bio-ontology-research-group/empty-quarter-ecology.git
 git clone https://github.com/bio-ontology-research-group/empty-quarter-data-paper.git
 cd empty-quarter-data-paper
-git checkout "$(awk -F '\t' '$1 == "commit" {print $2}' ../empty-quarter-ecology-reproducibility/DATA_REPOSITORY.lock)"
+git checkout "$(awk -F '\t' '$1 == "commit" {print $2}' ../empty-quarter-ecology/DATA_REPOSITORY.lock)"
 bash scripts/release/download_bulk_artifacts.sh
 bash scripts/release/bootstrap_package_layout.sh .
-cd ../empty-quarter-ecology-reproducibility
+cd ../empty-quarter-ecology
 ```
 
 `scripts/release/bootstrap_data_dependency.sh` checks the data commit and all
@@ -35,7 +35,7 @@ Create it before byte-level figure verification or the complete workflow:
 cd ../empty-quarter-data-paper
 make env-linux-exact
 export PATH="$PWD/.conda-env/bin:$PATH"
-cd ../empty-quarter-ecology-reproducibility
+cd ../empty-quarter-ecology
 ```
 
 The explicit lock fixes every Conda package build, including Matplotlib
@@ -85,7 +85,7 @@ Copy or clone both exact repositories on `ws` or Ontolinator, install the bulk
 inputs, create the locked environment, and run:
 
 ```bash
-cd empty-quarter-ecology-reproducibility
+cd empty-quarter-ecology
 bash workflow/run_on_remote.sh ../empty-quarter-data-paper \
   ./results/remote-validation-$(date -u +%Y%m%dT%H%M%SZ)
 ```
@@ -108,19 +108,31 @@ numbers to frozen outputs; a passing short test run is not evidence of fresh
 regeneration from raw reads. Public raw-read accession and upstream prediction/
 genome provenance requirements are listed in the companion data repository.
 
-The following committed result directories were produced before the Site 52
-coordinate correction and still carry the uncorrected position for that site
-(Trip 1 and Trip 3 rows, or the site average over all trips). They are not
-cited for coordinate-dependent numbers in the manuscript copy:
-`analysis/v3/environment_associations/climate_site_summary.tsv` (the
-corrected climate-diversity sensitivity is in
-`analysis/v3/biology_context_corrected_20260909/`), the
-`analysis/v3/rain_pulse_response*` and `analysis/v3/rain_pulse_sensitivities/`
-cohorts (superseded by `analysis/v3/rain_calendar_refit_20260909/`),
-`analysis/v3/xrf_community_rescue/xrf_alpha_analysis_table.tsv`,
-`analysis/batch-adjacency-2026-09-07/batch_meta.tsv`, and the control-filter
-sensitivity under `analysis/rerun-controls-2026-08-30/sensitivity/`, whose
-distance-decay comparison was run on the uncorrected coordinates.
+Current coordinate-dependent results use Site 52 at 20.82784 N, 53.57835 E.
+The October finalization replays the XRF/environment associations, control-filter
+sensitivity and batch-adjacency analyses on that geometry. The shared data pin
+still contains a daily Open-Meteo series fetched at an average that included the
+old position. The explicit replacement is
+`analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv`.
+Its package records the original source hash, corrected request and response,
+and verifies that every non-Site-52 row is unchanged. The rainfall refit and
+its current sensitivity consumers use this replacement. The five-product Trip 1
+comparison uses the corrected grid-cell extraction in
+`analysis/v3/rain_event_product_exposures_site52_corrected_20261004/`,
+rebuilt from the 21 hash-verified original climate files.
+
+The reported rainfall model is `analysis/v3/rain_calendar_refit_20260909/`,
+including its complete six-member calendar-year permutation orbit and full
+site-bootstrap refits. Other rainfall folders contain diagnostic or superseded
+models; they do not replace the reported calendar-randomization analysis.
+Likewise, `biology_context/` and `taxon_context/` are superseded by their
+`*_corrected_20260909/` counterparts. The latter retain their original run
+hashes plus an explicit reconciliation proving that the climate columns
+actually consumed are identical after the coordinate-column update.
+The pH partition is independently reproducible with
+`bash analysis/v3/ph_partition_20261004/reproduce.sh /tmp/ph-reproduction`.
+Its packaged inputs include the corrected coordinates; the older lock under
+`provenance/` is explicitly historical acquisition context.
 
 Do not use `-resume` after changing source code, input data, manuscript text, or
 the data lock. A local Nextflow stub is useful only for checking wiring and is
@@ -133,3 +145,18 @@ derived knowledge graph from the provided tables and archives. It does not yet
 reconstruct all canonical amplicon, shotgun, or PMA inputs from public raw
 reads. Those accession and upstream-processing records remain explicit release
 gates in the data descriptor.
+
+## 6. Review and finalization record
+
+The manuscript in `empty-quarter-amplicon/` is the current Overleaf text, not an
+older snapshot. `empty-quarter-amplicon/validation/finalization-20261004/`
+contains the complete change list and redlines against Rund's 2 October
+Overleaf revision (`a5d5623`). The finalization record identifies input versions,
+reruns and validation. `scripts/release/build_rund_redlines.py` generates the
+text comparisons from an exported baseline and built current manuscript.
+
+One author-source verification remains: the physical well-to-well analysis
+(259 T1 samples, p=0.87) lacks a deposited plate map, code and output. Its
+manuscript text is preserved, and `OPEN_VERIFICATION.txt` in the review package
+identifies the required inputs. The reproduced library-order adjacency test
+is different. A passing test suite is not verification of that missing analysis.

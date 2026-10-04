@@ -6,8 +6,11 @@
 \usepackage{graphicx}
 \usepackage[labelfont=bf]{caption}
 \usepackage{subcaption}
+\usepackage{xr}
+\externaldocument[si-]{supplement}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{todonotes}
 % Arabic script for the one-time introduction of the Rub' al-Khali (pdflatex).
 % arabtex redefines \begin so that every environment, including document,
 % opens a group; restore LaTeX's \begin/\end after loading it.
@@ -16,7 +19,6 @@
 \usepackage{utf8}
 \setcode{utf8}
 \let\begin\LaTeXbegin \let\end\LaTeXend
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
 \hypersetup{hidelinks}
 
 \title{Landscape-scale bacterial biogeography across the Rub' al-Khali}
@@ -80,25 +82,8 @@
   rRNA amplicon survey}
 
 \begin{abstract}
-The Rub' al-Khali (Empty Quarter) is the world's largest continuous sand desert, yet the
-bacterial ecology of its open Saudi interior has not been surveyed. We present
-the first landscape-scale bacterial survey of this region, with $5$
-expeditions to $60$ sites over $31$ months and paired surface, shallow-subsurface,
-and root-adjacent soil. Bacterial communities formed a recurring geographic
-pattern: distant sites contained more different communities, mainly because
-taxa replaced one another across the landscape. Within sites, root-adjacent
-communities were distinct and less even than both bulk soil compartments, showing
-that local soil context changes which bacteria dominate. Long-term temperature,
-rainfall, and humidity tracked diversity and the relative abundance of many
-genera, while richness showed a short positive association with recent rainfall,
-strongest during the first several days. Soil pH accounted for part of the
-geographic pattern. The metabolic pathways predicted from the $16$S sequences
-retained both geographic and compartment structure, and their broad
-gene-family profiles agreed with matched shotgun data. The main ecological conclusions held under checks for DNA from
-damaged cells and for low-biomass contamination. The study
-establishes a regional biological baseline
-and a reusable resource for biodiversity monitoring, restoration,
-arid-agriculture research and evidence-based land planning.
+The Rub' al-Khali (Empty Quarter) is the world's largest continuous sand desert, and its soil microbiome has not been surveyed across its vast landscape or over repeated visits. We surveyed microbial communities at $60$ sites along a west to east transect through the Empty Quarter in Saudi Arabia during $5$ campaigns over $31$ months. At each site, we sampled surface, shallow-subsurface, and root-adjacent soil, and obtained $1{,}237$ $16$S rRNA profiles together with climate, soil pH, and soil chemical composition data. Microbial community composition changed across the landscape, where dissimilarity increased with geographic distance in all sampled compartments. Replacement of taxa between sites accounted for most of the dissimilarity in taxon presence and absence. Within sites, root-adjacent soil had the lowest alpha diversity and harbored communities distinct from bulk soil. Climate, soil pH, and soil chemical composition changed along the transect along with community composition. Exploratory models associated higher richness with rainfall in the days before sample collection. Predicted metabolic pathways followed the same geographic and compartment patterns. This survey and its linked data resource provide a baseline for the Empty Quarter soil microbiome and a framework for targeted environmental measurements and repeated surveys in the region.
+
 \end{abstract}
 
 \begin{document}
@@ -106,177 +91,76 @@ arid-agriculture research and evidence-based land planning.
 \flushbottom
 \maketitle
 \thispagestyle{empty}
+\clearpage
 
-%% ====================================================================
 \section*{Introduction}
-%% ====================================================================
 
-The Rub' al-Khali (Arabic \RL{الربع الخالي}; in English, the Empty Quarter)
-is the world's largest continuous sand
-desert. It covers much of the southern Arabian Peninsula, mainly within Saudi
-Arabia \cite{edgell2006arabian}, and shapes land use, conservation, and plans for
-agriculture across the region. Yet the bacteria in its open interior have not
-been surveyed. The closest molecular community study examined a
-groundwater-fed salt flat in the United Arab Emirates, a habitat unlike the
-open sand soils of the Saudi interior \cite{mckay2016sabkha}. A regional survey
-is needed both to understand this major desert and to provide a reference for
-future monitoring, restoration and arid-land research.
+Drylands are among the most extensive terrestrial biomes \cite{marasco2023diamonds}, and aridity is projected to increase across much of them \cite{maestre2015increasing}. Where plants are sparse and rainfall is rare, soil microbial communities carry much of the remaining biological activity \cite{makhalanyane2015microbial}. Soil microbes influence soil fertility and crop production, and drive environmental processes such as carbon and nitrogen fixation, organic matter decomposition, and greenhouse gas emissions \cite{ling2022rhizosphere,delgadobaquerizo2018global}. Bacteria isolated from dryland soils have been used to improve plant tolerance to abiotic stress \cite{eida2018desertplants} and to stabilize and restore degraded soils \cite{marasco2023diamonds}. Therefore, characterizing the composition and diversity of dryland soil microbiomes is relevant to agriculture, conservation, and land management.
 
-Work in other deserts shows why such a survey matters. Dry landscapes that look
-uniform can contain strong changes in bacterial composition. Climate, soil pH,
-salts and minerals are often associated with these changes
-\cite{fierer2006toward,delgadobaquerizo2018global,maestre2015increasing,
-shen2021atacama}. Rare rainfall can also trigger a short biological pulse before
-the soil dries again \cite{noymeir1973desert,schwinning2004pulse}. Sampling
-sites at different delays after rainfall can therefore test whether diversity rises
-and then declines. One visible
-spatial outcome is distance decay: nearby sites contain more similar
-communities than distant sites
-\cite{nekola1999distance,hanson2012biogeography,bay2020negev}. This pattern can
-arise because taxa replace one another across the landscape, or because poorer
-communities become subsets of richer ones. Replacement implies distinct local
-assemblages; nestedness implies loss from a shared pool. Neither process has
-been measured across the open Empty Quarter.
 
-Desert soil can also change within centimetres. The surface receives direct
-sunlight and strong heating, while soil at $5$--$10\,\mathrm{cm}$ is partly buffered \cite{horstmann2024atacama}. Sparse
-plants may add water and carbon near their roots
-\cite{eida2018desertplants,maurice2023fertility}. These
-differences can change which taxa occur, which taxa dominate, and which
-metabolic pathways the community is predicted to encode. Separating these
-outcomes requires abundance and functional measures alongside richness: two
-soils may contain similar numbers of taxa while their abundance and predicted
-functional profiles differ. DNA can also remain after cells die.
-This relic DNA, together with contamination introduced during laboratory
-processing, is a particular concern in low-biomass desert soil. Biological
-interpretation therefore requires controls that distinguish these sources of
-DNA from the sampled community \cite{fierer2025controls}.
+The Rub' al-Khali (Arabic \RL{الربع الخالي}; in English, the Empty Quarter) is the world's largest continuous sand desert. It covers much of the southern Arabian Peninsula, mainly within Saudi Arabia, and is one of the least explored drylands in the world \cite{edgell2006arabian}. It is a hyperarid desert where rainfall is rare and temperatures approach $50\,^{\circ}\mathrm{C}$, thus considered one of the most hostile environments on Earth \cite{crassard2013mundafan}. It is characterized by sand dune and saline pans referred to as \textit{sabkhah}, and sparse shrubs and fauna \cite{mandaville_1986}. Ancient lakebeds are found throughout the desert, although it has no present link to rivers or other large water bodies \cite{edgell2006arabian}. Due to its unique terrain and climate, as well as its isolation from human influences, the Empty Quarter can serve as a model of desertification. Desertification is characterized by a decline in soil fertility and reduction in grass vegetation \cite{maestre2015increasing}, both of which are characteristic of the Empty Quarter, and understanding microbial community adaptations to this harsh habitat could play an important role in remediation efforts.
 
-Surveys elsewhere on the Arabian Peninsula have described bacteria along elevation gradients, at single
-arid locations, and in plant-associated soil
-\cite{yasir2015elevation,khan2020saudi,osman2016jizan,eida2018desertplants,
-jalal2022saudi,maurice2023fertility,maurice2024alula}. None covers the open
-Empty Quarter at landscape scale or combines a dense transect with repeated
-sampling of several compartments. We therefore sampled $60$ sites during $5$
-expeditions over $31$ months. We asked how bacterial composition changes across
-the landscape and among compartments; how climate, pH and elemental
-composition relate to those patterns; whether predicted metabolic potential
-changes with them; and whether relic-DNA and low-biomass controls alter the
-main conclusions. The resulting survey maps bacterial biogeography at landscape and centimetre scales, with the samples, measurements, sequences, and their production records preserved as a linked resource for reuse \cite{rubalkhali_datapaper}. Communities form a recurring geographic mosaic in which taxa replace one another across the sand sea. Within a site, the compartment (surface, shallow-subsurface or root-adjacent soil) changes which taxa dominate rather than how many taxa are detected. Long-term climate and soil pH track the geographic pattern. Richness shows a short positive association with recent rainfall, and predicted metabolic potential retains both spatial structures; neither the relic-DNA nor the low-biomass controls change these conclusions.
 
-%% ====================================================================
+Desert soils have been studied at different scales. At large spatial scales, community composition differs between regions and along aridity gradients. In the Mojave desert, biological soil crust communities from central and southern sites had distinct compositions \cite{pombubpa2020mojave}. In the Atacama and Gobi deserts, the colonization and diversity of hypolithic communities declined as aridity increased \cite{warren2006hypolithic, wu2023seasonal}. Community composition also varied between habitats within a landscape, such as in the Namib desert, where a comparison of sand dune zones showed that each zone harbored a different bacterial community \cite{ronca2015namib}. At a smaller scale, some studies have shown that communities differed between surface and deeper soils. Surface and subsurface communities were distinct in Mojave soil crusts \cite{pombubpa2020mojave}, and microbial biomass in an Atacama playa decreased with depth \cite{horstmann2024atacama}. Also within sites, microbial communities differed between bulk soil and plant-associated soil, where the rhizosheath held more diverse communities than surrounding bulk soil in the Namib desert \cite{marasco2022namib}.
+
+
+These spatial patterns have also been studied in relation to soil properties and environmental conditions. The distinct microbial communities in the Namib sand dunes varied with habitat stability, soil texture, and mineral and nutrient content \cite{ronca2015namib}. Decline in biomass with the depth gradient in the Atacama was linked to an increase in soluble salts \cite{horstmann2024atacama}. The Namib rhizosheath was found to be cooler, more humid, and richer in nutrients than bulk soil \cite{marasco2022namib}.
+
+
+Desert soils have also been studied over time. Rainfall in deserts is rare, usually in short pulses, and the pulse--reserve model proposes that each pulse triggers a brief period of biological activity before the soil dries again \cite{noymeir1973desert, schwinning2004pulse}. In the Atacama desert, heavy rainfall re-distributed salts in the soil, and shifted community composition to be more similar to less arid sites \cite{shen2021atacama}. Temperature has also been found to affect communities over time, where hypolithic communities in the Gobi desert were found to significantly differ from those sampled after cold periods \cite{wu2023seasonal}.
+
+
+Studies that combine repeated sampling and large spatial scales in desert soils remain sparse \cite{yuan2017experimental}, and the Arabian Peninsula remains underrepresented in global studies \cite{maestre2015increasing, blancosacristan2025biocrust}. In the Arabian Peninsula, studies have described microbial communities along elevation gradients \cite{yasir2015elevation}, at single locations \cite{khan2020saudi}, in plant-associated soil \cite{osman2016jizan,eida2018desertplants,jalal2022saudi}, and in an inland sabkha of the Empty Quarter in the United Arab Emirates \cite{mckay2016sabkha}. The Empty Quarter desert has not yet been surveyed across its landscape or over repeated visits. Here, we surveyed the microbial communities of the Empty Quarter in Saudi Arabia in $60$ sites along a west to east transect during $5$ campaigns over $31$ months. At each site, we sampled surface, shallow-subsurface, and root-adjacent soil, and recorded climate conditions and environmental features along with $16$S rRNA sequencing of the microbial communities. We also obtained soil pH and chemical composition of the samples across compartments and campaigns.
+
+
+
+We found that bacterial community composition changed across the landscape. Dissimilarity increased with geographic distance in all three compartments, and the replacement of taxa, or turnover, accounted for most of the dissimilarity. Within sites, root-adjacent soil harbored distinct communities from bulk soil, and had lower alpha diversity. Climate, soil pH, and soil chemical composition changes along the west to east transect along with community composition. Exploratory models associated richness with rainfall in the days before collection. Predicted metabolic pathways followed the same geographic patterns. We also found that PMA-accessible DNA contributed to measured richness in an exploratory experiment. The survey and its linked data resource \cite{rubalkhali_datapaper} provide a framework for targeted environmental measurements and repeated surveys. All analysis inputs and code are available in the \href{https://github.com/bio-ontology-research-group/empty-quarter-ecology}{ecology reproducibility repository}.
+
+
 \section*{Results}
-%% ====================================================================
+\subsection*{Pseudomonadota, Bacillota and Actinomycetota dominate Empty Quarter soils}
 
-\subsection*{Bacterial communities change across the landscape}
+We surveyed 60 sites along a west to east transect through the Empty Quarter in Saudi Arabia during 5 campaigns over 31 months (Figure~\ref{fig:landscape}a). At each site, we sampled bulk surface soil, shallow-subsurface soil and root-adjacent soil, collecting three field replicates per compartment. We sequenced the V3--V4 region of the bacterial $16$S rRNA gene and resolved the reads into amplicon sequence variants (ASVs). This yielded $1{,}237$ samples, $1{,}227$ of them from the repeatedly sampled sites 1--60 (Figure~\ref{fig:landscape}b). Trip~$2$ covered only 8 sites due to extreme heat.
 
-We surveyed 60 sites along a west--east transect through the Saudi
-Empty Quarter and returned during 5 expeditions over 31 months
-(Figure~\ref{fig:landscape}a). At each visit, we sampled bulk surface soil,
-bulk subsurface soil (``deep'' soil), and root-adjacent soil, collecting three replicates per compartment. We sequenced the V3--V4 marker region of the bacterial 16S rRNA gene and
-resolved the reads into amplicon sequence
-variants (ASVs). This yielded $1{,}237$ quality-controlled profiles, of which $1{,}227$ come from the repeatedly sampled sites 1--60 (Figure~\ref{fig:landscape}b). Trip~$2$ covered
-only 8 sites due to extreme heat. Supplementary Table~S1 lists the
-samples used in each analysis.
+We assessed contamination at different study stages, and found that candidate contaminant ASVs comprised $2.19\%$ of pooled reads in $217$ linked T5 profiles; before/after Shannon diversity and raw-richness rankings were strongly correlated ($\rho = 0.995$ and $0.99995$, respectively). Samples in adjacent wells during preparation were no more similar than matched samples in non-adjacent wells (one-sided $p=0.87$). Mock community controls varied in their recovery of expected genera. We therefore retained all ASVs in downstream analyses (Supplementary Section~\ref{si-sup:controls}).
 
-Eight phyla each held more than $2\,\%$ of reads on average across the
-$1{,}227$ core-site profiles: Pseudomonadota ($26.9\,\%$), Bacillota
-($22.5\,\%$), Actinomycetota ($18.7\,\%$), Chloroflexota ($8.6\,\%$),
-Bacteroidota ($7.1\,\%$), Planctomycetota ($3.2\,\%$), Gemmatimonadota
-($2.7\,\%$) and Acidobacteriota ($2.3\,\%$); Cyanobacteriota held
-$0.4\,\%$ (Supplementary Section~S5.6). Bacilli was the leading class
-($21.0\,\%$), ahead of Gammaproteobacteria ($14.7\,\%$), Actinobacteria
-($13.3\,\%$) and Alphaproteobacteria ($12.2\,\%$). The leading genera were
-\textit{Domibacillus} ($6.2\,\%$ of reads), \textit{Massilia} ($3.5\,\%$),
-\textit{Bacillus} ($3.0\,\%$), \textit{Microvirga} ($2.4\,\%$) and
-\textit{Flavisolibacter} ($2.0\,\%$), followed by
-\textit{Noviherbaspirillum}, \textit{Streptomyces}, \textit{Herpetosiphon},
-\textit{Paenibacillus} and \textit{Lysinibacillus}; \textit{Domibacillus}
-led every compartment. Endospore-forming Bacillota and Actinomycetota therefore
-supplied over $40\,\%$ of reads, whereas Acidobacteriota and
-Verrucomicrobiota, which rank among the most abundant phyla in global soil
-surveys \cite{delgadobaquerizo2018global,fierer2017embracing}, together held
-$3.3\,\%$. Reads without a genus assignment made up $35.6\,\%$ of the total,
-archaea $0.02\,\%$, and the Cyanobacteriota were no more abundant at the
-surface ($0.40\,\%$) than below it ($0.41\,\%$) or near roots ($0.51\,\%$),
-so the bulk soil sampled carried no biocrust signature.
+We first describe the overall microbial community composition of the $1{,}227$ samples. Pseudomonadota was the most abundant phylum ($26.9\,\%$), followed by Bacillota ($22.5\,\%$) and Actinomycetota ($18.7\,\%$). Acidobacteriota and Verrucomicrobiota, which are among the most abundant phyla in global soil surveys \cite{delgadobaquerizo2018global,fierer2017embracing}, together accounted for $3.3\,\%$. At the genus level, \textit{Domibacillus} ($6.2\,\%$) was most abundant in every compartment, followed by \textit{Massilia} ($3.5\,\%$), \textit{Bacillus} ($3.0\,\%$), \textit{Microvirga} ($2.4\,\%$) and \textit{Flavisolibacter} ($2.0\,\%$). ASVs without a genus assignment made up $35.6\,\%$ of reads per sample on average (Supplementary section~\ref{si-sup:composition}).
 
-We investigated whether community composition changed gradually across the
-sampled transect. The model allowed two broad patterns: a steady change from west to east,
-or a smooth change in its rate that could reverse direction once. These were
-represented by a straight-line term and a squared-location term. Together,
-these patterns accounted for $40.1\,\%$ of the site-averaged difference in
-relative taxon abundance across $630$ site, expedition, and compartment
-combinations ($95\,\%$ CI, $32.4$--$47.7\,\%$; $p=0.001$).
-The result remained when we changed the number of genera, used ASVs as the taxonomic units,
-or omitted any one expedition
-(Supplementary Section~S5.3). The geographic pattern therefore held at both
-taxonomic resolutions and with every expedition omitted in turn.
+\subsection*{Microbial communities change across the landscape}
 
-Communities also became less similar with distance. We therefore asked a more
-direct question: did sites farther apart have
-more different relative taxon abundances? We measured this with Aitchison
-dissimilarity, which compares the ratios among taxa. It is zero when two relative compositions are identical and increases
-as their taxon ratios diverge \cite{gloor2017compositional}. A positive slope
-with distance therefore shows how rapidly community composition changes across
-the landscape. The slope was $1.349$ ($95\,\%$ CI, $0.903$--$1.795$), $1.507$
-($1.089$--$1.925$) and $1.175$ ($0.695$--$1.656$) dissimilarity units per
-$100\,\mathrm{km}$ in surface, shallow-subsurface and root-adjacent soil, respectively
-(each $p=0.0001$; Figure~\ref{fig:landscape}c). The slopes differed among
-compartments ($p=0.0051$): composition changed fastest below the surface and
-slowest next to roots. Genus occupancy followed the same order. After pooling
-expeditions within site and subsampling every site to $12{,}865$ reads,
-root-adjacent soil had $85$ genera present at $90\,\%$ or more of the sites,
-surface soil $82$ and shallow-subsurface soil $69$, and the median number of
-genera per site was $299$, $274$ and $284$ (Supplementary Section~S5.7). The
-compartment with the largest shared pool changed most slowly with distance.
+To test whether community composition changed across the landscape, we modelled the composition of each site, based on the $200$ most abundant genera, as a function of its position along the transect, allowing for either a steady west to east change or a change that peaks or troughs mid-transect. Transect position explained $40.1\,\%$ of the variation in composition among the $60$ sites ($95\,\%$ CI, $32.4$--$47.7\,\%$), compared with $25.4\,\%$ for a steady west--east trend alone. The genus-level result persisted when we changed the number of genera included or omitted any one campaign; an ASV-resolution sensitivity analysis also showed a transect pattern (Supplementary Section~\ref{si-sup:beta_transect}). However, the model residuals showed significant spatial autocorrelation (Moran's $I=0.065$, $p=0.001$), so sites could not be treated as independent, which inflates the significance of permutation tests. When we accounted for this spatial autocorrelation, the trend remained significant if autocorrelation was assumed to be short-range, but support depended on the covariance model at ranges of $50$~km or more (Supplementary Section~\ref{si-sup:beta_spatialerrors}). We therefore report the variance explained as a descriptive measure of how strongly composition aligns with the transect, rather than evidence for a statistically supported west to east gradient.
 
-Finally, we asked what kind of change produced these differences. After
-comparing every sample at the same read coverage, we used Sørensen
-dissimilarity to compare the proportions of shared and unshared taxa between
-two sites. It is zero for identical taxon lists and increases as fewer taxa are
-shared. We separated taxa
-that replaced one another between sites from taxa lost from an otherwise
-shared pool; these components are called turnover or replacement and nestedness,
-respectively \cite{baselga2010partition}. Replacement represented 
-$69$--$75\,\%$ of the average difference in every compartment. Both components
-rose with distance, but replacement dominated. The Empty Quarter is therefore
-a mosaic of distinct bacterial assemblages that replace one another along the
-route.
 
-The replacement had identifiable participants. Among the $200$ genera of the
-route model, $124$ changed monotonically along the route after correction for
-the $200$ tests: $77$ declined from west to east and $47$ increased
-(Supplementary Section~S5.6). The declining genera were mostly Actinomycetota
-($27$ of $77$; for example \textit{Cellulomonas}, Spearman $\rho=-0.79$,
-\textit{Marmoricola} and \textit{Streptomyces}), Pseudomonadota ($20$;
-\textit{Sphingomonas}, \textit{Steroidobacter}, \textit{Massilia}),
-Bacteroidota ($9$) and Acidobacteriota ($4$; \textit{Blastocatella},
-\textit{Aridibacter}). The increasing genera were led by Bacillota ($17$ of
-$47$): \textit{Bacillus} rose from $1.6$ to $6.2\,\%$ of reads between the
-western and eastern thirds ($\rho=0.77$) and became the leading genus of the
-eastern third, joined by genera typical of saline and alkaline soils such as
-\textit{Halalkalibacter} ($\rho=0.85$), \textit{Halomonas},
-\textit{Aquibacillus} and \textit{Pseudalkalibacillus}. The eastern sites are
-also the warmer, more humid and more alkaline end of the route (site means:
-Spearman $\rho$ with route position $0.98$ for temperature, $0.92$ for humidity
-and $0.82$ for pH), so these genera mark the environmental gradient.
+Microbial communities became less similar as geographic distance increased. Aitchison dissimilarity increased with distance in all three compartments (Table~\ref{tab:decay}, Figure~\ref{fig:landscape}c), and decay rates differed among compartments ($p=0.0051$). Communities changed faster with distance in shallow-subsurface than in root-adjacent soil ($p_{\mathrm{adj}}=0.004$), whereas surface and root-adjacent soil did not differ ($p_{\mathrm{adj}}=0.173$).
 
-The pattern is a property of the dune soils. Field notes assign each site one
-landform: $44$ sand-dune sites, $9$ saline pans ($3$ in the west, $1$ central,
-$5$ in the east), $3$ oases in the east, and one gravel plain, dune slack,
-aeolian lake and oil-spill site each (Supplementary Section~S5.7). Saline-pan
-sites differed from dune sites in composition before adjustment for route
-position (pseudo-$F=4.56$, $p=0.0013$; $16$ genera at $q<0.05$) but barely
-after it (pseudo-$F=1.74$, $p=0.036$; no genus at $q<0.05$), and their
-diversity matched that of dune sites ($p\geq0.28$). The three
-oasis sites had the lowest diversity (mean Shannon $4.25$ against $5.77$ at
-dune sites). On the $44$ dune sites alone, the route model explained
-$34.2\,\%$ of composition ($40.1\,\%$ on all sites), $70$ of the $71$ genera
-with a supported route correlation on dune sites changed in the same direction
-as on all sites, and the temperature and humidity associations with diversity
-remained supported. The west-to-east replacement is therefore a property of
-the dune soils themselves.
+To determine whether differences between sites reflected replacement of genera or poorer sites containing subsets of the genera at richer sites, we partitioned S\o{}rensen dissimilarity into turnover and nestedness components \cite{baselga2010partition}. Turnover accounted for most of the dissimilarity between sites in every compartment ($69$--$75\,\%$; Table~\ref{tab:decay}), indicating that this transect of the Empty Quarter contains distinct communities rather than progressively poorer subsets of a single community. Both components increased with geographic distance in surface and shallow-subsurface soil (all $p=0.0001$). In root-adjacent soil, turnover increased faster than nestedness (Supplementary Section~\ref{si-sup:beta_turnover}). Root-adjacent soil also had the largest pool of genera shared across sites and the most genera per site
+(Table~\ref{tab:decay}). The three compartment cores shared $59$ genera (Figure~\ref{fig:core-overlap}).
+
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Distance decay, partitioning of Sørensen dissimilarity and core genera
+by compartment. Aitchison slope: increase in Aitchison dissimilarity per
+$100$~km. Sørensen, turnover and nestedness: mean pairwise dissimilarity
+between sites after rarefaction, with the increase per
+$100$~km in parentheses. Core genera: genera present at $\geq90\,\%$ of sites after $20$ rarefaction draws (detection in at least half of draws). Genera per site is the median across $60$ sites. All common-depth calculations use $12{,}865$ reads. Aitchison intervals use the delete-one-site jackknife.}
+\label{tab:decay}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Compartment & Aitchison slope [$95\,\%$ CI] & Sørensen & Turnover & Nestedness & Core genera & Genera per site \\
+\midrule
+Surface            & $1.35$ [$0.90$, $1.80$] & $0.401$ & $0.286$ ($0.0075$) & $0.115$ ($0.0112$) & $82$ & $274$ \\
+Shallow-subsurface & $1.51$ [$1.09$, $1.93$] & $0.406$ & $0.280$ ($0.0096$) & $0.126$ ($0.0164$) & $69$ & $284$ \\
+Root-adjacent      & $1.18$ [$0.70$, $1.66$] & $0.395$ & $0.295$ ($0.0117$) & $0.100$ ($0.0054$) & $85$ & $299$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+To identify the genera associated with this gradient, we correlated the relative abundance of each of the $200$ genera with transect position using CLR profiles. $124$ genera were significantly associated with the transect ($q<0.05$), where $77$ decreased and $47$ increased from west to east (Supplementary Table~\ref{si-tab:taxa_replacement}). Genera that decreased were mainly Actinomycetota ($35\,\%$), including \textit{Cellulomonas} ($\rho=-0.79$) and \textit{Marmoricola} ($\rho=-0.70$), whereas genera that increased were mainly Bacillota ($36\,\%$). \textit{Bacillus} increased from $1.6$ to $6.2\,\%$ mean relative abundance between the western and eastern thirds ($\rho=0.77$) and became the most abundant genus in the east, together with genera typical of saline and alkaline soils, including \textit{Halalkalibacter} ($\rho=0.85$), \textit{Aquibacillus} ($\rho=0.72$) and \textit{Pseudalkalibacillus} ($\rho=0.74$). The eastern end of the transect was also the warmest, most humid and most alkaline (Spearman $\rho$ between site means and transect position: $0.98$ for temperature, $0.92$ for humidity and $0.82$ for pH; Supplementary Table~\ref{si-tab:route_gradients}). The taxonomic change therefore coincides with environmental gradients that cannot be separated from geographic position in this experimental design.
+
+We next asked how landform contributed to the geographic pattern, since saline pans and oases are unevenly distributed along the transect. Field observations assign a landform to each site: $44$ sand dunes, $9$ saline pans ($3$ western, $1$ central, $5$ eastern), $3$ eastern oases, and one gravel plain, dune slack, aeolian lake and oil-spill site each (Supplementary Section~\ref{si-sup:landform}). Saline pans differed compositionally from dunes (pseudo-$F=4.56$, $p=0.0013$; $16$ genera at $q<0.05$), but the difference was much smaller after accounting for transect position (pseudo-$F=1.78$, $p=0.032$), and no genera remained differentially abundant. Sand dunes and saline pans did not differ in alpha diversity ($p\geq0.28$), whereas oases had the lowest Shannon diversity (mean $4.25$, compared with $5.77$ at sand dune sites). When restricted to dune sites, the transect model still explained $34.2\,\%$ of compositional variation ($40.1\,\%$ across all sites), and $70$ of the $71$ genera significantly associated with the transect changed in the same direction as in the full dataset (Supplementary Section~\ref{si-sup:landform}).
 
 \begin{figure}[!htbp]
 \centering
@@ -285,7 +169,7 @@ the dune soils themselves.
   (a) The $60$ core sites along the west--east route on a NASA Blue Marble
   satellite image (July 2004); the dashed outline marks the Empty Quarter
   boundary for orientation only. (b) The $1{,}237$ quality-controlled profiles
-  by expedition and compartment. Trip~$2$ reached $8$ sites. (c) The difference
+  by campaign and compartment. Trip~$2$ reached $8$ sites. (c) The difference
   in relative community composition, measured as mean Aitchison dissimilarity,
   as distance between sites increases. The statistical test kept all
   comparisons involving the same site together. (d) Each site's $49$-month
@@ -298,1001 +182,396 @@ the dune soils themselves.
 \label{fig:landscape}
 \end{figure}
 
-\subsection*{Compartment shapes bacterial composition and evenness}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.72\linewidth]{figures/fig_core_overlap.pdf}
+\caption{Overlap of core genera among soil compartments. A genus belongs to a compartment's core when it occurs at $\geq90\,\%$ of the $60$ sites after pooling counts within site and compartment across campaigns and rarefying $20$ times to $12{,}865$ reads; detection requires presence in at least half of the draws. Numbers give mutually exclusive intersections; circle areas are schematic.}
+\label{fig:core-overlap}
+\end{figure}
 
-We next asked whether compartment changed the relative abundance of taxa
-within the same site and expedition. Across $170$ site-by-expedition
-comparisons in which all three compartments were available, the separation
-among the three average compositions was large relative to the variation
-within compartments. This ratio is the pseudo-$F$ statistic: a larger value means
-stronger overall separation. The compartment separation had
-pseudo-$F=17.28$ ($p=0.001$).
-We then asked whether sites shifted in a
-consistent direction for each compartment pair. We divided the magnitude of the
-average shift by the average magnitude of the individual site shifts. This
-standardized displacement is near $1$ when sites shift in the same direction
-and near $0$ when their shifts cancel. Root-adjacent and shallow-subsurface
-soil showed the most consistent shift ($0.478$), followed by root-adjacent and
-surface soil ($0.433$) and shallow-subsurface and surface soil ($0.331$;
-Figure~\ref{fig:soil-position}a). All $3$ comparisons passed correction for
-the $3$ tests and remained supported after changing the included
-taxa, the treatment of zero counts, or the omitted expedition
-(Supplementary Section~S5.1).
+\subsection*{Compartment differences in composition and diversity within sites}
+As composition varies across the transect, we next tested whether communities differed between compartments at the same site and campaign. We used the $170$ site $\times$ campaign combinations with all three compartments, centred each combined sample profile on its mean, and averaged within site. Across the $170$ complete site $\times$ campaign blocks, the pooled test detected compartment differences (pseudo-$F=17.28$, $p=0.001$), and every pair of compartments differed in composition ($q=0.001$, Table~\ref{tab:compartments}). To assess whether these differences were consistent across sites, we calculated a standardized displacement, which approaches $1$ when compartments differ in the same direction at every site, and $0$ when site-level differences point in opposing directions. Displacement was largest between root-adjacent and shallow-subsurface soil ($0.48$), followed by root-adjacent and surface soil ($0.43$) and shallow-subsurface and surface soil ($0.33$, Figure~\ref{fig:soil-position}a). These differences remained significant with the same directions when we changed the number of genera tested, the treatment of zero counts, or omitted any one campaign (Supplementary Section~\ref{si-sup:beta_compartment}).
 
-Shannon diversity combines the number of taxa with the balance of their read
-abundances. It was lower in root-adjacent than shallow-subsurface soil by
-$0.206$ on average (Figure~\ref{fig:soil-position}b). After resampling whole
-sites, the $95\,\%$ interval was [$-0.398$,$-0.001$]. The difference remained
-after adjustment for
-sequencing depth and recorded extraction method ($-0.273$, $95\,\%$ CI
-[$-0.424$,$-0.122$]).
+Compartments also differed in variation among site profiles within each compartment, which we tested by multivariate dispersion. Dispersion was lowest in surface soil and highest in root-adjacent soil (Table~\ref{tab:compartments}). Root-adjacent and shallow-subsurface soil were both more variable than surface soil ($q=0.003$ and $0.015$), but did not differ significantly from each other ($q=0.061$). Because PERMANOVA is sensitive to differences in dispersion as well as in mean composition \cite{anderson2006multivariate}, we based conclusions about composition on the paired location tests, which compare compartments within each site and assume sign symmetry of the site-level difference vectors under the null.
 
-To find what produced this change, we estimated how many taxa would be expected
-if every profile had $25{,}000$ reads. We then scaled Shannon diversity by this
-common-depth richness to separate the balance among taxa from their number.
-This measure is normalized evenness: a high value means that reads are spread
-across taxa, whereas a low value means that a few taxa dominate.
-Evenness declined from shallow-subsurface to surface and then to root-adjacent
-soil (Figure~\ref{fig:soil-position}c). Root-adjacent soil was lower than
-surface soil by $0.0315$ ($95\,\%$ CI [$-0.0448$,$-0.0186$]) and lower than
-shallow-subsurface soil by $0.0440$ ([$-0.0572$,$-0.0313$]). Expected richness
-ordered the compartments differently. Compartment therefore changed which taxa
-dominated more consistently than it changed how many taxa were detected.
-Because the read abundances are relative, we compared each genus with the
-geometric mean abundance across all genera on a logarithmic scale. This avoids
-treating the reads as absolute cell counts. Testing the $200$ route-model
-genera in each of the $3$ paired contrasts ($600$ tests) supported $295$
-differences after correction (Supplementary Section~S5.1). Surface soil held
-more \textit{Deinococcus}, \textit{Kineococcus}, \textit{Kocuria},
-\textit{Planococcus} and \textit{Rufibacter} than shallow-subsurface soil and
-more \textit{Deinococcus}, \textit{Rubrobacter}, \textit{Geodermatophilus} and
-\textit{Blastococcus} than root-adjacent soil, genera known for pigmentation
-and tolerance of radiation and desiccation. Root-adjacent soil held more
-\textit{Pelagibacterium}, \textit{Neorhizobium}, \textit{Devosia},
-\textit{Metabacillus}, \textit{Pseudomonas} and the Saccharibacteria lineage
-TM7a than either bulk compartment, and more \textit{Brevundimonas} and
-\textit{Pantoea} than shallow-subsurface soil; \textit{Domibacillus}, the
-leading genus overall, was also highest near roots. Shallow-subsurface soil
-held more of the nitrifiers \textit{Nitrospira} and MND1 (Nitrosomonadaceae)
-than either other compartment, and more \textit{Gaiella},
-\textit{Symbiobacterium} and \textit{Caldilinea} than root-adjacent soil.
-\textit{Bradyrhizobium}, a root-nodule genus, was lower near roots than in
-either bulk compartment (Figure~\ref{fig:soil-position}d). These contrasts
-describe which genera carry the compartment difference.
+Alpha diversity was lowest in root-adjacent soil (Figure~\ref{fig:soil-position}b,c; Table~\ref{tab:compartments}). Compared with both bulk soil compartments, root-adjacent soil had lower rarefied richness ($173$ fewer ASVs than surface soil and $266$ fewer than shallow-subsurface soil) and lower normalized Shannon diversity. Shannon diversity was lower in root-adjacent than in shallow subsurface soil (mean difference $-0.27$, $95\,\%$ CI $-0.49$ to $-0.03$). Shallow-subsurface soil had higher normalized Shannon diversity than surface soil, but they did not differ in rarefied richness. An alternative comparison that averaged each compartment across campaigns gave the same directions but weaker richness differences, and adjusting Shannon contrasts for sequencing depth and DNA extraction kit, and normalized Shannon contrasts for sequencing depth, did not change the direction of any contrast (Supplementary Sections~\ref{si-sup:alphadiversity_compartments} and~\ref{si-sup:alphadiversity_confounds}).
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Pairwise differences between compartments within 60 sites. Diversity contrasts first average within matched site--campaign blocks and then across campaigns within site, using the common cohort with all three diversity measures. Richness is expected ASV richness at 25,000 reads. Displacement and dispersion use paired compositional profiles. $^{*}$\,$q<0.05$ (Benjamini--Hochberg within each measure): diversity uses Wilcoxon signed-rank tests; displacement and dispersion use paired sign-flip tests.}
+\label{tab:compartments}
+\begin{tabular}{lrrrrr}
+\toprule
+Contrast & Displacement & Dispersion & Shannon & Richness & Normalized Shannon \\
+\midrule
+Shallow-subsurface $-$ surface    & $0.33^{*}$ & $1.38^{*}$ & $0.14^{*}$     & $110$       & $0.018^{*}$  \\
+Root-adjacent $-$ surface         & $0.43^{*}$ & $2.39^{*}$ & $-0.22^{*}$    & $-173^{*}$  & $-0.034^{*}$ \\
+Root-adjacent $-$ shallow-subsurface & $0.48^{*}$ & $1.01$  & $-0.27^{*}$    & $-266^{*}$  & $-0.043^{*}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We next identified the genera associated with these compositional differences. Because read abundances are relative, we compared each genus with the geometric mean abundance across the selected $200$ genera on a logarithmic scale. Testing the $200$ genera from the transect model across the three compartment contrasts ($600$ tests) supported $295$ differences after correction (Supplementary Table~\ref{si-tab:compartment_genera}). Surface soil was enriched in pigmented and desiccation-tolerant genera, including \textit{Deinococcus}, \textit{Rubrobacter}, \textit{Kineococcus}, and \textit{Kocuria}. Root-adjacent soil was enriched in plant-associated genera, including \textit{Neorhizobium}, \textit{Devosia}, \textit{Pseudomonas}, and \textit{Brevundimonas}. Interestingly, the root nodule-associated genus \textit{Bradyrhizobium} was more abundant in bulk soil compartments. Shallow-subsurface soil was enriched in the nitrifying \textit{Nitrospira} and the Nitrosomonadaceae lineage MND1, and in \textit{Gaiella}.
+
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/fig2_soil_position.pdf}
-\caption{Compartment differentiates bacterial communities within sites.
-  (a) The consistency of the shift in relative taxon abundance across sites.
-  Values approach one when sites shift in the same direction and zero when
-  shifts cancel. (b,c) Paired differences in Shannon diversity and
-  normalized evenness, averaged across expeditions. In (a--c), points show
-  means and bars show $95\,\%$ intervals. (d) Genera that contributed most to the $3$ overall
-  composition differences. Positive values mean a higher relative abundance
-  in the first named compartment. This panel describes contributions to the
-  overall difference.}
+\caption{Compartment differences within sites.
+(a) Consistency of the shift in relative taxon abundance across sites.
+Values approach one when sites shift in the same direction and zero when
+shifts cancel. (b,c) Campaign-matched differences in Shannon diversity and
+normalized Shannon diversity, using profiles with all three diversity
+endpoints. We formed differences within campaign and site before averaging
+within each site. Points show means and bars show $95\,\%$ site-bootstrap
+intervals. (d) Genera with the largest contributions to the three
+composition contrasts. Positive values indicate higher CLR abundance in
+the first named compartment.}
 \label{fig:soil-position}
 \end{figure}
 
-\subsection*{Climate and soil properties track bacterial variation}
+\subsection*{Climate covaries with the geographic pattern}
 
-We recorded air temperature, pressure and relative humidity during $247$,
-$177$ and $239$ quality-controlled site visits. Air temperature ranged from
-$20.0$ to $49.4\,^{\circ}\mathrm{C}$ and humidity from $9.5$ to
-$62.5\,\%$. To describe background climate,
-we also summarized $49$ months per site from January $2022$ to January
-$2026$. Long-term site means ranged from $26.38$ to
-$30.30\,^{\circ}\mathrm{C}$, $1.31$ to $7.47\,\mathrm{mm}$ rainfall per month,
-and $24.27$ to $35.40\,\%$ relative humidity. Figure~\ref{fig:landscape}d
-shows how these site means changed across the transect.
+Air temperature during sampling ranged from $20.0$ to $49.4\,^{\circ}\mathrm{C}$ and relative humidity from $9.5$ to $62.5\,\%$. These single-visit measurements were not associated with alpha diversity after accounting for campaign and transect position (all $q\geq0.319$), which is expected as they capture transient weather rather than climate conditions under which communities develop (Supplementary Section~\ref{si-sup:alphadiversity_climate}). We therefore used long-term climate summaries averaged over $49$ months for each site, where long-term mean air temperatures ranged from $26.4$ to $30.3\,^{\circ}$C, monthly rainfall from $1.3$ to $7.5$~mm, and relative humidity from $24.3$ to $35.4\,\%$ (Figure~\ref{fig:landscape}d).
 
-We compared $3$ aspects of diversity: Shannon diversity combines taxon number
-and abundance balance, expected richness estimates how many taxa would be
-detected at a common read coverage, and normalized evenness measures how evenly
-reads are spread after accounting for richness. We then asked whether sites
-ordered from lower to higher climate values also showed a consistent order in
-each. Spearman rank correlation measures this ordering: a value near $-1$ means
-that diversity consistently decreases as the climate value increases, whereas a
-value near zero means no consistent order. All $3$ long-term gradients tracked
-all $3$ measures. Sites with higher temperature, rainfall and humidity had lower
-Shannon diversity (Spearman $\rho=-0.71$, $-0.47$ and $-0.70$), lower expected
-richness ($-0.79$, $-0.49$ and $-0.77$), and lower evenness ($-0.58$, $-0.30$
-and $-0.52$) (Figure~\ref{fig:landscape}e). All $9$ associations remained supported after correction for the
-$9$ comparisons (adjusted $p\leq0.021$). Among $200$ genera detected in at
-least $20\,\%$ of profiles, $112$, $112$ and $111$ were associated with
-temperature, rainfall and humidity after multiple-testing correction (Figure~\ref{fig:landscape}f).
-The strongest positive associations with temperature were
-\textit{Halalkalibacter}, \textit{Bacillus}, \textit{Pannonibacter},
-\textit{Ammoniphilus} and \textit{Rhodocista} ($\rho=0.74$--$0.85$), and the
-strongest negative associations were \textit{Cellulomonas},
-\textit{Marmoricola}, \textit{Steroidobacter}, \textit{Ellin6055} and
-\textit{Pseudonocardia} ($\rho=-0.65$ to $-0.69$); \textit{Streptomyces} had
-the strongest negative association with humidity ($\rho=-0.73$). Because
-climate covaries with location along the route, these are the genera that mark
-the west--east replacement described above.
-Supplementary Section~S7 gives the genus rankings and shows how strongly these
-climate patterns overlap with location.
+Sites with higher long term temperature, rainfall, and humidity had lower alpha diversity. All correlations between the climate variables and the three alpha diversity measures were negative and significant ($q\leq0.021$; Figure~\ref{fig:landscape}e), and were strongest for temperature and humidity. Climate variables were also associated with the relative abundance of more than half of the $200$ genera tested ($111$--$112$ genera per variable; Table~\ref{tab:environment}; Figure~\ref{fig:landscape}f). Genera most positively associated with temperature included \textit{Halalkalibacter}, \textit{Bacillus} and \textit{Ammoniphilus} ($\rho=0.75$--$0.85$), and those most negatively associated included \textit{Cellulomonas}, \textit{Marmoricola} and \textit{Steroidobacter} ($\rho=-0.67$ to $-0.69$), largely the same genera that changed along the transect. Because temperature and humidity were themselves strongly correlated with transect position ($\rho=0.98$ and $0.92$), these associations describe a shared climatic and geographic gradient rather than independent effects of climate.
 
-Quality-controlled pH measurements matched $702$ profiles and had a mean pH of
-$7.986$.
-After accounting for expedition and compartment, location along the route
-explained $84.6\,\%$ of pH variation ($p\leq0.001$). Among the same $702$ matched
-profiles, the share of bacterial composition explained by location fell from
-$35.8\,\%$ to $19.6\,\%$ after pH adjustment. Excluding the group with the
-highest pH, or its entire site, gave $18.7$--$19.6\,\%$. pH and location therefore
-described substantial overlapping variation. The genera that tracked site pH
-were the genera of the route: $117$ of the $200$ genera correlated with
-site-mean pH ($q<0.05$), $104$ of them also with route position.
-\textit{Polygonibacillus}, \textit{Sediminibacillus},
-\textit{Halalkalibacter}, \textit{Gracilibacillus}, \textit{Halomonas} and
-\textit{Aquibacillus} increased with pH ($\rho=0.71$--$0.81$);
-\textit{Pirellula}, \textit{Roseisolibacter}, \textit{Gemmatimonas},
-\textit{Steroidobacter}, \textit{Gaiella}, \textit{Sphingomonas} and
-\textit{Streptomyces} decreased ($\rho=-0.60$ to $-0.68$; Supplementary
-Section~S5.7).
+\subsection*{Soil pH tracks the west-to-east change in community composition}
 
-X-ray fluorescence (XRF) measured $11$ elements in at least $75\,\%$ of $725$ specimens.
-Because the elements changed together, we combined them into one summary
-gradient that captured the largest shared change. This gradient represented
-$39.2\,\%$ of the elemental variation and a smaller but consistent share of
-bacterial composition, $0.358\,\%$ ($p=0.010$). Planned changes to the included
-taxa and treatment of zero values
-gave estimates from $0.311$ to $0.543\,\%$ (Supplementary Sections~S2--S3). This
-range shows sensitivity to analysis choices.
-The gradient loaded positively on Ca, Mg, Na, S, Cl, Fe and Ti and negatively
-on Si, so it separates sand rich in carbonate, sulfate and chloride minerals
-from quartz-rich sand; it followed the route (Spearman $\rho=0.73$ with route
-position). $118$ genera tracked it, with the
-same Bacillota (\textit{Polygonibacillus}, \textit{Sediminibacillus},
-\textit{Aquibacillus}, \textit{Halalkalibacter}, \textit{Gracilibacillus}) on
-the Ca, Mg, Na, S and Cl side and \textit{Steroidobacter},
-\textit{Caldilinea}, \textit{Streptomyces}, \textit{Roseisolibacter} and
-\textit{Gemmatimonas} on the Si side (Supplementary Section~S5.7).
+Soil pH was alkaline (mean $7.99$) and increased from west to east. Transect position explained $84.3\,\%$ of the variation in pH after accounting for campaign and compartment ($p=0.001$). To quantify its association with the geographic pattern in composition, we partitioned variation in the adjusted mean composition of the $60$ sites using the $560$ campaign $\times$ site $\times$ compartment groups with pH measurements. With a common variance denominator, $1.38\,\%$ was uniquely associated with pH, $13.56\,\%$ uniquely with transect position, and $23.86\,\%$ shared between them; $61.20\,\%$ remained unexplained. The shared component describes the covariance of pH and geography with community composition. Within sites, the conditional association with pH was small (partial RDA, $0.28\,\%$ of variation, $p=0.125$; Supplementary Section~\ref{si-sup:beta_ph}).
 
-\subsection*{Bacterial richness shows a short association with recent rainfall}
+Of the $200$ genera tested, $117$ were correlated with mean site pH ($q<0.05$), $104$ of which were also associated with the transect. Alkaliphilic and halophilic genera, including \textit{Polygonibacillus}, \textit{Sediminibacillus}, \textit{Halalkalibacter} and \textit{Halomonas}, increased with pH ($\rho=0.76$--$0.81$), whereas \textit{Pirellula}, \textit{Gemmatimonas}, \textit{Gaiella} and \textit{Streptomyces} decreased ($\rho=-0.64$ to $-0.67$; Supplementary Section~\ref{si-sup:beta_ph}).
 
-We next asked whether rare rainfall was followed by a temporary rise in diversity.
-The expeditions ran on fixed dates, so each sample was collected an incidental
-number of days after the last rainfall at its site, and the delay at which any
-response peaks was unknown. For each sample we therefore weighted rainfall over the
-preceding $60$ complete days by a curve that rises to a maximum at day $p$ and
-then decays, so that rainfall $p$ days before collection carries the most
-weight. We scanned $p$ from $0.5$ to $30$ days across $3$ diversity measures
-($180$ candidate models) while accounting for site, compartment, expedition
-and location along the route, and retained the strongest positive association.
 
-Retaining the best of $180$ results inflates significance, so we calibrated the
-complete search. We rotated each expedition's
-$60$-day rainfall series in a circle $19{,}999$ times, independently within
-expeditions. Each rotation preserves the amount, rarity and clustering of rainfall
-and its spatial pattern across sites, and breaks only its timing relative to
-collection; because rotation acts within an expedition, the calibration holds
-when storms occur in only some expeditions. Re-running the entire scan on every
-rotation gave the distribution of the largest statistic obtainable when rainfall
-timing is uninformative, against which we tested the observed result.
+\subsection*{Soil chemical composition is a weak correlate of community composition}
 
-Expected richness was the selected endpoint in both daily rainfall products.
-With NASA POWER, the primary series \cite{nasa_power_2024}, each additional
-millimetre at the fitted peak was associated with $179.6$ additional expected
-taxa ($95\,\%$ site-clustered CI, $92.1$--$267.1$); the fitted peak was $2$
-complete days ($95\,\%$ peak-selection interval, $1.5$--$4.5$ days), rainfall
-accounted for $3.64\,\%$ of the remaining variation ($0.60$--$7.87\,\%$), and
-the family-wise one-sided test for a positive pulse gave $p=0.0560$.
-Open-Meteo, an independent product \cite{openmeteo}, selected the same
-endpoint with a peak at $1$ day ($0.5$--$6.5$ days), a larger estimate of
-$327.5$ taxa per millimetre ($141.1$--$514.0$), $3.84\,\%$ explained variation
-($0.57$--$8.99\,\%$), and $p=0.0432$ after the same correction. The two
-products therefore agree on an early positive association but differ in its
-size and exact timing (Supplementary Figure~S1).
 
-Three checks bound this result. The pulse curve assumes a smooth rise and
-decline; fitting rainfall from $7$ non-overlapping periods before collection
-instead, with no assumed shape, placed the largest positive estimate at
-$3$--$4$ days in both products. Rain falling after collection, which cannot
-have an effect, produced no comparable pattern (largest richness statistic
-$0.055$). The association was positive in every compartment and changed
-little after accounting for pH, but weakened when the model allowed more
-complex geographic change. Removing candidate contaminants also left the
-estimate essentially unchanged, although its corrected probability then
-crossed the conventional threshold ($p=0.0485$); we therefore report the
-unfiltered estimate. The data support an early association between rainfall
-and richness (Supplementary Section~S7).
+X-ray fluorescence (XRF) measured $11$ elements in at least $75\,\%$ of $725$ samples. Because the elements varied together, we summarized the first principal component of the standardized instrument-reported values as a single elemental score per sample, which accounted for $39.2\,\%$ of their variation. Higher scores indicated more Ca, Mg, Na, S, Cl, Fe and Ti and less Si, indicating a contrast between Ca-, Mg-, Na-, S- and Cl-rich samples and Si-rich samples. Scores increased from west to east along the transect ($\rho=0.73$). Within sites, the elemental axis explained a small but significant share of compositional variation (partial RDA, $0.36\,\%$, $p=0.010$; $0.31$--$0.54\,\%$ across sensitivity analyses), with similar effect sizes but weaker support when composition was measured as Bray--Curtis dissimilarity ($p=0.044$--$0.056$).
 
-\subsection*{Predicted metabolic pathways follow geography and compartment}
+$118$ genera correlated with the score, and they are mostly the same genera that changed with pH and transect position: alkaliphilic and halophilic Bacillota (\textit{Polygonibacillus}, \textit{Sediminibacillus}, \textit{Aquibacillus}, \textit{Halalkalibacter}, \textit{Gracilibacillus}) were more abundant where scores were high, and \textit{Steroidobacter}, \textit{Caldilinea}, \textit{Streptomyces}, \textit{Roseisolibacter} and \textit{Gemmatimonas} where scores were low (Supplementary Section~\ref{si-sup:beta_xrf}). This overlap is expected, since the score itself rises steadily from west to east.
 
-We used PICRUSt2, which compares each $16$S sequence with reference genomes, to
-predict which metabolic pathways the community could encode
-\cite{douglas2020picrust2}. These estimates describe metabolic potential. Across $1{,}227$ core-site profiles and $462$ pathways in the
-MetaCyc database \cite{metacyc}, the predicted profiles were dominated by
-housekeeping metabolism. Biosynthesis pathways held $66.8\,\%$ of predicted
-pathway abundance, energy and central metabolism $17.2\,\%$ and degradation or
-utilization pathways $10.7\,\%$ (keyword classes; Supplementary
-Section~S8.1). Aerobic respiration through cytochrome $c$ was the most
-abundant single pathway ($1.7\,\%$), followed by branched-chain amino acid
-and fatty acid biosynthesis. Carbon fixation was minor: the
-Calvin--Benson--Bassham cycle ranked $44$th ($0.6\,\%$) and the reductive TCA
-cycle $122$nd ($0.4\,\%$), in line with the $0.4\,\%$ read share of
-Cyanobacteriota; the MetaCyc set used by PICRUSt2 contains no light-reaction
-pathway. The predicted potential therefore describes an aerobic, heterotrophic
-community. Against this shared
-background, the $200$ most abundant pathways retained a strong geographic
-pattern.
-The same route model, which allowed the rate of change to vary smoothly and
-reverse once, accounted for $23.3\,\%$ of the difference among site-level
-pathway profiles ($95\,\%$ CI, $15.4$--$31.3\,\%$; $p=0.0001$). The result
-remained supported after changing the included pathways, the treatment of zero
-values, or the omitted expedition.
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Associations of environmental variables with transect position and
+community composition.}
+\label{tab:environment}
+\begin{tabular}{lrrr}
+\toprule
+Variable & Transect $\rho$ & Genera & Within-site composition \\
+\midrule
+Temperature         & $0.98$ & $112$ & -- \\
+Relative humidity   & $0.92$ & $111$ & -- \\
+Rainfall            & $0.55$ & $112$ & -- \\
+Soil pH             & $0.82$ & $117$ & $0.28\,\%$ ($p=0.125$) \\
+Elemental axis (XRF) & $0.73$ & $118$ & $0.36\,\%$ ($p=0.010$) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-We then asked whether predicted pathway profiles differed among
-compartments, and found a difference across $172$ complete site-by-expedition
-comparisons ($p=0.0001$). We used the same standardized displacement as for
-taxonomic composition. Predicted pathways shifted most consistently between
-root-adjacent and shallow-subsurface soil ($0.453$) and between root-adjacent
-and surface soil ($0.429$; both adjusted $p=0.00015$ after correction for $3$
-comparisons; Figure~\ref{fig:function-controls}a). Of $600$ tests covering
-$200$ pathways and $3$ compartment pairs, $270$ remained supported after
-correction. Root-adjacent soil had the largest increases for formaldehyde
-assimilation through the ribulose monophosphate cycle, palmitate and lysine
-biosynthesis, menaquinol biosynthesis, and glucose, xylose and fructuronate
-degradation; shallow-subsurface soil for isoleucine biosynthesis IV, the
-incomplete reductive TCA cycle, GDP-mannose biosynthesis and starch
-degradation; and surface soil for alanine and biotin biosynthesis and tRNA
-processing. Supplementary Section~S8.1 gives the complete results.
 
-From west to east along the transect, $2$ pathways that produce the fatty
-acids cis-vaccenate and gondoate
-increased, while palmitate production decreased. Root-adjacent soil
-had higher predictions for glucose and xylose degradation and for
-several polyamine and thiamin pathways. These patterns identify
-candidates for tests of membrane adaptation and carbon and metabolite
-exchange near desert roots.
+\subsection*{Exploratory models suggest an early richness response to rainfall}
 
-We then asked a narrower question of a fixed list of $20$ trait genes that
-matter in hyperarid soil, using two independent gene sources (Supplementary
-Section~S8.3). In the $975$ annotated genomes of the companion shotgun
-catalogue, $38.5\,\%$ carried the aerobic CO dehydrogenase \textit{coxL} and
-$22.6\,\%$ a group 1 [NiFe]-hydrogenase large subunit, most of them
-Actinomycetota; $24.6\,\%$ carried RuBisCO, $0.2\,\%$ photosystem II and
-$1.0\,\%$ nitrogenase (\textit{nifH}). Osmolyte synthesis was widespread
-(trehalose in $70$--$73\,\%$ of genomes, ectoine in $36\,\%$), as were
-carotenoid synthesis ($49\,\%$), DNA repair (\textit{uvrA} $95\,\%$,
-\textit{recA} $92\,\%$) and oxidative-stress genes (catalase $77\,\%$,
-superoxide dismutase $83\,\%$). Weighted by genome abundance in the $150$
-shotgun libraries, hydrogenase carriers made up $32\,\%$ of the recruited
-community in shallow-subsurface soil against $17\,\%$ at the surface and
-$15\,\%$ near roots, whereas carotenoid and photolyase carriers were most
-abundant at the surface ($61$ and $34\,\%$). The PICRUSt2 predictions agreed
-with the genome-derived shares for the trace-gas, ectoine, trehalose
-(\textit{otsA}/\textit{otsB}), sporulation, catalase, superoxide dismutase and
-Dps traits (Spearman $\rho=0.51$--$0.76$ across $119$ matched libraries) and
-gave the same compartment pattern: predicted hydrogenase and \textit{coxL}
-shares were lowest near roots ($0.67$ and $0.74$ of the shallow-subsurface
-value), whereas sporulation (\textit{spo0A}, $1.4$--$1.5$-fold), catalase,
-superoxide dismutase and Dps were highest there. Along the route, predicted
-trehalose-synthesis and carotenoid genes decreased eastward ($\rho=-0.71$ and
-$-0.59$) while ectoine, \textit{spo0A} and superoxide dismutase genes increased
-($0.36$, $0.56$ and $0.70$). Gene presence describes potential, and the hydrogenase KOs pool several
-[NiFe]-hydrogenase groups.
+Rainfall is rare in the Empty Quarter, and desert soil communities can respond within days of precipitation \cite{huxman2004precipitation,schwinning2004pulse}. Since the campaigns ran on fixed dates, samples were collected at different times after rainfall, which allowed us to explore whether recent rain was associated with alpha diversity. For each sample, we weighted rainfall over the preceding $60$ days with a curve that peaks a set number of days before collection, and scanned peaks from $0.5$ to $30$ days for each of the three alpha diversity measures, accounting for site, compartment, campaign, and transect position. We repeated the analysis with two independent daily rainfall datasets: NASA POWER \cite{nasa_power_2024} and Open-Meteo \cite{openmeteo} (Section~\ref{sec:alpha_methods}).
 
-Prediction quality depends on how closely the sampled bacteria resemble
-organisms with sequenced reference genomes. PICRUSt2 summarizes this distance
-as the weighted nearest-sequenced-taxon index (NSTI); smaller values require
-less extrapolation, and the median here was $0.165$. We also made a more direct
-comparison in $125$ samples. For each sample, we ranked $3{,}471$ gene families by
-abundance in the PICRUSt2 prediction and in shotgun metagenomic data. Shotgun
-sequencing reads all recovered DNA, so it measures gene families directly. These
-families, called KEGG Ortholog groups, collect genes with the same broad
-function. A rank correlation near one means that the two methods place the
-gene families in nearly the same order. The median correlation was $0.743$
-($95\,\%$ interval, $0.731$--$0.751$, after resampling whole sites), and the
-correlation between the two community-average profiles was $0.806$
-($0.793$--$0.812$; Figure~\ref{fig:function-controls}b). This level of
-agreement supports broad functional comparisons while leaving individual
-pathways as predictions \cite{douglas2020picrust2,sun2020picrust_accuracy};
-Supplementary Section~S8.2 gives the matched-data analysis.
+Both datasets selected rarefied richness at an early peak (Table~\ref{tab:rainfall}, Figure~\ref{si-fig:campaign-rainfall-secondary}). With NASA POWER, each additional millimetre of weighted rainfall was associated with $179$ additional taxa, with the strongest weight $2$ days before collection. With Open-Meteo, the estimate was $327$ taxa per millimetre at $1$ day. Rainfall explained a small share of the remaining variation in richness ($3.6$ and $3.8\,\%$). When we refitted the full model on resampled sites, richness was selected in $72$ and $68\,\%$ of refits and the peak remained within the first week, although the two datasets differed in effect size and exact timing.
+
+Selecting the best of the $180$ models inflates the strength of the association, so we calibrated the complete search against rainfall from other years, preserving the collection month and day, and the spatial pattern of the rainfall. With three complete years of daily data, only six such permutations were possible (smallest attainable value = $1/6$). The observed association ranked first for NASA POWER ($p=1/6$), and second for Open-Meteo and both datasets combined ($p=2/6$).
+
+Three additional checks described the timing and sensitivity of this exploratory association. First, we summed rainfall over fixed windows, which placed the largest positive estimate at $3$--$4$ days with NASA POWER and at $1$ day with Open-Meteo. Second, rainfall after collection produced a weak association with NASA POWER but a comparable richness association with Open-Meteo. Third, we removed individual `wet spells', which identified the rainfall of $10-19$ March $2023$ as the main contributor to the association in both datasets (Supplementary Section~\ref{si-sup:rainfall}).
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Association between antecedent rainfall and rarefied richness for two
+daily rainfall datasets.}
+\label{tab:rainfall}
+\begin{tabular}{lrrrrr}
+\toprule
+Dataset & Peak (days) & Effect (taxa mm$^{-1}$) & Variance explained (\%) & Selected (\%) & Calendar $p$ \\
+\midrule
+NASA POWER & $2.0$ [$1.5$, $5.0$] & $179$ [$64$, $253$]  & $3.6$ [$0.2$, $7.9$] & $72$ & $1/6$ \\
+Open-Meteo & $1.0$ [$0.5$, $6.0$] & $327$ [$149$, $797$] & $3.8$ [$0.5$, $8.7$] & $68$ & $2/6$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Predicted functional potential follows geography and compartment}
+
+We predicted the functional potential of each sample from its $16$S profile with PICRUSt2 \cite{douglas2020picrust2} (Section~\ref{sec:function_methods}). Because prediction accuracy declines as sampled taxa become more distant from sequenced genomes, which is a particular concern for desert soils \cite{li2023capturing}, we first assessed prediction quality. The median weighted nearest-sequenced-taxon index (NSTI) was $0.165$, and was lowest in root-adjacent soil ($0.134$) and highest in shallow-subsurface soil ($0.201$; Supplementary Section~\ref{si-sup:function_prediction}). We then compared the predictions with KO profiles derived from metagenome-assembled genomes (MAGs) recovered from the collection of $150$ shotgun libraries, using the $125$ libraries with matched amplicon profiles. Across $3{,}471$ shared KOs, predicted and MAG-derived profiles were strongly correlated within samples (median Spearman $\rho=0.74$, $95\,\%$ CI $0.73$--$0.75$) and between community-average profiles ($\rho=0.81$; Figure~\ref{fig:function-controls}b). MAGs recruited on average $28.5\,\%$ of shotgun reads, so this comparison evaluates the predictions against the recovered fraction of each community (Supplementary Section~\ref{si-sup:function_validation}).
+
+Predicted metabolism was dominated by core cellular functions. Of the $462$ predicted MetaCyc pathways, biosynthesis pathways accounted for $66.8\,\%$ of predicted pathway abundance, energy and central metabolism for $17.2\,\%$, and degradation and utilization for $10.7\,\%$. Aerobic respiration (cytochrome $c$) was the most abundant pathway ($1.7\,\%$), followed by branched-chain amino acid and fatty acid biosynthesis. Carbon fixation pathways were of low abundance, where the Calvin--Benson--Bassham cycle ranked $44$th ($0.6\,\%$) and the reductive TCA cycle $122$nd ($0.4\,\%$), consistent with the low relative abundance of Cyanobacteriota ($0.4\,\%$; Supplementary Section~\ref{si-sup:function_pathways}).
+
+Predicted pathway profiles showed the same geographic and compartment patterns as community composition. Transect position explained $23.3\,\%$ of the variation in pathway composition among sites (redundancy analysis; $95\,\%$ CI $15.4$--$31.3\,\%$; $21.3$--$36.1\,\%$ across sensitivity analyses), and $92$ of the $200$ pathways were correlated with transect position ($q<0.05$). Among them, pathways for cofactor and nucleotide biosynthesis, such as queuosine and pantothenate biosynthesis, increased eastward ($\rho=0.73$--$0.75$), whereas pathways for sugar fermentation and degradation, such as the \textit{Bifidobacterium} shunt and galactose degradation, decreased ($\rho=-0.59$ to $-0.72$; Supplementary Table~\ref{si-tab:pathway_geography}).
+
+Pathway composition also differed among compartments (pseudo-$F=6.37$, $p=0.0001$; $172$ site visits). As for community composition, the most consistent differences were between root-adjacent soil and both bulk compartments (standardized displacement $0.45$ and $0.43$; $q=0.0002$; Figure~\ref{fig:function-controls}a), whereas the difference between shallow-subsurface and surface soil ($0.33$, $q=0.019$) was not significant when Trip~$3$ was omitted. Of $600$ pathway--compartment contrasts, $270$ were significant ($q<0.05$). Compared with both bulk compartments, root-adjacent soil was enriched in pathways for glucose and xylose, fructuronate and 4-aminobutanoate degradation, polyamine and thiamin biosynthesis, and formaldehyde assimilation, but depleted in starch degradation (Supplementary Table~\ref{si-tab:pathways_compartment}).
+
+We examined mechanisms relevant to survival in hyperarid soil by screening $20$ marker gene sets in the MAGs and the PICRUSt2 predictions (Table~\ref{tab:markers}). Marker genes related to CO oxidation and hydrogen metabolism were abundant, as $38.5\,\%$ of MAGs carried the aerobic CO dehydrogenase gene \textit{coxL} and $22.6\,\%$ a [NiFe]-hydrogenase (membrane-bound group~1 or soluble group~3d), mostly within Actinomycetota, whereas the nitrogenase gene \textit{nifH} was only in $1.0\,\%$. Carrier abundance varied descriptively among compartments: hydrogenase carriers were most abundant in shallow-subsurface soil, carotenoid and photolyase carriers in surface soil, and sporulation carriers in root-adjacent soil. Along the transect, predicted trehalose and carotenoid synthesis genes decreased eastward, whereas ectoine synthesis, sporulation, and superoxide dismutase genes increased. Predicted and MAG-derived abundances agreed for most stress response, osmolyte, and trace-gas markers ($\rho=0.51-0.76$ across $119$ samples), but poorly for genes that are nearly universal (\textit{uvrA}, \textit{recA}) or rare (\textit{nifH}, \textit{psbA}, \textit{nosZ}; Supplementary Section~\ref{si-sup:function_traits}).
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Selected marker-gene sets in MAGs and PICRUSt2 predictions. MAGs:
+percentage of $975$ annotated MAGs carrying at least one KO in the set. Su,
+Sh, Ro: mean relative abundance (\%) of carrier MAGs in surface,
+shallow-subsurface and root-adjacent shotgun libraries. Transect $\rho$:
+Spearman correlation of predicted abundance with transect position.
+Agreement $\rho$: Spearman correlation between predicted and MAG-derived
+abundance across $119$ libraries. $^{*}$\,$q<0.05$. All $20$ sets are given in
+Supplementary Tables~\ref{si-tab:traits_genomes} and~\ref{si-tab:traits_picrust}.}
+\label{tab:markers}
+\begin{tabular}{lrrrrrr}
+\toprule
+Marker set & MAGs (\%) & Su & Sh & Ro & Transect $\rho$ & Agreement $\rho$ \\
+\midrule
+CO dehydrogenase (\textit{coxL})              & $38.5$ & $43.8$ & $45.5$ & $40.4$ & $-0.11$       & $0.71$ \\
+{[NiFe]}-hydrogenase                          & $22.6$ & $17.2$ & $31.9$ & $15.0$ & $0.05$        & $0.74$ \\
+RuBisCO (\textit{rbcL}/\textit{cbbL})         & $24.6$ & $18.2$ & $24.1$ & $18.1$ & $0.26$        & $0.33$ \\
+Nitrogenase (\textit{nifH})                   & $1.0$  & $0.5$  & $0.3$  & $0.8$  & $0.08$        & $0.04$ \\
+Trehalose (\textit{otsA}, \textit{otsB})      & $72.7$ & $85.6$ & $89.0$ & $83.8$ & $-0.71^{*}$   & $0.53$ \\
+Ectoine (\textit{ectA}--\textit{ectC})        & $36.4$ & $25.9$ & $28.0$ & $31.3$ & $0.36^{*}$    & $0.65$ \\
+Carotenoids (\textit{crtB})                   & $49.3$ & $60.6$ & $52.7$ & $53.4$ & $-0.59^{*}$   & $0.13$ \\
+Sporulation (\textit{spo0A})                  & $7.3$  & $5.1$  & $4.3$  & $7.5$  & $0.56^{*}$    & $0.51$ \\
+Superoxide dismutase (\textit{sodA})          & $82.8$ & $68.4$ & $67.4$ & $78.8$ & $0.70^{*}$    & $0.66$ \\
+Dps (\textit{dps})                            & $65.1$ & $58.2$ & $47.3$ & $69.5$ & $0.43^{*}$    & $0.76$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/fig3_function_controls.pdf}
-\caption{Predicted function and assay controls. (a) Paired differences in
-  predicted pathway profiles. Values approach one when sites shift in the same
-  direction and zero when shifts cancel; bars show $95\,\%$ intervals from
-  resampling whole sites.
-  (b) Agreement between predicted and shotgun-measured gene-family rankings;
-  red marks the median and its $95\,\%$ interval. (c) Estimated richness before
-  and after PMA treatment; red joins the means and the annotation gives the
-  interval for their difference. (d) The fraction of reads assigned to
-  candidate contaminants; red marks the median and the range containing the
-  middle half of profiles.}
+\caption{Predicted function, genome-derived agreement and assay controls.
+(a) Consistency of predicted-pathway compartment shifts, with $95\,\%$
+intervals from resampling whole sites. (b) Agreement between predicted and
+recovered-genome-derived gene-family rankings in $125$ matched profiles;
+red marks the median and its $95\,\%$ site-bootstrap interval.
+(c) Expected richness before and after PMA treatment in nine aliquot pairs,
+grouped as C1R, C2R and C2S at two campsites. Each group comprises three
+separately prepared slurries from one parent soil tube; lines join the
+treated and untreated aliquots of each slurry.
+(d) Fraction of reads assigned to candidate contaminants in $217$
+batch-linked Trip~5 profiles; red marks the median and interquartile range.}
 \label{fig:function-controls}
 \end{figure}
 
-%% ====================================================================
+\subsection*{PMA-accessible DNA contributed to measured richness}
+
+To assess the contribution of PMA-accessible DNA, we treated paired aliquots of three parent soil samples from two Trip~$5$ campsites with propidium monoazide (PMA), which suppresses amplification of extracellular DNA and DNA in membrane-compromised cells (Supplementary Section~\ref{si-sup:relic}). PMA-treated aliquots had lower rarefied richness than untreated aliquots in eight of the nine pairs (Figure~\ref{fig:function-controls}c). The mean reduction was $37$ ASVs in root-adjacent soil from the first campsite, $342$ in root-adjacent soil and $111$ in surface soil from the second campsite. Shannon diversity varied less consistently ($+0.73$, $-0.02$ and $-0.31$). Each group comprised three slurries prepared from one parent soil tube, so these comparisons describe the PMA response of those three parent samples.
+
+
 \section*{Discussion}
-%% ====================================================================
 
-\subsection*{The Empty Quarter and global dryland ecology}
+\subsection*{The Empty Quarter microbial ecology}
+The microbial communities of the Saudi Empty Quarter are organized both across hundreds of kilometres and within a few centimetres of soil. Taxon composition varied along the sampled transect, mostly through replacement of genera between sites, and compartments differed consistently in composition and alpha diversity within sites. Long term climate, soil pH, and soil chemical composition covaried with the geographic pattern, and predicted metabolic potential followed the same geographic and compartment structure. Together, these observations describe a recurring microbial mosaic at landscape and local scales.
 
-The open soils of the Saudi Empty Quarter are organized both across hundreds of
-kilometres and within a few centimetres. Taxa replace each other throughout the
-landscape, while compartment changes the composition of the community and the balance
-between taxa within the sites. Climate, pH, and elemental composition place this
-variation in an environmental setting, and predicted pathways suggest that
-taxonomic changes carry differences in metabolic potential. The main lesson is
-that a hyperarid sand sea contains a repeatable mosaic at landscape and local
-scales.
+Phyla abundances in the Empty Quarter share similarities and differences with other arid deserts. Empty Quarter soils are enriched in Pseudomonadota, Bacillota, Actinomycetota and Chloroflexota, whereas Acidobacteriota and Verrucomicrobiota, which are prominent in temperate and agricultural soils, were rare \cite{makhalanyane2015microbial,fierer2017embracing,delgadobaquerizo2018global}. At the genus level, the dominance of \textit{Domibacillus}, \textit{Bacillus} and other spore-forming Bacillota, together with the low relative abundance of Cyanobacteriota, distinguishes these open sand soils from biocrust-dominated desert surfaces.
 
-The phylum profile places the Empty Quarter with other hot deserts.
-Pseudomonadota, Bacillota, Actinomycetota and Chloroflexota led, and
-Acidobacteriota and Verrucomicrobiota, prominent in temperate and agricultural
-soils, were minor \cite{makhalanyane2015microbial,fierer2017embracing,
-delgadobaquerizo2018global}. The genus level adds a desert-specific signature:
-endospore-forming \textit{Domibacillus}, \textit{Bacillus},
-\textit{Paenibacillus} and \textit{Lysinibacillus}, together with
-\textit{Massilia}, \textit{Microvirga} and \textit{Streptomyces}, supplied
-more reads than any other genera.
+Across the landscape, community dissimilarity increased with geographic distance in all sampled compartments, and turnover accounted for most of the dissimilarity between sites. Distant sites therefore hosted largely distinct assemblages rather than progressively poorer subsets of a single community. Distance decay has also been reported in Negev soils \cite{bay2020negev}, and Namib dune systems show habitat-specific community structure across dune zones \cite{ronca2015namib}. In the Empty Quarter, the change along the transect was not a simple west to east gradient; a quadratic term substantially improved the fit. Nestedness increased with distance in bulk soils, consistent with the lower alpha diversity of the eastern sites. Because of residual spatial autocorrelation, the strength of this transect trend should be read as a description of the sampled sites rather than a test of the gradient. The pattern was not driven by the saline pans and oases interspersed along the transect, as it persisted among dune sites alone.
 
-The change in the geography of the community recurs in desert microbiomes. In the
-Empty Quarter, the transect pattern remained at genus and ASV
-resolution and across expeditions. Taxon replacement formed $69$--$75\,\%$
-of mean dissimilarity, so distant sites usually held different
-assemblages. The replacement has a
-recognizable biology: Actinomycetota, Acidobacteriota and Gemmatimonadota
-genera such as \textit{Cellulomonas}, \textit{Marmoricola},
-\textit{Blastocatella} and \textit{Roseisolibacter} gave way eastward to
-Bacillota, with \textit{Bacillus} and genera typical of saline and alkaline
-soils gaining most, in the direction in which temperature, humidity and pH
-increased. The replacement is a property of the dune soils: the same genera changed in the same direction on the $44$ dune
-sites alone, and saline pans differed little from dunes once route position
-was accounted for. Distance decay
-also occurs in Negev soils \cite{bay2020negev}, and Namib dune systems
-show habitat-specific community structure across dune zones \cite{ronca2015namib}.
-Different primers, distances and soils prevent a merged numerical comparison,
-but a presence-based comparison bounds the question of whether the Empty
-Quarter is one ecosystem or several. After subsampling every profile to
-$8{,}000$ reads and requiring detection in at least $10\,\%$ of profiles, the
-western and eastern thirds of the transect shared $267$ of $418$ genera
-(Jaccard $0.64$; $0.68$ and $0.83$ for adjacent thirds), and all $50$ leading
-genera of either end were detected at the other. The Empty Quarter and a
-public Atacama soil pit \cite{horstmann2024atacama} shared $43$ of $397$
-genera (Jaccard $0.11$), and only $17$ of the $50$ leading Empty Quarter genera
-reached the detection threshold in the Atacama profiles (Supplementary
-Section~S9.2). The overlap between the transect ends was therefore six times
-the overlap between deserts. Within-desert replacement is strong, but it
-reorders a largely shared regional pool; the Empty Quarter behaves as one
-regional system with internal structure. Primer, DNA-fraction and depth differences inflate the Atacama
-contrast, and all three deserts reject the hypothesis that there is one
-representative ``desert soil'' community.
+% This geographic variation occurs within a substantially shared genus pool.
+% At a common detection threshold, the western and eastern thirds shared
+% $267$ of $418$ genera (Jaccard $0.64$). All $50$ leading western genera
+% were detected in the east, and $44$ of the $50$ leading eastern genera
+% were detected in the west. The Empty Quarter and a public Atacama soil pit
+% shared $43$ of $397$ genera (Jaccard $0.11$; Supplementary Section~S9.2)
+% \cite{horstmann2024atacama}. The between-desert comparison combines
+% biological differences with differences in primers, DNA fractions and
+% sampled depths. Within the Empty Quarter, the combination of shared genera
+% and changing relative abundances describes a regional pool with pronounced
+% internal structure.
 
-Water was associated with diversity on two scales. Along the
-landscape, long-term temperature, rainfall, and humidity were
-negatively associated with diversity. After individual rainfall events, by
-contrast, richness was highest during the first several days, and the
-fitted association then declined. These patterns answer different
-questions: the long-term comparison separates sites with different
-climate histories, while the pulse model compares rainfall amount and
-time before collection. Pulse-reserve theory predicts that rare rainfall
-can briefly release water limitation before drying restores it
-\cite{noymeir1973desert,schwinning2004pulse}. Rapid cell
-resuscitation, solute movement, or improved detection of rare taxa
-could each produce our pattern; process measurements after rainfall would
-separate them. Direction also varies among deserts. In a public
-Atacama gradient, soil humidity was positively associated with Shannon
-diversity even after accounting for latitude, longitude, and elevation
-(rank correlation $0.68$, $p=0.011$)
-\cite{neilson2017significant}. Therefore, water source, evaporation, soil
-chemistry, and the range sampled matter more than a global
-rule such as ``more water means more diversity''
-\cite{coleine2024dryland}.
+The geographic pattern coincided with gradients in climate, pH, and chemical composition. The eastern end of the transect was the warmest, most humid, and most alkaline, and was enriched in alkaliphilic and halophilic Bacillota such as \textit{Halalkalibacter}, \textit{Aquibacillus} and \textit{Sediminibacillus}, whereas Actinomycetota such as \textit{Cellulomonas} and \textit{Marmoricola} declined eastward. Soil pH shared a substantial association with transect position in site-average composition, while its unique and within-site associations were small. This is consistent with the role of pH as one of the main correlates of soil bacterial composition across biomes \cite{fierer2006diversity}. The elemental axis, contrasting Ca-, Mg-, Na-, S- and Cl-rich samples with Si-rich samples, explained less than $1\,\%$ of compositional variation within sites. Alpha diversity decreased with long term temperature, humidity, and rainfall, which runs counter to the expectation that more moist desert soil supports more diverse communities \cite{xiao2023influence}. Because these climate variables, pH and elemental composition all change along the same transect, our design cannot separate their individual effects, and the associations identify a shared environmental gradient rather than its drivers.
 
-Physical stratification also occurs, although its direction depends on
-scale.  An Atacama pit showed differences in community composition
-among depth zones ($p=0.0014$) without a steady increase or decrease
-in diversity, and Mojave biocrust communities differ between surface
-and subsurface soil
-\cite{horstmann2024atacama,pombubpa2020mojave}. The Empty Quarter adds
-repeated comparisons of surface, $5$--$10\,\mathrm{cm}$ and root-adjacent
-soil. Root-adjacent communities were less even at similar richness, so
-fewer taxa carried more reads. The genera behind this pattern form three
-recognizable guilds. The surface is enriched in pigmented, radiation- and
-desiccation-tolerant Actinomycetota and Deinococcota (\textit{Deinococcus},
-\textit{Rubrobacter}, \textit{Geodermatophilus}, \textit{Blastococcus},
-\textit{Kocuria}), the shallow subsurface in nitrifiers (\textit{Nitrospira},
-Nitrosomonadaceae MND1; the genome catalogue also holds ammonia-oxidizing
-Thermoproteota) and in slow-growing \textit{Gaiella}, and root-adjacent soil
-in copiotrophic Rhizobiales (\textit{Pelagibacterium}, \textit{Neorhizobium},
-\textit{Devosia}), \textit{Pseudomonas} and Bacillota, with the highest
-predicted sporulation and oxidative-stress gene shares and the lowest
-trace-gas oxidation potential. This pattern is consistent with a stronger
-selective environment near roots: plants change carbon and nutrient supply,
-and studies of desert plants have found host- and root-compartment-specific
-recruitment \cite{philippot2013roots,eida2018desertplants,
-marasco2022namib,maurice2024alula}. Proximity to a root defines this
-compartment, so the root is the most likely source of the difference. The host plants were unidentified and the soil was root-adjacent, so a general
-root effect and host-specific recruitment remain open alternatives that
-host identification and root-attached sampling would separate. The
-genus contrasts in Figure~\ref{fig:soil-position}d identify targets for
-culture, genome and plant-association studies.
+Precipitation may also affect community composition in short time scales. Exploratory models selected a positive association between rarefied richness and rainfall in the first days before collection using two datasets. Pulse-reserve theory predicts that rare rainfall can briefly release water limitation before drying restores it \cite{noymeir1973desert,schwinning2004pulse}. The comparable post-collection association in Open-Meteo and dependence on a single wet spell in March 2023 make independently sampled storm events necessary to test the timing of this response. Sampling before rain and during the first days of drying, together with measurements of cell abundance and activity, would distinguish growth from the detection of previously dormant cells.
 
-Predicted pathways followed geography and compartment, suggesting
-that the taxonomic mosaic carries different metabolic
-potential. The dominant predicted biochemistry is aerobic heterotrophy:
-respiration through cytochrome $c$ and the biosynthesis of amino acids, fatty
-acids and cofactors led the profiles, while carbon-fixation pathways and
-Cyanobacteriota were minor. This is the profile expected for an
-endospore-rich community that lives on scarce, episodic organic input rather
-than on photoautotrophic crusts \cite{makhalanyane2015microbial}. The gene
-screen refines this picture: over a third of the recovered genomes carry the
-aerobic CO dehydrogenase and a fifth a group 1 [NiFe]-hydrogenase, mostly in
-Actinomycetota, and these carriers are most abundant in bulk
-shallow-subsurface soil and least abundant near roots. Oxidation of
-atmospheric H$_2$ and CO sustains desert soil bacteria between wetting events
-\cite{tribbia2026tracegas}; our data show that the genetic potential is
-widespread and concentrated where organic carbon input is smallest. The
-osmolyte genes also shift along the route, from trehalose synthesis in the
-west to ectoine and sporulation genes in the east where Bacillota rise, in
-line with the warmer and more alkaline conditions there. Along the
-route, most of the $92$ pathways that changed monotonically were biosynthesis
-pathways that increased eastward ($54$ of $63$), including unsaturated
-fatty-acid pathways, whereas near roots the supported differences included
-carbohydrate degradation and polyamine and thiamin biosynthesis.
-Agreement with matched shotgun profiles supports this broad
-reading. In the Namib, direct gas uptake, ATP
-and respiration measurements showed more than a $30$-fold rise in
-hydrogen oxidation after wetting \cite{tribbia2026tracegas}. Our
-predictions identify where comparable process measurements are needed.
+Within sites, compartments varied consistently in composition, with the largest and most consistent differences between root-adjacent soil and both bulk soil compartments. Vertical stratification has also been reported in an Atacama soil profile and between surface and subsurface Mojave biocrust communities \cite{horstmann2024atacama,pombubpa2020mojave}. Surface soil was enriched in pigmented, desiccation-tolerant genera such as \textit{Deinococcus} and \textit{Rubrobacter}, and shallow-subsurface soil in nitrifiers such as \textit{Nitrospira} and MND1. Root-adjacent soil was enriched in plant-associated genera, including  \textit{Neorhizobium}, \textit{Devosia} and \textit{Pseudomonas}, whereas the root-nodule genus \textit{Bradyrhizobium} was depleted. Root-adjacent soil had the lowest alpha diversity per sample, higher dispersion among sites than surface soil, the largest core of shared genera, and slower distance decay than shallow-subsurface soil. Individual root-adjacent samples therefore contained smaller and less even subsets of a regional pool that was more widely shared across the landscape than the pools of bulk soil. Studies that identified desert plants have found host- and compartment-specific recruitment of root-associated bacteria \cite{philippot2013roots,eida2018desertplants,marasco2022namib,maurice2024alula}. Our root-adjacent compartment includes soil near and attached to the roots of unidentified plants, so these patterns describe the compartment as sampled. Sampling identified hosts at measured distances from roots would connect them to host identity and rhizosphere processes.
 
-The relic-DNA experiment addresses DNA that remained accessible after cell
-membranes were damaged. PMA treatment reduced the expected richness in $8$ out of $9$
-pairs (Figure~\ref{fig:function-controls}c), showing that PMA-sensitive DNA
-contributed taxa to these aliquots. PMA measures DNA accessible through damaged membranes
-\cite{wang2021pma}. A design balanced across the three compartments would
-test whether PMA-sensitive DNA is more abundant on the surface than below it.
+Predicted pathways followed the same geographic and compartment structure as taxonomic composition. Pathways for cofactor and tRNA-related biosynthesis increased towards the east, whereas pathways for sugar fermentation and degradation decreased. Near roots, pathways for glucose and xylose degradation, polyamine and thiamin biosynthesis, and formaldehyde assimilation were enriched, whereas starch degradation was depleted. The enrichment of sugar degradation and formaldehyde assimilation is consistent with the use of root-derived sugars \cite{sugarrhizosphere}, and of plant-derived methanol \cite{macey2020impact}. The genome screen adds candidate mechanisms: over a third of the analysed MAGs carried CO dehydrogenase markers and about a fifth carried [NiFe]-hydrogenase markers, and hydrogenase carriers were most abundant in shallow-subsurface soil. Trace-gas oxidation can sustain bacteria in hyperarid soils \cite{leung2020energetic}, and direct measurements of gas uptake, ATP and respiration in the Namib show how such capacities can be evaluated after wetting \cite{tribbia2026tracegas}. Because the hydrogenase markers include several enzyme groups and the predictions rely on reference genomes, sequence-resolved classification and process measurements are needed to confirm these mechanisms.
 
-The extraction blanks address a separate low-biomass risk: DNA introduced
-during laboratory processing. Candidate contamination was small in most
-linked samples, although one profile was strongly affected, and filtering
-left all $25$ tracked conclusions unchanged
-(Figure~\ref{fig:function-controls}d). This sensitivity supports the reported
-patterns for linked profiles \cite{fierer2025controls}. The control design and its
-trip-specific limits are reported in Materials and Methods and Supplementary
-Section~S2.
+PMA treatment reduced rarefied richness in most paired samples, indicating that PMA-accessible DNA contributed to measured richness in the sampled soils. Because aliquots came from single soil samples, these comparisons do not extend to the rest of the survey, and PMA efficiency depends on the soil matrix, biomass, and community composition \cite{wang2021pma}. Candidate contaminants identified from control samples accounted for a small fraction of reads, and their removal preserved alpha-diversity rankings.
 
 \subsection*{A regional framework for the Arabian Peninsula}
 
-Earlier Arabian studies established local habitat-specific patterns. A
-groundwater-fed UAE sabkha contained a saline microbial mat, while Saudi
-studies examined highland soils, arid locations, biological crusts, and desert
-plants \cite{yasir2015elevation,khan2020saudi,aslam2016rainfall,
-eida2018desertplants,mckay2016sabkha}. This work revealed local habitat and
-plant effects without mapping the open interior. Our survey supplies that
-landscape frame and repeated compartment measurements.
+Earlier studies in the Arabian Peninsula established habitat-specific patterns at individual locations. An inland sabkha in the United Arab Emirates hosted a saline microbial mat \cite{mckay2016sabkha}, and studies in Saudi Arabia examined highland soils \cite{yasir2015elevation}, arid sites \cite{khan2020saudi}, soil crusts \cite{aslam2016rainfall}, and the root microbiomes of desert plants \cite{eida2018desertplants}. Our survey contributes an additional scale to this work; a landscape-scale transect with repeated sampling of three soil compartments over five campaigns.
 
-The mean pH of $7.986$, measured in a calcium chloride solution, is in the
-alkaline range reported for Saudi arid soils \cite{khan2020saudi}. At AlUla, a
-plant-created patch of more fertile soil had a different bacterial community
-from nearby bare sand; the bare sand was also more alkaline
-\cite{maurice2023fertility}. In the Empty Quarter, pH shared substantial
-variation with geography. Plant patches may therefore
-modify a broader regional setting.
+We found that soil in the open Empty Quarter is alkaline, which falls within the range reported for soils in Saudi Arabia \cite{khan2020saudi}. At AlUla, soil beneath fertility islands formed by desert plants hosted bacterial communities distinct from those in the surrounding bulk soil, which was also more alkaline \cite{maurice2023fertility}. In the Empty Quarter, pH increased from west to east, and its association with community composition was largely shared with geography. The small unique pH component and strong geographic covariance support a landscape-scale association with the sampled environmental gradient. Paired sampling of patches with vegetation and surrounding bulk soil would test whether local pH differences, such as those observed in AlUla, also shape composition at the scale of individual plants.
 
-Regional experiments help interpret compartment and rainfall results.
-Around \textit{Rhazya stricta}, the soil compartment had a larger effect than
-the simulated rainfall, while crust biomass increased $3$-fold $1$ week after watering
-\cite{aslam2016rainfall}. At Jizan and Al Wahbah, the rhizosphere resembled the 
-surrounding bulk soil while the root endosphere showed the strongest 
-loss of richness and evenness and a composition that tracked host plant 
-phylogeny \cite{eida2018desertplants}. Our near-root samples lie outside the
-compartments Eida et al. sampled; their lower evenness extends this
-local organization outward from the root. The rapid
-watering result independently shows that an Arabian desert community can
-change within days. Host identity, metabolite exchange, and plant benefit
-remain open questions.
+Regional experiments also provide practical models for follow up studies. In soil crusts associated with \textit{Rhazya stricta}, biomass increased threefold within a week of watering \cite{aslam2016rainfall}, consistent with the early response window selected by our rainfall models. In Jizan and AlWahbah, host-resolved surveys found the strongest plant-associated differentiation in the root endosphere \cite{eida2018desertplants}. Our root-adjacent compartment, which differed from bulk soil and had the lowest alpha diversity, represents the soil end of this root--soil gradient. Post-rainfall sampling and comparisons among identified host plants would connect these regional observations.
 
-The mapped variation makes this survey useful for regional decisions because
-a single reference site or compartment could be mistaken for the state of
-the wider desert. Saudi Arabia's cloud-seeding programme aims to enhance rainfall
-and support ecosystem restoration \cite{saudi_cloud_seeding}. Our rainfall
-association suggests a concrete sampling schedule for testing soil-community
-change during the first several days after natural or enhanced rainfall. The western Empty Quarter also
-contains the Uruq Bani Ma'arid protected area and free-ranging Arabian oryx
-\cite{ncw_uruq_bani_maarid}; drought effects on reintroduced oryx show why
-habitat condition and climate matter for management \cite{ismail2011oryx}.
-Repeated microbial measurements could add soil and vegetation context before
-and after habitat restoration.
-For arid agriculture, the survey identifies comparable background sites and
-candidate taxa or predicted pathways for later plant trials
-\cite{khan2020saudi,eida2018desertplants}. The linked samples, measurements,
-sequences and provenance make these comparisons reusable
-\cite{rubalkhali_datapaper}.
+Our survey also provides a baseline for biodiversity monitoring in restoration in the region, and three of our results inform monitoring design. First, because turnover accounted for most of the dissimilarity between sites, no single site represents the regional community, and monitoring should retain broad geographic coverage. Second, because the three compartments differed in composition and alpha diversity, they should be sampled separately. Third, because root-adjacent communities had higher dispersion among sites than surface soil, they may require more replicates than bulk soil to detect change. Around rainfall events, the first days after rain offer a candidate window for additional sampling. The linked samples, environmental measurements, sequences, and analysis inputs make these comparisons reusable \cite{rubalkhali_datapaper}.
 
-\subsection*{Limitations and identifying mechanisms}
 
-Our study measures associations. The sites lie on one west--east route, climate changes along
-that route, and every expedition traveled in the same direction. The
-shared route links location to collection order, time of day and
-changes during travel. Independent or crossing transects
-with randomized route direction would separate these effects from geography, but they
-are difficult in the roadless dune interior. The field team must use long,
-logistically feasible off-road traverses through an isolated landscape, which
-limits route randomization and simultaneous crossing surveys
-\cite{edgell2006arabian}. A next practical design could reverse the direction of travel
- between expeditions, add shorter crossing transects where terrain
-allows, and leave autonomous soil sensors at selected sites.
+\subsection*{Sampling constraints and tests of mechanism}
 
-Several measurements needed to test ecological explanations are
-missing: soil microclimate (we used air measurements), soluble ions,
-conductivity and osmotic stress (XRF measures total elements
-\cite{elmoatassem2025pxrf}), and soil moisture and collection time (the
-rainfall model used gridded daily estimates and collection dates). Rainfall was too rare and uneven for the omission of one expedition to
-be a meaningful stability test; the randomization test instead shifted
-the timing of the rainfall observed within each expedition. Its
-first-several-days window remains an association, and models that
-allowed more complex geographic change weakened the evidence.
-Event-triggered sampling before and after storms, moisture sensors and
-watering experiments are needed to measure response time and test a
-mechanism. Root identity, root distance, carbon, texture and plant
-performance would likewise separate plant effects from shared habitat.
+All sites lie on a single west--east transect, along which climate, pH and soil chemical composition change together, and every campaign proceeded in the same direction. Geographic position is therefore confounded with collection order and time of day, and the environmental gradients cannot be separated from one another or from geographic distance. In addition, community composition remained spatially autocorrelated after accounting for the transect, and support for the transect trend depended on the assumed spatial covariance and independent-noise fraction. We therefore treat the transect model as a description of the sampled landscape. Future surveys could reverse the direction of travel between campaigns, add shorter transects crossing the main route where terrain allows, and install autonomous soil sensors at selected sites. These changes would help separate geographic, environmental, and collection time effects while retaining feasible routes through the dune interior \cite{edgell2006arabian}.
 
-Shotgun metagenomics could recover genes without biases caused by $16$S
-primers or by bacteria that carry different numbers of $16$S gene
-copies. It could also link functions to genomes, resolve strains, and
-include archaea, fungi and viruses. It would test whether predicted
-pathways occur in the local gene pool, but DNA still measures
-potential. Transcripts, proteins, metabolites, cell counts and process
-rates are needed to show activity, while manipulations remain
-necessary for causation \cite{ray2023chemosynthesis}.
+The environmental measurements describe the soil samples indirectly. Climate summaries describe air, rather than soil, conditions, pH was measured on stored soil samples with uneven coverage of campaigns, and XRF measures total elemental composition rather than soluble ions or salinity \cite{elmoatassem2025pxrf}. Soil moisture, temperature, conductivity, and soluble-ion measurements would characterize water and salt exposure more directly. Similarly, the exact sampling depth and distance from root were not recorded, and host plants were not identified, so the compartments are defined by how samples were collected. Recording these fields would help separate plant-associated differences from shared habitat effects.
 
-Control coverage was uneven. Whole-cell standards test extraction and
-purified-DNA standards enter after it, Trips~$1$--$3$ had no usable
-extraction blank (although co-prepared profiles were no more similar than
-distance-matched pairs; Supplementary Section~S2), Trip~$4$ had no field-based positive
-or negative control (a PCR-stage-only positive control was run, and its PCR
-blank and no-template control were not sequenced), and
-Trip~$5$ controls used shotgun rather than $16$S. Linked
-extraction blanks could train the contaminant sensitivity for
-Trips~$4$ and $5$ only. Future work should sequence extraction and PCR blanks
-with every batch, use positive standards that enter at the same stage
-as the biological samples, and retain DNA concentrations.
+Functional analyses describe metabolic potential rather than activity. PICRUSt2 predictions depend on how closely the sampled taxa resemble sequenced genomes, and the MAGs used to evaluate them mapped to a small fraction of whole-genome reads. Sequence-resolved validation of marker genes and functional profiles derived directly from metagenomic reads would extend this comparison to a larger fraction of each community. Measurements of proteins, metabolites, cell abundance, and process rates, such as trace-gas uptake, would connect the predicted mechanisms to microbial activity \cite{ray2023chemosynthesis,tribbia2026tracegas}.
+
+Control samples did not cover all campaigns and sample processing stages. Extraction blanks were only linked to specific batches, and the recovery of mock community controls was variable. Future surveys should sequence extraction and PCR blanks with every batch, include positive standards, and record DNA concentrations and pooling measurements alongside sequencing metadata \cite{fierer2025controls}.
 
 \subsection*{Conclusions}
 
-The Empty Quarter is a structured microbial landscape. Bacterial
-assemblages turn over across the sand sea, nearby compartments
-differ in composition and evenness, environmental gradients track the
-broad pattern, and recent rainfall was associated with a short rise in
-richness. Predicted metabolic potential also changes with geography
-and compartment. These findings extend recurring dryland principles
-to the world's largest continuous sand desert while showing that the
-direction of diversity--environment associations remains local. The
-survey provides a regional reference and a set of testable hypotheses
-bounded by relic-DNA and contamination checks.
+The Empty Quarter hosts a structured microbial landscape. Bacterial
+assemblages change across the west to east, mainly through turnover of genera, and compartments differ in composition and alpha diversity within sites. Climate, soil pH, and soil chemical composition covary with the geographic pattern, and predicted metabolic potential also follows the same geographic and compartment structure. Exploratory rainfall models identify the first days after rain as a window for event-based sampling. Together, the survey provides a regional baseline and specific hypotheses on geographic, plant-associated, and metabolic patterns for repeated surveys and experiments.
 
-%% ====================================================================
 \section*{Materials and Methods}
 %% ====================================================================
-
-\subsection*{Field design and sample description}
+\subsection*{Study design and sample processing}
+\subsubsection*{Field design and sample collection}
 We sampled a transect through the Empty Quarter during
 expeditions on March $17$--$20$, $2023$ (T1), July $14$, $2023$ (T2),
-February $17$--$21$, $2024$ (T3), August $19$--$21$, $2024$ (T4), and
-October $12$--$15$, $2025$ (T5). Each sampling campaign covered $60$ sites, while extreme heat restricted T2 to $8$
-sites. At each site and
-visit, we sampled bulk surface soil ($0\,\mathrm{cm}$), bulk subsurface soil
-($5$--$10\,\mathrm{cm}$) and subsurface soil referred to as ``root-adjacent'' collected near plant roots ($5$--$10\,\mathrm{cm}$), collecting three replicates per compartment. The sampling initially targeted the
-rhizosphere, but most plants were so desiccated that too little soil adhered to the roots;
-therefore, we collected the soil as close to the root as possible,
-which in some cases included the soil attached to the roots. We call this compartment
-``root-adjacent soil'' because the soil was attached to roots in only some
-samples. Soil was placed in sterile tubes by
+February $17$--$21$, $2024$ (T3), August $29$--$31$, $2024$ (T4), and
+October $12$--$15$, $2025$ (T5). The repeated transect comprised $60$ sites, except T2, which was restricted to $8$ sites due to extreme heat. At each site, we sampled bulk surface soil ($0\,\mathrm{cm}$), bulk subsurface soil
+(nominal depth $5$--$10\,\mathrm{cm}$) and subsurface soil referred to as ``root-adjacent'' collected near plant roots ($5$--$10\,\mathrm{cm}$), collecting three replicates per compartment. The exact depth of each bulk subsurface sample was not recorded. The sampling initially targeted the
+rhizosphere, but most plants were so desiccated that the soil attached to the roots could
+not be obtained; therefore, we collected the soil as close to the root as possible,
+which in some cases included the soil attached to the roots. Soil was placed in sterile tubes by
 scooping directly with the tube or with a sterile plastic spoon. Samples were
-kept at $-20\,^{\circ}\mathrm{C}$ in a portable freezer during each expedition
+kept at $-20\,^{\circ}\mathrm{C}$ in a portable freezer during each campaign
 and transferred to $-80\,^{\circ}\mathrm{C}$ in the laboratory.
 
-Here, a profile means one quality-controlled $16$S amplicon library and its counts
-for exact bacterial $16$S amplicon sequences, which we call amplicon sequence variants
-(ASVs). Analyses that required repeat visits focused on sites $1$--$60$ and used
-$1{,}227$ profiles. Four locations sampled only during Trip~$1$ contributed $10$ additional
-profiles. We retained them for description but excluded them from repeated-site
-analyses because later expeditions could not revisit these sites. Supplementary
-Table~S1 reports the samples used in each analysis.
+%Here, a sample profile refers to one quality-controlled $16$S amplicon library and its counts for exact bacterial $16$S amplicon sequences, which are amplicon sequence variants (ASVs). Analyses that required repeat visits focused on sites $1$--$60$ and used $1{,}227$ profiles.
+Four sites sampled only during T1 contributed $10$ additional
+samples. We retained them for description but excluded them from repeated-site
+analyses because later expeditions could not revisit these sites. The analysis-specific cohorts are defined in the corresponding Methods and supplementary sections.
 
-\subsection*{Amplicon processing}
-Between $0.9$ and $1.2\,\mathrm{g}$ of soil was extracted with QIAGEN
-PowerLyzer PowerSoil or DNeasy PowerSoil Pro kits. Samples were homogenized
-with a PowerLyzer~$24$, processed manually or with a QIACube Connect, and
-eluted in $50\,\mu\mathrm{L}$. The V3--V4 region of the $16$S rRNA gene was amplified with
-the Bakt\_341F (\texttt{CCTACGGGNGGCWGCAG}) and Bakt\_785R
-(\texttt{GACTACHVGGGTATCTAATCC}) primers \cite{klindworth2013primers},
-both carrying Illumina overhang adapters. First-round PCR used TaKaRa Ex
-Taq DNA Polymerase (catalogue no.\ RR001B) in $50\,\mu\mathrm{L}$ reactions
-containing $5\,\mu\mathrm{L}$ of extracted DNA and $0.4\,\mu\mathrm{M}$ of
-each primer: $95\,^{\circ}\mathrm{C}$ for $3\,\mathrm{min}$; $30$ cycles of
-$95\,^{\circ}\mathrm{C}$ for $30\,\mathrm{s}$, $63\,^{\circ}\mathrm{C}$ for
-$30\,\mathrm{s}$ and $72\,^{\circ}\mathrm{C}$ for $1\,\mathrm{min}$; and a
-final $72\,^{\circ}\mathrm{C}$ extension for $6\,\mathrm{min}$. Products
-were checked on a $1\,\%$ agarose gel; samples with an amplicon of the expected
-size (about $500\,\mathrm{bp}$) were indexed, samples without a visible product
-were re-amplified with more DNA input, and samples that still failed were
-re-extracted.
+\subsubsection*{Sample processing}\label{sampleprocessing}
+We extracted $0.9$--$1.2\,\mathrm{g}$ of soil with QIAGEN PowerLyzer PowerSoil or DNeasy PowerSoil Pro kits, homogenizing with a PowerLyzer~$24$ ($4{,}000\,\mathrm{rpm}$, one $45$-second cycle), processing manually or with a QIACube Connect, and eluting in $50\,\mu\mathrm{L}$. We amplified the V3--V4 region of the $16$S rRNA gene with the Bakt\_341F (\texttt{CCTACGGGNGGCWGCAG}) and Bakt\_785R (\texttt{GACTACHVGGGTATCTAATCC}) primers \cite{klindworth2013primers}, both carrying Illumina overhang adapters. Amplification followed a two-step protocol \cite{illumina16S} where we performed a first PCR with TaKaRa Ex Taq DNA Polymerase (cat. no.\ RR001B), and checked products on a $1\,\%$ agarose gel for amplicons of the expected size ($500\,\mathrm{bp}$ including overhangs). We re-amplified the samples without visible products with more input DNA ($8\,\mu\mathrm{L}$, then $12\,\mu\mathrm{L}$), and samples without a product after three attempts were classified as failed.
+
+We indexed products with the QIAGEN Multiplex PCR Kit, and purified indexed libraries with Agencourt AMPure XP beads, and quantified them with the Qubit high-sensitivity double-stranded DNA assay. We checked the final library sizes on an Agilent TapeStation~$4200$ and pooled them according to their molarity. Pools were sequenced on an Illumina NovaSeq~$6000$ SP flow cell with a $500$-cycle kit to generate $2\times250$-bp paired-end reads. Additional details on protocols and sample preparation are given in Supplementary Section~\ref{si-sup:sampleprocessing}. Sample processing and library preparation were performed in the PI's laboratory and sequencing was conducted at the Bioscience Core Lab at KAUST.
 
 
-Dual indices and Illumina adapters were added in a second-round
-PCR with the QIAGEN Multiplex PCR Kit (catalogue no.\ 206143) following the
-Illumina $16$S protocol \cite{illumina16S}: $94\,^{\circ}\mathrm{C}$ for
-$15\,\mathrm{min}$; $8$ cycles of $94\,^{\circ}\mathrm{C}$ for
-$30\,\mathrm{s}$, $55\,^{\circ}\mathrm{C}$ for $30\,\mathrm{s}$ and
-$72\,^{\circ}\mathrm{C}$ for $30\,\mathrm{s}$; and $72\,^{\circ}\mathrm{C}$
-for $5\,\mathrm{min}$. Indexed libraries were purified with Agencourt AMPure
-XP beads, quantified with the Qubit high-sensitivity double-stranded DNA
-assay, sized on an Agilent TapeStation~$4200$ (D5000 ScreenTape), and pooled
-by concentration and size. Amplicon pools were sequenced on an Illumina
-NovaSeq~$6000$ on an SP flow cell with a $500$-cycle reagent kit to generate
-$2\times250$-bp paired-end reads. Sample processing and library preparation
-were performed in the PI's laboratory and sequencing was conducted at the
-Bioscience Core Lab at KAUST.
+\subsubsection*{Read processing}\label{sec:reads_methods}
+We processed reads with nf-core/Ampliseq v2.14.0 \cite{nfcore, ampliseq}, and used DADA2 to infer exact amplicon sequence variants (ASVs) and SILVA v138.2 \cite{silva} to assign taxonomy. The resulting count table contained $1{,}271$ profiles, including $24$ control profiles ($18$ extraction blanks and six PCR no-template controls), and $351{,}472$ ASVs. We assessed contamination at different study stages following recommendations for low-biomass microbiome studies \cite{fierer2025controls} (Supplementary Section~\ref{si-sup:controls}, Table~\ref{si-tab:controls}). We excluded control samples and $10$ samples that had $<1{,}000$ reads, leaving $1{,}237$ samples.
 
+\subsection*{Relic-DNA removal experiment}
+PMA treatment suppresses amplification of accessible DNA, including extracellular DNA and DNA in membrane-compromised cells \cite{wang2021pma,sun2023,carini2017relic}. We prepared three separate soil slurries from each of three parent soil tubes collected at two T5 campsites: root-adjacent soil at C1 and C2, and surface soil at C2. Each slurry was homogenized in sterile phosphate-buffered saline (PBS, pH $7.4$) at a $1:10$ (w/v) ratio and split into treated and untreated aliquots. We added PMAxx (Biotium, Hayward, USA) to treated aliquots at a final concentration of $50\,\mu\mathrm{M}$. Both aliquots underwent a 10 min dark incubation, photoactivation with a $450\,\mathrm{nm}$ LED lamp for 35 min on a white reflective surface ($15$--$20\,\mathrm{cm}$ from the lamp), and rotation at 15 min intervals. We stored samples at $-20\,^{\circ}\mathrm{C}$ until DNA extraction, which was performed using $860\,\mu\mathrm{L}$ from each aliquot with the DNeasy PowerSoil Pro kit (QIAGEN). We amplified the DNA and sequenced the samples with the protocols described in Section~\ref{sampleprocessing}.
 
-Reads were processed with
-nf-core/Ampliseq v2.14.0 \cite{nfcore, ampliseq}. We used DADA2 to infer exact
-amplicon sequence variants (ASVs)
-and SILVA~$138.2$ \cite{silva} to assign taxonomy. The complete count table retained
-all $351{,}472$ ASVs and $24$ control profiles from the Trip~$5$ sequencing run
-($18$ extraction blanks and $6$ no-template PCR controls). We excluded these controls and $10$
-biological profiles below $1{,}000$ reads, leaving $1{,}237$ profiles. Positive
-standards, PCR blanks and no-template controls were evaluated in their
-source-specific data and were never ecological profiles. The unfiltered biological table was
-the primary analysis input.
-
-\subsection*{Assay controls and sensitivity analyses}
-
-We followed low-biomass guidance by analysing each control according to the
-stage it tested \cite{fierer2025controls}. $17$ sequenced extraction blanks
-could be linked by extraction day to $217$ Trip~$5$ profiles. We pooled
-these blanks and marked an ASV as a candidate when it appeared in at least $2$
-blanks and was more prevalent in blanks than in biological samples in a
-one-sided Fisher test ($p<0.1$). The $351$ candidates were removed only from
-their linked profiles in a filtered copy used to test sensitivity. The
-remaining Trip~$5$ extraction blank and the $6$ no-template controls had no
-extraction-day link and were characterized without being used to identify
-candidates. The $6$ Trip~$4$ extraction blanks were sequenced on a separate run
-and denoised from the raw reads with the same pipeline; screened in the same way
-against the $95$ Trip~$4$ profiles linked through the extraction-batch map, they
-gave $7$ candidate ASVs (four unassigned at genus level, \textit{Nesterenkonia},
-\textit{Brevibacterium} and \textit{Alcaligenes}) whose removal changed a median
-of $0.00\,\%$ of reads per linked profile (maximum $14.3\,\%$; $0.14\,\%$ pooled).
-Trips~$1$--$3$ had one extraction blank per extraction kit rather than per
-batch and no usable sequenced blank, so no extraction blank could be linked
-to their profiles (Supplementary Section~S2).
-The Trip~$4$ PCR blank and no-template control
-were not sequenced because their index pairs conflicted with biological samples
-from Trips~$1$--$3$ on that run. No-template controls and PCR blanks contain the
-amplification reagents but no sample, so they test a later laboratory step;
-they were kept separate because their biological batch links were incomplete. Positive
-standards were used only to assess
-expected-taxon recovery and whether their expected taxa appeared in other
-samples. Supplementary Section~S2 gives the
-trip-specific products, assay stages and remaining coverage gaps.
-
-
-For the contamination sensitivity, we removed the $351$ Trip~$5$ candidate ASVs
-only from the $217$ linked Trip~$5$ profiles and the $7$ Trip~$4$ candidates only
-from the $95$ linked Trip~$4$ profiles. Trip~$5$ candidate sequences comprised
-$2.19\,\%$ of reads overall and a median of $0.40\,\%$ per profile
-(interquartile range, $0.16$--$0.99\,\%$); $1$ profile contained
-$56.60\,\%$ candidate reads (Figure~\ref{fig:function-controls}d). Every
-filtered profile remained above $25{,}000$ reads. We repeated $25$ geographic,
-environmental and compartment conclusions with this filtered copy; all
-retained the same disposition as in the unfiltered primary analysis.
-
-\subsection*{Relic-DNA removal and viability assessment}
-To distinguish DNA from intact, viable cells from total environmental DNA
-(including relic DNA), soil samples from $3$ Trip~$5$ sites were subjected to
-PMAxx-based viability treatment, following established protocols for relic-DNA
-removal from soil matrices \cite{carini2017relic,sun2023}. For each site,
-$3$ independent biological replicates were prepared as soil slurries by
-homogenizing soil in sterile phosphate-buffered saline (PBS, pH $7.4$) at a
-$1$:$10$ (w/v) ratio. Each replicate was partitioned into two aliquots:
-``treated'' (T), used to quantify DNA from intact cells, and ``untreated''
-(U), serving as a total-DNA baseline, yielding $9$ matched treated/untreated
-pairs across the $3$ sites. PMAxx dye (Biotium, Hayward, CA, USA) was added
-to treated aliquots at a final concentration of $50\,\mu\mathrm{M}$, followed
-by a $10$-minute dark incubation. Samples were photoactivated by exposure to a
-$450\,\mathrm{nm}$ LED lamp for $35$ minutes, with tubes positioned on a white
-reflective surface $15$--$20\,\mathrm{cm}$ from the light source and rotated
-at $15$-minute intervals. Immediately after photoactivation, all samples were
-stored at $-20\,^{\circ}\mathrm{C}$ until DNA extraction, which was performed
-on $860\,\mu\mathrm{L}$ of each sample using the DNeasy PowerSoil Pro Kit
-(QIAGEN). $16$S rRNA amplicon libraries from these samples were sequenced on
-an Illumina NovaSeq~$6000$ with the same $500$-cycle kit and $2\times250$-base
-paired-end configuration as the main sample set.
-
-Propidium monoazide (PMA) enters cells with damaged membranes and prevents
-their exposed DNA from being amplified \cite{wang2021pma}. We compared $9$
-matched treated and untreated Trip~$5$ aliquot pairs. We calculated Hurlbert
-expected richness at $123{,}897$ reads, the minimum depth among the $18$
-libraries, without random subsampling, and calculated Shannon diversity at
-full depth. Exact two-sided paired Wilcoxon tests compared the two endpoints;
-$99{,}999$ bootstrap samples of the matched aliquots gave uncertainty for
-their mean differences (seed $20260805$). Expected richness was lower after
-treatment in $8$ pairs
-(mean treated-minus-untreated difference, $-163.3$ taxa; $95\,\%$
-paired-aliquot bootstrap interval, $-274.0$ to $-69.8$; exact paired
-$p=0.00781$; Figure~\ref{fig:function-controls}c). This experiment measures a
-PMA-sensitive richness difference in these aliquots. Supplementary Sections~S2 and~S7.3 give the control
-provenance, quality checks and uncertainty calculations.
+We calculated Hurlbert expected richness at $123{,}897$ reads, the minimum
+depth among the 18 libraries, and Shannon diversity at full read depth. We report each treated-minus-untreated difference and
+the mean difference within each of the three groups. Supplementary
+Section~\ref{si-sup:relic} gives the protocol and endpoint calculations.
 
 \subsection*{Environmental measurements}
-At each site visit we recorded air temperature and, where available, atmospheric pressure and relative humidity. We retained confirmed values and excluded one
-out-of-range measurement. We used these measurements in a secondary analysis (Supplementary Section~S7.1) where we 
-% related this collection weather to diversity after accounting for campaign and for a geographic pattern that could change steadily or change its rate smoothly and reverse once along the route. Uncertainty estimates kept repeated measurements from the same site together.
-averaged each diversity measure within site and campaign, and tested its association with each variable.
-We included campaign and position along the transect (linear and quadratic terms) as covariates, with standard errors clustered by site to account for repeated visits. The nine tests were corrected together with the Benjamini--Hochberg method.
-%These are air, not soil, measurements.
+\subsubsection*{Weather and climate}\label{sec:envmeasurements}
+During our first campaign, we recorded the geographic coordinates of each sampling site along the transect and returned to these exact coordinates in all subsequent campaigns. At each site visit, we recorded air temperature and, where available, atmospheric pressure and relative humidity. We also photographed the sampling site and the plant from which we collected root-associated soil. We documented environmental features at each site and used the features to assign one of the following landforms: sand dune, saline pan, oasis, gravel plain, dune slack, aeolian lake, and oil spill.
 
-We obtained site-specific monthly air temperature, total rainfall, and relative
-humidity from the Open-Meteo historical API resource
-\cite{openmeteo}. Each site had $49$ complete months from January $2022$ to
-January $2026$. We averaged climate and the three diversity measures within each
-site, then used the $60$ sites for Spearman correlation. We corrected the $9$ climate--diversity tests together for multiple testing with the Benjamini--Hochberg
-method. For abundance,
-we selected the $200$ genera with the largest mean abundance among those detected
-in at least $20\,\%$ of profiles. We added $0.5$ to every count so that zero counts
-could enter the logarithm, then calculated
-each genus's log ratio to the geometric mean abundance across all genera. This
-centred-log-ratio (CLR) transformation compares taxa within a relative
-composition instead of treating read counts as absolute abundances. We
-averaged the transformed abundances by site. We corrected the $600$ climate--genus tests together in a second set.
+Since the environmental measurements we obtained capture weather at a point in time, we supplemented them with climate data from external sources. For each site, we retrieved monthly air temperature, total rainfall, and relative humidity from the Open-Meteo historical API resource \cite{openmeteo}. We also obtained daily precipitation for each site from the NASA POWER \texttt{PRECTOTCORR} resource \cite{nasa_power_2024}, using complete calendar days preceding the sampling date.
+
+\subsubsection*{Soil measurements}
+We measured pH from $767$ stored soil samples from all campaigns. We suspended air dried soil sieved to $\le 2$~mm in $0.01$~M CaCl$_2$ at a $1$:$2.5$ (w/v) ratio, mixed on a hula mixer for 30 min, and left them to stand for 30 min. We measured pH using an Accumet AB315 meter fitted with a Fisher Scientific Accumet electrode (cat. no.\ 13-620-112), which we calibrated at the start of each session and rinsed with Milli-Q water between measurements. We retained only measurements with a valid calibration defined as an electrode slope of $95$--$102\,\%$, and a pH $10$ buffer read-back of $9.9$--$10.1$ and a value within the physical range. pH coverage was incomplete and non-random across campaigns (Supplementary Section~\ref{si-sup:pH}).
+
+In the laboratory we measured total elements in $725$ stored soil samples from all campaigns using a Vanta Handheld XRF Analyzer in Fast Mode. A seperate in-situ field XRF workflow (only in T5) was used as a descriptive diagnostic and is reported in Supplementary Section~\ref{si-sup:XRF}. We retained the $11$ elements
+detected in at least $75\,\%$ of samples and applied a $\log(1+x)$ transformation. We standardized the values within each campaign to reduce between-campaign differences. We summarized the standardized element values by principal component analysis (PCA) and used the first component as a single elemental score per sample.
+%We then tested whether this score explained bacterial composition beyond campaign, compartment, and site using $999$ within-site permutations. We assessed sensitivity to the elements included, the treatment of zero values, and the amount of compositional value retained.
 
 
-We measured pH in $767$ archived soil samples from all campaigns. Dry
-soil below $2$~mm was mixed with $0.01$~M CaCl$_2$ at $1$:$2.5$ mass-to-volume and
-measured with an accumet AB315. We required a valid date and range, recorded
-calibration, an electrode slope of $95$--$102\,\%$, and a pH $10$ buffer read-back of
-$9.9$--$10.1$. In total, $712$ measurements passed and $702$ matched ecology profiles, and
-we used measured values only. We averaged matched values within site,
-campaign and compartment. The composition test added pH after expedition,
-compartment and site and randomly rearranged the remaining variation within sites
-$999$ times. We compared
-the transect result before and after pH adjustment in the same samples.
+\subsection*{Microbial community analysis}
+\subsubsection*{Community composition}\label{sec:composition_methods}
+To describe the overall composition of the microbial communities, we summed ASV counts at the phylum, class, and genus levels (SILVA v138.2, Section~\ref{sec:reads_methods}) and calculated the mean relative abundance of each taxon across the $1{,}227$ samples. We retained unclassified reads. We summarized composition across all samples, by compartment, and by transect third ($20$ sites each, ordered along the transect coordinate). Full tables are given in Supplementary Section~\ref{si-sup:composition}.
 
-Laboratory XRF covered $725$ archived-soil specimens. We retained $11$ elements
-detected in at least $75\,\%$ of specimens, transformed values as $\log(1+x)$,
-placed them on a common scale within each expedition and combined them by
-principal component analysis. This method constructs weighted combinations of
-the elements; the first component captures the largest shared change. We tested
-whether this component explained bacterial composition beyond expedition,
-compartment and site, using $999$ random rearrangements within sites. Changes to the
-included taxa and the treatment of zero values tested sensitivity. XRF
-describes total elements \cite{elmoatassem2025pxrf}. Supplementary Sections~S2--S4 give the laboratory
-quality checks, coverage and complete models.
+\subsubsection*{Alpha diversity (within-sample)}\label{sec:alpha_methods}
+We summarized within-sample diversity using three measures. We calculated Shannon diversity ($H$) with natural logarithms at full read depths as it is less sensitive to variation \cite{shirazi2021revisiting}. We also estimated rarefied richness as Hurlbert's expected number of ASVs as it controls for variation in sequencing depth \cite{hurlbert1971nonconcept} at $25{,}000$ reads ($E[S_{25k}]$) near the $5$th percentile of library size (median $382{,}432$ reads per sample). This allowed us to retain $95\,\%$ of the samples, and the rest were omitted from richness comparisons. To measure abundance relative to rarefied richness, we used a normalized Shannon index $H/\log(E[S_{25k}])$ (Supplementary Section~\ref{si-sup:alphadiversity}).
 
-\subsection*{Short-term rainfall response}
 
-We obtained daily precipitation for each site from the versioned NASA POWER
-\texttt{PRECTOTCORR} resource \cite{nasa_power_2024}; Open-Meteo provided an
-independent rainfall dataset for comparison. We excluded the sampling date because
-collection times were unavailable. Technical replicates were averaged within
-$617$ site, expedition, and compartment groups.
+\textbf{Compartment contrasts.} To separate the effect of compartment from differences among sites and campaigns, we compared surface, shallow subsurface, and root-adjacent soil with paired, site-level differences in a repeated measures design that removes within-site and within-campaign variation. For each compartment contrast, we used only the sites and campaigns for which we had samples, averaged the differences within campaign, then averaged across campaigns within each site. We obtained confidence intervals by site-level bootstrap and tested the paired differences with the Wilcoxon signed-rank test, controlling the false discovery rate separately for the Shannon and normalized Shannon comparisons. To check whether sequencing depth and DNA extraction kit affected the differences, we refitted the contrasts with Gaussian generalized estimating equations (GEEs) that accounted for repeated sampling of the same site (Supplementary Section~\ref{si-sup:alphadiversity_compartments}, \ref{si-sup:alphadiversity_confounds}).
 
-We represented a temporary response by weighting rainfall over the $60$ complete
-days before collection. For rainfall $r_{i,d}$ at site observation $i$ and $d$
-complete days before collection, the pulse score for a possible peak at day
-$p$ was
-\[
-x_i(p)=\sum_{d=1}^{60}r_{i,d}(d/p)\exp(1-d/p).
-\]
-The weight rises to one at $d=p$ and then declines. We searched
-$p=0.5,1.0,\ldots,30.0$ days for expected
-richness at $25{,}000$ reads, Shannon diversity and normalized evenness. Each
-model allowed each site and compartment to have its own baseline, each
-expedition to have its own mean, and longitude and collection day to have
-separate steady trends within each expedition.
 
-To account for choosing the strongest result from many peaks and diversity
-measures, we shifted the full $60$-day rainfall sequence in a circle $19{,}999$ times,
-independently within each expedition (seed $20260804$). Each shifted dataset
-retains the amount, rarity and spatial pattern of rainfall but changes its timing
-relative to collection. We used a one-sided test for the stated prediction of
-a positive pulse and also report a two-sided test that allows either direction;
-both tests cover the complete search. Confidence intervals for the selected
-effect used sandwich covariance clustered by site. We resampled whole
-sites $9{,}999$ times (seed $20260805$) to estimate the share of remaining variation
-explained by rain and the uncertainty in peak selection. Supplementary
-Section~S7 describes these calculations and the comparison of rainfall
-datasets. Additional analyses changed the rainfall dataset, contaminant
-filtering, pH adjustment, and geographic trend and included samples. To check the
-assumed pulse shape, we fitted rainfall from $1$, $2$, $3$--$4$, $5$--$7$,
-$8$--$14$, $15$--$30$ and $31$--$60$ complete days before collection
-together for each rainfall dataset, with site-clustered uncertainty. We also
-used future rainfall as a negative control. Supplementary Section~S7 gives these
-results, and the exact reproducibility manifests.
+\textbf{Climate associations.} We tested whether alpha diversity varied with weather and climate measurements. Associations with our field weather measurements did not remain after adjustment for campaign and transect position and correction for multiple testing, so we conducted the remaining analyses with external long-term climate datasets (Section~\ref{sec:envmeasurements}). We averaged each diversity index within site and used Spearman's correlation with 49-month means of temperature, rainfall, and humidity. We corrected the resulting tests as one family with Benjamini-Hochberg correction, and derived intervals by paired-site bootstrap resampling. Because the three climate summaries are themselves ordered along the sampling transect, we interpret these correlations as descriptions of the environmental axis along which diversity changes, rather than a means of identifying a causal driver (Supplementary Section~\ref{si-sup:alphadiversity_climate}).
 
-\subsection*{Community, diversity and spatial analyses}
-To compare richness at the same sequencing depth, we calculated Hurlbert's
-expected richness: the number of taxa expected if each profile contributed
-$25{,}000$ reads. We fixed this depth before analysis as a common
-standardization depth near the $5$th percentile of library size (median
-$382{,}432$ reads per profile), so that expected richness is comparable across
-profiles while $95\,\%$ of them are retained; the $60$ profiles with fewer reads
-($55$ of them core profiles) contributed no expected-richness value, and no
-profile was discarded on this basis (Supplementary Section~S2). Shannon diversity used full depth. We averaged profiles within
-site, expedition and compartment before paired compartment comparisons. Means and
-intervals came from repeatedly sampling whole sites with replacement. We drew
-$1{,}000{,}000$ whole-site bootstrap samples (seed $20260723$), keeping all repeated
-observations from one site together. We corrected each family of $3$
-contrasts. An additional evenness analysis used
-$H/\log(E[S_{25k}])$, where $H$ is Shannon diversity and $E[S_{25k}]$ is
-expected richness at $25{,}000$ reads. This measures abundance balance relative to
-common-depth richness.
-Supplementary Section~S5.2 gives campaign-specific contrasts and correction
-families.
 
-For composition, we combined replicate counts within expedition, site and
-compartment. We selected the $200$ most abundant genera among those detected in at
-least $20\,\%$ of profiles, added $0.5$ to every count to handle zeros, and used the
-CLR transformation defined above \cite{gloor2017compositional}. This small
-addition is called a pseudocount. The paired test
-used $170$ complete three-compartment comparisons across $60$ sites. Pairwise tests
-randomly reversed the direction of each within-pair difference while keeping
-all observations from a site together. Alternative taxon sets, treatments of
-zero counts and expedition omissions tested sensitivity.
+\textbf{Short-term rainfall.} To test whether samples collected soon after rainfall were more diverse, we modeled alpha diversity measures as a function of time-dependent cumulative rainfall over the 60 days preceding collection under a rise-and-decay distributed lag kernel (Supplementary Section~\ref{si-sup:rainfall_kernel}). Because the lag was unknown, we fitted this model across lags from 0.5 to 30 days for each diversity index, adjusting for site, compartment, campaign, and transect position. We repeated this analysis with two independent rainfall datasets (Section~\ref{sec:envmeasurements}). Since selecting the lag with the strongest effect inflates significance, we assessed the whole search against a randomization null that preserves the amount and spatial pattern of rainfall. We estimated the selected effect by refitting the full model on site-level bootstrap resamples. Detailed methods are described in Supplementary Section~\ref{si-sup:rainfall}.
 
-For broad spatial structure, we retained core-site groups with at least $2{,}000$
-reads, removed the CLR mean for each expedition and compartment, and averaged
-within site. The route model allowed both steady change from west to east and a
-smooth change in rate that could reverse once, represented by straight-line and
-squared-location terms. It used the
-same $200$ genera and $999$ random rearrangements of whole sites. Taxon sets, trend
-shapes and expedition omissions tested sensitivity. To quantify sampling
-uncertainty in the explained share, we removed each of the $60$ sites in turn,
-refitted the model, calculated the delete-one-site jackknife standard error,
-and formed a $95\,\%$ $t$ interval with $59$ degrees of freedom.
 
-To measure distance decay within each compartment, we removed the campaign
-mean from the CLR composition at each of the $60$ sites and related Aitchison
-dissimilarity to distance. We randomly reassigned location labels to whole
-sites $9{,}999$ times across all compartments, so the site was the unit of
-resampling. For comparisons based only on whether
-a taxon was present, we pooled counts within site and compartment and randomly
-subsampled each pooled sample to the same $12{,}865$ reads (seed $20260728$). We partitioned Sørensen
-dissimilarity into taxon replacement and nestedness
-\cite{baselga2010partition}. Delete-one-site jackknife intervals for the
-distance slopes and mean replacement shares removed every pair involving the
-omitted site.
+\subsubsection*{Beta diversity (between-sample)}\label{sec:beta_methods}
+For beta diversity analyses, we summed replicates for each site $\times$ campaign $\times$ compartment combination into a single genus count profile, and discarded profiles with $< 2{,}000$ reads, yielding $630$ profiles across $60$ sites. We kept the $200$ genera with highest mean relative abundance present in at least $20\,\%$ of profiles. We centre log ratio (CLR) transformed the profiles after adding a $0.5$ pseudocount for compositional analyses. We calculated Aitchison distance, the Euclidean distance between CLR profiles, which compares taxa through their abundance ratios \cite{tellmewhy}. We treated site as the independent unit throughout as we applied permutations to whole sites, and obtained confidence intervals by delete-one-site jackknife or site-level bootstrap (Supplementary Section~\ref{si-sup:beta_methods}).
 
-Supplementary Section~S5 gives the spatial prediction, ASV-resolution and
-dispersion diagnostics.
 
-To describe the taxa behind these patterns, we summed ASV counts per phylum,
-class and genus and expressed them as shares of total reads per profile across
-the $1{,}227$ core profiles, overall and by compartment and by transect third
-($20$ sites each, ordered by route position). For the $200$ genera of the
-route model, we correlated the site-level CLR values (expedition-by-compartment
-means removed) with route position (Spearman; Benjamini--Hochberg over $200$
-tests) and estimated the east-minus-west difference in mean CLR with a
-delete-one-site jackknife interval. To compare within-transect with
-between-desert differences under one rule, we subsampled every Empty Quarter
-profile and every Atacama pit profile \cite{horstmann2024atacama} $20$ times to
-$8{,}000$ reads (seed $20260903$), called a genus detected in a set when it
-occurred in at least $10\,\%$ of subsampled profiles, and computed Jaccard
-overlaps between transect thirds and between the Empty Quarter and the pit
-(all depths, and $2.5$--$10$~cm only). This comparison uses presence only, across datasets that differ in primer
-(V3--V4 versus V4) and DNA fraction (total versus intracellular). Site-level pH and climate means were correlated
-with route position to state the direction of the gradients. These summaries
-are descriptive and add no claim to the tracked conclusions
-(\path{analysis/v3/taxon_context/}).
+\textbf{Transect model (Redundancy analysis).} To test whether community composition changed across the study transect, we first removed campaign and compartment effects by subtracting from each profile the mean CLR profile of its campaign $\times$ compartment combination (mean taken across sites), and averaged the centred profiles to a single profile per site. The transect coordinate was defined as the first principal component (PC1) of site coordinates in kilometers, oriented from west to east. We related composition of site profiles to linear and quadratic transect terms by redundancy analysis (RDA) \cite{legendre2012rda} and summarized the fit as variance explained, with a delete-one-site jackknife interval, and tested the fit with $999$ site permutations (Supplementary Section~\ref{si-sup:beta_transect}). Since the residuals remained spatially autocorrelated (multivariate Moran's $I$, 5-nearest neighbor graph), we treat the variance explained as descriptive and report its sensitivity to spatially correlated errors (Supplementary Section~\ref{si-sup:beta_spatialerrors}). We also compared site-level CLR of each genus with the transect coordinate ($200$ tests, Benjamini--Hochberg).
 
-For each of the $200$ genera we also tested the $3$ paired compartment
-contrasts in the same block-centred site tensor as the composition test
-(sign-flip over sites; Benjamini--Hochberg over $600$ tests; site bootstrap
-intervals), correlated site-level CLR values with site-mean pH and with the
-laboratory-XRF elemental axis (Spearman; Benjamini--Hochberg over $200$ tests
-each), and compared the $44$ sand-dune and $9$ saline-pan sites, using the
-field landform recorded for each site, with a label-permutation pseudo-$F$
-and per-genus Mann-Whitney tests, without and with adjustment for route
-position. The route model, the genus route correlations and the
-climate-diversity correlations were refitted on the dune sites. Genus
-occupancy per compartment used counts pooled across expeditions within site
-and subsampled $20$ times to $12{,}865$ reads (seed $20260904$;
-\path{analysis/v3/biology_context/}).
+\textbf{Distance decay.} We estimated distance decay for each compartment with Aitchison distance. We used the same campaign $\times$ compartment centring, but averaged profiles within site \textit{and} compartment. Within each compartment, we regressed pairwise Aitchison distance on geographic distance using multiple regression on distance matrices (MRM). The resulting linear regression slope gives dissimilarity per $100$ km. Because pairwise distances involving the same site are not independent, we assessed significance by permuting site labels ($9{,}999$ permutations) rather than individual distances. We applied each permutation to all three compartment matrices at once, keeping geographic distance fixed, so that differences between compartments could be tested against the same null.
 
-\subsection*{Predicted functional potential and shotgun comparison}
 
-PICRUSt2 v2.4.1 predicted KEGG Ortholog groups and MetaCyc pathways from the ASV
-tables \cite{douglas2020picrust2}. We matched $1{,}227$ core-site profiles, summed
-replicates within expedition, site and compartment, and ranked pathways detected
-in at least $20\,\%$ of groups. The primary analysis used the $200$ with largest
-mean abundance, a $0.5$ pseudocount and CLR coordinates. For geography, we
-removed expedition-by-compartment means and tested the route model that allowed
-the rate of change to vary smoothly and reverse once, using $9{,}999$ random
-rearrangements of whole sites. The pathway geography interval used the same
-delete-one-site jackknife and $95\,\%$ $t$ interval as the taxonomic route
-model. For compartment,
-we expressed each complete three-compartment comparison relative to its own mean
-and then averaged within site. The overall test randomly reassigned compartment
-labels within sites; pairwise tests randomly reversed the site-level
-differences. We corrected $3$ profile comparisons together and $600$ pathway
-comparisons together. Pathway sets, pseudocounts and expedition omissions
-tested sensitivity. To describe the dominant predicted metabolism, we
-expressed each pathway as a share of predicted pathway abundance per profile,
-averaged across the $1{,}227$ core profiles, and grouped pathways by keywords
-in their MetaCyc descriptions into biosynthesis, degradation or utilization,
-energy and central metabolism, and other; the rules and the ranks of the
-carbon-fixation pathways are archived with the results. For a fixed list of
-$20$ trait genes (KO identifiers in the repository), we counted carriers among
-the $975$ annotated genomes of the companion catalogue (eggNOG-mapper KO
-annotations), weighted them by CoverM genome abundance in the $150$ shotgun
-libraries, and summed the predicted abundance of the same KOs in the PICRUSt2
-profiles as a share of all KO abundance. Compartment contrasts used site-level
-paired $\log_{10}$ ratios with sign-flip tests (Benjamini--Hochberg over $60$
-tests), route correlations used Spearman over site means ($20$ tests), and
-agreement between the two sources used Spearman over $119$ matched libraries
-(\path{analysis/v3/trait_genes/}).
+To determine whether spatial turnover rates varied among compartments, we compared decay rates using differences between distance matrices ($surface-root\text{-}adjacent$ and $shallow$ $subsurface-root\text{-}adjacent$). We first tested slope differences with an omnibus test, then corrected the two contrasts with maximum-statistic correction. Finally, to account for the spatial structure and non-independence of the matrix elements, confidence intervals for the regression slopes were calculated via a delete-one-site jackknife resampling, omitting each site in turn (Supplementary Section~\ref{si-sup:beta_decay}).
 
-For each predicted profile, the weighted nearest-sequenced-taxon index (NSTI)
-summarized the distance between its ASVs and sequenced reference genomes. A
-smaller value means that the prediction requires less extrapolation. For an
-empirical comparison, we matched PICRUSt2 and shotgun-derived abundance for
-$3{,}471$ KEGG Ortholog gene families in $125$ samples, calculated a Spearman rank
-correlation within each sample, and also correlated the two community-average
-profiles. The shotgun data come from a
-separate, ongoing metagenomic study of the same expeditions (BioProject
-\todo{BioProject accession}), in which $125$ shotgun libraries from Trip~$5$
-matched $16$S profiles in this survey. That study's assembly, binning,
-dereplication and eggNOG-mapper v2.1.12 annotation of the genome catalogue
-produced the CoverM genome-abundance profiles and KEGG Ortholog annotations we
-reused here; its results will be reported separately. Supplementary Section~S8 reports the uncertainty method and the
-limits of pathway and marker-gene predictions.
 
-\subsection*{Cross-desert contextual analysis}
+\textbf{Compartment differences.} We compared compartments in campaign $\times$ site blocks. Within each block, we subtracted the block's mean CLR profile from each compartment profile to remove site, campaign, and site $\times$ campaign effects, and averaged centred blocks within site. We tested for overall differences among compartments with a PERMANOVA on blocks that had samples in all compartments, resulting in $170$ blocks across $60$ sites. We computed a pseudo-$F$ statistic \cite{anderson2001new} on block-centred CLR profiles with permutations restricted within sites ($999$). As this is sensitive to differences in both location and dispersion \cite{anderson2006multivariate}, we tested pairwise differences in location using paired sign flip permutation tests ($999$) on the mean within-site difference vector. We used every block containing both compartments of that pair. We summarized the consistency of each pairwise shift across sites as a standardized displacement (Supplementary Section~\ref{si-sup:beta_compartment}).
 
-We compared effects in $2$ public Atacama datasets without merging their ASV
-counts. In QIITA study $10360$ (PRJEB17617), technical replicates were averaged
-within $16$ sites; Spearman correlations related diversity to soil humidity
-before and after adjustment for latitude, longitude and elevation. In
-PRJEB39249, $62$ intracellular-DNA profiles were aggregated to $23$ sampled depths.
-Three depth zones were compared in $200$-genus CLR coordinates with $9{,}999$ label
-rearrangements; diversity was averaged after subsampling each profile $100$ times
-to $8{,}000$ reads.
-Supplementary Section~S9 gives the upstream processing and comparison limits.
+To test whether compartments differed in their community variability, we compared multivariate dispersion. We measured the Aitchison distance of each profile to the centroid of its campaign $\times$ compartment combination and averaged these distances within site, so that each site contributed one dispersion value per compartment regardless of how many times it was sampled (Supplementary Section~\ref{si-sup:beta_compartment}). We then tested mean paired difference for each pair of compartments with a sign flip permutation test ($999$). For each of the $200$ genera, we tested the three pairwise compartment contrasts with the same paired sign-flip test. We applied Benjamini--Hochberg correction separately to the pairwise location, dispersion, and genus-level contrasts.
 
-\subsection*{Sensitivity analyses and reproducibility}
-To test whether sequencing depth or recorded extraction method explained the
-Shannon compartment differences, we fitted a Gaussian generalized estimating
-equation with sequencing depth, expedition and extraction protocol. This
-regression method accounts for repeated observations from the same site.
-We treated these models as robustness checks because extraction protocol and
-laboratory batch were incompletely recorded and partly linked to expedition.
+\subsubsection*{Turnover and nestedness}
+Compositional differences between sites can arise because different taxa replace one another (turnover) or because communities contain subsets of taxa found in richer ones (nestedness). This partition depends on taxon presence or absence, which CLR profiles cannot represent. We used presence/absence data from all genera, and pooled raw counts within each site and compartment across campaigns, obtaining one profile per site $\times$ compartment. We rarefied each pooled profile to the smallest pooled library ($12{,}865$ reads). We partitioned S\o{}rensen dissimilarity into turnover (Simpson dissimilarity) and nestedness components \cite{baselga2010partition}. We regressed each component on geographic distance, and tested significance with joint site permutations. To compare the size of the shared taxon pool among compartments, we used the same pooled counts, rarefied $20$ times to $12{,}865$ reads, and defined the core community as the genera present at $\geq 90\,\%$ of sites in each compartment (Supplementary Section~\ref{si-sup:beta_turnover}).
+
+\subsubsection*{Composition and the environment}
+
+\textbf{Soil pH and XRF elements.} To test whether soil pH and elemental composition were associated with microbial community composition, we used partial RDA on the CLR profiles of all site $\times$ campaign $\times$ compartment combinations with a corresponding measurement ($560$ profiles for pH, $621$ for XRF elements). We entered each variable after campaign, compartment, and site, to prevent the association from simply reproducing the west to east gradient. Because repeated profiles from one site are not independent, we restricted permutations within site ($999$ permutations). We partitioned pH and geographic associations using one fixed CLR response and a common variance denominator. We adjusted the response, pH and linear and quadratic transect terms for campaign-by-compartment categories, with equal total weight per site, and averaged the residuals within each site. Four models of these $60$ site averages (intercept only, pH, geography, and both) separated unique pH, unique geography, shared and unexplained fractions. We also fitted the corresponding weighted models to all $560$ groups and assessed sensitivity to site omission and spatial-block resampling (Supplementary Section~\ref{si-sup:beta_ph}).
+
+
+For the XRF elements, we used the same profiles and repeated the test on Bray--Curtis dissimilarities (distance-based RDA) to check that the result did not depend on the CLR transformation (Supplementary Section~\ref{si-sup:beta_xrf}). At the genus level, we correlated each genus's site-level CLR profile with mean pH at the site and with the elemental axis (Spearman), and corrected with Benjamini--Hochberg.
+
+\textbf{Landforms.} Because landforms such as saline pans and oases are unevenly distributed along the transect, we explored whether landform could explain community composition. We compared the $44$ sand dune sites and $9$ saline pan sites in each alpha diversity measure (Section~\ref{sec:alpha_methods}) with Mann--Whitney tests and summarized the $3$ oases sites descriptively. We also compared their composition with PERMANOVA on site-level CLR profiles with $9{,}999$ permutations (Section~\ref{sec:beta_methods}) before and after removing the linear and quadratic effects of transect position, and tested individual genera with Mann--Whitney tests ($200$ tests, Benjamini--Hochberg). To test whether the west to east patterns persisted within a single landform, we refitted the transect RDA, the genus--transect correlations and the climate--diversity correlations on sand dune sites only (Supplementary Section~\ref{si-sup:landform}).
+
+
+\subsection*{Predicted functional potential}\label{sec:function_methods}
+\subsubsection*{Function prediction}\label{sec:function_pred}
+We predicted the functional potential of each sample from the ASV table with PICRUSt2 v2.4.1 \cite{douglas2020picrust2}, which infers gene family content from the nearest sequenced reference genomes. We obtained unstratified abundances of KEGG orthologs (KOs) \cite{kanehisa2000kegg} and MetaCyc pathways \cite{metacyc} ($462$ pathways) for all $1{,}227$ samples. Because prediction accuracy declines as sampled taxa become more distant from sequenced genomes, a particular concern in under-studied desert soils \cite{li2023capturing}, we assessed prediction reliability with the weighted nearest-sequenced-taxon index (NSTI), where smaller values indicate less extrapolation from reference genomes.
+
+\subsubsection*{Comparison with metagenomes}\label{sec:function_metagenomes}
+We used a catalogue of $991$ metagenome-assembled genomes (MAGs) recovered from $150$ Trip~$5$ shotgun libraries in the companion study. Of these genomes, $990$ had KO annotations from eggNOG-mapper v2.1.12 \cite{cantalapiedra2021eggnog}. For each shotgun library, we constructed a community KO profile by weighting the genome KO annotations by genome relative abundances estimated with CoverM \cite{aroney2025coverm}. We compared the $125$ shotgun libraries with matched amplicon profiles across $3{,}471$ shared KOs, using Spearman rank correlations within each matched library pair and between the community-average profiles, with intervals from a site-level bootstrap (Supplementary Section~\ref{si-sup:function_validation}).
+
+\subsubsection*{Pathway composition}\label{sec:function_pathways}
+We tested whether predicted functional potential retained the patterns observed in taxonomic composition. We analyzed pathway abundances with the same design as the genus-level analyses (Section~\ref{sec:beta_methods}). We summed replicates within each site $\times$ campaign $\times$ compartment combination ($633$ grouped profiles) and retained the $200$ pathways with the highest mean relative abundance present in at least $20\,\%$ of profiles. We CLR transformed their abundances after adding a pseudocount of $0.5$. We tested spatial distribution with the transect RDA and compartment differences with PERMANOVA and paired sign-flip tests, as described for taxonomic composition (Section~\ref{sec:beta_methods}), using $9{,}999$ permutations throughout. Compartment tests used the $172$ campaign $\times$ site blocks in which all three compartments were sampled. To identify the pathways driving these patterns, we tested each pathway across the three compartment contrasts with paired sign-flip tests, and correlated each pathway's site-level CLR value with the transect coordinate (Spearman), applying Benjamini--Hochberg correction within each family.
+
+To describe the dominant predicted metabolism, we calculated the mean relative abundance of each pathway across the $1{,}227$ samples and grouped pathways into biosynthesis, degradation or utilization, energy and central metabolism, and other, based on keywords in their MetaCyc descriptions (Supplementary Section~\ref{si-sup:function_pathways}).
+
+\subsubsection*{Marker genes for desert survival}\label{sec:function_markergenes}
+We examined traits relevant to survival in hyperarid soil by defining $20$ marker gene sets covering trace gas oxidation, carbon fixation, nitrogen cycling, osmolyte synthesis, pigments, sporulation, DNA repair and oxidative stress defence, each consisting of one or more KOs. We considered a genome a carrier when it contained at least one KO in the set. For each set, we calculated the fraction of the $975$ annotated MAGs that carried it and, in each shotgun library, the relative abundance of those carrier genomes in the community. In parallel, we calculated the predicted abundance of the same KOs as a share of total predicted KO abundance in the PICRUSt2 profiles. We compared compartments using paired site-level $\log_{10}$ ratios with sign-flip tests corrected with Benjamini--Hochberg. We related site means to the transect coordinate using Spearman correlations ($20$ tests), and assessed agreement between predicted and MAG-derived marker abundances with Spearman correlations across $119$ shotgun libraries with matched amplicon profiles (Supplementary Section~\ref{si-sup:function_traits}).
+
+% \subsection*{Comparison with other deserts}
+% To interpret the patterns observed in the Empty Quarter within a broader context, we reanalyzed two public $16$S rRNA datasets from the Atacama desert. Since the studies processed their samples differently, we analyzed each dataset separately and compared the direction of effects, rather than merging count tables.
+
+% \subsubsection*{Diversity and soil moisture}
+% To test whether diversity varied with moisture along another aridity gradient, we used site-level diversity from two Atacama transects (QIITA study $10360$; PRJEB17617) \cite{neilson2017significant}. We averaged technical replicates within each of $16$ sites and related Shannon diversity and rarefied richness to soil relative humidity using Spearman correlations. Because humidity covaries with location and elevation along the gradient, we repeated each test as a partial Spearman correlation adjusted for latitude, longitude and elevation.
+% \todo[inline]{Does this make sense to compare? They measure SOIL humidity while we have relative humidity (atmospheric)}
+
+% \subsubsection*{Community change with depth}
+% We explored whether microbial communities change over short vertical distances in another hyperarid desert using intracellular-DNA profiles from an Atacama soil pit sampled from $2.5$ to $420$~cm (PRJEB39249) \cite{horstmann2024atacama}. We combined replicates within each of the $23$ sampled depths and grouped the depths into three zones ($<50$, $50$--$200$ and $\geq200$~cm). We compared composition among zones with PERMANOVA on CLR-transformed profiles of the $200$ most abundant genera ($9{,}999$ permutations). To relate diversity to depth, we rarefied each profile $100$ times to $8{,}000$ reads, averaged richness and Shannon diversity within depth, and used Spearman correlations.
+
+% To compare the difference between the two ends of the transect with the difference between deserts, we rarefied every Empty Quarter profile and every Atacama pit profile $20$ times to $8{,}000$ reads. We considered a genus present in a group of profiles when it was detected in at least $10\,\%$ of rarefied profiles, and calculated the Jaccard similarity of the genus sets between transect thirds and between the Empty Quarter and the pit. These comparisons are descriptive, because differences in primers (V3--V4 versus V4) and DNA fraction (total versus intracellular) also affect which genera are detected (Supplementary Section~\ref{sup:crossdesert}).
+
+
+\subsection*{Reproducibility}
 The companion data descriptor covers the field, specimen, amplicon,
 environmental, XRF and knowledge-graph resources \cite{rubalkhali_datapaper}.
 Inputs, scripts, machine-readable results, random seeds and checksums are
 maintained in the dedicated reproducibility repository at
-\url{https://github.com/bio-ontology-research-group/empty-quarter-ecology-reproducibility}.
+\href{https://github.com/bio-ontology-research-group/empty-quarter-ecology}{the ecology reproducibility repository}.
 The repository links each analysis to its exact input, machine-readable result,
 random seed and checksum, and links shared data products to the companion
-resource. Public deposition of the ecology package and upstream amplicon, PMA,
-shotgun-read and genome resources remains a submission requirement.
+resource. The public repository provides the staged inputs and downstream analyses. Its release checklist identifies the upstream amplicon, PMA, shotgun-read and genome resources required for a complete raw-read replay, together with the outstanding archival and public-download checks.
 
 \subsection*{Software}
 Amplicon reads were processed with nf-core/Ampliseq v2.14.0 (Nextflow; DADA2
-and SILVA~$138.2$) on the KAUST Ibex cluster, where the eggNOG-mapper v2.1.12
+and SILVA v138.2) on the KAUST Ibex cluster, where the eggNOG-mapper v2.1.12
 annotation of the shotgun genome catalogue also ran. All statistical analyses
-were run on a Linux workstation in Python $3.11.14$ with pandas $2.2.3$, NumPy
-$2.1.3$, SciPy $1.14.1$, statsmodels $0.14.6$, scikit-learn $1.5.2$, scikit-bio
-$0.7.3$ and Biopython $1.84$; PICRUSt2 v2.4.1 predicted functional potential.
-Figures were drawn with Matplotlib $3.9.4$ (FreeType $2.14.3$). The complete
+were run on a Linux workstation in Python v3.11.14 with pandas v2.2.3, NumPy
+v2.1.3, SciPy v1.14.1, statsmodels v0.14.6, scikit-learn v1.5.2, scikit-bio
+v0.7.3 and Biopython v1.84; PICRUSt2 v2.4.1 predicted functional potential.
+Figures were drawn with Matplotlib v3.9.4 (FreeType v2.14.3). The complete
 environment is pinned as a conda lock file with hashed pip requirements in the
-reproducibility repository, and every reported number is regenerated from the
-committed inputs by the repository's tests. We used Claude (Anthropic) to
-assist with writing analysis code and with editing the manuscript; all
-analyses, results and claims were checked and verified by the authors.
+reproducibility repository. Its tests check selected numerical calculations,
+input/output consistency and manuscript values. A complete raw-read replay
+requires the upstream input and execution records listed in the repository.
+We used Claude (Anthropic) and OpenAI Codex to assist with analysis code and
+manuscript editing. The authors are responsible for the analyses and text.
 
 \section*{Funding}
-SMA was supported by the Fonds National de la Recherche (FNR), Luxembourg
+No specific funding was received for this project.
+Susana Martinez Arbas was supported by the Fonds National de la Recherche (FNR), Luxembourg
 (Project Ref.\ 18047750).
-%% TODO (Robert): add the KAUST and any other grant numbers supporting this work.
+
+\section*{Competing interests}
+The authors declare no competing interests.
 
 %% ====================================================================
 \bibliography{sample}

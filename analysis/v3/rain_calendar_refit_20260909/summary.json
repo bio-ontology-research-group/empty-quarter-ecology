@@ -12,9 +12,9 @@
     "open_meteo": {
       "endpoint": "richness_hurlbert_25000",
       "peak_days": 1.0,
-      "beta": 326.77262286199397,
-      "partial_r2": 0.03823873583268389,
-      "rho": 0.19554727262911106,
+      "beta": 326.81408284080686,
+      "partial_r2": 0.03824175050246813,
+      "rho": 0.19555498076619815,
       "peak_index": 1,
       "endpoint_index": 0
     }
@@ -35,9 +35,9 @@
       "evenness_h_over_log_hurlbert": 0.025402540254025403
     },
     "open_meteo": {
-      "richness_hurlbert_25000": 0.7275727572757276,
-      "evenness_h_over_log_hurlbert": 0.1482148214821482,
-      "shannon": 0.12421242124212421
+      "richness_hurlbert_25000": 0.6795679567956796,
+      "shannon": 0.18311831183118313,
+      "evenness_h_over_log_hurlbert": 0.13731373137313732
     }
   },
   "calibration": [
@@ -51,19 +51,19 @@
     },
     {
       "nominal_alpha": 0.2,
-      "rejections": 56,
+      "rejections": 55,
       "simulations": 300,
-      "fraction": 0.18666666666666668,
-      "binomial_ci_low": 0.14419644918548247,
-      "binomial_ci_high": 0.23544824678732582
+      "fraction": 0.18333333333333332,
+      "binomial_ci_low": 0.14120072116427856,
+      "binomial_ci_high": 0.23184646860873961
     },
     {
       "nominal_alpha": 0.5,
-      "rejections": 153,
+      "rejections": 152,
       "simulations": 300,
-      "fraction": 0.51,
-      "binomial_ci_low": 0.4519092435030744,
-      "binomial_ci_high": 0.567891356146855
+      "fraction": 0.5066666666666667,
+      "binomial_ci_low": 0.44860290862468716,
+      "binomial_ci_high": 0.5645974916760528
     }
   ],
   "calibration_scope": "conditional randomized-year null algorithm; exchangeability of the real annual fields is a scientific assumption",

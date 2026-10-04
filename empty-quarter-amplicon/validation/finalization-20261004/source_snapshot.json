@@ -1,0 +1,33 @@
+{
+  "baseline_overleaf_commit": "a5d56232f1a22b36cf3ee39699e97e9aff6af8ab",
+  "initial_overleaf_commit": "3cd5a764ec1443007f3de4fb0d590ff0615155d5",
+  "data_commit": "5a17782c1ec3c7d511bf5f8ae934086b950f6ae1",
+  "paper_files": {
+    "main.tex": "68004767bcb8afe883e7836fa29b23184ab8d379b096991258a09329d807ef26",
+    "supplement.tex": "c28ba18ca1d26686405d7df8773c38cdd02ff28cc4e137fe647f7e420e062bb2",
+    "sample.bib": "2207fccb58d4dc9de065e7ec364c8d8609a992643288d1f941c6888c6f1f4d9b",
+    "ph_shared_v1.tex": "53c58eb50e819979004a0aed32d5a409cca15005b2c79cee5acc300047b1b8a8",
+    "latexmkrc": "a4c24ecbfa6eb5777ca58089f58f461e9bde061cbd28fc4e222c46daf89f2105",
+    "main.pdf": "57a01d79d13de7c2d8bb471b115faa4a4f94147c58ff34481d2c68aafb6c45ac",
+    "supplement.pdf": "3243555ff285d19309cddc2ef01048b13afe5c265a420c30990cb228cc2556d0",
+    "tables/beta_diversity.tex": "4993d8eec16872dacc8da0cd40e7d6f5271d57fe96123c10c326fa0633348e6a",
+    "tables/climate_alpha.tex": "e11a8c5448be0f9a78a93404fc2b99e781bbe77c20f89cdaaa5e5b5d36d7970b",
+    "tables/community_composition.tex": "e2740d4dbdc9f5a27aa528d89fc80c20a7cd2fe93938bc3444d281d63d140956",
+    "tables/compartment_differences.tex": "79914a07067198779f241fa85b590c43ceac5611c61f0549b9cd952b111510b9",
+    "tables/compartment_displacement.tex": "bda953b750619817e6a1fb7ad4489bbd2fb80ee2f5b272c4eeeedc3342994dfb",
+    "tables/function_tables.tex": "21222c7ea29aa6726a92af263e753acaf3dfd491facb8f888b3654df3dcd055a",
+    "tables/landforms.tex": "362ae66a908bc084c9fb52a4d94f0f9f7b40a635055c4acdeb6317affa60b1ed",
+    "tables/pH.tex": "d30a258dbfcbd5a35db2d84eac3b6642713435cae0354c3966fff760117d2f78",
+    "tables/rainfall_response.tex": "99c28bc5c87a00671fb81a0a9d96fcba28a77f7733e82d127d9b3cb72eb805d0",
+    "tables/turnover_slopes.tex": "c38c139ce7fa1de0b0df160df40cf95a0036c3257a0943feac0ed9a0683b5eed",
+    "tables/xrf.tex": "714ce8d6ee6d4b74bf0dc47bf639047db594c25a701610e8af6ad278dff58667",
+    "figures/fig1_landscape.pdf": "c2e1b4854df25034a642e5d12067e69c341948a6fb03072ed16f1b8448e7934a",
+    "figures/fig2_soil_position.pdf": "b90308330e4a47ea792d875f54c26e59c54f7fc623632024b5221b49f195950b",
+    "figures/fig3_function_controls.pdf": "29f894a9fb9cdcc284e43f94c528f62888e85a38e23022e445bd60e6506a5ea3",
+    "figures/figS_campaign_rainfall.pdf": "0a67aa3df3aa9de592103ae0f1c8ae068913ebc1d534f0733321cf597237c814",
+    "figures/fig_core_overlap.pdf": "eab4db7c735ff679d0c09a78d86a832f39478f641b6841127de5db9cfa120c8b",
+    "figures/fig_pma_richness.pdf": "3f77fdb5d435b871ae337b0050a816bae8f9acaa3bb8b60c17e69d0ad7a2f915",
+    "figures/rain_calendar_refit.pdf": "5d8888babbbbd3e34e3579875a8c6eff6ab5ded66fc7bfd75624b8e35416bb5d"
+  },
+  "unresolved_verification": "Physical well-to-well test: see OPEN_VERIFICATION.txt"
+}

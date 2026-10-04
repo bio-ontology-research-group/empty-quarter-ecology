@@ -3,8 +3,8 @@
 This public BORG repository is the reproducible companion to the manuscript
 *Landscape-scale bacterial biogeography across the Rub' al-Khali*. It contains the active paper
 and supplement, the analysis programs used for their claims, the canonical
-machine-readable results, the four submitted figures, regression tests, and
-byte-verifiable copies of key methodological sources.
+machine-readable results, the submitted figures, regression tests, and
+checksums and custody records for key methodological sources.
 
 The manuscript reports a bacterial survey across the Rub' al-Khali.
 Its main results concern geographic organization, paired soil-position
@@ -14,16 +14,18 @@ and assay-aware low-biomass controls. Regression tests cover specified
 calculations, figure semantics and selected result/prose checks; they do not
 regenerate every number or the upstream raw-read processing.
 
-The September 2026 revision corrects the Site 52 coordinate on the Trip 1 and
-Trip 3 field sheets (data repository commit `a3f1c21`) and reruns every
-coordinate-dependent analysis: spatial turnover, ASV-resolution and
-neighbour-count sensitivities, distance decay, geographic prediction,
-predicted-function geography, cross-desert context and the headline
-uncertainty table. Dated pH, taxon, biology, trait, paired-alpha, rainfall
-calendar and spatial-covariance directories under `analysis/v3/*_20260909`
-hold the current reanalyses. `DATA_REPOSITORY.lock` pins the data repository
-commit that contains the coordinate correction. Analyses that were not rerun
-after the correction are listed in `REPRODUCE.md`.
+The active manuscript preserves Rund Tawfiq's 2 October 2026 Overleaf revision,
+with factual corrections documented in the coauthor review package. The paper
+and supplement in `empty-quarter-amplicon/` are synchronized with Overleaf,
+including the included tables and generated figures. The analysis inventory
+and validation records identify the current result generation for each claim.
+
+`DATA_REPOSITORY.lock` pins the shared data release containing the Site 52
+coordinate correction. The daily Open-Meteo correction in
+`analysis/v3/open_meteo_site52_corrected_20261004/` replaces that release's
+remaining stale Site 52 daily series; its original response, request and hashes
+are packaged alongside the corrected input. The common-denominator pH
+partition is in `analysis/v3/ph_partition_20261004/`.
 
 ## Repository relationship
 
@@ -49,9 +51,9 @@ make figures PYTHON=../empty-quarter-data-paper/.conda-env/bin/python
 make paper
 ```
 
-`make figures` renders the four figures from the committed canonical result
-tables in a temporary directory and requires byte-identical PDFs and manifest
-entries. Byte-level rendering uses the exact Linux environment in the data
+`make figures` renders all six submitted figures from their current result
+tables in a temporary directory and requires byte-identical PDFs and review
+manifests. Byte-level rendering uses the exact Linux environment in the data
 repository's `environment/conda-linux-64.lock`; the renderer fails before
 writing output if Python, Matplotlib, or FreeType differs. `make paper` builds
 only `main.tex` and `supplement.tex`; the main

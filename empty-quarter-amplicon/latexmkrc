@@ -1,0 +1,7 @@
+# Build xr's companion auxiliary file when either manuscript is the root.
+# A direct LaTeX pass avoids recursively invoking latexmk for the other root.
+add_cus_dep('tex', 'aux', 0, 'build_external_aux');
+sub build_external_aux {
+    my ($base) = @_;
+    return system('pdflatex', '-interaction=nonstopmode', '-halt-on-error', "$base.tex");
+}

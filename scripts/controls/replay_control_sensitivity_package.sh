@@ -65,6 +65,7 @@ run_step claim_rescue \
   "$python_bin" "$package_root/scripts/analysis/claim_rescue.py" \
   --project-root "$work_root" \
   --alpha "$input_root/alpha.tsv" \
+  --daily-weather "$package_root/metadata/climate/daily_weather_canonical.tsv" \
   --output-dir "$output_root/claim_rescue" \
   --skip-downstream
 

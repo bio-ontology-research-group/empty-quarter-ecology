@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 from manuscript_paths import PAPER
+import manuscript_text as mt
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,14 +42,14 @@ def test_cross_desert_statistics_match_manuscript_claims() -> None:
     assert round(float(gradient["p_value"]), 6) == 0.011308
     assert round(float(pit["estimate"]), 2) == 1.46
     assert round(float(pit["p_value"]), 4) == 0.0014
-    main = " ".join(MAIN.split())
-    supplement = " ".join(SUPPLEMENT.split())
-    # The main text explains the effects in plain language; the Supplement
-    # preserves the exact adjusted statistic and model label.
-    assert "Atacama" in main
-    assert "$p=0.0113$" in supplement
-    assert "partial $\\rho=0.6753$" in supplement
-    assert "pseudo-$F=1.463$" in supplement
+    # The between-desert reanalysis is not part of the current manuscript.
+    # Literature on the Atacama is cited, but no reanalysed Atacama statistic
+    # or Empty Quarter-versus-Atacama comparison is presented as a result.
+    combined = mt.combined()
+    for value in ("0.6753", "0.0113", "1.463", "PRJEB39249", "PRJEB17617", "QIITA"):
+        assert value not in combined, value
+    results = mt.section("main", r"\section*Results", r"\section*Discussion")
+    assert "Atacama" not in results
 
 
 def test_cross_desert_checksums_are_current() -> None:
@@ -76,4 +77,10 @@ def test_soil_position_figure_adds_descriptive_taxon_context() -> None:
     manifest = pd.read_csv(
         PAPER / "figures/figure_manifest.tsv", sep="\t"
     )
-    assert "paired_composition_loadings" in set(manifest["name"])
+    # The figure manifest records the paired-displacement loadings that drive
+    # panel d, with the checksum of the committed analysis output.
+    inputs = manifest[manifest["role"] == "input"]
+    loadings = inputs[inputs["file"].astype(str).str.endswith("paired_displacement_loadings.tsv")]
+    assert len(loadings) == 1
+    source = ROOT / "analysis/v3/compartment_composition/paired_displacement_loadings.tsv"
+    assert loadings["sha256"].iloc[0] == hashlib.sha256(source.read_bytes()).hexdigest()

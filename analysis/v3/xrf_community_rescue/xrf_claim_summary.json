@@ -1,13 +1,13 @@
 {
   "alpha_primary": {
-    "ci_high": 0.04074804792076195,
-    "ci_low": -0.04021056309990892,
-    "estimate": 0.00026874241042651806,
+    "ci_high": 0.04074804792076215,
+    "ci_low": -0.04021056309990873,
+    "estimate": 0.00026874241042670714,
     "model": "site_fixed_primary",
     "n_observations": 622,
     "n_sites": 60,
-    "p": 0.9896180471467837,
-    "std_error": 0.020653086398337437
+    "p": 0.9896180471467764,
+    "std_error": 0.02065308639833744
   },
   "axis": {
     "detection_threshold": 0.75,
@@ -22,12 +22,12 @@
     "n_observations": 621.0,
     "n_sites": 60.0,
     "p": 0.056,
-    "partial_r2": 0.0034547475768325502,
+    "partial_r2": 0.0034547475768323043,
     "pcoa_axes": 38.0,
-    "pcoa_retained_fraction": 0.8000459413452449,
+    "pcoa_retained_fraction": 0.8000459413452448,
     "pcoa_target_fraction": 0.8,
     "permutations": 999.0,
-    "pseudo_f": 1.9205652256246082,
+    "pseudo_f": 1.920565225624471,
     "residual_df": 554.0
   },
   "counts": {

@@ -69,9 +69,11 @@ def verify_file_manifest(root: Path, failures: list[str]) -> None:
 
 
 def verify_sha256s(root: Path, failures: list[str]) -> None:
-    for checksum_file in root.rglob("SHA256SUMS"):
-        if any(part in {".git", "data", "data-paper"} for part in checksum_file.parts):
+    tracked = subprocess.check_output(["git", "-C", str(root), "ls-files", "-z"]).split(b"\0")
+    for entry in tracked:
+        if not entry or Path(entry.decode()).name != "SHA256SUMS":
             continue
+        checksum_file = root / entry.decode()
         for line in checksum_file.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -92,14 +94,10 @@ def verify_manuscript(root: Path, failures: list[str]) -> None:
     main = (paper / "main.tex").read_text(encoding="utf-8")
     supplement = (paper / "supplement.tex").read_text(encoding="utf-8")
     combined = main + supplement
-    # One \todo is a documented open item: the BioProject accession of the
-    # companion shotgun study is still to be obtained by the corresponding
-    # author (handover, Sep 2026).  Every other marker fails verification.
-    allowed_todos = {"BioProject accession"}
-    todos = re.findall(r"\\todo\{([^}]*)\}", combined)
-    unexpected = [todo for todo in todos if todo not in allowed_todos]
-    if unexpected or combined.count(r"\todo{") != len(todos):
-        failures.append(f"active manuscript contains unexpected \\todo markers: {unexpected}")
+    # Check rendered source, excluding comments, for both ordinary and inline TODOs.
+    active = re.sub(r"(?m)^\s*%.*$", "", combined)
+    if re.search(r"\\todo(?:\[[^]]*\])?\{", active):
+        failures.append("active manuscript contains unresolved TODO markers")
     for marker in (r"\paragraph{", r"\subparagraph{"):
         if marker in combined:
             failures.append(f"active manuscript contains {marker}")
@@ -111,7 +109,12 @@ def verify_manuscript(root: Path, failures: list[str]) -> None:
         "figures/fig1_landscape.pdf",
         "figures/fig2_soil_position.pdf",
         "figures/fig3_function_controls.pdf",
-        "figures/figS_campaign_rainfall.pdf",
+        "figures/rain_calendar_refit.pdf",
+        "figures/fig_core_overlap.pdf",
+        "figures/fig_pma_richness.pdf",
+        "figures/pma_richness_manifest.json",
+        "figures/figure_review_manifest.json",
+        "figures/core_overlap_manifest.json",
         "figures/figure_manifest.tsv",
         "figures/figure_runtime.json",
     ):

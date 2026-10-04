@@ -1,0 +1,132 @@
+Changes for Rund's review — 4 October 2026
+
+Baseline: Rund's Overleaf revision a5d5623 (2 October 2026).
+This comparison includes the subsequent cohort/reference corrections (85aa86d),
+ASV sensitivity update (3cd5a76), and the finalization changes made on 4 October.
+Rund's section order and argument structure are retained. Text is changed to
+correct data, methods, interpretation, cross-references and obvious typos.
+
+The main and supplement redlines mark textual additions and deletions, including
+included tables. Figure comparisons show old and new graphics separately:
+latexdiff cannot mark changed pixels inside an existing figure file. The source
+patch records every changed source line, including bibliography changes.
+
+1. Cohorts and definitions
+- Distinguished 1,237 retained biological profiles from the 1,227 profiles at
+  repeatedly sampled sites 1–60; clarified the 24 controls within 1,271 profiles.
+- Matched the MAG cohorts to their analyses: 991 genomes/150 shotgun libraries;
+  990 genomes with KO assignments and 125 paired libraries for KO validation;
+  975 genomes and 119 paired libraries for marker comparisons. Checked 28.5%
+  mean read recruitment against the complete 991-genome catalogue.
+- Defined richness as expected ASV richness at the specified read depth.
+  Clarified normalized Shannon, including why it can exceed one.
+- Clarified nominal subsurface depth (5–10 cm) versus unrecorded exact depths,
+  following Robert's confirmation. Root distance remains operational.
+- Added the confirmed Trip 4 pH replicate-2 protocol; explained that the v1.0.1
+  annotation update preserves the v1.0.0 numerical values.
+
+2. Geography, compartments and core genera
+- Used corrected Site 52 coordinates throughout current coordinate-dependent
+  analyses. Retained the supported main spatial result, 40.1% [32.4, 47.7],
+  and distance-decay omnibus p=0.0051.
+- Updated ASV-resolution sensitivity to the complete 630-group cohort:
+  37.3% [32.1, 42.5] and 35.4% [30.4, 40.3].
+- Qualified the covariance sensitivity correctly: support depends on covariance
+  range and independent-noise fraction, including some models at about 50 km.
+  Added the existing Moran neighbour-number sensitivity.
+- Reconciled paired alpha-diversity tables to Rund's campaign-matched primary
+  estimand. Corrected shallow-subsurface versus surface Shannon q to 0.010,
+  richness q to 0.115, and root-adjacent versus surface Shannon to -0.22.
+- Clarified contrast directions, pairing, tests and confidence intervals;
+  repaired displacement and turnover supplementary tables and citations.
+- Specified the endpoints actually used in depth/kit GEE sensitivity analyses.
+- Limited root-adjacent dispersion/decay comparisons to supported contrasts.
+- Replaced the Venn TODO with the requested core-genus overlap figure:
+  82 surface, 69 subsurface and 85 root-adjacent core genera, 59 shared by all.
+  The figure uses the same 90%-occupancy definition and rarefaction as the table.
+
+3. pH, climate and XRF
+- Replaced the invalid inference that pH accounts for about half the geographic
+  pattern. The new common-denominator partition of adjusted site means gives
+  1.38% unique pH, 13.56% unique geography, 23.86% shared and 61.20% unexplained.
+  Added methods, group-level and resampling sensitivity; retained the small
+  within-site association (0.278%, p=0.125). Revised the Discussion accordingly.
+- Corrected correlation ranges for the named pH-associated genera to
+  0.76–0.81 and -0.64 to -0.67.
+- Reran XRF and climate/environment analyses with corrected geometry and the
+  latest confirmed field-weather input. Reported XRF results are unchanged.
+- Corrected field-weather minimum adjusted q from 0.53 to 0.319. Explained
+  campaign/transect adjustment, rather than multiple testing alone. Included
+  the raw humidity associations alongside pressure in the supplement.
+- Corrected named temperature-associated genus ranges to 0.75–0.85 and
+  -0.67 to -0.69; clarified that climate temperatures are long-term means.
+- Described the XRF axis as an elemental contrast, removing an unsupported
+  identification of specific minerals. Corrected the Trip 5 duplicate-reading
+  sensitivity rule to last-reported versus primary-status candidate selection.
+- Reconciled XRF measurement/group counts and in-situ measurement coverage.
+
+4. Rainfall
+- Refetched Site 52 Open-Meteo daily weather at the corrected coordinates;
+  verified all other sites are unchanged and NASA POWER uses the same grid cell.
+- Rebuilt the five-product Trip 1 exposure table at corrected grid cells using
+  the original 21 raw climate files, verified by hash. Its reported correlation
+  ranges are unchanged.
+- Reran the calendar-year refit and the retained diagnostic/sensitivity analyses.
+  Main effect estimates remain 179 and 327 taxa/mm; exact calendar p values
+  remain 1/6 and 2/6. The interpretation remains exploratory.
+- Updated Open-Meteo richness selection from 73% to 68%, its fixed-endpoint
+  peak range from 0.5–6.5 to 0.5–6.0 days, and supplementary bootstrap endpoint
+  frequencies, effect ranges, orbit entries, calibration and wet-spell values.
+- Corrected two pre-existing rainfall robustness errors: the strongest fixed
+  interval is 3–4 days for NASA POWER but 1 day for Open-Meteo, and Open-Meteo
+  also has a comparable post-collection association. Revised the timing claim
+  and Discussion accordingly; independent storm sampling is needed.
+- Updated the rainfall figure and all included rainfall tables. Clarified the
+  scope of the diagnostics and the calendar-year exchangeability assumption.
+  Described whole-site bootstrap ranges accurately, without implying a spatial
+  block bootstrap or selective-inference confidence coverage.
+
+5. Controls and PMA
+- Corrected extraction-blank, PCR-negative, mock and filtering descriptions,
+  including the 1,000-read threshold and the roles of Trip 5 control libraries.
+- Corrected Trip 5 pooled removal to 2.19% in 217 linked profiles and the
+  before/after Shannon/raw-richness rank correlations to 0.995/0.99995.
+- Added and independently reproduced the Trip 4 diversity summary: 95 linked
+  profiles, seven candidate ASVs, correlations 0.99948/1.00000. Replayed the
+  screen against the sample map in the latest data commit with identical results.
+- Clarified exact-sequence matching of separately denoised Trip 4 blanks to
+  biological profiles, and shared-run processing for Trip 5.
+- Reran the control-filter sensitivity and batch-adjacency analysis with
+  corrected coordinates; the final result ledger records their conclusions.
+- Corrected PMA replication to nine aliquot pairs from three parent tubes at
+  two campsites. Used PMA-accessible DNA terminology rather than treating PMA
+  as a direct live/dead assay. Removed the unsupported claim that relic DNA
+  did not affect the ecological results.
+- Corrected the rounded C2 root-adjacent PMA Shannon difference to -0.02.
+- Reproduced the supplementary PMA richness plot from the exact paired data.
+
+6. Functional results
+- Corrected input/cohort descriptions and the scope of the Trip 5 ASV count.
+- Used the corrected geographic pathway result (23.3%) and explicit analysis
+  cohorts throughout. Specified marker definitions and the current source path.
+- Limited hydrogenase interpretation to the measured groups (1 or 3d) and
+  described carrier-compartment differences as descriptive where untested.
+
+7. References, presentation and reproducibility
+- Repaired cross-document references, undefined citations, duplicate BibTeX
+  entries and missing bibliography fields; added the KEGG reference.
+- Removed an incomplete sentence and fixed spelling, punctuation, missing
+  delimiters and table-placement errors. Cited previously uncited floats.
+- Regenerated figures from their evidence tables, with source/output hashes,
+  and provided scripts for the new overlap and PMA figures.
+- Added the funding statement supplied by Robert: "No specific funding was
+  received for this project." Retained Susana's existing FNR support statement.
+- Synchronized the current Overleaf manuscript, tables and figures into the
+  ecology GitHub repository. Reconciled tests with Rund's manuscript structure
+  while retaining numerical checks. Documented current input versions, rerun
+  commands, validation and the limits of reconstruction from public raw reads.
+
+Exact wording and every changed line are available in the redlines/source patch.
+
+Rainfall route sensitivity: added the attenuation under quadratic/cubic longitude
+trends (71–124 taxa/mm), including the quadratic interval crossing zero.

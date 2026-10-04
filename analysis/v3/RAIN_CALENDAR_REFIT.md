@@ -4,7 +4,12 @@ This analysis replaces the current manuscript's circular-lag search and
 frozen-nuisance-residual bootstrap. Historical outputs remain archived.
 
 Inputs are the final diversity table, corrected campaign geodata and the
-two frozen daily rainfall products. No new weather retrieval is performed.
+two frozen daily rainfall products. The Open-Meteo product is the packaged
+override `analysis/v3/open_meteo_site52_corrected_20261004/`: the pinned
+data-repository table with the Site 52 series refetched at the corrected
+position (the pinned series was fetched at the mean of the pre-correction
+campaign coordinates; see that directory's `manifest.json`). The refit itself
+performs no weather retrieval.
 The complete input hashes and Python, NumPy, pandas, SciPy and Patsy versions
 are recorded in rain_calendar_refit_20260909/manifest.json.
 
@@ -16,7 +21,7 @@ From the ecology analysis root, use the analysis environment:
 python analysis/v3/rain_calendar_refit.py \
   --geodata /path/to/data/metadata/geodata \
   --nasa /path/to/data/metadata/climate/nasa_power_daily_precipitation.tsv.gz \
-  --open-meteo /path/to/data/metadata/climate/daily_weather_canonical.tsv \
+  --open-meteo analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv \
   --output analysis/v3/rain_calendar_refit_20260909 \
   --bootstraps 9999 --simulations 300 --seed 20260910
 python -m pytest -q tests/test_rain_calendar_refit.py

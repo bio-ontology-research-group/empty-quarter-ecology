@@ -18,12 +18,18 @@ compartment, and site effects.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import platform
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import scipy
+import sklearn
+import statsmodels
 import statsmodels.formula.api as smf
 from scipy.spatial.distance import pdist, squareform
 from sklearn.decomposition import PCA
@@ -51,6 +57,28 @@ META_COLUMNS = {
 ELEMENT_RE = re.compile(r"^[A-Z][a-z]?$")
 CORE_SITES = set(range(1, 61))
 SEED = 20260723
+LAB_XRF_TRIPS1_4 = "data/processed/geochemistry/xrf_lab_table_trips1-4.tsv"
+LAB_XRF_TRIP5 = "data/processed/geochemistry/xrf_lab_table_filtered.tsv"
+ALPHA_CACHE = "analysis/v2/review/cache/alpha.tsv"
+GENUS_CACHE = "analysis/v2/review/cache/genus_counts.tsv"
+GEODATA = [f"data/metadata/geodata/trip{trip}_geodata.tsv" for trip in range(1, 6)]
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def data_repository_lock(root: Path) -> dict[str, str]:
+    """Return the pinned data-repository record, if the lock file exists."""
+    path = root / "DATA_REPOSITORY.lock"
+    if not path.is_file():
+        return {}
+    frame = pd.read_csv(path, sep="\t", dtype=str)
+    return dict(zip(frame["field"], frame["value"]))
 
 
 def parse_sample_id(
@@ -84,14 +112,8 @@ def load_xrf_table(path: Path, default_trip: int | None) -> pd.DataFrame:
 
 
 def load_all_lab_xrf(root: Path) -> tuple[pd.DataFrame, list[str]]:
-    t14 = load_xrf_table(
-        root / "data/processed/geochemistry/xrf_lab_table_trips1-4.tsv",
-        default_trip=None,
-    )
-    t5 = load_xrf_table(
-        root / "data/processed/geochemistry/xrf_lab_table_filtered.tsv",
-        default_trip=5,
-    )
+    t14 = load_xrf_table(root / LAB_XRF_TRIPS1_4, default_trip=None)
+    t5 = load_xrf_table(root / LAB_XRF_TRIP5, default_trip=5)
     shared_elements = [
         column
         for column in t14.columns
@@ -177,9 +199,8 @@ def fit_elemental_axis(
 
 def load_coordinates(root: Path) -> pd.DataFrame:
     rows: list[dict[str, float | int]] = []
-    for trip in range(1, 6):
-        path = root / f"data/metadata/geodata/trip{trip}_geodata.tsv"
-        frame = pd.read_csv(path, sep="\t")
+    for trip, relative in enumerate(GEODATA, start=1):
+        frame = pd.read_csv(root / relative, sep="\t")
         frame["Site"] = pd.to_numeric(frame["Site"], errors="coerce")
         frame = frame.dropna(subset=["Site", "Latitude", "Longitude"])
         for _, row in frame.iterrows():
@@ -197,16 +218,8 @@ def load_coordinates(root: Path) -> pd.DataFrame:
 def load_community(
     root: Path,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    alpha = pd.read_csv(
-        root / "analysis/v2/review/cache/alpha.tsv",
-        sep="\t",
-        index_col=0,
-    )
-    counts = pd.read_csv(
-        root / "analysis/v2/review/cache/genus_counts.tsv",
-        sep="\t",
-        index_col=0,
-    )
+    alpha = pd.read_csv(root / ALPHA_CACHE, sep="\t", index_col=0)
+    counts = pd.read_csv(root / GENUS_CACHE, sep="\t", index_col=0)
     shared = counts.columns.intersection(alpha.index)
     counts = counts[shared]
     metadata = alpha.loc[shared, ["Trip", "Site", "Type", "shannon", "depth"]].copy()
@@ -488,7 +501,9 @@ def analyse(
         "# Laboratory XRF/community claim rescue",
         "",
         f"- Status: `{status}`",
-        f"- Laboratory records: {len(xrf)} (547 Trips 1–4; 178 Trip 5)",
+        f"- Laboratory records: {len(xrf)} "
+        f"({summary['counts']['trips1_4_records']} Trips 1–4; "
+        f"{summary['counts']['trip5_records']} Trip 5)",
         f"- Community joins: {len(joined_keys)} core-site observations",
         f"- Primary alpha p: {alpha_primary['p']:.4g}",
         f"- Primary multivariate p: {beta_primary['p']:.4g}",
@@ -503,7 +518,78 @@ def analyse(
         "",
     ]
     (output / "README.md").write_text("\n".join(readme))
+    write_run_manifest(
+        root,
+        output,
+        {
+            "permutations": permutations,
+            "detection_threshold": detection_threshold,
+            "seed": SEED,
+        },
+    )
     return summary
+
+
+def write_run_manifest(
+    root: Path, output: Path, parameters: dict[str, object]
+) -> None:
+    """Record outputs, input digests and the pinned data revision."""
+    inputs = {
+        relative: {
+            "sha256": sha256_file(root / relative),
+            "bytes": (root / relative).stat().st_size,
+        }
+        for relative in (
+            LAB_XRF_TRIPS1_4,
+            LAB_XRF_TRIP5,
+            ALPHA_CACHE,
+            GENUS_CACHE,
+            *GEODATA,
+        )
+    }
+    names = sorted(
+        path.name
+        for path in output.iterdir()
+        if path.is_file() and path.name not in {"run_manifest.json", "SHA256SUMS"}
+    )
+    manifest = {
+        "artifact_root": "analysis/v3/xrf_community_rescue",
+        "files": [
+            {
+                "bytes": (output / name).stat().st_size,
+                "path": name,
+                "sha256": sha256_file(output / name),
+            }
+            for name in names
+        ],
+        "inputs": inputs,
+        "data_repository": data_repository_lock(root),
+        "parameters": parameters,
+        "provenance": {
+            "script": "analysis/v3/xrf_community_rescue.py",
+            "script_sha256": sha256_file(Path(__file__).resolve()),
+            "software": {
+                "python": platform.python_version(),
+                "numpy": np.__version__,
+                "pandas": pd.__version__,
+                "scipy": scipy.__version__,
+                "scikit_learn": sklearn.__version__,
+                "statsmodels": statsmodels.__version__,
+            },
+            "command": "python analysis/v3/xrf_community_rescue.py "
+            + " ".join(sys.argv[1:]).replace(str(root) + "/", ""),
+        },
+        "schema_version": "1.1",
+    }
+    (output / "run_manifest.json").write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+    )
+    checksums = [*names, "run_manifest.json"]
+    (output / "SHA256SUMS").write_text(
+        "".join(
+            f"{sha256_file(output / name)}  {name}\n" for name in sorted(checksums)
+        )
+    )
 
 
 def main() -> None:

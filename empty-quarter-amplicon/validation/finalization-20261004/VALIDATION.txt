@@ -1,0 +1,70 @@
+Ecology finalization validation record — 4 October 2026
+
+Authoritative manuscript: Overleaf project 6a7422eef2624277cf100b3b.
+Coauthor comparison baseline: Rund's 2 October revision a5d5623.
+Initial ecology analysis commit: fa9ceb4.
+Data pin: 5a17782c1ec3c7d511bf5f8ae934086b950f6ae1.
+Site 52: 20.82784 N, 53.57835 E.
+
+Input custody
+The original data checkout contains unrelated edits and was preserved. A clean
+worktree at the exact pinned data commit passed its repository verification.
+Consumed data inputs were compared with that pin. The feature table, taxonomy,
+XRF lab tables, sample ledger and packaged Trip 4 blank map match it. The field-
+weather analysis explicitly used the pinned curated environmental table.
+The remaining old-position daily Open-Meteo series is replaced by an explicit,
+hashed ecology input package; all non-Site-52 rows are preserved.
+
+Numerical validation
+- XRF community and CLR sensitivity rerun: principal results unchanged,
+  including 0.358% conditional CLR variation, p=0.010.
+- Environment associations rerun: monthly climate values/correlations unchanged;
+  corrected coordinate diagnostics and field-weather adjusted q range
+  0.3192–0.7966. Current biology/taxon manifests explicitly verify that consumed
+  climate/alpha columns are unchanged; historical acquisition hashes are retained.
+- Hypothesis-family registry recomputed: 35 BH families, 3,394 memberships;
+  every reported q agrees with the recorded family membership.
+- Trip 4/5 screen independently replayed from pinned input maps: identical
+  biological outputs, 95 linked Trip 4 profiles and 217 Trip 5 profiles.
+- Current both-campaign control-filter sensitivity: all 25 verdicts stable;
+  geographic partial R2 0.4007 -> 0.3971; distance-decay p 0.0051 -> 0.0074.
+- Library-order adjacency rerun using corrected Trip 1/3 Site 52 rows:
+  interpretations unchanged; original Bray-Curtis matrix reproduced exactly.
+- Rain calendar refit: 9,999 whole-site refits, complete six-assignment orbit,
+  300 calibration simulations and wet-spell deletions rerun. Legacy diagnostic
+  models also rerun, including product, nuisance, filtering and window checks.
+  Product-specific fixed intervals and the positive Open-Meteo future placebo
+  are now reflected in the paper.
+- The pH common-denominator package independently regenerates every output;
+  its input coordinates match the correction. Methods and sensitivity are
+  documented in analysis/v3/ph_partition_20261004/.
+- MAG recruitment independently reconstructed across all 991 genomes and
+  150 libraries: mean 28.518623%, confirming 28.5%.
+- Archaeal read share independently reconstructed from canonical ASV counts:
+  0.0239404% across 1,227 profiles, confirming 0.02%.
+- Trip 4 Shannon and richness independently reconstructed from full counts:
+  rho 0.9994820829 and 1.0; all 95 depths, richnesses and removed-read counts
+  agree with screen ledgers.
+
+Manuscript and figures
+Claim tests now read active included tables and compare their cells with the
+scientific outputs. Old heading/wording expectations were reconciled with Rund's
+reorganization; numerical checks were retained. Unsupported analyses absent
+from her manuscript were not reintroduced. No tests were skipped or xfailed.
+All six submitted figure PDFs and their review manifests regenerate byte for
+byte in the locked rendering environment. The three original main composite
+PDFs also match Rund's baseline exactly. Main/supplement LaTeX builds resolve
+all current references and citations. The changed figure and table pages were
+visually inspected. Redlines include tables and use the exact baseline above.
+
+Reproducibility boundary
+These checks concern the paper's analyses from provided canonical tables and
+archives. They do not claim a fresh raw-read-to-paper run. Public raw-read,
+upstream prediction/genome and archival release requirements remain documented
+in the companion data repository and the manuscript's Data availability.
+
+Outstanding verification
+OPEN_VERIFICATION.txt describes the unresolved physical well-to-well analysis.
+Its original author text is preserved; the available library-order analysis
+cannot replace its missing source. Passing software/claim checks do not verify
+this result in the absence of its code and plate map.

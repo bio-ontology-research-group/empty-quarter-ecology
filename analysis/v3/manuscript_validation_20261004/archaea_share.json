@@ -1,0 +1,11 @@
+{
+  "method": "Mean archaeal read fraction across 1227 core profiles, reconstructed directly from canonical ASV counts and SILVA domain assignments. All profile depths match cached alpha depths exactly.",
+  "mean_archaeal_read_share_pct": 0.023940385503097288,
+  "archaeal_asvs": 1931,
+  "n_profiles": 1227,
+  "inputs": {
+    "data/metadata/taxonomy/taxonomy-trips1-5.tsv": "fcf0a3ea0ca8ed956532fb4d7bffa0c20249e3048779a219155cc1bb7e483d35",
+    "analysis/v2/review/cache/alpha.tsv": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
+    "data/metadata/taxonomy/feature-table-trips1-5.tsv": "129f47d8f0db8d9afd6f8c67b8d80b5bead90155d8c91d2f43ea6a4139b0cb12"
+  }
+}

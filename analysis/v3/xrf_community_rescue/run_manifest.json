@@ -1,5 +1,16 @@
 {
   "artifact_root": "analysis/v3/xrf_community_rescue",
+  "data_repository": {
+    "bulk_manifest_sha256": "66c0a66ad2f15058828fbf915947f94c8264e486f5d8d729b3ad332a5c121631",
+    "commit": "5a17782c1ec3c7d511bf5f8ae934086b950f6ae1",
+    "conda_explicit_lock_sha256": "d3bdc7b6b0731126691d046eb8250622bad54b3fc5767cd6ab182208ad07923a",
+    "environment_lock_sha256": "b10cf25f9bd92fb75a13c46ed71c2aaf6d4debd4f9faed3dc2a759bdd3617fa0",
+    "file_manifest_sha256": "f3416f96aa088f4ed18911422ea294478aae7367a98c101452a45e7eaa5ca45e",
+    "pip_overlay_lock_sha256": "aa9a85ebbee6440d7c8eebc9a2e9234f8100b90724b4233bac33324ea623c3b9",
+    "release_manifest_sha256": "a61afc0aecc95de3b198c3070ef2014fb7d8ec99a328a8cebbb56f8522c22d58",
+    "repository": "git@github.com:bio-ontology-research-group/empty-quarter-data-paper.git",
+    "workflow_sha256": "500722d0e3c7d721eac378e7d9286e039f8b6e46b0e379025a848fc804524ece"
+  },
   "files": [
     {
       "bytes": 632,
@@ -17,25 +28,81 @@
       "sha256": "5cc9008bcd24b6c284339d684d05ee55bacc4f12d44b77549d5a9286d4718d6a"
     },
     {
-      "bytes": 81008,
+      "bytes": 80970,
       "path": "xrf_alpha_analysis_table.tsv",
-      "sha256": "037f5189dbe8e77304d853598206f28b7a3e394a2db7b050b554362684edadf0"
+      "sha256": "5d70a6da0f92ed6e2cb89d0c6589a7bf67a262393d441ce3ac0f7548c66f8e1f"
     },
     {
-      "bytes": 475,
+      "bytes": 476,
       "path": "xrf_alpha_models.tsv",
-      "sha256": "ba1e81bb1dc8ee58bda1280fb2d666c33606c8f4e9b065ce5051ed0aa459bbf8"
+      "sha256": "83366074dbe92dbb468295b16b886ced0f22c262746fe3dec3ff4c35825c6af2"
     },
     {
-      "bytes": 1655,
+      "bytes": 1653,
       "path": "xrf_claim_summary.json",
-      "sha256": "39eebed2305bc7978639d029a56e730558e127cb03c0b39a84e454cad872badb"
+      "sha256": "8e06580dc0b44dfcd38162a96fca4a3f5c17c93803046d3f33a5dd7dee35bd53"
     },
     {
-      "bytes": 301,
+      "bytes": 300,
       "path": "xrf_community_models.tsv",
-      "sha256": "dd4fe20e4a024d533de3e0a26be3ee544c029668bc79076a31b7d1bbf91bc749"
+      "sha256": "833d933d3541f56fba30c6a3de59ae586f4288bda6d4d1614b828981c660fa7f"
     }
   ],
-  "schema_version": "1.0"
+  "inputs": {
+    "analysis/v2/review/cache/alpha.tsv": {
+      "bytes": 123109,
+      "sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c"
+    },
+    "analysis/v2/review/cache/genus_counts.tsv": {
+      "bytes": 8401418,
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "data/metadata/geodata/trip1_geodata.tsv": {
+      "bytes": 5966,
+      "sha256": "2682d26bd83cc928b89abe637335cc09479ce61b9f52118c07b0538013a89ee2"
+    },
+    "data/metadata/geodata/trip2_geodata.tsv": {
+      "bytes": 888,
+      "sha256": "5935cde2684936a653ab3f1358209ff8dbe6d090cb8d618e136123fb84120855"
+    },
+    "data/metadata/geodata/trip3_geodata.tsv": {
+      "bytes": 7574,
+      "sha256": "af9834366a56c3bc537410aeccfa1495cd3e249115a832728c5dcedc45251ae1"
+    },
+    "data/metadata/geodata/trip4_geodata.tsv": {
+      "bytes": 5610,
+      "sha256": "d60d815a0b0ec8a471513fef4ae367bd6b49b88178daedf178613b2430123237"
+    },
+    "data/metadata/geodata/trip5_geodata.tsv": {
+      "bytes": 2928,
+      "sha256": "3d94c3d63ba81932af72fdfcbdff5d97a9ae9a6d2c4c02142ccb9d0193cf1fc7"
+    },
+    "data/processed/geochemistry/xrf_lab_table_filtered.tsv": {
+      "bytes": 58955,
+      "sha256": "8e11d540f5220dcc976f101ad4f6ddb916b8011803a610d9100534d1be98a4ca"
+    },
+    "data/processed/geochemistry/xrf_lab_table_trips1-4.tsv": {
+      "bytes": 121086,
+      "sha256": "afc0282badd602a2d6f51e3f3d4339f43fe0ddfa9914b83d6a0e3644671565f6"
+    }
+  },
+  "parameters": {
+    "detection_threshold": 0.75,
+    "permutations": 999,
+    "seed": 20260723
+  },
+  "provenance": {
+    "command": "python analysis/v3/xrf_community_rescue.py --output-dir analysis/v3/xrf_community_rescue",
+    "script": "analysis/v3/xrf_community_rescue.py",
+    "script_sha256": "ec12c67bb41226be207b66fede852ad22726e3b81a363100c2a3cee870aa01a4",
+    "software": {
+      "numpy": "2.1.3",
+      "pandas": "2.2.3",
+      "python": "3.11.14",
+      "scikit_learn": "1.5.2",
+      "scipy": "1.14.1",
+      "statsmodels": "0.14.6"
+    }
+  },
+  "schema_version": "1.1"
 }

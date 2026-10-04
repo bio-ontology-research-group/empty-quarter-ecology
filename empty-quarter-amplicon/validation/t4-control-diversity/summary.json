@@ -1,0 +1,11 @@
+{
+  "n_profiles": 95,
+  "called_asvs": 7,
+  "called_asvs_present_in_canonical": 7,
+  "shannon_spearman": 0.9994820828667412,
+  "raw_richness_spearman": 0.9999999999999999,
+  "max_abs_shannon_change": 0.30941531053846294,
+  "direct_count_entropy_max_error": 3.552713678800501e-15,
+  "removed_reads_ledger_exact_match": true,
+  "depth_and_richness_ledger_exact_match": true
+}

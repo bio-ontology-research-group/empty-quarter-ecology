@@ -616,8 +616,12 @@ def main() -> int:
     for name in ("README.md", "primer_counts.tsv", "source_paths.tsv"):
         copy(root / "analysis/v3/primer_identity_audit" / name, primer_stage / name)
 
+    # Open-Meteo daily table with the Site 52 series at the corrected
+    # position (analysis/v3/open_meteo_site52_corrected_20261004/README.md).
     copy(
-        root / "data/processed/climate/daily_weather_canonical.tsv",
+        root
+        / "analysis/v3/open_meteo_site52_corrected_20261004"
+        / "daily_weather_canonical_site52_corrected.tsv",
         stage / "metadata/climate/daily_weather_canonical.tsv",
     )
     copy(

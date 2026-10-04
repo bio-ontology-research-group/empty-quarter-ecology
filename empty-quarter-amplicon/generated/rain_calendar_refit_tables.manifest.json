@@ -1,0 +1,38 @@
+{
+  "inputs": [
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit_20260909/summary.json",
+      "sha256": "6fd4ec18c3d804a3062f518a10f87523b7ef1795921a5fe4008955c36fec5f7a"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit_20260909/refitted_site_bootstrap.tsv.gz",
+      "sha256": "e60574446630185bc2902a7439946471caca0be4585456c81179025b212a758d"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit_20260909/refitted_site_bootstrap_summary.tsv",
+      "sha256": "436866df25f23a684abbeb1955a0db5ddeedc7d773a453b39d7c52836c50674d"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit_20260909/calendar_year_orbit.tsv",
+      "sha256": "67d1e7e47bf50a6512f1dc39e1000ae784b2be90f656eab0260687d00cc90be9"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/rain_calendar_refit_20260909/manifest.json",
+      "sha256": "965506f0d07fd4e3a6a0ab33aaa4ab047a49402a42b30b93a785ff019b01eccc"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/render_rain_calendar_refit.py",
+      "sha256": "eb9fd02068c80667758d2ed25b01abf278b972b404d782c23c5d15805096321e"
+    }
+  ],
+  "outputs": {
+    "figures/rain_calendar_refit.pdf": "5d8888babbbbd3e34e3579875a8c6eff6ab5ded66fc7bfd75624b8e35416bb5d",
+    "generated/rain_calendar_refit_tables.tex": "970cfc6aa34b5cdfc928109f607db112a7d7e8c0e06b38d045224bbb008048d9"
+  },
+  "software": {
+    "matplotlib": "3.9.4",
+    "freetype": "2.14.3",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3"
+  }
+}

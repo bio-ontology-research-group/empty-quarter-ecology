@@ -1626,7 +1626,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--open-meteo-weather",
         type=Path,
-        default=root / "data/processed/climate/daily_weather_canonical.tsv",
+        default=root
+        / "analysis/v3/open_meteo_site52_corrected_20261004"
+        / "daily_weather_canonical_site52_corrected.tsv",
     )
     parser.add_argument(
         "--output",

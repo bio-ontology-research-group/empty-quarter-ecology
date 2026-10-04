@@ -18,8 +18,8 @@
     "inferential_role": "descriptive negative control only",
     "maximum_endpoint": "evenness_h_over_log_hurlbert",
     "maximum_peak_days": 0.5,
-    "maximum_t": 0.5638448077196107,
-    "richness_maximum_t": 0.1470967840251816
+    "maximum_t": 0.5638448077196211,
+    "richness_maximum_t": 0.14709678402518117
   },
   "half_maximum_day": 5.356746783733919,
   "kernel": "(lag / peak) * exp(1 - lag / peak)",
@@ -39,12 +39,12 @@
   "sampling_uncertainty": {
     "boundary": "The bootstrap quantifies sampling variation among sites conditional on the fitted nuisance adjustment and rainfall product. Product and route-model uncertainty are reported separately.",
     "fixed_effect_95_ci": [
-      0.09831264660909285,
-      0.3716193509771387
+      0.09831264660909252,
+      0.3716193509771384
     ],
     "fixed_partial_r2_95_ci": [
-      0.014027380772367247,
-      0.21609625030648608
+      0.014027380772366854,
+      0.2160962503064875
     ],
     "full_search_endpoint_selection_frequency": {
       "evenness_h_over_log_hurlbert": 0.019001900190019003,

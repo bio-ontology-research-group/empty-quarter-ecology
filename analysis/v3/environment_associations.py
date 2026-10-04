@@ -76,6 +76,15 @@ def bh_fdr(values: Iterable[float]) -> np.ndarray:
     return result
 
 
+def data_repository_lock(root: Path) -> dict[str, str]:
+    """Return the pinned data-repository record, if the lock file exists."""
+    path = root / "DATA_REPOSITORY.lock"
+    if not path.is_file():
+        return {}
+    frame = pd.read_csv(path, sep="\t", dtype=str)
+    return dict(zip(frame["field"], frame["value"]))
+
+
 def write_tsv(frame: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     frame.to_csv(path, sep="\t", index=False, float_format="%.10g")
@@ -578,6 +587,13 @@ def main() -> None:
             "geography-adjusted models are supplementary diagnostics."
         ),
         "input_sha256": {name: sha256_file(path) for name, path in paths.items()},
+        "coordinate_input_sha256": {
+            f"trip{trip}_geodata": sha256_file(
+                root / "data/metadata/geodata" / f"trip{trip}_geodata.tsv"
+            )
+            for trip in range(1, 6)
+        },
+        "data_repository": data_repository_lock(root),
         "provenance": {
             "script": "analysis/v3/environment_associations.py",
             "script_sha256": sha256_file(Path(__file__).resolve()),

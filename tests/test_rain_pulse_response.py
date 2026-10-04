@@ -80,14 +80,16 @@ def test_primary_result_is_borderline_and_not_promoted_by_filtering():
     assert primary["analysis_status"] == "temporally_localized_association_borderline"
     assert primary["selected_endpoint"] == "richness_hurlbert_25000"
     assert primary["selected_peak_complete_days"] == 2.0
+    # Regenerated on 4 Oct 2026 with corrected Site 52 coordinates and the
+    # corrected Open-Meteo Site 52 series (was 179.567, p=0.056/0.07865).
     assert primary["selected_estimate_per_mm_at_peak"] == pytest.approx(
-        179.5673223157866
+        179.37737555811324
     )
     family = primary["familywise_inference"]
     assert family["n_lag_rotation_draws"] == 19_999
-    assert family["conditional_lag_rotation_one_sided_p"] == pytest.approx(0.056)
+    assert family["conditional_lag_rotation_one_sided_p"] == pytest.approx(0.0545)
     assert family["conditional_lag_rotation_two_sided_p"] == pytest.approx(
-        0.07865
+        0.07705
     )
 
     assert filtered["community_table_role"] == "control_filtered_sensitivity"
@@ -98,7 +100,7 @@ def test_primary_result_is_borderline_and_not_promoted_by_filtering():
     ) < 0.2
     assert filtered["familywise_inference"][
         "conditional_lag_rotation_one_sided_p"
-    ] == pytest.approx(0.0485)
+    ] == pytest.approx(0.04825)
     assert "threshold crossing" in " ".join(primary["prohibited_wording"])
 
 
@@ -110,10 +112,10 @@ def test_independent_weather_product_places_peak_in_same_early_period():
     assert decision["selected_peak_complete_days"] == 1.0
     assert decision["familywise_inference"][
         "conditional_lag_rotation_one_sided_p"
-    ] == pytest.approx(0.04315)
+    ] == pytest.approx(0.04295)
     assert decision["familywise_inference"][
         "conditional_lag_rotation_two_sided_p"
-    ] == pytest.approx(0.04865)
+    ] == pytest.approx(0.04885)
 
 
 def test_shape_position_and_future_rain_diagnostics_are_bounded():
@@ -168,7 +170,10 @@ def test_all_run_checksums_are_current():
 
 def test_fixed_event_exposures_cover_five_products_with_positive_agreement():
     table = pd.read_csv(
-        ROOT / "data/processed/climate/rain_event_product_exposures.tsv", sep="\t"
+        ROOT
+        / "analysis/v3/rain_event_product_exposures_site52_corrected_20261004"
+        / "rain_event_product_exposures.tsv",
+        sep="\t",
     )
     assert len(table) == 300
     assert table["product_id"].nunique() == 5

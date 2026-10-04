@@ -69,4 +69,26 @@ Identical to the 29 Aug six-library run.
 Sensitivity of the 25 tracked conclusions with both screens applied together (312
 filtered profiles; `sensitivity/outputs/headline_result_sensitivity.tsv`): all 25
 verdicts stable; largest shifts paired Shannon q 0.0256 -> 0.0312 (published Trip 5-only
-run: 0.0305) and paired distance-decay omnibus p 0.0053 -> 0.0075 (0.0077).
+run: 0.0305) and paired distance-decay omnibus p 0.0051 -> 0.0074.
+
+Rerun 4 Oct 2026 on the corrected Site 52 coordinates (data repository 5a17782;
+the 30 Aug run used the uncorrected Trip 1 and Trip 3 rows). The screen
+outputs were re-executed from the pinned data worktree and are byte-identical,
+including the corrected Trip 4 workbook (sha256 1fdb7394..., identical to
+`inputs/EB_Sample_Map_FourthTrip2_corrected_2026-08-30.xlsx` of
+`../rerun-trip4-blanks-2026-08-29`), so only the sensitivity stage was rerun:
+
+    OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHON=../data-paper/.venv/bin/python \
+      RERUN_ROOT=$PWD/analysis/rerun-controls-2026-08-30/screen EXPECTED_PROFILES=312 \
+      bash analysis/rerun-controls-2026-08-30/sensitivity/run_control_ecology_sensitivity.sh \
+      $PWD $PWD/analysis/rerun-controls-2026-08-30/sensitivity/outputs
+
+Coordinate-dependent values (canonical / control-adjusted; before -> after):
+spatial partial R2 0.4016/0.3979 -> 0.4007/0.3971; distance-decay omnibus p
+0.0053/0.0075 -> 0.0051/0.0074; ASV-resolution partial R2 range
+0.3462-0.3737/0.3468-0.3737 -> 0.3455-0.3728/0.3461-0.3729; geographic
+prediction site-block skill 0.2526/0.2473 -> 0.2528/0.2475. All other metrics
+are unchanged and all 25 verdicts remain stable. The superseded
+antecedent-rainfall arm of `claim_rescue` still reads the data repository's
+`daily_weather.tsv` (its count of q < 0.05 tests stays 0); it is not used by
+the manuscript.

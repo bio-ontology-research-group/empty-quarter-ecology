@@ -1,0 +1,138 @@
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Leading supported predicted-pathway differences between compartments:
+the five largest paired mean CLR differences ($|\Delta$CLR$|$) in each direction
+among the $270$ supported tests ($q<0.05$) of the $600$-test family. MetaCyc
+identifiers are given in the archived results.}
+\label{tab:pathways_compartment}
+\begin{tabular}{P{5.0cm}rP{5.0cm}r}
+\toprule
+Pathway & $|\Delta$CLR$|$ & Pathway & $|\Delta$CLR$|$ \\
+\midrule
+\multicolumn{2}{l}{\textit{Higher in subsurface than surface}} & \multicolumn{2}{l}{\textit{Higher in surface than subsurface}} \\
+L-isoleucine biosynthesis IV & 0.22 & L-alanine biosynthesis (superpathway) & 0.36 \\
+Incomplete reductive TCA cycle & 0.15 & tRNA processing & 0.35 \\
+Adenine and adenosine salvage III & 0.14 & 8-amino-7-oxononanoate biosynthesis I & 0.33 \\
+Geranylgeranyl diphosphate biosynthesis II & 0.12 & Biotin biosynthesis I & 0.31 \\
+GDP-mannose biosynthesis & 0.09 & TCA cycle VII (acetate producers) & 0.24 \\
+\addlinespace
+\multicolumn{2}{l}{\textit{Higher in root-adjacent than shallow-subsurface}} & \multicolumn{2}{l}{\textit{Higher in shallow-subsurface than root-adjacent}} \\
+Formaldehyde assimilation II (RuMP cycle) & 0.53 & L-isoleucine biosynthesis IV & 0.38 \\
+Palmitate biosynthesis II & 0.49 & GDP-mannose biosynthesis & 0.19 \\
+L-lysine biosynthesis II & 0.37 & Kdo transfer to lipid IV$_\mathrm{A}$ III & 0.19 \\
+TCA cycle VII (acetate producers) & 0.35 & Glycogen degradation I & 0.17 \\
+L-alanine biosynthesis (superpathway) & 0.31 & Purine nucleotide \textit{de novo} biosynthesis II & 0.17 \\
+\addlinespace
+\multicolumn{2}{l}{\textit{Higher in root-adjacent than surface}} & \multicolumn{2}{l}{\textit{Higher in surface than root-adjacent}} \\
+Formaldehyde assimilation II (RuMP cycle) & 0.51 & Kdo transfer to lipid IV$_\mathrm{A}$ III & 0.17 \\
+1,4-dihydroxy-2-naphthoate biosynthesis I & 0.31 & L-isoleucine biosynthesis IV & 0.16 \\
+Phylloquinol biosynthesis (superpathway) & 0.30 & Starch degradation V & 0.16 \\
+L-lysine biosynthesis II & 0.28 & CMP-Kdo biosynthesis I & 0.15 \\
+Menaquinol-11 biosynthesis (superpathway) & 0.27 & tRNA processing & 0.14 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Marker-gene sets in the $975$ annotated MAGs of the companion
+catalogue. Genomes: percentage carrying at least one KO in the set. Su, Sh, Ro:
+mean relative abundance of carrier genomes in surface, shallow-subsurface and root-adjacent libraries. Leading carriers:
+phylum with the most carrier genomes (number of genomes); Act., Actinomycetota;
+Pse., Pseudomonadota; Bac., Bacillota. KO memberships are archived with the
+analysis.}
+\label{tab:traits_genomes}
+\begin{tabular}{P{4.2cm}rrrrl}
+\toprule
+Marker set & Genomes (\%) & Su & Sh & Ro & Leading carriers \\
+\midrule
+CO dehydrogenase (\textit{coxL}) & 38.5 & 43.8 & 45.5 & 40.4 & Act. (170) \\
+{[NiFe]}-hydrogenase (\textit{hyaB}, \textit{hhyL}, \textit{hoxH}) & 22.6 & 17.2 & 31.9 & 15.0 & Act. (126) \\
+RuBisCO (\textit{rbcL}/\textit{cbbL}) & 24.6 & 18.2 & 24.1 & 18.1 & Act. (90) \\
+Photosystem II D1 (\textit{psbA}) & 0.2 & 0.1 & 0.2 & 0.1 & Pse. (1) \\
+Nitrogenase (\textit{nifH}) & 1.0 & 0.5 & 0.3 & 0.8 & Pse. (3) \\
+Ammonia/methane monooxygenase (\textit{amoA}/\textit{pmoA}) & 3.3 & 3.3 & 4.7 & 1.9 & Act. (16) \\
+Nitrite reductase (\textit{nirK}, \textit{nirS}) & 32.4 & 30.6 & 38.8 & 23.1 & Act. (149) \\
+Nitrous-oxide reductase (\textit{nosZ}) & 4.1 & 5.1 & 4.0 & 2.2 & Pse. (14) \\
+Urease (\textit{ureC}) & 31.2 & 24.0 & 27.9 & 35.3 & Pse. (132) \\
+Trehalose, OtsAB (\textit{otsA}, \textit{otsB}) & 72.7 & 85.6 & 89.0 & 83.8 & Act. (336) \\
+Trehalose, TreYZ (\textit{treY}, \textit{treZ}) & 70.1 & 74.3 & 79.1 & 76.5 & Act. (258) \\
+Ectoine (\textit{ectA}--\textit{ectC}) & 36.4 & 25.9 & 28.0 & 31.3 & Act. (145) \\
+Carotenoids (\textit{crtB}) & 49.3 & 60.6 & 52.7 & 53.4 & Pse. (199) \\
+Sporulation (\textit{spo0A}) & 7.3 & 5.1 & 4.3 & 7.5 & Bac. (41) \\
+Photolyase (\textit{phrB}) & 23.6 & 34.5 & 17.8 & 26.0 & Pse. (71) \\
+Excinuclease A (\textit{uvrA}) & 94.6 & 93.2 & 92.0 & 93.8 & Act. (324) \\
+Recombinase A (\textit{recA}) & 92.2 & 88.9 & 90.9 & 92.4 & Act. (324) \\
+Catalase (\textit{katE}, \textit{katG}) & 77.4 & 86.7 & 76.3 & 84.1 & Act. (266) \\
+Superoxide dismutase (\textit{sodA}) & 82.8 & 68.4 & 67.4 & 78.8 & Pse. (238) \\
+Dps (\textit{dps}) & 65.1 & 58.2 & 47.3 & 69.5 & Act. (177) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{PICRUSt2 predictions for the marker-gene sets. Fold changes are paired
+site-level ratios of the predicted share of KO abundance between compartments
+(Su, surface; Sh, shallow-subsurface; Ro, root-adjacent; sign-flip tests,
+Benjamini--Hochberg over $60$ tests). Transect $\rho$: Spearman correlation of
+site means with the transect coordinate (Benjamini--Hochberg over $20$ tests).
+Agreement $\rho$: Spearman correlation between predicted and genome-derived
+shares across $119$ matched libraries. $^{*}$\,$q<0.05$. Predicted shares by
+compartment are archived with the analysis.}
+\label{tab:traits_picrust}
+\begin{tabular}{P{4.2cm}rrrrr}
+\toprule
+Marker set & Sh/Su & Ro/Su & Ro/Sh & Transect $\rho$ & Agreement $\rho$ \\
+\midrule
+CO dehydrogenase (\textit{coxL}) & 1.09$^{*}$ & 0.78$^{*}$ & 0.74$^{*}$ & $-0.11$ & $0.71$ \\
+{[NiFe]}-hydrogenase (\textit{hyaB}, \textit{hhyL}, \textit{hoxH}) & 1.16$^{*}$ & 0.77$^{*}$ & 0.67$^{*}$ & $0.05$ & $0.74$ \\
+RuBisCO (\textit{rbcL}/\textit{cbbL}) & 1.01 & 0.81$^{*}$ & 0.82$^{*}$ & $0.26$ & $0.33$ \\
+Photosystem II D1 (\textit{psbA}) & 1.25 & 0.90 & 0.81 & $0.05$ & $0.18$ \\
+Nitrogenase (\textit{nifH}) & 1.19 & 1.19 & 1.04 & $0.08$ & $0.04$ \\
+Ammonia/methane monooxygenase (\textit{amoA}/\textit{pmoA}) & 1.33 & 1.36 & 1.21 & $-0.24$ & $0.41$ \\
+Nitrite reductase (\textit{nirK}, \textit{nirS}) & 0.96 & 0.88$^{*}$ & 0.93 & $-0.23$ & $0.40$ \\
+Nitrous-oxide reductase (\textit{nosZ}) & 1.01 & 0.95 & 0.95 & $0.20$ & $-0.10$ \\
+Urease (\textit{ureC}) & 0.92$^{*}$ & 0.98 & 1.08$^{*}$ & $-0.27$ & $0.26$ \\
+Trehalose, OtsAB (\textit{otsA}, \textit{otsB}) & 1.01 & 0.86$^{*}$ & 0.87$^{*}$ & $-0.71^{*}$ & $0.53$ \\
+Trehalose, TreYZ (\textit{treY}, \textit{treZ}) & 0.95 & 0.84$^{*}$ & 0.91 & $-0.67^{*}$ & $0.40$ \\
+Ectoine (\textit{ectA}--\textit{ectC}) & 1.21$^{*}$ & 1.22$^{*}$ & 1.05 & $0.36^{*}$ & $0.65$ \\
+Carotenoids (\textit{crtB}) & 0.97 & 0.92$^{*}$ & 0.94$^{*}$ & $-0.59^{*}$ & $0.13$ \\
+Sporulation (\textit{spo0A}) & 0.91 & 1.41$^{*}$ & 1.49$^{*}$ & $0.56^{*}$ & $0.51$ \\
+Photolyase (\textit{phrB}) & 1.03 & 0.94$^{*}$ & 0.93$^{*}$ & $-0.27$ & $-0.14$ \\
+Excinuclease A (\textit{uvrA}) & 1.03$^{*}$ & 0.99 & 0.96$^{*}$ & $-0.24$ & $-0.21$ \\
+Recombinase A (\textit{recA}) & 1.04$^{*}$ & 1.00 & 0.95$^{*}$ & $-0.57^{*}$ & $0.06$ \\
+Catalase (\textit{katE}, \textit{katG}) & 0.91$^{*}$ & 1.09$^{*}$ & 1.20$^{*}$ & $-0.16$ & $0.57$ \\
+Superoxide dismutase (\textit{sodA}) & 1.00 & 1.06$^{*}$ & 1.06$^{*}$ & $0.70^{*}$ & $0.66$ \\
+Dps (\textit{dps}) & 0.97$^{*}$ & 1.07$^{*}$ & 1.10$^{*}$ & $0.43^{*}$ & $0.76$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Predicted MetaCyc pathways most strongly correlated with transect
+position (Spearman $\rho$ between site-level CLR values and the transect
+coordinate; $60$ sites). Of $200$ pathways tested, $92$ were significant
+(Benjamini--Hochberg $q<0.05$): $66$ increased and $26$ decreased eastward.
+All pathways shown have $q<0.001$.}
+\label{tab:pathway_geography}
+\begin{tabular}{P{5.2cm}rP{5.2cm}r}
+\toprule
+\multicolumn{2}{c}{Increasing eastward} & \multicolumn{2}{c}{Decreasing eastward} \\
+\cmidrule(lr){1-2}\cmidrule(lr){3-4}
+Pathway & $\rho$ & Pathway & $\rho$ \\
+\midrule
+Queuosine biosynthesis & $0.75$ & \textit{Bifidobacterium} shunt & $-0.72$ \\
+Pantothenate and coenzyme A biosynthesis I & $0.73$ & Glycolysis and Entner--Doudoroff (superpathway) & $-0.63$ \\
+tRNA charging & $0.67$ & Galactose degradation I (Leloir pathway) & $-0.59$ \\
+Phosphopantothenate biosynthesis I & $0.67$ & UDP-glucose-derived O-antigen building blocks (superpathway) & $-0.56$ \\
+Pyrimidine deoxyribonucleotide \textit{de novo} biosynthesis I & $0.65$ & Purine nucleotide degradation II (aerobic) & $-0.56$ \\
+preQ$_0$ biosynthesis & $0.63$ & TCA cycle VI (obligate autotrophs) & $-0.53$ \\
+6-Hydroxymethyl-dihydropterin diphosphate biosynthesis I & $0.63$ & Palmitate biosynthesis II & $-0.53$ \\
+Anhydromuropeptide recycling & $0.62$ & L-Glutamate and L-glutamine biosynthesis & $-0.52$ \\
+Gondoate biosynthesis (anaerobic) & $0.62$ & Fatty acid $\beta$-oxidation I & $-0.48$ \\
+L-Threonine biosynthesis (superpathway) & $0.61$ & Fatty acid salvage & $-0.48$ \\
+\bottomrule
+\end{tabular}
+\end{table}

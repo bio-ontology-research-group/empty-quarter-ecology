@@ -1,13 +1,13 @@
 {
   "analysis_date": "2026-08-05",
-  "git_head": "be0f9afa9d159ed0540a5201f3b801e40aeeeadf",
+  "git_head": "fa9ceb49ed20cf6b271ed9176b6d74fa4a69886a",
   "inputs": {
     "alpha": {
       "path": "analysis/v2/review/cache/alpha.tsv",
       "sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c"
     },
     "rainfall": {
-      "path": "data/processed/climate/nasa_power_daily_precipitation.tsv.gz",
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/data-paper/metadata/climate/nasa_power_daily_precipitation.tsv.gz",
       "sha256": "71d11a8c930760b0dfcb45b59017d3f00321f75ade4f01ad50ea8f1b47379cc2",
       "source_column": "PRECTOTCORR",
       "weather_product": "nasa_power"
@@ -290,7 +290,7 @@
     ],
     "nuisance_formula": "0 + C(Site):C(Type) + C(Trip) + C(Trip):longitude_z + C(Trip):sampling_day_z + C(Trip):I(longitude_z ** 2) + C(Trip):I(longitude_z ** 3)",
     "nuisance_model": "cubic_longitude",
-    "nuisance_rank": 201,
+    "nuisance_rank": 200,
     "permutations": 19999,
     "ph_adjusted": false,
     "sampling_day_included": false,

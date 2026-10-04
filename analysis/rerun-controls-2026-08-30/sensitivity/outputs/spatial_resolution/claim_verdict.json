@@ -1,28 +1,87 @@
 {
-  "asv_alignment": {
-    "aligned_groups": 629,
-    "groups_dropped_from_asv_cache": 2,
+  "asv_cohort": {
+    "aligned_groups": 630,
+    "asv_cache_core_profiles": 1236,
+    "asv_cache_groups_outside_reference_cohort": [
+      "campaign 1, site 46, Rhizosphere",
+      "campaign 2, site 1, Deep",
+      "campaign 4, site 53, Deep"
+    ],
+    "asv_cache_sample_columns": 1247,
+    "filtered_asv_reads_per_group_median": 476183.5,
+    "filtered_asv_reads_per_group_min": 894,
+    "profiles_excluded_as_absent_from_genus_cache": [
+      "V5PRr1O",
+      "e0384_24PRr2",
+      "e0805_1Dr3",
+      "e0847_32Dr3",
+      "e0856_48PRr3",
+      "e681_T1Dr1",
+      "e729_T8Dr3",
+      "e743_T4PRr2",
+      "e752_T7PRr1"
+    ],
+    "profiles_used": 1227,
     "reference_groups": 630,
-    "reference_groups_absent_from_asv_cache": 1
+    "reference_groups_below_2000_filtered_asv_reads": {
+      "campaign 3, site 54, Rhizosphere": 894
+    }
   },
-  "asv_partial_r2_range": [
-    0.3467733910960604,
-    0.373693461793444
+  "asv_fits": [
+    {
+      "feature_count": 800,
+      "partial_r2": 0.37287734144205176,
+      "partial_r2_ci_high": 0.4250253766432631,
+      "partial_r2_ci_low": 0.3207293062408404,
+      "permutation_p": 0.001,
+      "residual_moran_i": 0.16134334092742406,
+      "residual_moran_p": 0.001
+    },
+    {
+      "feature_count": 2000,
+      "partial_r2": 0.35448757082657856,
+      "partial_r2_ci_high": 0.40422045544598584,
+      "partial_r2_ci_low": 0.3047546862071713,
+      "permutation_p": 0.001,
+      "residual_moran_i": 0.15318244054208502,
+      "residual_moran_p": 0.001
+    },
+    {
+      "feature_count": 2633,
+      "partial_r2": 0.3460871070913911,
+      "partial_r2_ci_high": 0.39557540322201773,
+      "partial_r2_ci_low": 0.2965988109607645,
+      "permutation_p": 0.001,
+      "residual_moran_i": 0.1485278790979725,
+      "residual_moran_p": 0.001
+    }
   ],
-  "genus_primary_partial_r2": 0.3979353965536677,
+  "asv_partial_r2_range": [
+    0.3460871070913911,
+    0.37287734144205176
+  ],
+  "genus_primary_partial_r2": 0.3970685000677644,
+  "genus_primary_partial_r2_95_jackknife_ci": [
+    0.3211717012425634,
+    0.4729652988929654
+  ],
   "input": {
+    "asv_counts_path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/rerun-controls-2026-08-30/sensitivity/outputs/sensitivity_inputs/asv_filt_counts.tsv.gz",
     "asv_counts_sha256": "d189dd0ad4b89b483cccafad0498ff0eb1cc02d06a86e937df1d50370ebb89e2",
-    "asv_groups_before_alignment": 631,
+    "coordinates_path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+    "coordinates_sha256": "18c208ad198f120159c997b3a29219e7040c0f047a90b0b8c19227990cd53fbd",
+    "genus_counts_path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/rerun-controls-2026-08-30/sensitivity/outputs/sensitivity_inputs/genus_counts.tsv.gz",
     "genus_counts_sha256": "55c8115092bb51126dfd37dd7adef0029905d5e270ce2dd74e12bdfa0ec0d168",
     "genus_groups": 630,
+    "minimum_group_reads": 2000,
     "permutations": 999,
     "prevalence_threshold": 0.2,
     "pseudocount": 0.5,
     "seed": 20260728
   },
   "moran_i_range_across_k": [
-    -0.00950151218157302,
-    0.11046937317046865
+    -0.009540534505692517,
+    0.11012709881771393
   ],
   "moran_k_status": "residual_autocorrelation_depends_on_neighbour_count",
   "moran_p_max_across_k": 0.237,
@@ -44,8 +103,8 @@
   "neighbour_counts_without_detected_autocorrelation": [
     10
   ],
-  "permitted_wording": "The transect association is not an artefact of genus aggregation: at amplicon-sequence-variant resolution the same model gives partial R2 0.3468 to 0.3737 against 0.3979 at genus level. The comparison runs on the 629-group intersection of the two caches, covering 629 of the 630 genus-reference groups (1 reference group absent from the ASV cache, 2 extra ASV-cache groups dropped); the genus figure quoted here is the 630-group primary fit. The residual Moran diagnostic declines with the neighbour count: it is detected at k = [3, 4, 5, 6, 8] and not at k = [10] (Moran I 0.1105 down to -0.0095). The fixed-k residual autocorrelation statement is bounded to the short-neighbourhood scale.",
+  "permitted_wording": "The transect association is not an artefact of genus aggregation: at amplicon-sequence-variant resolution the same model gives partial R2 0.3461 to 0.3729 against 0.3971 at genus level (800 ASVs 0.3729 [0.3207, 0.4250]; 2000 ASVs 0.3545 [0.3048, 0.4042]; 2633 ASVs 0.3461 [0.2966, 0.3956]). Both resolutions use the same 630 site-campaign-compartment groups at 60 sites and the corrected site coordinates; the genus figure is the primary fit. 1 of the 630 groups (campaign 3, site 54, Rhizosphere) carries fewer than 2,000 reads on prevalence-filtered ASVs while passing the genus-assigned read threshold; it is retained because the cohort is defined once, by the primary quality control. The residual Moran diagnostic declines with the neighbour count: it is detected at k = [3, 4, 5, 6, 8] and not at k = [10] (Moran I 0.1101 down to -0.0095). The fixed-k residual autocorrelation statement is bounded to the short-neighbourhood scale.",
   "prohibited_wording": "Do not promote the ASV-resolution fit to the primary result; it is a supplementary resolution sensitivity on the same design and inherits every design limit of the primary model, including the collection-order alias. Do not state unqualified residual spatial autocorrelation without naming the neighbour count.",
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "status": "asv_resolution_consistent_with_genus_primary"
 }

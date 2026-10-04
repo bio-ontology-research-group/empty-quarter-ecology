@@ -1,0 +1,110 @@
+{
+  "generator": {
+    "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/render_biology_context_tex.py",
+    "sha256": "5c773dccf706172078fa1d4dc705e98360af8714496830731fe2792b0e3e392e"
+  },
+  "inputs": [
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/alpha_by_landform.tsv",
+      "sha256": "dda9e84195fca34ba36f902fd899710ab6aeef1b2c3d8b7d8588cb17a0c7d708"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/climate_diversity_dune_sensitivity.tsv",
+      "sha256": "a6d26c2ac9a984e056ed704744505a60115951f7af021e788abec01ee6af797f"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/compartment_genus_family.tsv",
+      "sha256": "744595fe2469b610af836780d2f37103af733dba1675395314a019ffea5a71b6"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/compartment_pathway_leaders.tsv",
+      "sha256": "ca963ff6dcdc0d843d6b8a26cf52d4443e9b86e7f1de14f1d07060a1b3f4b5d1"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/core_genera_by_compartment.tsv",
+      "sha256": "dce620d39876ec5e4bae4e5e09b12f331861a8e0eadd5aaa906724039f59200c"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/genus_site_occupancy_by_compartment.tsv",
+      "sha256": "b1351fdb7c36c7ee0fc58f5b76ac1d02c127e66d32a7304cc8a95f8dcb835a81"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/landform_composition_omnibus.tsv",
+      "sha256": "26e011194a5cf28a06e24e9096ca5bfaddfcc6887965a01119fe5a1a36f47e7e"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/landform_genus_contrasts.tsv",
+      "sha256": "1847dcc13173050cfa89142bc53a565e400781f56870e81fcbc5187b413d3fd9"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/ph_genus_correlations.tsv",
+      "sha256": "8aaec1b2664c791e73fd3ff12af8eb2cc125a352c45d09e59fe37c9f5a1999f5"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/route_genus_correlations_dune_sites.tsv",
+      "sha256": "1d39901af392a9c6e156583858ddc5adab46b89250f591b9b9fe778bd1e51301"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/route_model_dune_sensitivity.tsv",
+      "sha256": "ef235c137bef8d623a89abb0871af1b4e5c31bba182b989c1d6ff654d6e90599"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/site_landforms.tsv",
+      "sha256": "1fc498d681e9655e8500081503b390aba6e7f27899e2b1913f5df571add3dd4f"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/xrf_axis_genus_correlations.tsv",
+      "sha256": "38b50a429de9240b978e4d124b63eb6bcb01c47c197f812a5a87188b31f13214"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/biology_context_corrected_20260909/xrf_axis_loadings.tsv",
+      "sha256": "bf0723a8f3ec21ad6f339905c38859114166fc45de42aace07bcb66c18b856ab"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/genome_trait_presence.tsv",
+      "sha256": "79b32aa9b82cea75e3580af29b20807f14df7a16ec3af5e416f8b1fa37c0c04d"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/genome_trait_summary.tsv",
+      "sha256": "c6a3e37c8956fbdda07d0119ce279b4a3bfc8c25369e2d4a56c498f22e1a9cfc"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/library_trait_shares.tsv",
+      "sha256": "6634c246da075f8e2f1a3e78eee194efdc6c7d84d1e3941f7c395d1fd49acf8d"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/picrust_trait_compartment_contrasts.tsv",
+      "sha256": "b31f8bce79fdb5f26870d61a9965bd1d106014c31f79e32438a338f8e82823e7"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/picrust_trait_shares_grouped.tsv",
+      "sha256": "c63759b71f899ed181b9f5ef2356defc13affeb8e5a60810b72eaa55d87500d8"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/picrust_trait_summary.tsv",
+      "sha256": "836d96f2b8d74f7df3b9c92895850db4eb0ba0f6f257618b421507d269a427a1"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/source_agreement.tsv",
+      "sha256": "5833e022dc34b8b5891c4d5f3031f11fecd5c3edf6dd9f3b26758c71b07bf499"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/trait_genes_20260909/trait_definitions.tsv",
+      "sha256": "d5ccec401cacd56f0cb935f49271a0858bea5eaa423410b3758832912f578c06"
+    },
+    {
+      "path": "/home/leechuck/Public/software/empty-quarter-paper-repos/ecology/analysis/v3/ph_context_reanalysis_20260909/ph_genus_correlations.tsv",
+      "sha256": "f90b460c8ca36a2d4eb17917d3ec40c826edf8d07d90a6b5b7334ec6daabb60c"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/home/leechuck/Documents/papers/empty-quarter-ecology-overleaf/generated/biology_context_tables.tex",
+      "sha256": "66ff066f497babe781fd40c0519bd36626a3688caba7a1fb22a9cace8b87a569"
+    },
+    {
+      "path": "/home/leechuck/Documents/papers/empty-quarter-ecology-overleaf/generated/trait_gene_tables.tex",
+      "sha256": "0bcffcf2c185418b26d32720003d964417c5fd0f805c042e9ecfb39e36debba9"
+    }
+  ]
+}

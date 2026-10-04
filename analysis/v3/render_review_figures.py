@@ -91,24 +91,14 @@ def main():
         "outputs": {path.name: {"sha256": figures.sha256(path), "bytes": path.stat().st_size} for path in paths},
     }
     (output / "figure_review_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    legacy = output / "figure_manifest.tsv"
-    if legacy.exists():
-        table = pd.read_csv(legacy, sep="\t")
-        # Replace retired alpha inputs as well as the output hashes. The JSON
-        # manifest remains the complete custody record for this renderer.
-        table = table.loc[~table["name"].isin([
-            "paired_compartment_effects", "paired_evenness_effects", "campaign_matched_alpha"
-        ])].copy()
-        matched = inputs["matched_alpha"]
-        table = pd.concat([table, pd.DataFrame([{
-            "role": "input", "name": "campaign_matched_alpha", "file": matched.name,
-            "bytes": matched.stat().st_size, "sha256": figures.sha256(matched),
-        }])], ignore_index=True)
-        for path in paths:
-            selected = table["role"].eq("output") & table["file"].eq(path.name)
-            table.loc[selected, "sha256"] = figures.sha256(path)
-            table.loc[selected, "bytes"] = path.stat().st_size
-        table.to_csv(legacy, sep="\t", index=False)
+    # Rebuild the manifest from the inputs actually consumed; retaining old rows
+    # left pre-correction coordinate hashes attached to corrected figures.
+    rows = [{"role": "input", "name": key, "file": str(path.relative_to(root)),
+             "bytes": path.stat().st_size, "sha256": figures.sha256(path)}
+            for key, path in inputs.items()]
+    rows += [{"role": "output", "name": path.stem, "file": path.name,
+              "bytes": path.stat().st_size, "sha256": figures.sha256(path)} for path in paths]
+    pd.DataFrame(rows).to_csv(output / "figure_manifest.tsv", sep="\t", index=False)
 
 
 if __name__ == "__main__":

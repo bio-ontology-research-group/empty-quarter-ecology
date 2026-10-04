@@ -6,8 +6,8 @@
   "cohort_description": "technical replicates averaged within 617 site-campaign-position groups",
   "community_table_role": "primary_unfiltered",
   "familywise_inference": {
-    "conditional_lag_rotation_one_sided_p": 0.056,
-    "conditional_lag_rotation_two_sided_p": 0.07865,
+    "conditional_lag_rotation_one_sided_p": 0.0545,
+    "conditional_lag_rotation_two_sided_p": 0.07705,
     "correction_scope": "all candidate peaks and three alpha-diversity endpoints",
     "n_lag_rotation_draws": 19999,
     "n_spatial_route_orbit_members": 120,
@@ -17,9 +17,9 @@
   "future_rain_placebo": {
     "inferential_role": "descriptive negative control only",
     "maximum_endpoint": "evenness_h_over_log_hurlbert",
-    "maximum_peak_days": 19.5,
-    "maximum_t": 2.1256607098007954,
-    "richness_maximum_t": 0.05506289209425649
+    "maximum_peak_days": 18.5,
+    "maximum_t": 2.0818293936504033,
+    "richness_maximum_t": 0.051887732552848544
   },
   "half_maximum_day": 5.356746783733919,
   "kernel": "(lag / peak) * exp(1 - lag / peak)",
@@ -39,17 +39,17 @@
   "sampling_uncertainty": {
     "boundary": "The bootstrap quantifies sampling variation among sites conditional on the fitted nuisance adjustment and rainfall product. Product and route-model uncertainty are reported separately.",
     "fixed_effect_95_ci": [
-      85.25802408642508,
-      249.1375172703633
+      85.12684686404378,
+      248.83010632618374
     ],
     "fixed_partial_r2_95_ci": [
-      0.005967988765356446,
-      0.0787369999172886
+      0.005956645532140956,
+      0.078625728014783
     ],
     "full_search_endpoint_selection_frequency": {
-      "evenness_h_over_log_hurlbert": 0.0159015901590159,
-      "richness_hurlbert_25000": 0.7367736773677368,
-      "shannon": 0.24732473247324732
+      "evenness_h_over_log_hurlbert": 0.0205020502050205,
+      "richness_hurlbert_25000": 0.7444744474447444,
+      "shannon": 0.23502350235023503
     },
     "half_maximum_95_interval_complete_days": [
       4.017560087800439,
@@ -68,11 +68,11 @@
     ]
   },
   "schema_version": "1.2",
-  "selected_classical_t": 3.9996337760616516,
+  "selected_classical_t": 3.9991685911364407,
   "selected_endpoint": "richness_hurlbert_25000",
   "selected_endpoint_label": "Hurlbert expected richness at 25,000 reads",
-  "selected_estimate_per_mm_at_peak": 179.5673223157866,
-  "selected_partial_r2": 0.036440038950894024,
+  "selected_estimate_per_mm_at_peak": 179.37737555811324,
+  "selected_partial_r2": 0.036349070824371804,
   "selected_peak_complete_days": 2.0,
   "ten_percent_day": 9.779588897944489,
   "weather_product": "nasa_power"

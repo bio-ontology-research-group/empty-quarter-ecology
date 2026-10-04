@@ -15,9 +15,8 @@ is attributable to resolution or to k rather than to a different estimator.
 
 Site coordinates come from the corrected 60-site table written by the primary
 analysis (``analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv``),
-the same table the spatial-covariance and pH-partition analyses consume. The
-geodata files under the pinned data link still carry the uncorrected site-52
-campaign-1 and campaign-3 rows, so they are not read here.
+the same table the spatial-covariance and pH-partition analyses consume.
+Using this common table keeps all spatial analyses on the same site geometry.
 
 The ASV arm runs on exactly the site-campaign-compartment groups of the genus
 primary fit. The ASV cache (``asv_filt_counts.tsv``) differs from the genus

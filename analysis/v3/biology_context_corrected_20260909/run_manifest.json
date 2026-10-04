@@ -238,5 +238,30 @@
     "numpy": "2.1.3",
     "pandas": "2.2.3",
     "scipy": "1.14.1"
+  },
+  "input_reconciliation": {
+    "climate_site_summary": {
+      "input": "analysis/v3/environment_associations/climate_site_summary.tsv",
+      "sha256_read_by_run": "f1e5c44b47d603d8f9f199500db95ed033ef37e17822049d28b24eebad0327c3",
+      "sha256_current": "f39284ba3e2e10750745d6cc3771c9b46cb8257d296147a9c93ff8f8ed01982b",
+      "reason": "environment_associations rerun on 2026-10-04 with the corrected Site 52 coordinates (data commit 5a17782); only the listed changed columns differ",
+      "changed_columns": [
+        "latitude",
+        "longitude",
+        "transect_km"
+      ],
+      "consumed_columns": [
+        "site",
+        "shannon",
+        "expected_richness_25k",
+        "normalized_evenness",
+        "mean_air_temperature_c",
+        "mean_monthly_rain_mm",
+        "mean_relative_humidity_pct"
+      ],
+      "consumed_columns_identical": true,
+      "verification": "pandas DataFrame.equals on the consumed columns of the table read by this run and the current table (60 rows); this run was not repeated",
+      "verified_by": "analysis/v3/reconcile_climate_summary_inputs.py"
+    }
   }
 }

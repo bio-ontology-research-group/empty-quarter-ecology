@@ -1,0 +1,67 @@
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Landform of the $60$ sites and site-mean diversity by landform.}
+\label{tab:landform_alpha}
+\begin{tabular}{lrP{3.7cm}rrr}
+\toprule
+Landform & Sites & Thirds & Shannon & Rarefied Richness & Normalized Shannon \\
+\midrule
+sand dune & 44 & 15 west, 18 central, 11 east & 5.77 & 1635 & 0.806 \\
+saline pan & 9 & 3 west, 1 central, 5 east & 5.15 & 1259 & 0.788 \\
+desert oasis & 3 & 3 east & 4.25 & 578 & 0.737 \\
+aeolian lake & 1 & 1 east & 4.44 & 759 & 0.783 \\
+dune slack & 1 & 1 west & 6.08 & 1825 & 0.815 \\
+gravel & 1 & 1 west & 5.45 & 1496 & 0.799 \\
+oil spill & 1 & 1 central & 6.21 & 2291 & 0.811 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Landform sensitivity of the transect model.}
+\label{tab:landform_sensitivity}
+\begin{tabular}{P{5.2cm}ccc}
+\toprule
+\multicolumn{4}{l}{\textbf{A. Dune vs saline pan}}\\
+\midrule
+Adjustment & Pseudo-$F$ & $p$ & Genera at $q<0.05$ \\
+\midrule
+None                                & 4.56 & 0.0013 & 16 \\
+Transect position                      & 1.78 & 0.032  & 0  \\
+\midrule
+\multicolumn{4}{l}{\textbf{B. Transect model}}\\
+\midrule
+Sites & $R^2$ & & Transect genera at $q<0.05$ \\
+\midrule
+All ($n=60$)  & 0.401 & & 124 \\
+Dune ($n=44$) & 0.342 & & 71  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Spearman correlations between site climate and diversity, across all
+sites and across dune sites only. $q$ values are BH adjusted.}
+\label{tab:landform_climate}
+\begin{tabular}{llcccc}
+\toprule
+ & & \multicolumn{2}{c}{All sites ($n=60$)} & \multicolumn{2}{c}{Dune sites ($n=44$)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Climate variable & Diversity measure & $\rho$ & $q$ & $\rho$ & $q$ \\
+\midrule
+Temperature & Shannon            & $-0.71$ & $6.0\times10^{-10}$ & $-0.57$ & $1.4\times10^{-4}$ \\
+            & Rarefied richness           & $-0.79$ & $3.1\times10^{-13}$ & $-0.71$ & $5.5\times10^{-7}$ \\
+            & Normalized Shannon & $-0.58$ & $1.8\times10^{-6}$  & $-0.44$ & $4.5\times10^{-3}$ \\
+\addlinespace
+Humidity    & Shannon            & $-0.70$ & $1.0\times10^{-9}$  & $-0.57$ & $1.4\times10^{-4}$ \\
+            & Rarefied richness           & $-0.77$ & $2.9\times10^{-12}$ & $-0.69$ & $7.6\times10^{-7}$ \\
+            & Normalized Shannon & $-0.52$ & $2.9\times10^{-5}$  & $-0.38$ & $0.017$ \\
+\addlinespace
+Rainfall    & Shannon            & $-0.47$ & $1.7\times10^{-4}$  & $-0.23$ & $0.14$ \\
+            & Rarefied richness           & $-0.49$ & $7.5\times10^{-5}$  & $-0.32$ & $0.044$ \\
+            & Normalized Shannon & $-0.30$ & $0.021$             & $-0.11$ & $0.46$ \\
+\bottomrule
+\end{tabular}
+\end{table}

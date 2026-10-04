@@ -12,7 +12,7 @@
     "current_test": "SUPERSEDED historical diagnostic: trip-adjusted spatial trend model, six-window FDR and campaign omission",
     "status": "superseded",
     "permitted_wording": "Do not use this historical diagnostic for a rainfall claim; use analysis/v3/rain_response_window/.",
-    "reason": "Historical compartment-wise screen; superseded because it does not estimate the paired surface-minus-shallow contrast with site- and campaign-specific position baselines or calibrate the complete window search while preserving the spatial rainfall field. Historical surface 14-day q_global=0.556 (q_within_compartment=0.222); LOCO sign-stable=False; residual Moran p=0.001.",
+    "reason": "Historical compartment-wise screen; superseded because it does not estimate the paired surface-minus-shallow contrast with site- and campaign-specific position baselines or calibrate the complete window search while preserving the spatial rainfall field. Historical surface 14-day q_global=0.398 (q_within_compartment=0.159); LOCO sign-stable=False; residual Moran p=0.001.",
     "evidence_file": "../rain_response_window/analysis_decision.json"
   },
   {
@@ -20,7 +20,7 @@
     "current_test": "SUPERSEDED historical diagnostic: 18 compartment-by-window trip-adjusted spatial trend models",
     "status": "superseded",
     "permitted_wording": "Do not use this historical diagnostic for a rainfall claim; use analysis/v3/rain_response_window/.",
-    "reason": "Historical compartment-wise screen; superseded because it does not estimate the paired surface-minus-shallow contrast with site- and campaign-specific position baselines or calibrate the complete window search while preserving the spatial rainfall field. Historical screen: 0/18 tests with q_global<0.05; smallest q_within_compartment=0.0775; smallest q_global=0.187.",
+    "reason": "Historical compartment-wise screen; superseded because it does not estimate the paired surface-minus-shallow contrast with site- and campaign-specific position baselines or calibrate the complete window search while preserving the spatial rainfall field. Historical screen: 0/18 tests with q_global<0.05; smallest q_within_compartment=0.0676; smallest q_global=0.135.",
     "evidence_file": "../rain_response_window/analysis_decision.json"
   },
   {

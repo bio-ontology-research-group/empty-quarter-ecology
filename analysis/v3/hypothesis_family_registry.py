@@ -68,7 +68,15 @@ def run(root, output):
     registry = dict(schema_version="1.0", families=families,
                     script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     other_tests={"omnibus_tests": "Reported individually with their permutation scheme",
-                                 "rainfall_search": "Maximum statistic over 3 endpoints x 60 peak lags; shared circular shifts within expedition; 19,999 draws; seed 20260804",
+                                 "rainfall_search": ("Primary: calendar-year refit in rain_calendar_refit_20260909. Maximum statistic over "
+                                                     "both daily rainfall products (NASA POWER, Open-Meteo), 3 endpoints x 60 peak lags; "
+                                                     "exact reference distribution of all 6 permutations of the eligible 2023-2025 "
+                                                     "December-November annual rainfall fields, collection month and day preserved, one "
+                                                     "year map shared by all sites, products and campaigns (smallest attainable p = 1/6); "
+                                                     "whole-site bootstrap refits with seed 20260910."),
+                                 "rainfall_search_historical": ("Superseded diagnostic only, not used for reported inference: shared "
+                                                                "circular shifts within expedition, 19,999 draws, seed 20260804 "
+                                                                "(rain_pulse_response* outputs)."),
                                  "distance_slope_contrasts": "Maximum statistic over two compartment slope contrasts; 9,999 whole-site-label permutations"})
     (output / "hypothesis_families.json").write_text(json.dumps(registry, indent=2) + "\n")
     print(f"Verified {len(families)} BH families and {len(members)} memberships")

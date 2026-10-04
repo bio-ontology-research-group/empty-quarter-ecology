@@ -31,7 +31,14 @@ def run_definitions(root: Path) -> list[dict[str, Any]]:
     unfiltered = root / "analysis/v2/review/cache/alpha.tsv"
     filtered = root / "analysis/v3/control_audit/sensitivity_inputs/alpha.tsv"
     nasa = root / "data/processed/climate/nasa_power_daily_precipitation.tsv.gz"
-    open_meteo = root / "data/processed/climate/daily_weather_canonical.tsv"
+    # Open-Meteo daily input with the Site 52 series refetched at the corrected
+    # position; the pinned data-repository file still holds the series fetched
+    # at the mean of the pre-correction campaign coordinates.
+    open_meteo = (
+        root
+        / "analysis/v3/open_meteo_site52_corrected_20261004"
+        / "daily_weather_canonical_site52_corrected.tsv"
+    )
     sensitivities = root / "analysis/v3/rain_pulse_sensitivities"
     return [
         {

@@ -6,7 +6,7 @@ geographic distance apart that were not prepared together? Cross-contamination
 between co-processed samples would make adjacent pairs more similar (lower
 Bray-Curtis), most strongly for low-DNA-yield samples.
 
-Inputs: canonical feature table (gz TSV, ASV x profile counts), batch_meta.tsv
+Inputs: canonical feature table (TSV or gz TSV, ASV x profile counts), batch_meta.tsv
 (profile, trip, site, compartment, depth, lat, lon, lib_series, lib_number,
 dna_conc, dna_kit). Outputs in the working directory.
 """
@@ -26,7 +26,7 @@ profiles = [m["profile"] for m in meta]
 pidx = {p: i for i, p in enumerate(profiles)}
 
 # ---- read table, keep the 1,237 ecological profiles, relative abundance ----
-with gzip.open(FT, "rt") as fh:
+with (gzip.open(FT, "rt") if FT.endswith(".gz") else open(FT)) as fh:
     header = None
     for line in fh:
         if line.startswith("#OTU ID"):

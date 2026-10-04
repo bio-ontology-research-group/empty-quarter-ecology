@@ -795,6 +795,17 @@ def main() -> None:
         default=Path(__file__).resolve().parents[2],
     )
     parser.add_argument("--alpha", type=Path, default=None)
+    parser.add_argument(
+        "--daily-weather",
+        type=Path,
+        default=None,
+        help=(
+            "Daily Open-Meteo table for the superseded rainfall arm. Defaults "
+            "to the packaged table with the corrected Site 52 series; its "
+            "numeric-site rows otherwise equal the data repository's "
+            "daily_weather.tsv."
+        ),
+    )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument(
         "--skip-downstream",
@@ -851,7 +862,10 @@ def main() -> None:
     rain_frame = add_rain_windows(
         aggregate.copy(),
         site_meta,
-        root / "data/processed/climate/daily_weather.tsv",
+        args.daily_weather
+        or root
+        / "analysis/v3/open_meteo_site52_corrected_20261004"
+        / "daily_weather_canonical_site52_corrected.tsv",
     )
     rain, rain_loco = fit_rain_models(rain_frame)
     for table in (rain, rain_loco):

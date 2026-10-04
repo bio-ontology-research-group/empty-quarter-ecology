@@ -1,0 +1,8 @@
+{
+  "input": "analysis/v3/pma_endpoint_results/pma_pair_endpoints.tsv",
+  "input_sha256": "aed9d2e439b84c53aa484b003063a8dba33667f16e2f5c21a16e2b9153502bf8",
+  "generator": "analysis/v3/render_pma_richness.py",
+  "generator_sha256": "1177b60cf581427d1ded69ac345500dcc84062e9712263450f14308e3115ba72",
+  "output_sha256": "3f77fdb5d435b871ae337b0050a816bae8f9acaa3bb8b60c17e69d0ad7a2f915",
+  "definition": "Nine aliquot pairs from three parent soil tubes at two campsites; expected ASV richness at 123897 reads; group means are descriptive."
+}

@@ -3,19 +3,19 @@
 
 \begin{table}[htbp]
 \centering\footnotesize
-\caption{Field landform of the $60$ core sites and site-mean diversity by landform (site means of Shannon diversity, expected richness at $25{,}000$ reads and normalized evenness). Thirds are the western, central and eastern $20$ sites by route position. Mann-Whitney tests of dune against saline-pan sites gave $p=0.35$, $0.28$ and $0.93$ for the three measures.}
+\caption{Field landform of the $60$ core sites and site-mean diversity by landform (site means of Shannon diversity, expected richness at $25{,}000$ reads and normalized Shannon diversity). Thirds are the western, central and eastern $20$ sites by route position. Mann-Whitney tests of dune against saline-pan sites gave $p=0.35$, $0.28$ and $0.93$ for the three measures.}
 \label{tab:landform-alpha}
-\begin{tabular}{lrlrrr}
+\begin{tabular}{lrP{3.7cm}rrr}
 \toprule
-Landform & Sites & Thirds & Shannon & Richness & Evenness \\
+Landform & Sites & Thirds & Shannon & Richness & Norm. Shannon \\
 \midrule
-sand dune & 44 & central:18,east:11,west:15 & 5.77 & 1635 & 0.806 \\
-saline pan & 9 & central:1,east:5,west:3 & 5.15 & 1259 & 0.788 \\
-desert oasis & 3 & east:3 & 4.25 & 578 & 0.737 \\
-aeolian lake & 1 & east:1 & 4.44 & 759 & 0.783 \\
-dune slack & 1 & west:1 & 6.08 & 1825 & 0.815 \\
-gravel & 1 & west:1 & 5.45 & 1496 & 0.799 \\
-oilspill & 1 & central:1 & 6.21 & 2291 & 0.811 \\
+sand dune & 44 & 15 west, 18 central, 11 east & 5.77 & 1635 & 0.806 \\
+saline pan & 9 & 3 west, 1 central, 5 east & 5.15 & 1259 & 0.788 \\
+desert oasis & 3 & 3 east & 4.25 & 578 & 0.737 \\
+aeolian lake & 1 & 1 east & 4.44 & 759 & 0.783 \\
+dune slack & 1 & 1 west & 6.08 & 1825 & 0.815 \\
+gravel & 1 & 1 west & 5.45 & 1496 & 0.799 \\
+oil spill & 1 & 1 central & 6.21 & 2291 & 0.811 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -26,22 +26,23 @@ oilspill & 1 & central:1 & 6.21 & 2291 & 0.811 \\
 \label{tab:landform-sensitivity}
 \begin{tabular}{P{4.4cm}P{3.6cm}P{3.6cm}}
 \toprule
-Quantity & All sites / unadjusted & Dune sites / adjusted \\
+Quantity & Estimate & Test or comparison \\
 \midrule
-Dune vs saline pan, none & pseudo-$F=4.56$ & $p=0.0013$ \\
-Dune vs saline pan, route linear quadratic & pseudo-$F=1.74$ & $p=0.0362$ \\
-Route model, all $60$ sites & $R^2=0.402$ & \\
+Dune vs saline pan, unadjusted & pseudo-$F=4.56$ & $p=0.0013$ \\
+Dune vs saline pan, route-adjusted & pseudo-$F=1.78$ & $p=0.0320$ \\
+Route model, all $60$ sites & $R^2=0.401$ & \\
 Route model, $44$ dune sites & $R^2=0.342$ & \\
 Route genera at $q<0.05$ & 124 (all) / 71 (dune) & 70 in both, same sign \\
-air temperature c vs shannon & $\rho=-0.71$ ($q=6.02e-10$) & $\rho=-0.57$ ($q=0.000139$) \\
-air temperature c vs expected richness 25k & $\rho=-0.79$ ($q=3.12e-13$) & $\rho=-0.71$ ($q=5.5e-07$) \\
-air temperature c vs normalized evenness & $\rho=-0.58$ ($q=1.75e-06$) & $\rho=-0.44$ ($q=0.00448$) \\
-monthly rain mm vs shannon & $\rho=-0.47$ ($q=0.000167$) & $\rho=-0.23$ ($q=0.141$) \\
-monthly rain mm vs expected richness 25k & $\rho=-0.49$ ($q=7.51e-05$) & $\rho=-0.32$ ($q=0.0439$) \\
-monthly rain mm vs normalized evenness & $\rho=-0.30$ ($q=0.0206$) & $\rho=-0.11$ ($q=0.459$) \\
-relative humidity pct vs shannon & $\rho=-0.70$ ($q=1.04e-09$) & $\rho=-0.57$ ($q=0.000139$) \\
-relative humidity pct vs expected richness 25k & $\rho=-0.77$ ($q=2.87e-12$) & $\rho=-0.69$ ($q=7.56e-07$) \\
-relative humidity pct vs normalized evenness & $\rho=-0.52$ ($q=2.89e-05$) & $\rho=-0.38$ ($q=0.0171$) \\
+\midrule Climate association & All $60$ sites & Dune $44$ sites \\
+Temperature vs Shannon & $\rho=-0.71$ ($q=6.02\times10^{-10}$) & $\rho=-0.57$ ($q=1.39\times10^{-4}$) \\
+Temperature vs richness & $\rho=-0.79$ ($q=3.12\times10^{-13}$) & $\rho=-0.71$ ($q=5.50\times10^{-7}$) \\
+Temperature vs normalized Shannon & $\rho=-0.58$ ($q=1.75\times10^{-6}$) & $\rho=-0.44$ ($q=4.48\times10^{-3}$) \\
+Rain vs Shannon & $\rho=-0.47$ ($q=1.67\times10^{-4}$) & $\rho=-0.23$ ($q=1.41\times10^{-1}$) \\
+Rain vs richness & $\rho=-0.49$ ($q=7.51\times10^{-5}$) & $\rho=-0.32$ ($q=4.39\times10^{-2}$) \\
+Rain vs normalized Shannon & $\rho=-0.30$ ($q=2.06\times10^{-2}$) & $\rho=-0.11$ ($q=4.59\times10^{-1}$) \\
+Humidity vs Shannon & $\rho=-0.70$ ($q=1.04\times10^{-9}$) & $\rho=-0.57$ ($q=1.39\times10^{-4}$) \\
+Humidity vs richness & $\rho=-0.77$ ($q=2.87\times10^{-12}$) & $\rho=-0.69$ ($q=7.56\times10^{-7}$) \\
+Humidity vs normalized Shannon & $\rho=-0.52$ ($q=2.89\times10^{-5}$) & $\rho=-0.38$ ($q=1.71\times10^{-2}$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -55,66 +56,66 @@ relative humidity pct vs normalized evenness & $\rho=-0.52$ ($q=2.89e-05$) & $\r
 Genus & Phylum & $\Delta$ CLR & 95\,\% CI & $q$ \\
 \midrule
 \multicolumn{5}{l}{\emph{shallow-subsurface vs surface: higher in shallow-subsurface}} \\
-\textit{Polycyclovorans} & Pseudomonadota & 1.79 & [1.24, 2.31] & 4.3e-04 \\
-\textit{Opitutus} & Verrucomicrobiota & 1.16 & [0.83, 1.49] & 4.3e-04 \\
-\textit{Thermosipho} & Thermotogota & 1.02 & [0.58, 1.46] & 7.9e-04 \\
-\textit{Nordella} & Pseudomonadota & 0.92 & [0.50, 1.35] & 1.4e-03 \\
-\textit{Acidiferrimicrobium} & Actinomycetota & 0.89 & [0.51, 1.29] & 4.3e-04 \\
-\textit{MND1} & Pseudomonadota & 0.89 & [0.49, 1.29] & 4.3e-04 \\
-\textit{I-8} & Planctomycetota & 0.85 & [0.38, 1.28] & 2.8e-03 \\
-\textit{Aureibacillus} & Bacillota & 0.84 & [0.42, 1.26] & 1.7e-03 \\
+\textit{Polycyclovorans} & Pseudomonadota & 1.79 & [1.24, 2.31] & $4.3\times10^{-4}$ \\
+\textit{Opitutus} & Verrucomicrobiota & 1.16 & [0.83, 1.49] & $4.3\times10^{-4}$ \\
+\textit{Thermosipho} & Thermotogota & 1.02 & [0.58, 1.46] & $7.9\times10^{-4}$ \\
+\textit{Nordella} & Pseudomonadota & 0.92 & [0.50, 1.35] & $1.4\times10^{-3}$ \\
+\textit{Acidiferrimicrobium} & Actinomycetota & 0.89 & [0.51, 1.29] & $4.3\times10^{-4}$ \\
+\textit{MND1} & Pseudomonadota & 0.89 & [0.49, 1.29] & $4.3\times10^{-4}$ \\
+\textit{I-8} & Planctomycetota & 0.85 & [0.38, 1.28] & $2.8\times10^{-3}$ \\
+\textit{Aureibacillus} & Bacillota & 0.84 & [0.42, 1.26] & $1.7\times10^{-3}$ \\
 \multicolumn{5}{l}{\emph{shallow-subsurface vs surface: higher in surface}} \\
-\textit{Planococcus} & Bacillota & -1.75 & [-2.23, -1.28] & 4.3e-04 \\
-\textit{Nibribacter} & Bacteroidota & -1.48 & [-1.88, -1.11] & 4.3e-04 \\
-\textit{Kineococcus} & Actinomycetota & -1.36 & [-1.75, -0.99] & 4.3e-04 \\
-\textit{Deinococcus} & Deinococcota & -1.30 & [-1.65, -0.97] & 4.3e-04 \\
-\textit{Saccharibacillus} & Bacillota & -1.27 & [-1.75, -0.81] & 4.3e-04 \\
-\textit{Kineosporia} & Actinomycetota & -1.20 & [-1.62, -0.80] & 4.3e-04 \\
-\textit{Rufibacter} & Bacteroidota & -1.20 & [-1.60, -0.78] & 4.3e-04 \\
-\textit{Kocuria} & Actinomycetota & -1.13 & [-1.50, -0.72] & 4.3e-04 \\
+\textit{Planococcus} & Bacillota & -1.75 & [-2.23, -1.28] & $4.3\times10^{-4}$ \\
+\textit{Nibribacter} & Bacteroidota & -1.48 & [-1.88, -1.11] & $4.3\times10^{-4}$ \\
+\textit{Kineococcus} & Actinomycetota & -1.36 & [-1.75, -0.99] & $4.3\times10^{-4}$ \\
+\textit{Deinococcus} & Deinococcota & -1.30 & [-1.65, -0.97] & $4.3\times10^{-4}$ \\
+\textit{Saccharibacillus} & Bacillota & -1.27 & [-1.75, -0.81] & $4.3\times10^{-4}$ \\
+\textit{Kineosporia} & Actinomycetota & -1.20 & [-1.62, -0.80] & $4.3\times10^{-4}$ \\
+\textit{Rufibacter} & Bacteroidota & -1.20 & [-1.60, -0.78] & $4.3\times10^{-4}$ \\
+\textit{Kocuria} & Actinomycetota & -1.13 & [-1.50, -0.72] & $4.3\times10^{-4}$ \\
 \multicolumn{5}{l}{\emph{root-adjacent vs surface: higher in root-adjacent}} \\
-\textit{TM7a} & Patescibacteria & 2.07 & [1.50, 2.67] & 4.3e-04 \\
-\textit{Pelagibacterium} & Pseudomonadota & 1.86 & [1.31, 2.44] & 4.3e-04 \\
-\textit{Arsenicitalea} & Pseudomonadota & 1.67 & [1.16, 2.15] & 4.3e-04 \\
-\textit{Ohtaekwangia} & Bacteroidota & 1.60 & [1.06, 2.09] & 4.3e-04 \\
-\textit{Neorhizobium} & Pseudomonadota & 1.51 & [0.98, 2.04] & 4.3e-04 \\
-\textit{DSSF69} & Pseudomonadota & 1.47 & [0.98, 1.93] & 4.3e-04 \\
-\textit{Litchfieldia} & Bacillota & 1.43 & [0.92, 1.99] & 4.3e-04 \\
-\textit{Metabacillus} & Bacillota & 1.41 & [1.10, 1.72] & 4.3e-04 \\
+\textit{TM7a} & Patescibacteria & 2.07 & [1.50, 2.67] & $4.3\times10^{-4}$ \\
+\textit{Pelagibacterium} & Pseudomonadota & 1.86 & [1.31, 2.44] & $4.3\times10^{-4}$ \\
+\textit{Arsenicitalea} & Pseudomonadota & 1.67 & [1.16, 2.15] & $4.3\times10^{-4}$ \\
+\textit{Ohtaekwangia} & Bacteroidota & 1.60 & [1.06, 2.09] & $4.3\times10^{-4}$ \\
+\textit{Neorhizobium} & Pseudomonadota & 1.51 & [0.98, 2.04] & $4.3\times10^{-4}$ \\
+\textit{DSSF69} & Pseudomonadota & 1.47 & [0.98, 1.93] & $4.3\times10^{-4}$ \\
+\textit{Litchfieldia} & Bacillota & 1.43 & [0.92, 1.99] & $4.3\times10^{-4}$ \\
+\textit{Metabacillus} & Bacillota & 1.41 & [1.10, 1.72] & $4.3\times10^{-4}$ \\
 \multicolumn{5}{l}{\emph{root-adjacent vs surface: higher in surface}} \\
-\textit{Bradyrhizobium} & Pseudomonadota & -2.27 & [-3.04, -1.52] & 4.3e-04 \\
-\textit{Deinococcus} & Deinococcota & -2.01 & [-2.48, -1.53] & 4.3e-04 \\
-\textit{Oxalophagus} & Bacillota & -1.75 & [-2.33, -1.20] & 4.3e-04 \\
-\textit{Blastococcus} & Actinomycetota & -1.73 & [-2.18, -1.29] & 4.3e-04 \\
-\textit{Vallicoccus} & Actinomycetota & -1.64 & [-2.14, -1.17] & 4.3e-04 \\
-\textit{Rubrobacter} & Actinomycetota & -1.58 & [-2.01, -1.16] & 4.3e-04 \\
-\textit{Limnobacter} & Pseudomonadota & -1.55 & [-1.93, -1.15] & 4.3e-04 \\
-\textit{Cystobacter} & Myxococcota & -1.54 & [-2.01, -1.06] & 4.3e-04 \\
+\textit{Bradyrhizobium} & Pseudomonadota & -2.27 & [-3.04, -1.52] & $4.3\times10^{-4}$ \\
+\textit{Deinococcus} & Deinococcota & -2.01 & [-2.48, -1.53] & $4.3\times10^{-4}$ \\
+\textit{Oxalophagus} & Bacillota & -1.75 & [-2.33, -1.20] & $4.3\times10^{-4}$ \\
+\textit{Blastococcus} & Actinomycetota & -1.73 & [-2.18, -1.29] & $4.3\times10^{-4}$ \\
+\textit{Vallicoccus} & Actinomycetota & -1.64 & [-2.14, -1.17] & $4.3\times10^{-4}$ \\
+\textit{Rubrobacter} & Actinomycetota & -1.58 & [-2.01, -1.16] & $4.3\times10^{-4}$ \\
+\textit{Limnobacter} & Pseudomonadota & -1.55 & [-1.93, -1.15] & $4.3\times10^{-4}$ \\
+\textit{Cystobacter} & Myxococcota & -1.54 & [-2.01, -1.06] & $4.3\times10^{-4}$ \\
 \multicolumn{5}{l}{\emph{root-adjacent vs shallow-subsurface: higher in root-adjacent}} \\
-\textit{Pelagibacterium} & Pseudomonadota & 2.37 & [1.78, 2.96] & 4.3e-04 \\
-\textit{TM7a} & Patescibacteria & 2.01 & [1.46, 2.57] & 4.3e-04 \\
-\textit{Planococcus} & Bacillota & 1.99 & [1.42, 2.58] & 4.3e-04 \\
-\textit{Brevundimonas} & Pseudomonadota & 1.95 & [1.52, 2.36] & 4.3e-04 \\
-\textit{Devosia} & Pseudomonadota & 1.95 & [1.44, 2.50] & 4.3e-04 \\
-\textit{Pseudomonas} & Pseudomonadota & 1.87 & [1.38, 2.38] & 4.3e-04 \\
-\textit{Neorhizobium} & Pseudomonadota & 1.76 & [1.21, 2.33] & 4.3e-04 \\
-\textit{Nibribacter} & Bacteroidota & 1.75 & [1.40, 2.12] & 4.3e-04 \\
+\textit{Pelagibacterium} & Pseudomonadota & 2.37 & [1.78, 2.96] & $4.3\times10^{-4}$ \\
+\textit{TM7a} & Patescibacteria & 2.01 & [1.46, 2.57] & $4.3\times10^{-4}$ \\
+\textit{Planococcus} & Bacillota & 1.99 & [1.42, 2.58] & $4.3\times10^{-4}$ \\
+\textit{Brevundimonas} & Pseudomonadota & 1.95 & [1.52, 2.36] & $4.3\times10^{-4}$ \\
+\textit{Devosia} & Pseudomonadota & 1.95 & [1.44, 2.50] & $4.3\times10^{-4}$ \\
+\textit{Pseudomonas} & Pseudomonadota & 1.87 & [1.38, 2.38] & $4.3\times10^{-4}$ \\
+\textit{Neorhizobium} & Pseudomonadota & 1.76 & [1.21, 2.33] & $4.3\times10^{-4}$ \\
+\textit{Nibribacter} & Bacteroidota & 1.75 & [1.40, 2.12] & $4.3\times10^{-4}$ \\
 \multicolumn{5}{l}{\emph{root-adjacent vs shallow-subsurface: higher in shallow-subsurface}} \\
-\textit{Bradyrhizobium} & Pseudomonadota & -2.18 & [-2.80, -1.61] & 4.3e-04 \\
-\textit{MND1} & Pseudomonadota & -2.03 & [-2.50, -1.57] & 4.3e-04 \\
-\textit{Nitrospira} & Nitrospirota & -2.01 & [-2.47, -1.54] & 4.3e-04 \\
-\textit{Thermosipho} & Thermotogota & -1.99 & [-2.50, -1.45] & 4.3e-04 \\
-\textit{Gaiella} & Actinomycetota & -1.94 & [-2.42, -1.43] & 4.3e-04 \\
-\textit{Oxalophagus} & Bacillota & -1.79 & [-2.39, -1.21] & 4.3e-04 \\
-\textit{Symbiobacterium} & Bacillota & -1.76 & [-2.30, -1.23] & 4.3e-04 \\
-\textit{Rubrobacter} & Actinomycetota & -1.63 & [-2.09, -1.16] & 4.3e-04 \\
+\textit{Bradyrhizobium} & Pseudomonadota & -2.18 & [-2.80, -1.61] & $4.3\times10^{-4}$ \\
+\textit{MND1} & Pseudomonadota & -2.03 & [-2.50, -1.57] & $4.3\times10^{-4}$ \\
+\textit{Nitrospira} & Nitrospirota & -2.01 & [-2.47, -1.54] & $4.3\times10^{-4}$ \\
+\textit{Thermosipho} & Thermotogota & -1.99 & [-2.50, -1.45] & $4.3\times10^{-4}$ \\
+\textit{Gaiella} & Actinomycetota & -1.94 & [-2.42, -1.43] & $4.3\times10^{-4}$ \\
+\textit{Oxalophagus} & Bacillota & -1.79 & [-2.39, -1.21] & $4.3\times10^{-4}$ \\
+\textit{Symbiobacterium} & Bacillota & -1.76 & [-2.30, -1.23] & $4.3\times10^{-4}$ \\
+\textit{Rubrobacter} & Actinomycetota & -1.63 & [-2.09, -1.16] & $4.3\times10^{-4}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering\scriptsize
-\caption{The laboratory-XRF elemental axis: element loadings of the first principal component after within-campaign standardization, and the genera whose site-level CLR values track the site-mean axis (Spearman over $60$ sites; 118 of $200$ genera at Benjamini--Hochberg $q<0.05$). The axis is an elemental axis and does not measure soluble ions.}
+\caption{The laboratory-XRF elemental axis: element loadings of the first principal component after within-campaign standardization, and the genera whose site-level CLR values track the site-mean axis (Spearman over $60$ sites; 118 of $200$ genera at Benjamini--Hochberg $q<0.05$).}
 \label{tab:xrf-genera}
 \begin{tabular}{llrr}
 \toprule
@@ -133,61 +134,61 @@ Al & & 0.158 & \\
 P & & -0.013 & \\
 Si & & -0.273 & \\
 \multicolumn{4}{l}{\emph{Genera increasing with the axis (Ca, Mg, Na, S, Cl, Fe, Ti side)}} \\
-\textit{Polygonibacillus} & Bacillota & 0.81 & 1.8e-12 \\
-\textit{Escherichia-Shigella} & Pseudomonadota & 0.74 & 6.2e-10 \\
-\textit{Sediminibacillus} & Bacillota & 0.74 & 6.2e-10 \\
-\textit{Aquibacillus} & Bacillota & 0.74 & 6.2e-10 \\
-\textit{Halalkalibacter} & Bacillota & 0.73 & 1.2e-09 \\
-\textit{Gracilibacillus} & Bacillota & 0.72 & 3.9e-09 \\
-\textit{Enterococcus} & Bacillota & 0.71 & 5.4e-09 \\
-\textit{Aeromonas} & Pseudomonadota & 0.69 & 1.7e-08 \\
-\textit{Pseudalkalibacillus} & Bacillota & 0.69 & 2.5e-08 \\
-\textit{Crossiella} & Actinomycetota & 0.65 & 2.3e-07 \\
+\textit{Polygonibacillus} & Bacillota & 0.81 & $1.8\times10^{-12}$ \\
+\textit{Escherichia-Shigella} & Pseudomonadota & 0.74 & $6.2\times10^{-10}$ \\
+\textit{Sediminibacillus} & Bacillota & 0.74 & $6.2\times10^{-10}$ \\
+\textit{Aquibacillus} & Bacillota & 0.74 & $6.2\times10^{-10}$ \\
+\textit{Halalkalibacter} & Bacillota & 0.73 & $1.2\times10^{-9}$ \\
+\textit{Gracilibacillus} & Bacillota & 0.72 & $3.9\times10^{-9}$ \\
+\textit{Enterococcus} & Bacillota & 0.71 & $5.4\times10^{-9}$ \\
+\textit{Aeromonas} & Pseudomonadota & 0.69 & $1.7\times10^{-8}$ \\
+\textit{Pseudalkalibacillus} & Bacillota & 0.69 & $2.5\times10^{-8}$ \\
+\textit{Crossiella} & Actinomycetota & 0.65 & $2.3\times10^{-7}$ \\
 \multicolumn{4}{l}{\emph{Genera decreasing with the axis (Si side)}} \\
-\textit{Steroidobacter} & Pseudomonadota & -0.71 & 5.4e-09 \\
-\textit{Caldilinea} & Chloroflexota & -0.67 & 9.3e-08 \\
-\textit{Phenylobacterium} & Pseudomonadota & -0.65 & 2.7e-07 \\
-\textit{Paraconexibacter} & Actinomycetota & -0.65 & 3.0e-07 \\
-\textit{Streptomyces} & Actinomycetota & -0.65 & 3.1e-07 \\
-\textit{Roseisolibacter} & Gemmatimonadota & -0.63 & 7.1e-07 \\
-\textit{Gemmatimonas} & Gemmatimonadota & -0.63 & 7.2e-07 \\
-\textit{Pirellula} & Planctomycetota & -0.58 & 8.9e-06 \\
-\textit{Blastocatella} & Acidobacteriota & -0.58 & 8.9e-06 \\
-\textit{Dongia} & Pseudomonadota & -0.58 & 8.9e-06 \\
+\textit{Steroidobacter} & Pseudomonadota & -0.71 & $5.4\times10^{-9}$ \\
+\textit{Caldilinea} & Chloroflexota & -0.67 & $9.3\times10^{-8}$ \\
+\textit{Phenylobacterium} & Pseudomonadota & -0.65 & $2.7\times10^{-7}$ \\
+\textit{Paraconexibacter} & Actinomycetota & -0.65 & $3.0\times10^{-7}$ \\
+\textit{Streptomyces} & Actinomycetota & -0.65 & $3.1\times10^{-7}$ \\
+\textit{Roseisolibacter} & Gemmatimonadota & -0.63 & $7.1\times10^{-7}$ \\
+\textit{Gemmatimonas} & Gemmatimonadota & -0.63 & $7.2\times10^{-7}$ \\
+\textit{Pirellula} & Planctomycetota & -0.58 & $8.9\times10^{-6}$ \\
+\textit{Blastocatella} & Acidobacteriota & -0.58 & $8.9\times10^{-6}$ \\
+\textit{Dongia} & Pseudomonadota & -0.58 & $8.9\times10^{-6}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering\scriptsize
-\caption{Genera whose site-level CLR values track site-mean archived-soil pH (admitted measurements, $60$ sites; 117 of $200$ genera at Benjamini--Hochberg $q<0.05$, 104 of them also supported in the route family).}
+\caption{Genera whose site-level CLR values track site-mean archived-soil pH. pH means give each campaign--site--compartment group equal weight within site ($563$ groups, $60$ sites; 117 of $200$ genera at Benjamini--Hochberg $q<0.05$, 104 of them also supported in the route family). These site-level Spearman tests retain spatial dependence among sites.}
 \label{tab:ph-genera}
 \begin{tabular}{llrr}
 \toprule
 Genus & Phylum & $\rho$ & $q$ \\
 \midrule
 \multicolumn{4}{l}{\emph{Increasing with site-mean pH}} \\
-\textit{Polygonibacillus} & Bacillota & 0.81 & 1.1e-12 \\
-\textit{Sediminibacillus} & Bacillota & 0.80 & 3.0e-12 \\
-\textit{Halalkalibacter} & Bacillota & 0.78 & 1.2e-11 \\
-\textit{Gracilibacillus} & Bacillota & 0.75 & 1.6e-10 \\
-\textit{Halomonas} & Pseudomonadota & 0.75 & 2.6e-10 \\
-\textit{Aquibacillus} & Bacillota & 0.71 & 5.2e-09 \\
-\textit{Aeromonas} & Pseudomonadota & 0.71 & 7.4e-09 \\
-\textit{Ammoniphilus} & Bacillota & 0.69 & 3.1e-08 \\
-\textit{Escherichia-Shigella} & Pseudomonadota & 0.69 & 3.1e-08 \\
-\textit{Truepera} & Deinococcota & 0.68 & 4.1e-08 \\
+\textit{Polygonibacillus} & Bacillota & 0.81 & $5.6\times10^{-13}$ \\
+\textit{Sediminibacillus} & Bacillota & 0.79 & $5.7\times10^{-12}$ \\
+\textit{Halalkalibacter} & Bacillota & 0.79 & $5.7\times10^{-12}$ \\
+\textit{Halomonas} & Pseudomonadota & 0.76 & $1.4\times10^{-10}$ \\
+\textit{Gracilibacillus} & Bacillota & 0.75 & $1.4\times10^{-10}$ \\
+\textit{Aquibacillus} & Bacillota & 0.73 & $1.3\times10^{-9}$ \\
+\textit{Aeromonas} & Pseudomonadota & 0.71 & $4.4\times10^{-9}$ \\
+\textit{Pseudalkalibacillus} & Bacillota & 0.70 & $1.0\times10^{-8}$ \\
+\textit{Ammoniphilus} & Bacillota & 0.70 & $1.0\times10^{-8}$ \\
+\textit{Escherichia-Shigella} & Pseudomonadota & 0.70 & $1.2\times10^{-8}$ \\
 \multicolumn{4}{l}{\emph{Decreasing with site-mean pH}} \\
-\textit{Pirellula} & Planctomycetota & -0.68 & 4.4e-08 \\
-\textit{Caenimonas} & Pseudomonadota & -0.68 & 4.4e-08 \\
-\textit{Roseisolibacter} & Gemmatimonadota & -0.65 & 2.7e-07 \\
-\textit{Gemmatimonas} & Gemmatimonadota & -0.65 & 2.7e-07 \\
-\textit{Steroidobacter} & Pseudomonadota & -0.64 & 3.7e-07 \\
-\textit{Gaiella} & Actinomycetota & -0.64 & 4.6e-07 \\
-\textit{Dongia} & Pseudomonadota & -0.62 & 1.2e-06 \\
-\textit{Adhaeribacter} & Bacteroidota & -0.61 & 1.9e-06 \\
-\textit{Sphingomonas} & Pseudomonadota & -0.60 & 2.6e-06 \\
-\textit{Streptomyces} & Actinomycetota & -0.60 & 3.4e-06 \\
+\textit{Caenimonas} & Pseudomonadota & -0.68 & $3.8\times10^{-8}$ \\
+\textit{Pirellula} & Planctomycetota & -0.67 & $8.3\times10^{-8}$ \\
+\textit{Roseisolibacter} & Gemmatimonadota & -0.65 & $1.8\times10^{-7}$ \\
+\textit{Gemmatimonas} & Gemmatimonadota & -0.65 & $2.0\times10^{-7}$ \\
+\textit{Steroidobacter} & Pseudomonadota & -0.65 & $2.0\times10^{-7}$ \\
+\textit{Streptomyces} & Actinomycetota & -0.64 & $3.5\times10^{-7}$ \\
+\textit{Gaiella} & Actinomycetota & -0.64 & $3.9\times10^{-7}$ \\
+\textit{Dongia} & Pseudomonadota & -0.63 & $8.0\times10^{-7}$ \\
+\textit{Cellulomonas} & Actinomycetota & -0.60 & $2.6\times10^{-6}$ \\
+\textit{Sphingomonas} & Pseudomonadota & -0.60 & $3.1\times10^{-6}$ \\
 \bottomrule
 \end{tabular}
 \end{table}

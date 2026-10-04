@@ -1,0 +1,8 @@
+{
+  "source": "metadata/metagenome/coverm_profiles.tar.gz",
+  "source_sha256": "a33923313f0d648a092259848a21b1951b7fdee7678414b03d7913f58b4f9aba",
+  "n_libraries": 150,
+  "n_genomes": 991,
+  "mean_recruited_pct": 28.518623257764133,
+  "median_recruited_pct": 28.317779153000004
+}

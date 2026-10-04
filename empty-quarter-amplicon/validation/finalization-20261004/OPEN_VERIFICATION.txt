@@ -1,0 +1,24 @@
+Remaining author-source verification: physical well-to-well analysis
+
+The current manuscript reports 259 Trip 1 biological samples, a mean
+Bray-Curtis difference of +0.005 and one-sided p=0.87 from 999 stratified
+permutations for physically adjacent wells (shared edge or corner).
+
+The physical plate map, executed script and result output for this specific
+analysis have not been found in the ecology/data repositories or other local
+project copies. It first appears in Rund's 28 September Overleaf revision fb00f5c and is
+reworded in her 2 October revision a5d5623. The older
+library-order adjacency analysis is a different test and cannot substantiate
+this claim. It has been rerun on corrected coordinates separately.
+
+Rund's well-to-well wording and numbers are retained pending her source files;
+they have not been independently verified or rerun. At least the Trip 1 Site 52
+coordinate must be checked if that sample is included in the plate-map cohort.
+This prevents an unconditional claim that every manuscript analysis is fully
+verified. Needed: sample-to-plate/well map, analysis code, result output and
+random seed/permutation specification. Package those inputs, reproduce the
+reported result and rerun with corrected coordinates before submission.
+
+A targeted read-only search of the shared IBEX EmptyQuarter_Data soil/amplicon
+project, for-rund and emptyquarter directories also found no physical well map
+or adjacency script; available Trip 1 CSVs contain biological/site metadata only.

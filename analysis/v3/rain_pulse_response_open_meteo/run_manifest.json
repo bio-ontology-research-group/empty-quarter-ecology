@@ -1,14 +1,14 @@
 {
   "analysis_date": "2026-08-05",
-  "git_head": "be0f9afa9d159ed0540a5201f3b801e40aeeeadf",
+  "git_head": "fa9ceb49ed20cf6b271ed9176b6d74fa4a69886a",
   "inputs": {
     "alpha": {
       "path": "analysis/v2/review/cache/alpha.tsv",
       "sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c"
     },
     "rainfall": {
-      "path": "data/processed/climate/daily_weather_canonical.tsv",
-      "sha256": "6cb570e7a8a85a9508fdc910ae0a11bf7db614ef05e0d22fd6fd6a599966581a",
+      "path": "analysis/v3/open_meteo_site52_corrected_20261004/daily_weather_canonical_site52_corrected.tsv",
+      "sha256": "494acfb4b01728d00bdaea3cafc481dab2f4730386f5cd3e6c2734edfd5ac3de",
       "source_column": "Precip_mm",
       "weather_product": "open_meteo"
     }
@@ -280,7 +280,7 @@
     ],
     "nuisance_formula": "0 + C(Site):C(Type) + C(Trip) + C(Trip):longitude_z + C(Trip):sampling_day_z",
     "nuisance_model": "linear",
-    "nuisance_rank": 193,
+    "nuisance_rank": 192,
     "permutations": 19999,
     "ph_adjusted": false,
     "sampling_day_included": false,

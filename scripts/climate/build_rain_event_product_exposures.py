@@ -35,6 +35,9 @@ from rasterio.io import MemoryFile
 
 
 ANALYSIS_DATE = "2026-08-04"
+# Corrected Site 52 build (4 Oct 2026); the data-repository copy predates the
+# Site 52 coordinate correction.
+PACKAGE = "analysis/v3/rain_event_product_exposures_site52_corrected_20261004"
 WINDOW_START = 1
 WINDOW_END = 4
 TRIP = 1
@@ -129,9 +132,11 @@ def official_url(product: str, day: pd.Timestamp, filename: str) -> str:
             f"daily/0.25deg/{day.year}/{day.month:02d}/{filename}"
         )
     if product == "GPM_3IMERGDF_07B":
+        # GES DISC moved the daily archive from day-of-year to month
+        # directories; the day-of-year path now returns an HTML banner.
         return (
             "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/"
-            f"GPM_3IMERGDF.07/{day.year}/{day.dayofyear:03d}/{filename}"
+            f"GPM_3IMERGDF.07/{day.year}/{day.month:02d}/{filename}"
         )
     raise ValueError(f"No raw-file URL template for {product}")
 
@@ -415,7 +420,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--open-meteo",
         type=Path,
-        default=root / "data/processed/climate/daily_weather_canonical.tsv",
+        default=root
+        / "analysis/v3/open_meteo_site52_corrected_20261004"
+        / "daily_weather_canonical_site52_corrected.tsv",
     )
     parser.add_argument("--chirps-dir", type=Path, required=True)
     parser.add_argument("--cmorph-dir", type=Path, required=True)
@@ -423,17 +430,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=root / "data/processed/climate/rain_event_product_exposures.tsv",
+        default=root / f"{PACKAGE}/rain_event_product_exposures.tsv",
     )
     parser.add_argument(
         "--sources",
         type=Path,
-        default=root / "data/processed/climate/rain_event_product_sources.tsv",
+        default=root / f"{PACKAGE}/rain_event_product_sources.tsv",
     )
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=root / "data/processed/climate/rain_event_product_exposures.manifest.json",
+        default=root / f"{PACKAGE}/rain_event_product_exposures.manifest.json",
     )
     return parser.parse_args()
 

@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 
 from manuscript_paths import PAPER
+import manuscript_text as mt
 
 ROOT = Path(__file__).resolve().parents[1]
 ANALYSIS = ROOT / "analysis/v3"
@@ -46,9 +47,23 @@ def test_figure_uses_matched_common_profile_estimates(tmp_path, monkeypatch):
 
 
 def test_reconciled_claims_and_prose():
-    text = " ".join((PAPER / "main.tex").read_text().split())
-    for retired in ("compartment alone", "agnostic to sequencing depth", "all $25$ tracked conclusions unchanged", "group 1 [NiFe]", "\\todo{", "\\todo[", "tab:traits", "$p=0.00781$", "$p=0.0432$"):
-        assert retired not in text
-    for current in ("campaign-matched", "$0.269$", "$-0.492$", "$-0.031$", "$0.0342$", "$0.0425$", "$999$ within-site label permutations", "membrane-bound group~1 and soluble group~3d", "executed pooling inputs are unavailable", "$44$ of the $50$ leading eastern genera", "$p=0.0113$"):
-        assert current in text
-    assert text.index("weighted nearest-sequenced-taxon index") < text.index("Across $1{,}227$ sample profiles and $462$ MetaCyc pathways")
+    main = mt.text("main")
+    supplement = mt.text("supplement")
+    source = mt.strip_comments((PAPER / "main.tex").read_text())
+    for retired in ("compartment alone", "agnostic to sequencing depth", "all 25 tracked conclusions unchanged",
+                    "group 1 [NiFe]", "p=0.00781", "p=0.0432"):
+        assert retired not in main, retired
+    # No rendered author notes remain (commented-out notes are not rendered).
+    assert "\\todo" not in source
+    # Current reconciled statements, tied to their sources in other tests.
+    assert "campaign-matched" in main.lower()
+    estimands = pd.read_csv(ANALYSIS / "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv", sep="\t")
+    root_deep = estimands.query(
+        "cohort == 'common_profiles' and estimand == 'campaign_matched' and metric == 'shannon' and contrast == 'Rhizosphere-Deep'"
+    ).iloc[0]
+    assert f"{root_deep['mean']:.3f}" == "-0.269"
+    assert "-0.269" in supplement and "[-0.492, -0.031]" in supplement
+    assert "membrane-bound group 1 or soluble group 3d" in main
+    assert "both membrane-bound group 1 and soluble group 3d" in supplement
+    assert "permutations restricted within sites (999)" in main
+    assert main.index("nearest-sequenced-taxon index") < main.index("Of the 462 predicted MetaCyc pathways")

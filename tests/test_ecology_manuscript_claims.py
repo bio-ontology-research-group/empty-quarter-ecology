@@ -1,8 +1,8 @@
 """Numerical claim checks tying the ecology manuscript to canonical artifacts.
 
-Every assertion here compares a string printed in the manuscript against the
-machine-readable output that produced it.  A stale number in either direction
-fails the test.
+Current numerical assertions compare manuscript claims with their source
+artifacts. Superseded analyses retain separate archival checks; their old
+values are not required in the current paper.
 """
 
 import hashlib
@@ -14,17 +14,13 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from manuscript_paths import PAPER
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = ROOT / "empty-quarter-amplicon"
 MAIN = PAPER / "main.tex"
 SUPPLEMENT = PAPER / "supplement.tex"
 MANIFEST = PAPER / "figures" / "figure_manifest.tsv"
 RESULTS = ROOT / "analysis/v3/results"
-
-pytestmark = pytest.mark.skipif(
-    not MAIN.exists(), reason="active ecology manuscript not available"
-)
 
 
 @pytest.fixture(scope="module")
@@ -75,7 +71,7 @@ def test_amplicon_filter_description_matches_the_canonical_branch(
     flat_main = _without_value_math(" ".join(main_tex.split()))
     flat_supplement = _without_value_math(" ".join(supplement_tex.split()))
     assert (
-        "retained all 351,472 ASVs and 24 control profiles from the Trip~5 "
+        "all 351,472 ASVs and 24 control profiles from the Trip~5 "
         "sequencing run (18 extraction blanks and 6 no-template PCR controls)"
         in flat_main
     )
@@ -110,11 +106,19 @@ def test_section_order_matches_isme_communications(main_tex):
         # Added on Overleaf (Sep 2026); sits between Methods and the
         # bibliography as ISME Communications back matter.
         "Funding",
+        "Competing interests",
     ]
 
 
 def test_rainfall_denominators_are_reported_in_supplement(supplement_tex, rain):
     cohort = rain["cohort"]
+    current = pd.read_csv(
+        ROOT / "analysis/v3/rain_calendar_refit_20260909/analysis_cohort.tsv", sep="\t"
+    )
+    keys = ["Trip", "Site", "Type"]
+    assert set(map(tuple, current[keys].to_numpy())) == set(map(tuple, cohort[keys].to_numpy()))
+    assert current.loc[current.Trip == 4, "Date"].min() == "2024-08-29"
+    assert current.loc[current.Trip == 4, "Date"].max() == "2024-08-31"
     supplement_flat = _without_value_math(" ".join(supplement_tex.split()))
     assert len(cohort) == 617
     assert cohort["Site"].nunique() == 60
@@ -125,33 +129,40 @@ def test_rainfall_denominators_are_reported_in_supplement(supplement_tex, rain):
     }
     assert "617 site--campaign--position groups" in supplement_flat
     assert "179 pairs" in supplement_flat
-    assert "20 distinct daily rainfall series" in supplement_flat
+    assert "20 distinct rainfall series" in supplement_flat
+    assert "Open-Meteo resolved 58 series" in supplement_flat
     assert "historical surface denominator" not in supplement_flat
 
 
 def test_rainfall_family_extremes_match_the_artifact(main_tex, supplement_tex, rain):
+    # Preserve the historical result test without requiring superseded values
+    # in the active manuscript.
     decision = rain["decision"]
-    scan = rain["scan"]
-    assert decision["analysis_status"] == "temporally_localized_association_borderline"
     assert decision["selected_peak_complete_days"] == 2.0
-    assert round(
-        decision["familywise_inference"]["conditional_lag_rotation_one_sided_p"],
-        3,
-    ) == 0.056
-    assert decision["familywise_inference"][
-        "conditional_lag_rotation_two_sided_p"
-    ] == pytest.approx(0.07865)
-    selected = scan[
-        (scan["endpoint"] == "richness_hurlbert_25000")
-        & (scan["candidate_peak_days"] == 2.0)
-    ].iloc[0]
+    assert decision["familywise_inference"]["conditional_lag_rotation_one_sided_p"] == pytest.approx(0.056)
+    assert decision["familywise_inference"]["conditional_lag_rotation_two_sided_p"] == pytest.approx(0.07865)
+    selected = rain["scan"].query("endpoint == 'richness_hurlbert_25000' and candidate_peak_days == 2.0").iloc[0]
     assert round(float(selected["estimate_per_mm_at_kernel_peak"]), 1) == 179.6
-    assert "179.6 expected taxa per millimetre" in _without_value_math(supplement_tex)
-    assert "$p=0.0560$" in supplement_tex
-    assert "$p=0.0787$" in supplement_tex
-    assert "Bacterial richness shows a short association with recent rain" in main_tex
-    assert "figS_campaign_rainfall.pdf" not in main_tex
-    assert "$p=0.518$" not in main_tex + supplement_tex
+    current = ROOT / "analysis/v3/rain_calendar_refit_20260909"
+    result = json.loads((current / "summary.json").read_text())
+    intervals = pd.read_csv(current / "refitted_site_bootstrap_summary.tsv", sep="\t").set_index(["product", "quantity"])
+    generated = (PAPER / "generated/rain_calendar_refit_tables.tex").read_text()
+    for product, peak in (("nasa_power", 2.0), ("open_meteo", 1.0)):
+        observed = result["observed"][product]
+        assert observed["endpoint"] == "richness_hurlbert_25000"
+        assert observed["peak_days"] == peak
+        assert f"{observed['beta']:.1f}" in main_tex
+        assert f"{observed['beta']:.1f}" in generated
+        for column in ("lower_2_5", "upper_97_5"):
+            assert f"{intervals.loc[(product, 'fixed_beta'), column]:.1f}" in generated
+            assert f"{intervals.loc[(product, 'fixed_endpoint_selected_peak_days'), column]:.1f}" in generated
+    assert result["year_orbit_size"] == 6
+    assert result["exact_p"]["nasa_power_positive_max"] == pytest.approx(1 / 6)
+    assert result["exact_p"]["joint_positive_max"] == pytest.approx(2 / 6)
+    assert "$p=1/6$" in main_tex and "$p=2/6$" in main_tex
+    assert "calendar-preserving" in supplement_tex
+    for retired in ("$p=0.0560$", "$p=0.0787$", "179.6", "327.5"):
+        assert retired not in main_tex + supplement_tex + generated
 
 
 def test_campaign_interaction_reports_both_models(main_tex, supplement_tex):
@@ -181,7 +192,7 @@ def test_rubisco_correlation_is_rounded_and_carries_its_p(main_tex, supplement_t
     assert round(marker["across_sample_spearman"], 2) == 0.16
     assert round(marker["two_sided_p_value"], 3) == 0.067
     flat = " ".join(supplement_tex.split())
-    assert flat.count("RuBisCO $r=0.16$") == 2
+    assert "RuBisCO agreement was weaker ($r=0.16$, two-sided $p=0.067$)" in flat
     assert "two-sided $p=0.067$" in flat
     assert "RuBisCO $r=0.17$" not in flat
     assert "0.17" not in " ".join(main_tex.split()).split("RuBisCO")[-1][:80]
@@ -204,12 +215,12 @@ def test_paired_compartment_contrasts_match_the_artifact(
     }
     assert values["Rhizosphere-Surface"] == (-0.130, -0.321, 0.079)
     assert values["Rhizosphere-Deep"] == (-0.206, -0.398, -0.001)
-    assert "$-0.130$" in supplement_tex and "$0.206$" in main_tex
+    assert "$-0.130$" in supplement_tex and "$-0.206$" in main_tex
     assert "[$-0.321$,$0.079$]" in supplement_tex
-    assert "[$-0.398$,$-0.001$]" in main_tex
+    assert "[$-0.398$,$-0.001$]" in supplement_tex
     flat = _without_value_math(" ".join(main_tex.split()))
-    assert "After resampling whole sites, the 95\\,\\% interval was" in flat
-    assert "[-0.398,-0.001]" in flat
+    assert "95\\,\\% site-bootstrap interval, -0.492 to -0.031" in flat
+    assert "by 0.269 on average" in flat
 
 
 def test_primary_and_evenness_shannon_bootstraps_are_identical():
@@ -289,20 +300,30 @@ def test_primary_bootstrap_source_is_unambiguous(main_tex, supplement_tex):
     flat_supplement = _without_value_math(supplement_tex)
     assert "seed 20260723" in flat_main
     assert "1,000,000 whole-site bootstrap samples" in flat_main
-    assert "evenness" in main_tex
+    assert "normalized Shannon diversity" in main_tex
     assert "same 1,000,000-resample" in flat_supplement
-    assert "must reproduce them" in supplement_tex
+    assert "their estimates, intervals and unadjusted $p$ values for the identical Shannon estimand agree" in " ".join(supplement_tex.split())
 
 
-def test_pma_protocol_record_gap_is_explicit(main_tex, supplement_tex):
-    for term in (
-        "PMAxx concentration",
-        "dark-incubation time",
-        "photoactivation duration",
-        "photoactivation device",
-    ):
-        assert term in supplement_tex
-        assert term not in main_tex
+def test_pma_parent_tubes_and_equal_illumination_confirmed(main_tex, supplement_tex):
+    combined = " ".join((main_tex + supplement_tex).split())
+    for confirmed in (r"50\,\mu\mathrm{M}", "10-minute dark incubation", r"450\,\mathrm{nm}", "35 minutes"):
+        assert confirmed in combined
+    assert "two campsites" in combined
+    assert "three" in combined and "site--compartment groups" in combined
+    assert "three separately prepared slurries" in combined
+    assert "one parent collection tube" in combined
+    assert "Both treated and untreated aliquots" in combined
+    assert "same 10-minute dark incubation and 35-minute light exposure" in combined
+    assert "untreated-aliquot illumination unspecified" not in combined
+    assert "biological replication unresolved" not in combined
+    assert "executed replicate hierarchy remains unresolved" not in combined
+    assert "descriptive" in combined
+    endpoints = pd.read_csv(ROOT / "analysis/v3/pma_endpoint_results/pma_pair_endpoints.tsv", sep="\t")
+    assert len(endpoints) == 9
+    assert set(endpoints.pair_id.str[:-1]) == {"C1R", "C2R", "C2S"}
+    assert set(endpoints.rarefaction_depth) == {123897}
+    assert int((endpoints.rarefied_richness_difference_treated_minus_untreated < 0).sum()) == 8
 
 
 def test_picrust_seed_and_multiplicity_provenance_is_explicit(
@@ -311,13 +332,46 @@ def test_picrust_seed_and_multiplicity_provenance_is_explicit(
     combined = _without_value_math(" ".join((main_tex + supplement_tex).split()))
     assert "separately executed Trips~1--4 and Trip~5 input sets" in combined
     assert "330,830 ASVs" in combined
-    assert "351,472-ASV combined canonical table used for the primary" in combined
-    assert "not as one omnibus correction across the distinct" in combined
+    assert "combined canonical table used for the primary" in combined
+    assert "351,472 ASVs" in combined
+    assert "Multiplicity correction was applied separately to the stated" in combined
     for seed in ("20260723", "20260725", "20260728"):
         assert seed in _without_value_math(supplement_tex)
-    assert "PMA mean-difference intervals used 99,999 paired-aliquot" in combined
-    assert "encoded-function agreement used 9,999 whole-site" in combined
-    assert "both with seed 20260805" in combined
+    assert "PMA endpoints are summarized descriptively within three groups" in combined
+    assert "Encoded-function agreement used 9,999 whole-site" in combined
+    assert "with seed 20260805" in combined
+
+
+def test_confirmed_laboratory_volumes_and_rinsing_are_reported(main_tex, supplement_tex):
+    combined = " ".join((main_tex + supplement_tex).split())
+    for value in (r"4{,}000\,\mathrm{rpm}", "45$-second cycle",
+                  r"8\,\mu\mathrm{L}", r"12\,\mu\mathrm{L}",
+                  r"31.75\,\mu\mathrm{L}", r"28.75\,\mu\mathrm{L}",
+                  r"24.75\,\mu\mathrm{L}", "$0.8$:$1$", "target molarity",
+                  "room temperature", "Milli-Q", "Kimwipes"):
+        assert value in combined
+    assert "programme-to-library allocation before submission" not in combined
+    assert "All Trip~4 pH measurements used field replicate~2" in combined
+    assert "replicate~2 was requested" not in combined.lower()
+
+
+def test_latest_confirmed_primary_pcr_and_ph_protocol(main_tex, supplement_tex):
+    for text in (main_tex, supplement_tex):
+        flat=" ".join(text.split())
+        for fact in ("$35$ cycles", r"$95\,^{\circ}\mathrm{C}$ for $10\,\mathrm{s}$",
+                     r"$65\,^{\circ}\mathrm{C}$ for $30\,\mathrm{s}$",
+                     r"$75\,^{\circ}\mathrm{C}$", "13-620-112", "hula mixer",
+                     "green stability indicator", "All Trip~4 pH measurements used field replicate~2"):
+            assert fact in flat
+        assert "$30$ cycles" not in flat
+        assert "14~July, used replicate~1" not in flat
+        assert "illumination unspecified" not in flat
+    flat=" ".join(supplement_tex.split())
+    for fact in (r"$10\times$ Mg$^{2+}$-containing buffer", r"$2.5\,\mathrm{mM}$ each",
+                 r"$5\,\mathrm{U}/\mu\mathrm{L}$", "blank template",
+                 r"V_i=V_{\mathrm{pool}}C_{\mathrm{pool}}/(N C_i)",
+                 "indexing-PCR reaction mixture remains unspecified"):
+        assert fact in flat
 
 
 def test_final_ecology_cohort_is_reported_without_repair_history(supplement_tex):
@@ -341,35 +395,32 @@ def test_reproducibility_boundary_does_not_promise_a_missing_status_table(
 ):
     flat = " ".join(main_tex.split())
     assert "Supplementary Information records the current component" not in flat
-    assert "Public deposition of the ecology package" in flat
-    assert "remains a submission requirement" in flat
+    assert "The public repository provides the staged inputs and downstream analyses" in flat
+    assert "outstanding archival and public-download checks" in flat
 
 
 def test_figure_manifest_matches_the_current_rainfall_artifact():
-    manifest = pd.read_csv(MANIFEST, sep="\t")
-    row = manifest[manifest["name"] == "rain_response_figure"].iloc[0]
-    rain_figure = ROOT / "analysis/v3/rain_pulse_response/rain_pulse_response.pdf"
-    digest = hashlib.sha256(rain_figure.read_bytes()).hexdigest()
-    assert row["sha256"] == digest
-    assert int(row["bytes"]) == rain_figure.stat().st_size
-    outputs = set(manifest[manifest["role"] == "output"]["file"])
-    assert outputs == {
-        "fig1_landscape.pdf",
-        "fig2_soil_position.pdf",
-        "fig3_function_controls.pdf",
-        "figS_campaign_rainfall.pdf",
-    }
+    # The earlier figure_manifest.tsv describes the archived circular-lag
+    # renderer. Current rainfall tables carry their own source custody.
+    manifest = json.loads((PAPER / "generated/rain_calendar_refit_tables.manifest.json").read_text())
+    assert manifest
+    figure = PAPER / "figures/rain_calendar_refit.pdf"
+    assert figure.read_bytes().startswith(b"%PDF")
+    for relative, expected in manifest["outputs"].items():
+        assert hashlib.sha256((PAPER / relative).read_bytes()).hexdigest() == expected
+    assert r"{figures/rain_calendar_refit.pdf}" in SUPPLEMENT.read_text()
+    source = ROOT / "analysis/v3/rain_calendar_refit_20260909"
+    for item in ("summary.json", "calendar_year_orbit.tsv", "refitted_site_bootstrap_summary.tsv"):
+        assert hashlib.sha256((source / item).read_bytes()).hexdigest() in json.dumps(manifest)
 
 
 def test_xrf_geographic_scope_is_bounded(main_tex, supplement_tex):
-    assert "smaller but consistent share of bacterial composition" in " ".join(
-        main_tex.split()
-    )
-    assert "does not fully account for the broad geographic" in supplement_tex or (
-        "fully accounting for broad geographic" in supplement_tex
-    )
-    assert "does not account for the broad geographic" not in main_tex
-    assert "does not account for the broad geographic" not in supplement_tex
+    flat = " ".join(main_tex.split())
+    assert "within-site composition model" in flat
+    assert r"0.358\,\%" in flat and "$p=0.010$" in flat
+    assert "residual variation" in flat
+    assert "undocumented concentration units" in flat
+    assert "site-level" in supplement_tex
 
 
 def test_xrf_primary_status_sensitivity_matches_the_canonical_table(
@@ -409,7 +460,7 @@ def test_primary_aitchison_configuration_is_explicit(main_tex):
     assert verdict["input"]["primary_taxon_count"] == 200
     assert verdict["input"]["primary_zero_treatment"] == "pseudocount_0.5"
     flat = _without_value_math(" ".join(main_tex.split()))
-    assert "selected the 200 most abundant genera among those detected in at least 20\\,\\% of profiles" in flat
+    assert "selected the 200 most abundant genera among those detected in at least 20\\,\\% of groups" in flat
     assert "added 0.5 to every count to handle zeros" in flat
 
 
@@ -444,8 +495,7 @@ def test_venue_structure_and_abstract_limit(main_tex, supplement_tex):
         assert bbl.read_text(encoding="utf-8").count("\\bibitem") <= 100
 
     texcount = shutil.which("texcount")
-    if texcount is None:
-        pytest.skip("texcount is required for venue word-limit validation")
+    assert texcount is not None, "texcount is required for venue word-limit validation"
     abstract = re.search(
         r"\\begin\{abstract\}(.*?)\\end\{abstract\}", main_tex, re.S
     ).group(1)
@@ -461,21 +511,18 @@ def test_venue_structure_and_abstract_limit(main_tex, supplement_tex):
     assert abstract_words <= 245
 
 
-def test_rainfall_scope_is_consistent_across_the_whole_manuscript(
-    main_tex, supplement_tex, rain
-):
-    """The bounded association belongs in Results; detailed calibration is supplementary."""
-    assert rain["decision"]["analysis_status"] == (
-        "temporally_localized_association_borderline"
-    )
+def test_rainfall_scope_is_consistent_across_the_whole_manuscript(main_tex, supplement_tex, rain):
+    assert rain["decision"]["analysis_status"] == "temporally_localized_association_borderline"
     flat = _without_value_math(" ".join(main_tex.split()))
-    supplement_flat = _without_value_math(" ".join(supplement_tex.split()))
-    assert "19,999 conditional rotations" in supplement_flat
-    assert "support an early association between rainfall and richness, not an exact delay" in flat
-    assert "does not require storms to recur across expeditions" in flat
-    assert "rain caused" not in (flat + supplement_flat).lower()
-    assert "figS_campaign_rainfall.pdf" not in flat
-    assert "figS_campaign_rainfall.pdf" in supplement_tex
+    si = _without_value_math(" ".join(supplement_tex.split()))
+    assert "6 assignments" in flat and "2023, 2024 and 2025" in flat
+    assert "exchangeability" in flat and "exchangeability" in si
+    assert "refitting all nuisance coefficients in every draw" in flat
+    assert "full endpoint--peak search separately within each product" in si
+    assert "sampling window for event-triggered tests" in flat
+    assert "rain caused" not in (flat + si).lower()
+    assert "figS_campaign_rainfall.pdf" not in main_tex + supplement_tex
+    assert "rain_calendar_refit.pdf" in supplement_tex
 
 
 def test_every_main_text_cross_reference_resolves_in_main_text(main_tex):
@@ -520,20 +567,21 @@ def test_relocated_detail_survives_in_the_supplement(main_tex, supplement_tex):
     # (added on Overleaf, Sep 2026) naming the companion metagenomic study
     # and its eggNOG-mapper annotation, without the encoded-function detail.
     flat_main = " ".join(main_tex.split())
-    assert "separate, ongoing metagenomic study of the same expeditions" in flat_main
+    assert "companion metagenomic study of the same expeditions" in flat_main
     assert "eggNOG-mapper v2.1.12 annotation of the genome catalogue" in flat_main
-    assert "its results will be reported separately" in flat_main
-    # provenance paragraph + trait-gene Methods (Sep 2026) + Software
+    assert "CoverM genome-abundance profiles and KEGG Ortholog annotations" in flat_main
+    # Provenance paragraph, trait-gene Methods and Software.
     assert main_tex.count("eggNOG-mapper") == 3
     # The Supplement carries the shotgun/genomic-potential methods instead.
     assert "990" in normalized_supplement and "2,000" in normalized_supplement
 
 
 def test_network_calibration_diagnostic_is_named_correctly(supplement_tex):
-    assert "Expected false fraction" in supplement_tex
-    assert "mean expected false fractions among stable edges" in supplement_tex
-    assert "mean expected false fractions among stable edges" in supplement_tex
-    assert "null-selection fraction" not in supplement_tex
+    flat = " ".join(supplement_tex.split())
+    assert "Expected false fraction" in flat
+    assert "Expected false fractions summarize the permuted-taxon calibration" in flat
+    assert "null-selection fraction" not in flat
+    assert "0.05374" in flat
 
 
 def test_companion_title_is_consistent(main_tex, supplement_tex):
@@ -580,7 +628,7 @@ def test_abstract_interprets_the_supported_soil_position_result(main_tex):
     )
     assert primary.loc["Rhizosphere-Surface", "q_primary_family"] < 0.05
     assert primary.loc["Rhizosphere-Deep", "q_primary_family"] > 0.05
-    assert "root-adjacent communities were distinct" in flat
-    assert "less even" in flat
+    assert "root-adjacent communities differed from bulk soil in composition" in flat
+    assert "lower normalized Shannon diversity" in flat
     assert "pseudo-$F" not in flat
     assert "partial $R" not in flat

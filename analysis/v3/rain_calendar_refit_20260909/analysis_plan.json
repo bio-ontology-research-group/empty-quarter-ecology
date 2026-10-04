@@ -1,0 +1,16 @@
+{
+  "status": "fixed_before_observed_tests",
+  "eligible_years": [
+    2023,
+    2024,
+    2025
+  ],
+  "calendar": "December-November fields, exact month/day collection, 60 actual complete days",
+  "null": "joint exchangeability of eligible whole-year rainfall fields, conditional on community responses and collection design",
+  "coupling": "same year map for both products, all sites and campaigns; campaigns sharing a year remain coupled",
+  "family": "both rainfall products, all 60 peaks, all 3 endpoints; one-sided positive and two-sided summaries",
+  "bootstrap_draws": 9999,
+  "seed": 20260910,
+  "bootstrap": "whole-site multinomial reweighting; site-compartment and campaign-route-day nuisance coefficients refitted; full endpoint/peak search per product",
+  "wet_spells": "maximal consecutive calendar days with positive rainfall at any of 60 sites, separately within each campaign lookback; omit whole regional spell"
+}

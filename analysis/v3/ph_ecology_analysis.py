@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Reproduce the pH sensitivity analysis for a frozen dataset version.
 
-The analysis uses only admitted measurements and exact specimen identifiers
-shared with the ecology cache. The expected dataset and analysis versions are
+The analysis links admitted archived-soil measurements to ecology by campaign,
+site and compartment. Reported sample labels do not prove physical-specimen
+identity. The expected dataset and analysis versions are
 explicit command-line inputs so a successor can be rerun without mutating an
 archived predecessor analysis.
 """
@@ -88,32 +89,42 @@ def load_sample_level_join(root: Path, accepted_path: Path) -> tuple[pd.DataFram
         profile_id=alpha.index.astype(str),
         sample_id=[normalize_profile_id(value) for value in alpha.index],
     )
-    alpha = alpha[alpha["sample_id"].isin(set(ph["sample_id"]))].copy()
-    alpha_by_sample = (
-        alpha.groupby("sample_id", as_index=False)
+    alpha["Site"] = pd.to_numeric(alpha["Site"], errors="coerce")
+    alpha = alpha[alpha["Site"].isin(CORE_SITES)].copy()
+    alpha["Site"] = alpha["Site"].astype(int)
+    alpha["Trip"] = alpha["Trip"].astype(int)
+    alpha_by_group = (
+        alpha.groupby(["Trip", "Site", "Type"], as_index=False)
         .agg(
-            alpha_trip=("Trip", "first"),
-            alpha_site=("Site", "first"),
-            alpha_compartment=("Type", "first"),
             shannon=("shannon", "mean"),
             sequencing_depth=("depth", "sum"),
             n_profiles=("shannon", "size"),
         )
+        .rename(columns={"Trip": "trip", "Site": "site", "Type": "compartment"})
     )
-    joined = ph.merge(alpha_by_sample, on="sample_id", how="inner", validate="one_to_one")
-    mismatch = joined[
-        (joined["trip"].astype(int) != joined["alpha_trip"].astype(int))
-        | (joined["site"].astype(int) != joined["alpha_site"].astype(int))
-        | (joined["compartment"] != joined["alpha_compartment"])
-    ]
-    if not mismatch.empty:
-        raise ValueError(
-            "pH/ecology metadata disagree for: "
-            + ", ".join(mismatch["sample_id"].head(10))
-        )
+    joined = ph.merge(
+        alpha_by_group, on=["trip", "site", "compartment"],
+        how="inner", validate="many_to_one",
+    )
     joined["trip"] = joined["trip"].astype(int)
     joined["site"] = joined["site"].astype(int)
     joined = joined[joined["site"].isin(CORE_SITES)].copy()
+    joined["ecology_linkage_level"] = "campaign_site_compartment"
+    joined["physical_specimen_identity"] = "unverified"
+    joined["archived_material_relation"] = "unverified"
+    trip_four = joined["trip"].eq(4)
+    original_group = joined["site"].isin([1, 2]) | (
+        joined["site"].eq(3) & joined["compartment"].isin(["Deep", "Rhizosphere"])
+    )
+    joined.loc[trip_four, "archived_material_relation"] = "other_field_replicate_reported"
+    joined.loc[trip_four & original_group, "archived_material_relation"] = (
+        "original_sequenced_material_reported_at_group_level"
+    )
+    joined["material_relation_source"] = ""
+    joined.loc[trip_four, "material_relation_source"] = (
+        "https://borg.bio2vec.net/borg/pl/h58nwetfs3ysmp6kfpabjbb7zr;"
+        "https://borg.bio2vec.net/borg/pl/p69z9dh1qi8r5ezk66a4j6odph"
+    )
 
     grouped = (
         joined.groupby(["trip", "site", "compartment"], as_index=False)
@@ -122,8 +133,8 @@ def load_sample_level_join(root: Path, accepted_path: Path) -> tuple[pd.DataFram
             ph_sd=("ph_value", "std"),
             n_ph_specimens=("sample_id", "size"),
             shannon=("shannon", "mean"),
-            sequencing_depth=("sequencing_depth", "sum"),
-            n_profiles=("n_profiles", "sum"),
+            sequencing_depth=("sequencing_depth", "first"),
+            n_profiles=("n_profiles", "first"),
         )
         .sort_values(["trip", "site", "compartment"])
     )
@@ -137,7 +148,14 @@ def load_grouped_counts(
     group_table: pd.DataFrame,
     minimum_group_reads: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, int]]:
-    ph = pd.read_csv(accepted_path, sep="\t").set_index("sample_id")
+    alpha = pd.read_csv(root / "analysis/v2/review/cache/alpha.tsv", sep="\t", index_col=0)
+    alpha["Site"] = pd.to_numeric(alpha["Site"], errors="coerce")
+    alpha = alpha[alpha["Site"].isin(CORE_SITES)].copy()
+    alpha["Site"] = alpha["Site"].astype(int)
+    eligible_keys = set(map(tuple, group_table[["trip", "site", "compartment"]].to_numpy()))
+    alpha = alpha[
+        [(int(row.Trip), int(row.Site), row.Type) in eligible_keys for row in alpha.itertuples()]
+    ]
     counts = pd.read_csv(
         root / "analysis/v2/review/cache/genus_counts.tsv",
         sep="\t",
@@ -148,11 +166,13 @@ def load_grouped_counts(
     selected_columns = [
         column
         for column in counts.columns
-        if normalize_profile_id(column) in ph.index
+        if column in alpha.index
     ]
     selected = counts[selected_columns].T.copy()
     selected["sample_id"] = [normalize_profile_id(value) for value in selected.index]
-    metadata = ph.loc[selected["sample_id"], ["trip", "site", "compartment"]].reset_index(drop=True)
+    metadata = alpha.loc[selected.index, ["Trip", "Site", "Type"]].rename(
+        columns={"Trip": "trip", "Site": "site", "Type": "compartment"}
+    ).reset_index(drop=True)
     selected["trip"] = metadata["trip"].astype(int).to_numpy()
     selected["site"] = metadata["site"].astype(int).to_numpy()
     selected["compartment"] = metadata["compartment"].to_numpy()
@@ -371,6 +391,12 @@ def fit_spatial_response(
     permutations: int,
     seed: int,
 ) -> dict[str, float | int]:
+    """Fit the route to a site-averaged residual response (descriptive R²).
+
+    The legacy partial_r2 field is retained for compatible consumers. This
+    statistic is ordinary R² of this residual response, not a nested-model
+    partition of the original community matrix.
+    """
     design = spatial_design(transect)
     centered = response - response.mean(axis=0, keepdims=True)
 
@@ -393,6 +419,8 @@ def fit_spatial_response(
         exceed += candidate_f >= observed_f
     return {
         "partial_r2": r2,
+        "residual_response_r2": r2,
+        "estimand": "route_R2_of_site_averaged_residual_response",
         "pseudo_f": observed_f,
         "p": (exceed + 1) / (permutations + 1),
         "n_observations": len(centered),
@@ -611,6 +639,7 @@ def analyse(
     minimum_group_reads: int,
     dataset_version: str,
     analysis_version: str,
+    output_dir: Path | None = None,
 ) -> dict[str, Any]:
     accepted_path = ph_dir / "normalized/ph_accepted_measurements.tsv"
     ingest_summary_path = ph_dir / "summary.json"
@@ -621,7 +650,7 @@ def analyse(
         )
     if not ingest_summary["release_gate"]["ecology_analysis_frozen"]:
         raise ValueError("The pH source is not frozen for the ecology manuscript")
-    output = ph_dir / "ecology"
+    output = output_dir if output_dir is not None else ph_dir / "ecology"
     output.mkdir(parents=True, exist_ok=True)
 
     sample_join, grouped = load_sample_level_join(root, accepted_path)
@@ -768,6 +797,8 @@ def analyse(
         "counts": {
             "accepted_ph_specimens": ingest_summary["counts"]["admitted_rows"],
             "accepted_specimens_with_ecology_profile": len(sample_join),
+            "group_linked_ph_measurements": len(sample_join),
+            "verified_exact_ph_profile_pairs": 0,
             "site_campaign_position_groups": len(grouped),
             "composition_groups": len(count_keys),
             "sites": int(grouped["site"].nunique()),
@@ -784,6 +815,8 @@ def analyse(
         "composition_primary": primary_beta.to_dict(),
         "paired_position_omnibus": paired_omnibus,
         "geographic_same_cohort": {
+            "estimand": "route_R2_of_site_averaged_residual_response",
+            "legacy_partial_r2_fields_are_residual_response_r2": True,
             "without_ph_adjustment_partial_r2": float(geo_without["partial_r2"]),
             "without_ph_adjustment_p": float(geo_without["p"]),
             "with_ph_adjustment_partial_r2": float(geo_with["partial_r2"]),
@@ -849,10 +882,10 @@ def analyse(
         "",
         f"Dataset version: `{dataset_version}`. Analysis version: `{analysis_version}`.",
         "",
-        f"The immutable, incomplete workbook contributed {len(sample_join)} exact pH/specimen/ecology joins and {len(grouped)} site-campaign-position groups.",
+        f"The archived workbook contributed {len(sample_join)} admitted pH measurements linked to ecology through {len(grouped)} site-campaign-position groups. Physical specimen identity is unverified; the linkage table preserves the reported Trip 4 material relationships.",
         f"Group-mean pH ranged from {grouped['ph'].min():.3f} to {grouped['ph'].max():.3f}.",
         "",
-        "The pipeline tests exact specimen reconciliation, site-fixed alpha models, paired position contrasts, Bray-Curtis and Aitchison composition models, a same-cohort geographic model before and after pH adjustment, and deletion diagnostics for the singleton maximum-pH group and its site.",
+        "The pipeline fits group-linked alpha and composition models. Its geographic diagnostic first residualizes group composition against campaign-by-position indicators, with or without group pH, averages residuals within site, then fits linear and quadratic route terms. Each reported R² describes its own residual-response matrix; the difference is a descriptive diagnostic. Legacy partial_r2 fields retain this statistic for compatibility.",
         "",
         "Rows that are pending, depleted, date-quarantined, or quality-control-quarantined are absent from every model. Availability is non-random, so results are bounded to this fixed cohort.",
         "",
@@ -919,6 +952,7 @@ def main() -> None:
         "--project-root", type=Path, default=Path(__file__).resolve().parents[2]
     )
     parser.add_argument("--ph-dir", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--permutations", type=int, default=999)
     parser.add_argument("--minimum-group-reads", type=int, default=2000)
     parser.add_argument("--dataset-version", default=DEFAULT_DATASET_VERSION)
@@ -931,6 +965,7 @@ def main() -> None:
         args.minimum_group_reads,
         args.dataset_version,
         args.analysis_version,
+        args.output_dir.resolve() if args.output_dir is not None else None,
     )
     print(json.dumps(summary, indent=2, sort_keys=True))
 

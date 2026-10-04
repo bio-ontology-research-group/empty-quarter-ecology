@@ -1,0 +1,18 @@
+{
+  "original_descriptive_r2": 0.40073421629965933,
+  "model_count": 73,
+  "family_p_min": 0.0001,
+  "family_p_max": 1.0,
+  "reference_iid_rotation_p": 0.0001,
+  "groups_per_site_min": 5,
+  "groups_per_site_max": 15,
+  "scope": "maximum p across the finite propagated-covariance family; a model sensitivity envelope, not a universal spatial p-value",
+  "input_info": {
+    "input_genera": 1604,
+    "input_sample_columns": 1237,
+    "parsed_core_sample_columns": 1227,
+    "retained_site_campaign_compartment_groups": 630,
+    "retained_sites": 60,
+    "minimum_group_reads": 2000
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "n_sites": 60,
+  "n_groups": 563,
+  "n_assays": 709,
+  "site_pH_weighting": "equal weight per campaign/site/compartment assay mean",
+  "pH_route_rho": 0.8246735204223397,
+  "pH_route_p": 5.554909742502961e-16,
+  "supported_genera": 117,
+  "supported_also_route": 104,
+  "null_assumption": "ordinary site-level rank correlation; spatial dependence unadjusted",
+  "inputs": {
+    "analysis/v3/ph_group_linkage_20260909/ph_group_analysis_table.tsv": "d12b11f88a91bca529d210f358009a308f60aced81bae95b725fa4bc7260056f",
+    "analysis/v3/taxon_context/site_clr_means_200_genera.tsv": "e1f56ff7f4bbaafbcff34632e01ea291bcdcb7f0dede6d71599f730f2f1f93af",
+    "analysis/v3/taxon_context/transect_replacement.tsv": "84cc32b518955613dfd0b5835e37008568e46437343b40b242abaa3239065fbb"
+  },
+  "script_sha256": "5bbfe9d484897bf9f572440a2befeb857e2d84445f3f33a7e1fa50d01f40da8c"
+}

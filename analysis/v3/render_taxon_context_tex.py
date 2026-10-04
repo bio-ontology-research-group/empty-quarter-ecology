@@ -13,6 +13,7 @@ import argparse
 from pathlib import Path
 
 import pandas as pd
+from render_biology_context_tex import scientific
 
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "analysis/v3/taxon_context"
@@ -33,6 +34,8 @@ def tex_escape(text: str) -> str:
 
 
 def pct(value: float, digits: int = 1) -> str:
+    if 0 < 100 * float(value) < 0.5 * 10 ** (-digits):
+        return rf"$<{10 ** (-digits):.{digits}f}$"
     return f"{100 * float(value):.{digits}f}"
 
 
@@ -71,6 +74,7 @@ def render_genera(frame: pd.DataFrame) -> str:
     lines = [
         r"\begin{table}[htbp]",
         r"\centering\footnotesize",
+        r"\setlength{\tabcolsep}{4pt}",
         r"\caption{Leading genera across the $1{,}227$ core-site profiles (mean share"
         r" of total reads in percent, prevalence in percent of profiles, and means"
         r" by compartment and transect third).}",
@@ -122,7 +126,7 @@ def render_replacement(frame: pd.DataFrame) -> str:
     def row_line(row) -> str:
         return (
             f"{italic(row.genus)} & {tex_escape(row.phylum)} & {row.spearman_rho_route_position:.2f} & "
-            f"{row.q_bh_200:.1e} & {row.east_minus_west_mean_clr:.2f} "
+            f"{scientific(row.q_bh_200)} & {row.east_minus_west_mean_clr:.2f} "
             f"[{row.east_minus_west_ci_low:.2f}, {row.east_minus_west_ci_high:.2f}] & "
             f"{pct(row.mean_relative_abundance_west_third, 2)} & "
             f"{pct(row.mean_relative_abundance_east_third, 2)} \\\\"
@@ -142,7 +146,8 @@ def render_gradients(frame: pd.DataFrame) -> str:
         r"\centering\footnotesize",
         r"\caption{Direction of the environmental gradients along the route:"
         r" Spearman correlation of site means with route position and the means"
-        r" of the western and eastern transect thirds.}",
+        r" of the western and eastern transect thirds. Temperature is in degrees"
+        r" Celsius, monthly rainfall in millimetres, and humidity in percent.}",
         r"\label{tab:route-gradients}",
         r"\begin{tabular}{lrrrr}",
         r"\toprule",
@@ -160,15 +165,15 @@ def render_gradients(frame: pd.DataFrame) -> str:
 
 def render_overlap(frame: pd.DataFrame) -> str:
     lines = [
-        r"\begin{table}[htbp]",
+        r"\begin{sidewaystable}[p]",
         r"\centering\footnotesize",
         r"\caption{Genus-set overlap after subsampling every profile $20$ times to"
         r" $8{,}000$ reads. A genus counts as detected in a set when it occurs in at"
         r" least $10\,\%$ of subsampled profiles. ``Top 50 A in B'' is the number"
         r" of the $50$ most abundant genera of set A that are detected in set B."
         r" The Atacama pit profiles (PRJEB39249) use V4 primers and intracellular"
-        r" DNA; the comparison is presence-based and does not merge feature"
-        r" tables.}",
+        r" DNA. The presence-based comparison combines biological and methodological"
+        r" differences.}",
         r"\label{tab:genus-overlap}",
         r"\begin{tabular}{p{3.6cm}p{3.6cm}rrrrrrr}",
         r"\toprule",
@@ -181,7 +186,7 @@ def render_overlap(frame: pd.DataFrame) -> str:
             f"{row.n_genera_a} & {row.n_genera_b} & {row.n_shared} & {row.jaccard:.3f} & "
             f"{row.top50_a_detected_in_b} \\\\"
         )
-    lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", ""]
+    lines += [r"\bottomrule", r"\end{tabular}", r"\end{sidewaystable}", ""]
     return "\n".join(lines)
 
 
@@ -206,9 +211,9 @@ def render_pathways(
         r" with the number of positive (eastward increase or first-named"
         r" compartment higher) and negative estimates.}",
         r"\label{tab:pathway-classes}",
-        r"\begin{tabular}{lrrrrrr}",
+        r"\begin{tabular}{lrrrr}",
         r"\toprule",
-        r"Class & Pathways & Share (\%) & Route (+/$-$) & Compartment (+/$-$) & & \\",
+        r"Class & Pathways & Share (\%) & Route (+/$-$) & Compartment (+/$-$) \\",
         r"\midrule",
     ]
     for row in classes.itertuples():
@@ -218,7 +223,7 @@ def render_pathways(
         c_pos = int(comp["n_positive"].sum()); c_neg = int(comp["n_negative"].sum())
         lines.append(
             f"{label[row.pathway_class]} & {row.n_pathways} & {pct(row.share_of_predicted_pathway_abundance)} & "
-            f"{r_pos + r_neg} ({r_pos}/{r_neg}) & {c_pos + c_neg} ({c_pos}/{c_neg}) & & \\\\"
+            f"{r_pos + r_neg} ({r_pos}/{r_neg}) & {c_pos + c_neg} ({c_pos}/{c_neg}) \\\\"
         )
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", ""]
 
@@ -242,7 +247,7 @@ def render_pathways(
             f"{pct(row.mean_relative_abundance, 2)} \\\\"
         )
     lines.append(r"\midrule")
-    lines.append(r"\multicolumn{4}{l}{\emph{Carbon-fixation pathways}} \\")
+    lines.append(r"\multicolumn{4}{l}{\emph{Pathways selected by the carbon-fixation keyword screen}} \\")
     for row in autotrophy.itertuples():
         lines.append(
             f"{row.rank} & {tex_escape(row.pathway)} & {tex_escape(row.description)} & "
@@ -281,6 +286,8 @@ def render(results: Path) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results", type=Path, default=RESULTS)
+    parser.add_argument("--split-dir", type=Path,
+                        help="Also write topic-specific fragments for manuscript placement")
     parser.add_argument(
         "--output",
         type=Path,
@@ -289,6 +296,25 @@ def main() -> None:
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(render(args.results.resolve()), encoding="utf-8")
+    if args.split_dir:
+        args.split_dir.mkdir(parents=True, exist_ok=True)
+        def read(name):
+            return pd.read_csv(args.results / name, sep="\t")
+        fragments = {
+            "taxon_composition_tables.tex": "\n".join([
+                render_phyla(read("phylum_composition.tsv")),
+                render_genera(read("genus_composition.tsv")),
+                render_replacement(read("transect_replacement.tsv")),
+                render_gradients(read("site_gradients.tsv"))]),
+            "taxon_overlap_tables.tex": render_overlap(read("genus_set_overlap.tsv")),
+            "taxon_pathway_tables.tex": render_pathways(
+                read("pathway_dominance.tsv"), read("pathway_class_share.tsv"),
+                read("supported_pathways_by_class.tsv"), read("autotrophy_pathways.tsv")),
+        }
+        for name, content in fragments.items():
+            (args.split_dir / name).write_text(
+                "% Generated by analysis/v3/render_taxon_context_tex.py; do not edit.\n" + content,
+                encoding="utf-8")
     print(args.output)
 
 

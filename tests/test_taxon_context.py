@@ -4,13 +4,14 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import pandas as pd
+from manuscript_paths import PAPER
 
 ROOT = Path(__file__).resolve().parents[1]
-RESULTS = ROOT / "analysis/v3/taxon_context"
-PAPER = ROOT / "empty-quarter-amplicon"
+RESULTS = ROOT / "analysis/v3/taxon_context_corrected_20260909"
 MAIN = (PAPER / "main.tex").read_text(encoding="utf-8")
 SUPPLEMENT = (PAPER / "supplement.tex").read_text(encoding="utf-8")
 FRAGMENT = PAPER / "generated/taxon_context_tables.tex"
@@ -42,6 +43,7 @@ def test_manifest_scope_and_cohort() -> None:
 def test_phylum_and_genus_numbers_match_main_text() -> None:
     phyla = pd.read_csv(RESULTS / "phylum_composition.tsv", sep="\t").set_index("phylum")
     main = flat(MAIN)
+    composition = (PAPER / "generated/taxon_composition_tables.tex").read_text()
     for phylum, printed in (
         ("Pseudomonadota", "26.9"),
         ("Bacillota", "22.5"),
@@ -54,10 +56,19 @@ def test_phylum_and_genus_numbers_match_main_text() -> None:
         ("Cyanobacteriota", "0.4"),
     ):
         assert f"{100 * phyla.loc[phylum, 'mean_relative_abundance']:.1f}" == printed
-        assert f"{phylum} ({printed}\\,\\%)" in main or f"{phylum} held {printed}\\,\\%" in main
+        if phylum in ("Pseudomonadota", "Bacillota", "Actinomycetota"):
+            assert f"{phylum} ({printed}\\,\\%)" in main
+        elif phylum == "Cyanobacteriota":
+            # The abundance is retained as context in the SI; the revised
+            # main text no longer uses it to classify the community's metabolism.
+            assert f"Cyanobacteriota contributed {printed}\\,\\%" in flat(SUPPLEMENT)
+        else:
+            row = next(line for line in composition.splitlines() if line.startswith(phylum + " &"))
+            assert row.split(" & ")[2] == printed
     combined = phyla.loc[["Acidobacteriota", "Verrucomicrobiota"], "mean_relative_abundance"].sum()
     assert f"{100 * combined:.1f}" == "3.3"
-    assert "together held 3.3\\,\\%" in main
+    # The combined 3.3% remains an artifact check; the shortened main text
+    # reports three leading phyla/genera and relocates classes to the SI.
 
     genera = pd.read_csv(RESULTS / "genus_composition.tsv", sep="\t").set_index("genus")
     for genus, printed in (
@@ -68,7 +79,11 @@ def test_phylum_and_genus_numbers_match_main_text() -> None:
         ("Flavisolibacter", "2.0"),
     ):
         assert f"{100 * genera.loc[genus, 'mean_relative_abundance']:.1f}" == printed
-        assert f"\\textit{{{genus}}} ({printed}\\,\\%" in main
+        if genus in ("Domibacillus", "Massilia", "Bacillus"):
+            assert f"\\textit{{{genus}}} ({printed}\\,\\%" in main
+        else:
+            row = next(line for line in composition.splitlines() if line.startswith(f"\\textit{{{genus}}} &"))
+            assert float(row.split(" & ")[2]) == round(100 * genera.loc[genus, "mean_relative_abundance"], 2)
     leaders = pd.read_csv(RESULTS / "leading_genera_by_stratum.tsv", sep="\t")
     for stratum in ("surface", "shallow_subsurface", "root_adjacent"):
         top = leaders[(leaders["stratum"] == stratum) & (leaders["rank_in_stratum"] == 1)]
@@ -84,7 +99,7 @@ def test_phylum_and_genus_numbers_match_main_text() -> None:
         ("Alphaproteobacteria", "12.2"),
     ):
         assert f"{100 * classes.loc[name, 'mean_relative_abundance']:.1f}" == printed
-        assert printed in main
+        assert f"{name} ({printed}\\,\\%)" in flat(SUPPLEMENT)
 
 
 def test_replacement_numbers_match_text() -> None:
@@ -107,10 +122,10 @@ def test_replacement_numbers_match_text() -> None:
     assert f"{100 * rows.loc['Bacillus', 'mean_relative_abundance_west_third']:.1f}" == "1.6"
     assert f"{100 * rows.loc['Bacillus', 'mean_relative_abundance_east_third']:.1f}" == "6.2"
     main = flat(MAIN)
-    assert "124 changed monotonically along the route" in main
-    assert "77 declined from west to east and 47 increased" in main
-    assert "\\textit{Cellulomonas}, Spearman \\rho=-0.79" in main
-    assert "rose from 1.6 to 6.2\\,\\% of reads" in main
+    assert "124 changed significantly after correcting for multiple testing" in main
+    assert "77 that declined along the transect" in main
+    assert "47 that increased" in main
+    assert "increased from 1.6 to 6.2\\,\\%" in main
     assert "\\textit{Halalkalibacter} (\\rho=0.85)" in main
 
     gradients = pd.read_csv(RESULTS / "site_gradients.tsv", sep="\t").set_index("variable")
@@ -120,7 +135,10 @@ def test_replacement_numbers_match_text() -> None:
         ("mean_ph", "0.82"),
     ):
         assert f"{gradients.loc[variable, 'spearman_rho_route_position']:.2f}" == printed
-    assert "0.98 for temperature, 0.92 for humidity and 0.82 for pH" in main
+    assert "0.98 temperature, 0.92 humidity" in main
+    # The pH gradient uses independently rejoined assay groups and is displayed
+    # in the SI table after shortening the main-text environmental summary.
+    assert "archived-soil pH (equal-weight assay-group means within site) & 60 & 0.82 & 7.85 & 8.23" in (PAPER / "generated/taxon_composition_tables.tex").read_text()
 
 
 def test_overlap_numbers_match_text() -> None:
@@ -141,12 +159,19 @@ def test_overlap_numbers_match_text() -> None:
     assert int(pit["top50_b_detected_in_a"]) == 31
     assert round(west_east["jaccard"] / pit["jaccard"]) == 6
     main = flat(MAIN)
-    assert "shared 267 of 418 genera (Jaccard 0.64; 0.68 and 0.83 for adjacent thirds)" in main
-    assert "shared 43 of 397 genera (Jaccard 0.11)" in main
-    assert "only 17 of the 50 leading Empty Quarter genera" in main
     supplement = flat(SUPPLEMENT)
+    assert "shared 267 of 418 detected genera" in supplement
+    assert "shared 43 of 397 genera" in supplement
+    assert "17 of the 50 leading Empty Quarter genera" in supplement
     assert "Jaccard 0.639" in supplement and "Jaccard 0.108" in supplement
     assert "31 of the 50 leading pit genera" in supplement
+    overlap_rows = (PAPER / "generated/taxon_overlap_tables.tex").read_text()
+    west_east_row = next(line for line in overlap_rows.splitlines() if "west third" in line and "east third" in line)
+    assert west_east_row.endswith(" & 50 " + r"\\")
+    # The table prints A→B only; the revised prose must also preserve B→A=44.
+    overlap_section = supplement.split("Genus-set overlap with the Atacama pit", 1)[1].split("Sampling designs", 1)[0]
+    assert "All 50 leading western genera were detected in the east" in overlap_section
+    assert "44 of the 50 leading eastern genera were detected in the west" in overlap_section
 
 
 def test_pathway_numbers_match_text() -> None:
@@ -172,29 +197,24 @@ def test_pathway_numbers_match_text() -> None:
     compartment = supported[supported["family"] == "compartment_contrast_supported"]
     assert int(compartment["n_supported"].sum()) == 270
     main = flat(MAIN)
-    assert "Biosynthesis pathways held 66.8\\,\\% of predicted pathway abundance" in main
+    assert "Biosynthesis pathways accounted for 66.8\\,\\% of predicted pathway abundance" in main
     assert "Calvin--Benson--Bassham cycle ranked 44th (0.6\\,\\%)" in main
     assert "reductive TCA cycle 122nd (0.4\\,\\%)" in main
-    assert "54 of 63" in main
+    assert "63 were biosynthesis pathways (54 increasing eastward)" in flat(SUPPLEMENT)
 
 
 def test_generated_tables_are_current_and_included() -> None:
-    assert "\\input{generated/taxon_context_tables.tex}" in SUPPLEMENT
-    rendered = subprocess.run(
-        [
-            sys.executable,
-            str(ROOT / "analysis/v3/render_taxon_context_tex.py"),
-            "--output",
-            "/dev/stdout",
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    # The script prints the output path after writing; /dev/stdout receives
-    # the fragment followed by that path line.
-    fragment = FRAGMENT.read_text(encoding="utf-8")
-    assert fragment.strip() in rendered
+    names = ("taxon_composition_tables.tex", "taxon_overlap_tables.tex", "taxon_pathway_tables.tex")
+    with tempfile.TemporaryDirectory() as tmp:
+        target = Path(tmp)
+        subprocess.run([sys.executable, str(ROOT / "analysis/v3/render_taxon_context_tex.py"),
+                        "--results", str(RESULTS), "--output", str(target / "all.tex"),
+                        "--split-dir", str(target)], check=True, capture_output=True, text=True)
+        assert (target / "all.tex").read_text() == FRAGMENT.read_text()
+        for name in names:
+            assert f"\\input{{generated/{name}}}" in SUPPLEMENT
+            assert (target / name).read_bytes() == (PAPER / "generated" / name).read_bytes()
+    fragment = "\n".join((PAPER / "generated" / name).read_text() for name in names)
     for label in (
         "tab:taxa-phyla",
         "tab:taxa-genera",
@@ -216,7 +236,7 @@ def test_landscape_figure_uses_the_committed_satellite_crop() -> None:
     assert hashlib.sha256(crop.read_bytes()).hexdigest() == sidecar["output_sha256"]
     assert sidecar["extent_degrees"] == {"lon_min": 44.0, "lon_max": 57.0, "lat_min": 16.0, "lat_max": 25.0}
     assert sidecar["pixels_per_degree"] == 120
-    manifest = pd.read_csv(PAPER / "figures/figure_manifest.tsv", sep="\t")
-    row = manifest[manifest["name"] == "landscape_background_image"].iloc[0]
+    manifest = json.loads((PAPER / "figures/figure_review_manifest.json").read_text())
+    row = manifest["inputs"]["background"]
     assert row["sha256"] == sidecar["output_sha256"]
     assert "NASA Blue Marble" in MAIN

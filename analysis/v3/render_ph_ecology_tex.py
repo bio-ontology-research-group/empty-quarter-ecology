@@ -32,23 +32,25 @@ def render(
     ph_dir: Path,
     output: Path,
     expected_dataset_version: str | None = None,
+    ecology_dir: Path | None = None,
 ) -> None:
     project_root = Path(__file__).resolve().parents[2]
-    summary = json.loads((ph_dir / "ecology/summary.json").read_text(encoding="utf-8"))
+    ecology_dir = ecology_dir if ecology_dir is not None else ph_dir / "ecology"
+    summary = json.loads((ecology_dir / "summary.json").read_text(encoding="utf-8"))
     ingest = json.loads((ph_dir / "summary.json").read_text(encoding="utf-8"))
     paired = pd.read_csv(
-        ph_dir / "ecology/ph_paired_position_contrasts.tsv", sep="\t"
+        ecology_dir / "ph_paired_position_contrasts.tsv", sep="\t"
     ).set_index("comparison")
     composition = pd.read_csv(
-        ph_dir / "ecology/ph_composition_models.tsv", sep="\t"
+        ecology_dir / "ph_composition_models.tsv", sep="\t"
     ).set_index(["representation", "configuration"])
     geographic = pd.read_csv(
-        ph_dir / "ecology/ph_geographic_adjustment.tsv", sep="\t"
+        ecology_dir / "ph_geographic_adjustment.tsv", sep="\t"
     ).set_index("model")
     influence = pd.read_csv(
-        ph_dir / "ecology/ph_influence_sensitivity.tsv", sep="\t"
+        ecology_dir / "ph_influence_sensitivity.tsv", sep="\t"
     ).set_index("scenario")
-    coverage = pd.read_csv(ph_dir / "ecology/ph_coverage.tsv", sep="\t")
+    coverage = pd.read_csv(ecology_dir / "ph_coverage.tsv", sep="\t")
 
     dataset_version = summary["dataset_version"]
     if expected_dataset_version and dataset_version != expected_dataset_version:
@@ -165,7 +167,7 @@ def render(
         "PHSpatialP": tex_number(ph_spatial["p"], 3),
         "PHMaximumGroupTrip": int(exclude_maximum["excluded_trip"]),
         "PHMaximumGroupSite": int(exclude_maximum["excluded_site"]),
-        "PHMaximumGroupPosition": exclude_maximum["excluded_compartment"],
+        "PHMaximumGroupPosition": {"Rhizosphere": "root-adjacent", "Deep": "shallow-subsurface", "Surface": "surface"}[exclude_maximum["excluded_compartment"]],
         "PHMaximumGroupSpecimens": int(
             exclude_maximum["excluded_group_n_ph_specimens"]
         ),
@@ -208,12 +210,12 @@ def render(
 
     input_paths = [
         ph_dir / "summary.json",
-        ph_dir / "ecology/summary.json",
-        ph_dir / "ecology/ph_paired_position_contrasts.tsv",
-        ph_dir / "ecology/ph_composition_models.tsv",
-        ph_dir / "ecology/ph_geographic_adjustment.tsv",
-        ph_dir / "ecology/ph_influence_sensitivity.tsv",
-        ph_dir / "ecology/ph_coverage.tsv",
+        ecology_dir / "summary.json",
+        ecology_dir / "ph_paired_position_contrasts.tsv",
+        ecology_dir / "ph_composition_models.tsv",
+        ecology_dir / "ph_geographic_adjustment.tsv",
+        ecology_dir / "ph_influence_sensitivity.tsv",
+        ecology_dir / "ph_coverage.tsv",
         Path(__file__).resolve(),
     ]
     def input_label(path: Path) -> str:
@@ -250,12 +252,14 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ph-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--ecology-dir", type=Path, default=None)
     parser.add_argument("--expected-dataset-version")
     args = parser.parse_args()
     render(
         args.ph_dir.resolve(),
         args.output.resolve(),
         args.expected_dataset_version,
+        args.ecology_dir.resolve() if args.ecology_dir is not None else None,
     )
 
 

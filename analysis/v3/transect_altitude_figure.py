@@ -9,14 +9,36 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import sys
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib import ft2font  # noqa: E402
 
 
 EXPECTED_SITES = set(range(1, 61))
+EXPECTED_FIGURE_RUNTIME = {
+    "python": "3.11.14",
+    "matplotlib": "3.9.4",
+    "freetype": "2.14.3",
+}
+
+
+def require_figure_runtime() -> dict[str, str]:
+    """Fail before canonical rendering when native font metrics differ."""
+    observed = {
+        "python": sys.version.split()[0],
+        "matplotlib": matplotlib.__version__,
+        "freetype": ft2font.__freetype_version__,
+    }
+    if observed != EXPECTED_FIGURE_RUNTIME:
+        raise RuntimeError(
+            "Figure runtime differs from environment/conda-linux-64.lock: "
+            f"expected {EXPECTED_FIGURE_RUNTIME}, observed {observed}"
+        )
+    return observed
 
 
 def sha256(path: Path) -> str:
@@ -146,14 +168,27 @@ def render(
     matplotlib.rcParams.update(
         {
             "font.family": "DejaVu Sans",
-            "font.size": 10,
+            "font.size": 14,
             "axes.titlesize": 12,
-            "axes.labelsize": 10,
+            "axes.labelsize": 14,
             "figure.dpi": 100,
             "savefig.dpi": 100,
         }
     )
-    figure, axis = plt.subplots(figsize=(10, 5), dpi=100)
+    figure, (map_axis, axis) = plt.subplots(
+        figsize=(10, 6), nrows=2, gridspec_kw={"height_ratios": [1.4, 2]}, dpi=100
+    )
+    latitudes = [float(row["latitude"]) for row in rows]
+    longitudes = [float(row["longitude"]) for row in rows]
+    map_axis.plot(longitudes, latitudes, color="#35698b", marker="o", markersize=3, linewidth=1)
+    # An equirectangular view at the mean latitude; this is not a basemap.
+    map_axis.set_aspect(1 / math.cos(math.radians(sum(latitudes) / len(latitudes))))
+    map_axis.set_xlabel("Longitude (°E)")
+    map_axis.set_ylabel("Latitude (°N)")
+    for row in rows:
+        if int(row["site"]) in (1, 10, 20, 30, 40, 50, 60):
+            map_axis.annotate(str(int(row["site"])), (float(row["longitude"]), float(row["latitude"])),
+                              textcoords="offset points", xytext=(0, 6), ha="center", fontsize=12)
     distances = [float(row["distance_km"]) for row in rows]
     altitudes = [float(row["altitude_m"]) for row in rows]
     axis.plot(
@@ -161,7 +196,9 @@ def render(
         altitudes,
         marker="o",
         linestyle="-",
-        color="blue",
+        color="#35698b",
+        markersize=3,
+        linewidth=1,
     )
     for row in rows:
         site = int(row["site"])
@@ -175,13 +212,16 @@ def render(
             )
     axis.set_xlabel("Distance along transect (km)")
     axis.set_ylabel("Altitude (m)")
-    axis.set_title("Altitude Profile of Rub al-Khali Transect (Sites 1-60)")
-    axis.grid(True)
+    for label, panel in zip(("a", "b"), (map_axis, axis)):
+        panel.text(-0.07, 1.03, label, transform=panel.transAxes, fontweight="bold")
+        panel.spines[["top", "right"]].set_visible(False)
+        panel.grid(True, color="0.9", linewidth=0.5)
     figure.tight_layout()
     figure.savefig(
         output,
-        format="png",
-        metadata={"Software": "Empty Quarter reproducibility workflow"},
+        format=output.suffix.lstrip("."),
+        metadata=({"Creator": "Empty Quarter reproducibility workflow", "CreationDate": None, "ModDate": None}
+                  if output.suffix == ".pdf" else {"Software": "Empty Quarter reproducibility workflow"}),
     )
     plt.close(figure)
 
@@ -194,12 +234,15 @@ def main() -> int:
 
     input_path = args.input.resolve()
     output_dir = args.output_dir.resolve()
+    figure_runtime = require_figure_runtime()
     output_dir.mkdir(parents=True, exist_ok=True)
     rows = read_profile(input_path)
     profile_path = output_dir / "transect_altitude_profile.tsv"
     figure_path = output_dir / "transect_altitude.png"
     write_profile(rows, profile_path)
     render(rows, figure_path)
+    vector_path = output_dir / "transect_altitude.pdf"
+    render(rows, vector_path)
 
     summary = {
         "schema_version": "1.0",
@@ -225,7 +268,16 @@ def main() -> int:
             "minimum": min(float(row["altitude_m"]) for row in rows),
             "maximum": max(float(row["altitude_m"]) for row in rows),
         },
+        "figure_runtime": {
+            "schema_version": "figure-runtime-v1",
+            **figure_runtime,
+        },
         "outputs": {
+            "vector_figure": {
+                "file": vector_path.name,
+                "bytes": vector_path.stat().st_size,
+                "sha256": sha256(vector_path),
+            },
             "figure": {
                 "file": figure_path.name,
                 "bytes": figure_path.stat().st_size,

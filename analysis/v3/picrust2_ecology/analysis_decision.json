@@ -10,7 +10,7 @@
     "alpha": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
     "descriptions": "cf7d23ac7d03d6174f5ee3cd919cfedc6f827927a0df0b1ac977a18aa6f7bdc3",
     "measured_function": "d90051c1ef5c1237c62df7f11a6bdfdeb0dad4cfce239571f2689306b22aacd5",
-    "metadata": "4f6b4f67a54bd06f66a74e566e463ae5225116b53a23aa6f7b08002f6e2cb082",
+    "metadata": "2ec2056020886b20bbe2a89e338555be4eddec937db88a958be976aa9d678939",
     "nsti": "2a3468f5239627d8c22e1c3e9abeb7b8ddd0088e0676932c4e9f4e7913eb67e0",
     "pathways": "41bf98b763fa4b7dc392fcf25e2d4ccd37c5f7d351f7ce87002dea0ab3c6fa1d"
   },
@@ -61,10 +61,10 @@
     "all_sensitivities_p_lt_0_05": true,
     "n_sites": 60,
     "permutation_p": 0.0001,
-    "quadratic_transect_r2": 0.23424681119179114,
+    "quadratic_transect_r2": 0.23326512170467784,
     "quadratic_transect_r2_95_jackknife_ci": [
-      0.15464262705223558,
-      0.3138509953313467
+      0.15369194485413729,
+      0.3128382985552184
     ],
     "uncertainty_method": "delete-one-site jackknife standard error with a 95% t interval"
   },

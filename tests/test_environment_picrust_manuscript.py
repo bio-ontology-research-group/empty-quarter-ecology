@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from manuscript_paths import PAPER
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = ROOT / "empty-quarter-amplicon"
 ENVIRONMENT = ROOT / "analysis/v3/environment_associations"
 PICRUST = ROOT / "analysis/v3/picrust2_ecology"
 
@@ -61,8 +61,8 @@ def test_environment_associations_match_the_main_results() -> None:
         "mean_relative_humidity_pct": 111,
     }
     for text in (
-        "Climate and soil properties track bacterial variation",
-        "correction for the 9 comparisons",
+        "Climate gradients track bacterial diversity and composition",
+        "corrected the 9 climate--diversity tests together",
         "Among 200 genera detected in at least 20\\,\\% of profiles, 112, 112 and 111",
         "kept all comparisons involving the same site together",
     ):
@@ -74,13 +74,14 @@ def test_environmental_limits_and_negative_diagnostics_are_in_the_right_places()
     main = _flat(PAPER / "main.tex")
     supplement = _flat(PAPER / "supplement.tex")
 
-    assert "Limitations and identifying mechanisms" in main
-    assert "cannot separate their individual effects from geography" in main
+    assert "covaried with route position" in supplement
+    assert "shared environmental and geographic gradient" in main
+    assert "statistical support depended on the assumed spatial covariance" in main
     assert r"adjusted $q\geq0.527$" not in main
     assert r"adjusted $q\geq0.527$" in supplement
-    assert "Bacterial richness shows a short association with recent rain" in main
+    assert "Rainfall models identify an early sampling window" in main
     assert "Fitted short-term rainfall pulse" in supplement
-    assert "does not require storms to recur across expeditions" in main
+    assert "conditional on exchangeability of the annual rainfall fields" in main
 
 
 def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
@@ -93,7 +94,7 @@ def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
     assert decision["cohort"]["grouped_profiles"] == 633
     assert decision["cohort"]["pathways"] == 462
     assert decision["primary_geography"]["quadratic_transect_r2"] == pytest.approx(
-        0.23424681119179114
+        0.23326512170467784
     )
     assert decision["primary_geography"]["permutation_p"] == 0.0001
     assert decision["primary_geography"]["all_sensitivities_p_lt_0_05"] is True
@@ -115,17 +116,17 @@ def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
 
     for text in (
         "Predicted metabolic pathways follow geography and compartment",
-        "23.4\\,\\% of the difference among site-level pathway profiles",
-        "Of 600 tests covering 200 pathways and 3 compartment pairs, 270",
-        "pathways that produce the fatty acids cis-vaccenate and gondoate",
-        "glucose and xylose degradation",
-        "carbon and metabolite exchange near desert roots",
-        "The median correlation was 0.743",
-        "These estimates describe metabolic potential, not activity",
+        "23.3\\,\\% of the differences among site-level pathway profiles",
+        "Of 600 tests (200 pathways \\times 3 compartment pairs), 270",
+        "geographic changes in fatty-acid pathways",
+        "glucose, xylose and fructuronate degradation",
+        "substrate-uptake and metabolite-exchange experiments",
+        "median rank correlation was 0.743",
+        "KO annotations of metagenome-assembled genomes (MAGs) with their CoverM abundance estimates",
     ):
         assert text in main
     assert "did not pass when Trip~3 was omitted" not in main
     assert "did not pass when Trip~3 was omitted" in supplement
     assert "dedicated UV-repair pathway" not in main
-    assert "dedicated UV-repair pathway" in supplement
+    assert "UV protection" in supplement
     _verify_checksums(PICRUST)

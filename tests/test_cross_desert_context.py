@@ -3,12 +3,13 @@ import json
 from pathlib import Path
 
 import pandas as pd
+from manuscript_paths import PAPER
 
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "analysis/v3/cross_desert_context"
-MAIN = (ROOT / "empty-quarter-amplicon/main.tex").read_text(encoding="utf-8")
-SUPPLEMENT = (ROOT / "empty-quarter-amplicon/supplement.tex").read_text(
+MAIN = (PAPER / "main.tex").read_text(encoding="utf-8")
+SUPPLEMENT = (PAPER / "supplement.tex").read_text(
     encoding="utf-8"
 )
 
@@ -36,15 +37,16 @@ def test_cross_desert_statistics_match_manuscript_claims() -> None:
         table["question"] == "community composition among three depth zones"
     ].iloc[0]
     assert round(float(gradient["estimate"]), 2) == 0.68
-    assert round(float(gradient["p_value"]), 3) == 0.004
+    # Corrected partial-rank approximation accounts for the nuisance-design rank.
+    assert round(float(gradient["p_value"]), 6) == 0.011308
     assert round(float(pit["estimate"]), 2) == 1.46
     assert round(float(pit["p_value"]), 4) == 0.0014
     main = " ".join(MAIN.split())
     supplement = " ".join(SUPPLEMENT.split())
     # The main text explains the effects in plain language; the Supplement
     # preserves the exact adjusted statistic and model label.
-    assert "rank correlation $0.68$, $p=0.004$" in main
-    assert "depth zones ($p=0.0014$)" in main
+    assert "Atacama" in main
+    assert "$p=0.0113$" in supplement
     assert "partial $\\rho=0.6753$" in supplement
     assert "pseudo-$F=1.463$" in supplement
 
@@ -68,8 +70,10 @@ def test_soil_position_figure_adds_descriptive_taxon_context() -> None:
     assert "Genera contributing most to compartment differences" in figure
     # The Figure 2d caption keeps the descriptive boundary; the Results text now
     # reports the per-genus family (analysis/v3/biology_context, Sep 2026).
-    assert "does not test genera separately" in " ".join(MAIN.split())
+    caption = " ".join(MAIN.split()).split("\\caption{Compartment differences", 1)[1].split("\\label", 1)[0]
+    assert "Genera with the largest contributions to the three composition contrasts" in caption
+    assert "higher CLR abundance" in caption
     manifest = pd.read_csv(
-        ROOT / "empty-quarter-amplicon/figures/figure_manifest.tsv", sep="\t"
+        PAPER / "figures/figure_manifest.tsv", sep="\t"
     )
     assert "paired_composition_loadings" in set(manifest["name"])

@@ -394,6 +394,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument("--ph-groups", type=Path, default=None,
+                        help="Corrected campaign/site/compartment pH group table")
     parser.add_argument("--seed", type=int, default=20260903)
     parser.add_argument("--rarefaction-depth", type=int, default=8000)
     parser.add_argument("--rarefaction-draws", type=int, default=20)
@@ -423,7 +425,7 @@ def main() -> None:
         "atacama_pit_taxonomy": root / "data/metadata/comparators/atacama/pit/ASV_tax.silva_138_2.tsv",
         "atacama_pit_depth_map": root / "data/metadata/comparators/atacama/pit/sample_depth_map.tsv",
         "climate_site_summary": root / "analysis/v3/environment_associations/climate_site_summary.tsv",
-        "ph_sample_profile_join": root / "analysis/v3/ph_shared_v1/ecology/ph_sample_profile_join.tsv",
+        "ph_group_table": root / (args.ph_groups or Path("analysis/v3/ph_shared_v1/ecology/ph_group_analysis_table.tsv")),
     }
     missing = [str(path) for path in inputs.values() if not path.is_file()]
     if missing:
@@ -617,9 +619,9 @@ def main() -> None:
 
     # ---- direction of the environmental gradients along the route ---------
     climate = pd.read_csv(inputs["climate_site_summary"], sep="\t")
-    ph = pd.read_csv(inputs["ph_sample_profile_join"], sep="\t")
-    ph = ph[ph["disposition"] == "ADMITTED_MEASUREMENT"]
-    ph_site = ph.groupby("site")["ph_value"].mean().rename("mean_ph").reset_index()
+    from ph_context_reanalysis import site_ph
+    ph = pd.read_csv(inputs["ph_group_table"], sep="\t")
+    ph_site = site_ph(ph).rename("mean_ph").reset_index()
     gradient_frame = coordinates[["site", "transect_km"]].merge(
         climate[["site", "mean_air_temperature_c", "mean_monthly_rain_mm", "mean_relative_humidity_pct"]],
         on="site",
@@ -630,7 +632,7 @@ def main() -> None:
         ("mean_air_temperature_c", "49-month mean air temperature"),
         ("mean_monthly_rain_mm", "49-month mean monthly rainfall"),
         ("mean_relative_humidity_pct", "49-month mean relative humidity"),
-        ("mean_ph", "archived-soil pH (admitted measurements, site mean)"),
+        ("mean_ph", "archived-soil pH (equal-weight assay-group means within site)"),
     ):
         block = gradient_frame.dropna(subset=[column])
         rho, p_value = stats.spearmanr(block["transect_km"], block[column])

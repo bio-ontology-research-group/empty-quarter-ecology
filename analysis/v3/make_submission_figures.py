@@ -149,9 +149,8 @@ def make_landscape_figure(
     output: Path,
 ) -> None:
     """Combine design, geography and climate into one landscape-scale figure."""
-    fig, axes = plt.subplots(2, 3, figsize=(10.8, 7.2))
-    map_ax, coverage_ax, distance_ax = axes[0]
-    climate_ax, diversity_ax, genus_ax = axes[1]
+    fig, axes = plt.subplots(3, 2, figsize=(8.4, 9.0))
+    map_ax, coverage_ax, distance_ax, climate_ax, diversity_ax, genus_ax = axes.flat
 
     coordinates = coordinates.sort_values("transect_km")
     boundary = read_kml_polygon(boundary_path)
@@ -177,7 +176,7 @@ def make_landscape_figure(
         22.7,
         "Rub' al-Khali",
         color="#FFFFFF",
-        fontsize=8.0,
+        fontsize=9.0,
         ha="center",
         path_effects=[
             patheffects.withStroke(linewidth=1.6, foreground="#4A3520")
@@ -212,7 +211,7 @@ def make_landscape_figure(
             textcoords="offset points",
             ha=horizontal,
             va=vertical,
-            fontsize=7.3,
+            fontsize=9.0,
             color="#FFFFFF",
             path_effects=[
                 patheffects.withStroke(linewidth=1.4, foreground="#4A3520")
@@ -254,7 +253,7 @@ def make_landscape_figure(
                     f"{int(value)}",
                     ha="center",
                     va="center",
-                    fontsize=7.0,
+                    fontsize=9.0,
                     color="white",
                 )
         bottom += values
@@ -265,26 +264,22 @@ def make_landscape_figure(
             f"{int(total)}",
             ha="center",
             va="bottom",
-            fontsize=7.4,
+            fontsize=9.0,
         )
     coverage_ax.set(
         xlabel="Expedition",
         ylabel="Quality-controlled profiles",
-        title="(b) Repeated coverage across compartments",
+        title="(b) Coverage by compartment",
         xticks=range(1, 6),
         xticklabels=[
-            "T1\nMar\n2023",
-            "T2\nJul\n2023",
-            "T3\nFeb\n2024",
-            "T4\nAug\n2024",
-            "T5\nOct\n2025",
+            "T1", "T2", "T3", "T4", "T5",
         ],
     )
-    coverage_ax.tick_params(axis="x", labelsize=7.0)
-    coverage_ax.tick_params(axis="y", labelsize=7.0)
+    coverage_ax.tick_params(axis="x", labelsize=9.0)
+    coverage_ax.tick_params(axis="y", labelsize=9.0)
     # Headroom keeps the legend clear of the tallest bar and its total label.
-    coverage_ax.set_ylim(0, 640)
-    coverage_ax.legend(frameon=False, fontsize=7.0, loc="upper right")
+    coverage_ax.set_ylim(0, 880)
+    coverage_ax.legend(frameon=False, fontsize=9.0, loc="upper right")
 
     climate_order = [
         "mean_air_temperature_c",
@@ -313,7 +308,7 @@ def make_landscape_figure(
         ylabel="Climate value relative to sites\n(standard deviations)",
         title="(d) Climate changes along the route",
     )
-    climate_ax.legend(frameon=False, fontsize=7.4)
+    climate_ax.legend(frameon=False, fontsize=9.0)
 
     distance_pairs = distance_pairs.copy()
     upper = float(distance_pairs["geographic_distance_km"].max())
@@ -353,10 +348,10 @@ def make_landscape_figure(
         ylabel="Difference in relative composition\n(Aitchison dissimilarity)",
         title="(c) Communities diverge with distance",
     )
-    distance_ax.legend(frameon=False, fontsize=7.3)
+    distance_ax.legend(frameon=False, fontsize=9.0)
 
     response_order = ["shannon", "expected_richness_25k", "normalized_evenness"]
-    response_labels = ["Shannon", "Expected\nrichness", "Normalized\nevenness"]
+    response_labels = ["Shannon", "Expected\nrichness", "Norm.\nShannon"]
     matrix = (
         alpha_correlations.pivot(
             index="climate_variable", columns="response", values="spearman_rho"
@@ -376,16 +371,18 @@ def make_landscape_figure(
                 ha="center",
                 va="center",
                 color="white" if abs(matrix[row, column]) > 0.55 else "#222222",
-                fontsize=8.2,
+                fontsize=9.0,
             )
     diversity_ax.set(
         xticks=np.arange(3),
         xticklabels=response_labels,
         yticks=np.arange(3),
         yticklabels=climate_labels,
-        title="(e) Diversity is lower at higher climate values",
+        title="(e) Climate–diversity associations",
     )
-    diversity_ax.tick_params(axis="x", labelsize=7.3)
+    diversity_ax.tick_params(axis="x", labelsize=9.0, rotation=25)
+    for label in diversity_ax.get_xticklabels():
+        label.set_ha("right")
     colourbar = fig.colorbar(image_plot, ax=diversity_ax, fraction=0.05, pad=0.04)
     colourbar.set_label("Rank association (Spearman $\\rho$)")
 
@@ -423,13 +420,13 @@ def make_landscape_figure(
         )
     genus_ax.axvline(0, color="#777777", linewidth=0.8)
     genus_ax.set(
-        xlabel="Rank association of relative genus abundance\n(Spearman $\\rho$)",
+        xlabel="Genus–climate rank association\n(Spearman $\\rho$)",
         yticks=genus_y,
         yticklabels=[rf"$\it{{{name}}}$" for name in selected.index],
         xlim=(-0.9, 0.9),
-        title="(f) Genera associated with long-term climate",
+        title="(f) Climate-associated genera",
     )
-    genus_ax.legend(frameon=False, fontsize=6.8, loc="upper left")
+    genus_ax.legend(frameon=False, fontsize=9.0, loc="upper left")
 
     fig.tight_layout(h_pad=2.0, w_pad=1.8)
     fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
@@ -515,7 +512,7 @@ def make_soil_position_figure(
     axes[1].axvline(0, color="#777777", linewidth=0.8)
     axes[1].set(
         yticks=y,
-        xlabel="Shannon difference within sites",
+        xlabel="Paired Shannon difference",
         title="(b) Shannon diversity",
     )
     axes[1].tick_params(axis="y", labelleft=False)
@@ -548,12 +545,16 @@ def make_soil_position_figure(
     axes[2].axvline(0, color="#777777", linewidth=0.8)
     axes[2].set(
         yticks=y,
-        xlabel="Normalized-evenness difference within sites",
-        title="(c) Normalized evenness",
+        xlabel="Paired normalized\nShannon difference",
+        title="(c) Normalized Shannon\ndiversity",
     )
     axes[2].tick_params(axis="y", labelleft=False)
+    axes[2].set_xticks([-0.05, 0.0, 0.025], labels=["−0.05", "0", "0.025"])
 
-    axes[0].invert_yaxis()
+    for axis in axes:
+        axis.invert_yaxis()
+        axis.tick_params(labelsize=11.5)
+        axis.xaxis.label.set_size(11.5)
 
     # This panel is descriptive: it names the genera contributing most to the
     # three paired CLR displacement vectors without turning their loadings into
@@ -595,7 +596,7 @@ def make_soil_position_figure(
                 f"{value:.1f}",
                 ha="center",
                 va="center",
-                fontsize=7.3,
+                fontsize=12.0,
                 color="white" if abs(value) > maximum * 0.58 else "#222222",
             )
     loading_ax.set(
@@ -605,8 +606,8 @@ def make_soil_position_figure(
         yticklabels=labels,
         title="(d) Genera contributing most to compartment differences",
     )
-    loading_ax.tick_params(axis="x", rotation=28, labelsize=8.0)
-    loading_ax.tick_params(axis="y", labelsize=8.3)
+    loading_ax.tick_params(axis="x", rotation=28, labelsize=12.0)
+    loading_ax.tick_params(axis="y", labelsize=12.0)
     colourbar = fig.colorbar(
         image_plot, ax=loading_ax, fraction=0.025, pad=0.02
     )
@@ -708,63 +709,39 @@ def make_function_control_figure(
         fontsize=8.5,
     )
     axes[0, 1].set(
-        xlabel="Predicted vs shotgun\ngene-family ranking (Spearman $\\rho$)",
+        xlabel="Predicted vs genome-derived\nKO ranking (Spearman $\\rho$)",
         ylabel="Matched samples",
-        title="(b) Broad predictions agree\nwith shotgun ($n=125$)",
+        title="(b) Gene-family rank agreement\n($n=125$)",
     )
 
-    for row in pma_pairs.itertuples():
+    pma_groups = pma_pairs.assign(group=pma_pairs["pair_id"].str.extract(r"^(C[12][RS])", expand=False))
+    expected_groups = {"C1R", "C2R", "C2S"}
+    if set(pma_groups["group"]) != expected_groups or len(pma_groups) != 9:
+        raise ValueError("Expected three PMA aliquot groups at two campsites")
+    for group, color in zip(("C1R", "C2R", "C2S"), ("#0072B2", "#009E73", "#D55E00")):
+        values = pma_groups[pma_groups["group"].eq(group)]
+        if len(values) != 3:
+            raise ValueError(f"Expected three aliquot comparisons for {group}")
+        for row in values.itertuples():
+            axes[1, 0].plot(
+                [0, 1],
+                [row.untreated_expected_rarefied_richness, row.treated_expected_rarefied_richness],
+                color=color, linewidth=0.9, alpha=0.5, marker="o", markersize=3.4,
+            )
         axes[1, 0].plot(
             [0, 1],
-            [
-                row.untreated_expected_rarefied_richness,
-                row.treated_expected_rarefied_richness,
-            ],
-            color="#888888",
-            linewidth=0.9,
-            alpha=0.8,
-            marker="o",
-            markersize=3.4,
+            [values["untreated_expected_rarefied_richness"].mean(), values["treated_expected_rarefied_richness"].mean()],
+            color=color, linewidth=2.1, marker="D", markersize=4,
+            label=f"{group} mean", zorder=4,
         )
-    untreated_mean = float(
-        pma_pairs["untreated_expected_rarefied_richness"].mean()
-    )
-    treated_mean = float(pma_pairs["treated_expected_rarefied_richness"].mean())
-    axes[1, 0].plot(
-        [0, 1],
-        [untreated_mean, treated_mean],
-        color="#CC3311",
-        linewidth=2.2,
-        marker="D",
-        markersize=5,
-        label="Mean",
-        zorder=4,
-    )
     axes[1, 0].set(
         xticks=[0, 1],
         xticklabels=["Untreated", "PMA treated"],
-        xlabel="Paired Trip 5 aliquots",
+        xlabel="Trip 5 aliquots from two campsites",
         ylabel="Expected richness",
-        title="(c) PMA lowers richness in 8 of 9 pairs",
+        title="(c) PMA aliquot outcomes\nby sample group",
     )
     axes[1, 0].legend(frameon=False, fontsize=8.0)
-    richness_uncertainty = pma_summary["richness_endpoint"][
-        "mean_difference_uncertainty"
-    ]
-    axes[1, 0].text(
-        0.03,
-        0.97,
-        "mean difference "
-        f"{richness_uncertainty['estimate']:.0f}\n"
-        "95% interval "
-        f"{richness_uncertainty['interval_low']:.0f} to "
-        f"{richness_uncertainty['interval_high']:.0f}",
-        transform=axes[1, 0].transAxes,
-        ha="left",
-        va="top",
-        fontsize=8.0,
-        bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.72},
-    )
 
     biological = removal[
         removal["role"].eq("compatible_biological_profile")
@@ -796,7 +773,7 @@ def make_function_control_figure(
     axes[1, 1].set(
         xlabel="Trip 5 profiles, ordered by fraction",
         ylabel="Candidate reads removed (%)",
-        title="(d) Removal is below 1% in 75% of profiles",
+        title="(d) Candidate read fractions\nin linked profiles",
     )
     axes[1, 1].text(
         0.03,

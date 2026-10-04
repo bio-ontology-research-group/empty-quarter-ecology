@@ -1,0 +1,9 @@
+product	quantity	lower_2_5	median	upper_97_5
+nasa_power	fixed_beta	63.65720993955312	176.553005941294	252.65962807382164
+nasa_power	fixed_partial_r2	0.0022413252252905407	0.03428439532395543	0.07878301730277723
+nasa_power	fixed_endpoint_selected_peak_days	1.5	2.0	5.0
+nasa_power	selected_peak_days	1.5	2.0	5.5
+open_meteo	fixed_beta	149.15069943511742	334.20773376065245	797.0284735675415
+open_meteo	fixed_partial_r2	0.005254348378634734	0.03653941686001018	0.0872108225561823
+open_meteo	fixed_endpoint_selected_peak_days	0.5	1.5	6.5
+open_meteo	selected_peak_days	0.5	1.5	11.5

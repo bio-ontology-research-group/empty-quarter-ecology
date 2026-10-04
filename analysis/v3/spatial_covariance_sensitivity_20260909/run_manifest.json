@@ -1,0 +1,39 @@
+{
+  "finished_at_utc": "2026-09-09T18:35:33.925929+00:00",
+  "generator": {
+    "path": "analysis/v3/spatial_covariance_sensitivity.py",
+    "sha256": "0244df1786e357e88c104fd3e1ade0b3cbf553438bac932dc91317229213c5c8"
+  },
+  "inputs": {
+    "genus_counts": {
+      "path": "analysis/v2/review/cache/genus_counts.tsv",
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "coordinates": {
+      "path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "sha256": "18c208ad198f120159c997b3a29219e7040c0f047a90b0b8c19227990cd53fbd"
+    },
+    "original_analysis": {
+      "path": "analysis/v3/spatial_turnover_rescue.py",
+      "sha256": "e2775839f80dde56cc4ef681b321a8919420afa046f928e335ef59a658208787"
+    }
+  },
+  "frozen_design_sha256": "6bc763ded4ef44f3a2228394151ba9990d804729fd5f99bacf152b1bd1ee8322",
+  "frozen_design_addendum_sha256": "7c8c733b4dbcaeb2f352586fa7b43ae0be9bdbbc44917eb9feedeff7ca6ca7be",
+  "software": {
+    "python": "3.11.14",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3"
+  },
+  "outputs": {
+    "frozen_design.json": "6bc763ded4ef44f3a2228394151ba9990d804729fd5f99bacf152b1bd1ee8322",
+    "frozen_design_addendum.json": "7c8c733b4dbcaeb2f352586fa7b43ae0be9bdbbc44917eb9feedeff7ca6ca7be",
+    "group_cohort.tsv": "e76280509514e59fb088ceee5642680dc424be5d9b499618ae268a963e241717",
+    "null_calibration.tsv": "8cb0a0a1b0e286fffb3a275bec33788b27649839768e02ecfc7a6734827676e3",
+    "null_calibration_replicates.tsv": "5b4f3b81ecd8e3cd5173ecee441bbe6cd7e5b80464d68e5b5c51f300f856bb48",
+    "site_clr_response.tsv": "e57ee3f36b4355f936b7ea3ca658c304b172731200a8bedf68f1b7a3bff78619",
+    "site_group_counts.tsv": "659d7312e6838fb446797e9ce2f5798b2310c141b6698cda8aacbf2d796caaf8",
+    "spatial_covariance_tests.tsv": "3bf91c1eed5bda403d76033cfeca8785d53fdd08bee077675a802606993abe57",
+    "summary.json": "7ca3c050ac79a84b32938208c41f77131a6f9d7d72ab7b5ab75dfda362026e85"
+  }
+}

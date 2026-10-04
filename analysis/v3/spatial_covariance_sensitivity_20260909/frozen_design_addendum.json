@@ -1,0 +1,8 @@
+{
+  "reason": "A pre-test positive-definiteness check stopped before any observed rotation probabilities were computed. Exact centring and unequal averaging impose a group-count-weighted zero-sum constraint. The propagated covariance has known rank59.",
+  "known_covariance_rank": 59,
+  "covariance_support": "Whiten the positive-eigenvalue support; numerical tolerance n*machine_epsilon*largest_eigenvalue. Never add jitter or fit a missing eigenvalue.",
+  "propagated_mean_design": "H times the original linear and quadratic route columns. H times intercept equals zero because B removes the campaign-by-compartment means.",
+  "nuisance": "Campaign-by-compartment nuisance means are annihilated by B. The propagated analysis tests two route coefficients in the59-dimensional support. The iid-site reference retains the usual intercept projection.",
+  "unchanged": "All73 covariance models, geometry-only range grid, variance fractions, resampling counts, seed and calibration cases in frozen_design.json are unchanged."
+}

@@ -1,0 +1,71 @@
+{
+  "observed": {
+    "nasa_power": {
+      "endpoint": "richness_hurlbert_25000",
+      "peak_days": 2.0,
+      "beta": 179.377375558114,
+      "partial_r2": 0.036349070824371874,
+      "rho": 0.19065432285781478,
+      "peak_index": 3,
+      "endpoint_index": 0
+    },
+    "open_meteo": {
+      "endpoint": "richness_hurlbert_25000",
+      "peak_days": 1.0,
+      "beta": 326.77262286199397,
+      "partial_r2": 0.03823873583268389,
+      "rho": 0.19554727262911106,
+      "peak_index": 1,
+      "endpoint_index": 0
+    }
+  },
+  "year_orbit_size": 6,
+  "exact_p": {
+    "nasa_power_positive_max": 0.16666666666666666,
+    "nasa_power_absolute_max": 0.16666666666666666,
+    "open_meteo_positive_max": 0.3333333333333333,
+    "open_meteo_absolute_max": 0.3333333333333333,
+    "joint_positive_max": 0.3333333333333333,
+    "joint_absolute_max": 0.3333333333333333
+  },
+  "bootstrap_endpoint_frequencies": {
+    "nasa_power": {
+      "richness_hurlbert_25000": 0.7167716771677167,
+      "shannon": 0.25782578257825783,
+      "evenness_h_over_log_hurlbert": 0.025402540254025403
+    },
+    "open_meteo": {
+      "richness_hurlbert_25000": 0.7275727572757276,
+      "evenness_h_over_log_hurlbert": 0.1482148214821482,
+      "shannon": 0.12421242124212421
+    }
+  },
+  "calibration": [
+    {
+      "nominal_alpha": 0.05,
+      "rejections": 0,
+      "simulations": 300,
+      "fraction": 0.0,
+      "binomial_ci_low": 0.0,
+      "binomial_ci_high": 0.01222097469429642
+    },
+    {
+      "nominal_alpha": 0.2,
+      "rejections": 56,
+      "simulations": 300,
+      "fraction": 0.18666666666666668,
+      "binomial_ci_low": 0.14419644918548247,
+      "binomial_ci_high": 0.23544824678732582
+    },
+    {
+      "nominal_alpha": 0.5,
+      "rejections": 153,
+      "simulations": 300,
+      "fraction": 0.51,
+      "binomial_ci_low": 0.4519092435030744,
+      "binomial_ci_high": 0.567891356146855
+    }
+  ],
+  "calibration_scope": "conditional randomized-year null algorithm; exchangeability of the real annual fields is a scientific assumption",
+  "interval_scope": "percentile ranges of raw whole-site refits with frozen rainfall; selected-peak ranges summarize reselection"
+}

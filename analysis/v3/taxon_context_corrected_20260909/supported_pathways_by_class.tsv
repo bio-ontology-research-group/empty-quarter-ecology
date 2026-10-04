@@ -1,0 +1,9 @@
+family	pathway_class	n_supported	n_positive	n_negative
+route_correlation_supported	biosynthesis	63	54	9
+route_correlation_supported	degradation_utilization	10	1	9
+route_correlation_supported	energy_central_metabolism	13	6	7
+route_correlation_supported	other	6	5	1
+compartment_contrast_supported	biosynthesis	208	86	122
+compartment_contrast_supported	degradation_utilization	21	12	9
+compartment_contrast_supported	energy_central_metabolism	28	14	14
+compartment_contrast_supported	other	13	5	8

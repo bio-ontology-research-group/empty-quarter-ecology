@@ -1,0 +1,501 @@
+{
+  "schema_version": "spatial-covariance-sensitivity-v1.0.0",
+  "seed": 202609091,
+  "site_count": 60,
+  "group_count": 630,
+  "range_rule": "median nearest-site distance; diameter times .05,.1,.2,.5,1",
+  "noise_fraction_definition": "fraction of mean marginal site variance contributed by propagated independent group noise",
+  "range_km": [
+    14.402035965410596,
+    50.71963934606843,
+    101.43927869213687,
+    202.87855738427373,
+    507.1963934606843,
+    1014.3927869213686
+  ],
+  "diameter_km": 1014.3927869213686,
+  "kernels": {
+    "exponential": "exp(-d/l)",
+    "matern_3_2": "(1+sqrt(3)d/l)exp(-sqrt(3)d/l)",
+    "matern_5_2": "(1+sqrt(5)d/l+5d\u00b2/(3l\u00b2))exp(-sqrt(5)d/l)"
+  },
+  "models": [
+    {
+      "model": "group_noise_only",
+      "kernel": "group_noise",
+      "range_km": null,
+      "group_noise_fraction": 1.0
+    },
+    {
+      "model": "exponential_range0_noise0.01",
+      "kernel": "exponential",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range0_noise0.1",
+      "kernel": "exponential",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range0_noise0.5",
+      "kernel": "exponential",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range0_noise0.9",
+      "kernel": "exponential",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "exponential_range1_noise0.01",
+      "kernel": "exponential",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range1_noise0.1",
+      "kernel": "exponential",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range1_noise0.5",
+      "kernel": "exponential",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range1_noise0.9",
+      "kernel": "exponential",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "exponential_range2_noise0.01",
+      "kernel": "exponential",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range2_noise0.1",
+      "kernel": "exponential",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range2_noise0.5",
+      "kernel": "exponential",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range2_noise0.9",
+      "kernel": "exponential",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "exponential_range3_noise0.01",
+      "kernel": "exponential",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range3_noise0.1",
+      "kernel": "exponential",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range3_noise0.5",
+      "kernel": "exponential",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range3_noise0.9",
+      "kernel": "exponential",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "exponential_range4_noise0.01",
+      "kernel": "exponential",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range4_noise0.1",
+      "kernel": "exponential",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range4_noise0.5",
+      "kernel": "exponential",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range4_noise0.9",
+      "kernel": "exponential",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "exponential_range5_noise0.01",
+      "kernel": "exponential",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "exponential_range5_noise0.1",
+      "kernel": "exponential",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "exponential_range5_noise0.5",
+      "kernel": "exponential",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "exponential_range5_noise0.9",
+      "kernel": "exponential",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range0_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range0_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range0_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range0_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range1_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range1_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range1_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range1_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range2_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range2_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range2_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range2_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range3_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range3_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range3_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range3_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range4_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range4_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range4_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range4_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_3_2_range5_noise0.01",
+      "kernel": "matern_3_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_3_2_range5_noise0.1",
+      "kernel": "matern_3_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_3_2_range5_noise0.5",
+      "kernel": "matern_3_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_3_2_range5_noise0.9",
+      "kernel": "matern_3_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range0_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range0_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range0_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range0_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 14.402035965410596,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range1_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range1_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range1_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range1_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 50.71963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range2_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range2_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range2_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range2_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 101.43927869213687,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range3_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range3_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range3_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range3_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 202.87855738427373,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range4_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range4_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range4_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range4_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 507.1963934606843,
+      "group_noise_fraction": 0.9
+    },
+    {
+      "model": "matern_5_2_range5_noise0.01",
+      "kernel": "matern_5_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.01
+    },
+    {
+      "model": "matern_5_2_range5_noise0.1",
+      "kernel": "matern_5_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.1
+    },
+    {
+      "model": "matern_5_2_range5_noise0.5",
+      "kernel": "matern_5_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.5
+    },
+    {
+      "model": "matern_5_2_range5_noise0.9",
+      "kernel": "matern_5_2",
+      "range_km": 1014.3927869213686,
+      "group_noise_fraction": 0.9
+    }
+  ],
+  "reference": "iid_site_identity_covariance",
+  "observed_rotations": 9999,
+  "calibration_replicates": 500,
+  "calibration_rotations": 199,
+  "calibration_cases": [
+    "iid_sites",
+    "group_noise_only",
+    "matched_exp_medium",
+    "matched_matern_smooth",
+    "off_grid_range_noise",
+    "nonstationary_site_field",
+    "nonseparable_two_site_fields",
+    "heavy_tailed_group_innovations"
+  ],
+  "calibration_column_covariance": "three response factors with eigenvalues 1,.3,.1, mixed by a fixed orthogonal matrix",
+  "nuisance": "whitened intercept; original route design has linear and quadratic terms",
+  "model_scope": "Gaussian group/site fields sharing one cross-genus covariance; original selected genus set and CLR transformation held fixed",
+  "coverage": "A averages groups within site, B centres campaign-by-compartment groups; H=ABZ and V=ABB' A' propagate unequal group membership",
+  "scope_of_envelope": "maximum p across the finite propagated-covariance family; a model sensitivity envelope, not a universal spatial p-value",
+  "calibration_uncertainty": "exact binomial intervals for rejection frequencies; independent null datasets and rotation draws for each replicate",
+  "references": [
+    "https://doi.org/10.1007/s11222-005-4789-5",
+    "https://doi.org/10.1093/bioinformatics/btab063"
+  ],
+  "inputs": {
+    "genus_counts": {
+      "path": "analysis/v2/review/cache/genus_counts.tsv",
+      "sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481"
+    },
+    "coordinates": {
+      "path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "sha256": "18c208ad198f120159c997b3a29219e7040c0f047a90b0b8c19227990cd53fbd"
+    },
+    "original_analysis": {
+      "path": "analysis/v3/spatial_turnover_rescue.py",
+      "sha256": "e2775839f80dde56cc4ef681b321a8919420afa046f928e335ef59a658208787"
+    }
+  },
+  "frozen_at_utc": "2026-09-09T18:28:30.292248+00:00"
+}

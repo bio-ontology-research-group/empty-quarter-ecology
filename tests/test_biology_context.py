@@ -8,11 +8,12 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
+from manuscript_paths import PAPER
 
 ROOT = Path(__file__).resolve().parents[1]
-BIO = ROOT / "analysis/v3/biology_context"
-TRAIT = ROOT / "analysis/v3/trait_genes"
-PAPER = ROOT / "empty-quarter-amplicon"
+BIO = ROOT / "analysis/v3/biology_context_corrected_20260909"
+TRAIT = ROOT / "analysis/v3/trait_genes_20260909"
+PH = ROOT / "analysis/v3/ph_context_reanalysis_20260909/ph_genus_correlations.tsv"
 MAIN = (PAPER / "main.tex").read_text(encoding="utf-8")
 SUPPLEMENT = (PAPER / "supplement.tex").read_text(encoding="utf-8")
 
@@ -39,12 +40,12 @@ def test_landform_numbers_match_text() -> None:
     assert manifest["landform"]["saline_pan_sites_by_third"] == {"east": 5, "west": 3, "central": 1}
     omni = {row["adjustment"]: row for row in manifest["landform"]["omnibus"]}
     assert f"{omni['none']['pseudo_f']:.2f}" == "4.56" and f"{omni['none']['permutation_p']:.4f}" == "0.0013"
-    assert f"{omni['route_linear_quadratic']['pseudo_f']:.2f}" == "1.74"
-    assert f"{omni['route_linear_quadratic']['permutation_p']:.3f}" == "0.036"
+    assert f"{omni['route_linear_quadratic']['pseudo_f']:.2f}" == "1.78"
+    assert f"{omni['route_linear_quadratic']['permutation_p']:.3f}" == "0.032"
     assert manifest["landform"]["supported_genera_unadjusted"] == 16
     assert manifest["landform"]["supported_genera_route_adjusted"] == 0
     route = pd.read_csv(BIO / "route_model_dune_sensitivity.tsv", sep="\t").set_index("cohort")
-    assert f"{100 * route.loc['all_60_sites', 'route_r2']:.1f}" == "40.2"
+    assert f"{100 * route.loc['all_60_sites', 'route_r2']:.1f}" == "40.1"
     assert f"{100 * route.loc['sand_dune_sites', 'route_r2']:.1f}" == "34.2"
     assert int(route.loc["sand_dune_sites", "supported_route_genera_dune_sites"]) == 71
     assert int(route.loc["sand_dune_sites", "supported_in_both_same_sign"]) == 70
@@ -57,11 +58,11 @@ def test_landform_numbers_match_text() -> None:
     temp_hum = clim[clim["climate_variable"].isin(["mean_air_temperature_c", "mean_relative_humidity_pct"])]
     assert (temp_hum["q_bh_9_dune_44"] < 0.05).all()
     main = flat(MAIN)
-    assert "44 sand-dune sites, 9 saline pans (3 in the west, 1 central, 5 in the east), 3 oases in the east" in main
+    assert "44 sand dunes, 9 saline pans (3 western, 1 central, 5 eastern), 3 eastern oases" in main
     assert "pseudo-F=4.56, p=0.0013; 16 genera at q<0.05" in main
-    assert "pseudo-F=1.74, p=0.036; no genus at q<0.05" in main
-    assert "mean Shannon 4.25 against 5.77 at dune sites" in main
-    assert "34.2\\,\\% of composition (40.2\\,\\% on all sites), 70 of the 71 genera" in main
+    assert "pseudo-F=1.78, p=0.032" in main
+    assert "mean Shannon 4.25 vs. 5.77 at dune sites" in main
+    assert "34.2\\,\\% of compositional variation (vs. 40.1\\,\\% across all sites). 70 of the 71 genera" in main
 
 
 def test_compartment_genus_family_matches_text() -> None:
@@ -108,7 +109,7 @@ def test_gradient_and_core_numbers_match_text() -> None:
     assert manifest["xrf_axis"]["supported_genera"] == 118
     assert manifest["ph"]["supported_genera"] == 117
     assert manifest["ph"]["supported_also_route_supported"] == 104
-    ph = pd.read_csv(BIO / "ph_genus_correlations.tsv", sep="\t").set_index("genus")
+    ph = pd.read_csv(PH, sep="\t").set_index("genus")
     up = ph.loc[["Polygonibacillus", "Sediminibacillus", "Halalkalibacter", "Gracilibacillus", "Halomonas", "Aquibacillus"], "spearman_rho_site_ph"]
     assert up.min() >= 0.705 and up.max() <= 0.815 and ph.loc[up.index, "supported_q_lt_0_05"].all()
     down = ph.loc[["Pirellula", "Roseisolibacter", "Gemmatimonas", "Steroidobacter", "Gaiella", "Sphingomonas", "Streptomyces"], "spearman_rho_site_ph"]
@@ -119,11 +120,12 @@ def test_gradient_and_core_numbers_match_text() -> None:
     table = pd.read_csv(BIO / "core_genera_by_compartment.tsv", sep="\t").set_index("compartment")
     assert [int(table.loc[c, "median_rarefied_genera_per_site"]) for c in ("root_adjacent", "surface", "shallow_subsurface")] == [299, 274, 284]
     main = flat(MAIN)
-    assert "root-adjacent soil had 85 genera present at 90\\,\\% or more of the sites, surface soil 82 and shallow-subsurface soil 69" in main
-    assert "median number of genera per site was 299, 274 and 284" in main
-    assert "117 of the 200 genera correlated with site-mean pH (q<0.05), 104 of them also with route position" in main
-    assert "118 genera tracked it" in main
-    assert "Spearman \\rho=0.73 with route position" in main
+    assert "85 genera occurred at 90\\,\\% or more of the sites in root-adjacent soil, compared with 82 in surface and 69 in shallow-subsurface soil" in main
+    assert "median richness was 299, 274 and 284 genera per site" in main
+    assert "117 of the 200 genera correlated with site-mean pH (q<0.05), 104 of these correlated with transect position" in main
+    assert "equal-weight campaign--site--compartment pH means within each site" in flat(SUPPLEMENT)
+    assert "118 genera correlated with the score" in main
+    assert "Spearman \\rho=0.73" in main
     taxon = pd.read_csv(ROOT / "analysis/v3/taxon_context/genus_composition.tsv", sep="\t").set_index("genus")
     assert f"{100 * taxon.loc['unclassified_genus', 'mean_relative_abundance']:.1f}" == "35.6"
     phyla = pd.read_csv(ROOT / "analysis/v3/taxon_context/phylum_composition.tsv", sep="\t").set_index("phylum")
@@ -131,7 +133,8 @@ def test_gradient_and_core_numbers_match_text() -> None:
     assert f"{100 * archaea:.2f}" == "0.02"
     cyano = phyla.loc["Cyanobacteriota"]
     assert [f"{100 * cyano[c]:.2f}" for c in ("mean_surface", "mean_shallow_subsurface", "mean_root_adjacent")] == ["0.40", "0.41", "0.51"]
-    assert "Reads without a genus assignment made up 35.6\\,\\% of the total, archaea 0.02\\,\\%" in main
+    assert "Reads without a genus assignment made up 35.6\\,\\% per profile on average" in main
+    assert "archaea" in flat(SUPPLEMENT).lower()
 
 
 def test_trait_gene_numbers_match_text() -> None:
@@ -177,10 +180,11 @@ def test_trait_gene_numbers_match_text() -> None:
     named = agree.loc[["coxL_CO_dehydrogenase", "NiFe_hydrogenase_large", "ectABC_ectoine", "otsA_otsB_trehalose", "spo0A_sporulation", "katE_katG_catalase", "sodA_superoxide_dismutase", "dps_DNA_protection"]]
     assert f"{named.min():.2f}" == "0.51" and f"{named.max():.2f}" == "0.76"
     main = flat(MAIN)
-    assert "38.5\\,\\% carried the aerobic CO dehydrogenase \\textit{coxL} and 22.6\\,\\% a group 1 [NiFe]-hydrogenase" in main
-    assert "hydrogenase carriers made up 32\\,\\% of the recruited community in shallow-subsurface soil against 17\\,\\% at the surface and 15\\,\\% near roots" in main
-    assert "Spearman \\rho=0.51--0.76 across 119 matched libraries" in main
-    assert "(0.67 and 0.74 of the shallow-subsurface value)" in main
+    assert "CO-dehydrogenase markers occurred in 38.5\\,\\%, hydrogenase markers in 22.6\\,\\%" in main
+    assert "combines \\textit{hyaB}, \\textit{hhyL} and \\textit{hoxH}" in flat(SUPPLEMENT)
+    assert "hydrogenase carriers had the largest abundance-weighted share below the surface" in main
+    assert "Across 119 matched libraries, correlations between predicted and genome-derived markers ranged from 0.51 to 0.76" in main
+    assert "Supplementary Section~S8.3" in main
 
 
 def test_generated_fragments_are_current_and_included() -> None:
@@ -190,7 +194,9 @@ def test_generated_fragments_are_current_and_included() -> None:
         out = Path(tmp) / "bio.tex"
         out_traits = Path(tmp) / "trait.tex"
         subprocess.run(
-            [sys.executable, str(ROOT / "analysis/v3/render_biology_context_tex.py"), "--output", str(out), "--output-traits", str(out_traits)],
+            [sys.executable, str(ROOT / "analysis/v3/render_biology_context_tex.py"),
+             "--biology-dir", str(BIO), "--trait-dir", str(TRAIT),
+             "--ph-correlations", str(PH), "--output", str(out), "--output-traits", str(out_traits)],
             check=True, capture_output=True, text=True,
         )
         assert out.read_text() == (PAPER / "generated/biology_context_tables.tex").read_text()

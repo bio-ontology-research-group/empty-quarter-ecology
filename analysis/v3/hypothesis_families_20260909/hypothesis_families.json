@@ -1,0 +1,425 @@
+{
+  "schema_version": "1.0",
+  "families": [
+    {
+      "family": "alpha_original:richness_rare",
+      "n_tests": 16,
+      "method": "Benjamini-Hochberg",
+      "source": "results/paired_compartment_effects.tsv",
+      "source_sha256": "5841c45fe8c6c5d79f018814100dfa0455b817bb6a41201df2d693cec86b0d65",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "richness_rare"
+      }
+    },
+    {
+      "family": "alpha_original:shannon",
+      "n_tests": 17,
+      "method": "Benjamini-Hochberg",
+      "source": "results/paired_compartment_effects.tsv",
+      "source_sha256": "5841c45fe8c6c5d79f018814100dfa0455b817bb6a41201df2d693cec86b0d65",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "shannon"
+      }
+    },
+    {
+      "family": "composition",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "compartment_composition/compartment_location_results.tsv",
+      "source_sha256": "c036ab0cba2474cd086b5438b973eaa6f358e44a9c70182c2da9409e565729d8",
+      "p_column": "permutation_p",
+      "q_column": "q_primary_family",
+      "filter": {}
+    },
+    {
+      "family": "climate_alpha",
+      "n_tests": 9,
+      "method": "Benjamini-Hochberg",
+      "source": "environment_associations/climate_alpha_correlations.tsv",
+      "source_sha256": "6091025b75bdfb8636e0ea0f2fcbe44a24ad86c67a5d31df050eec6e682c53d3",
+      "p_column": "p_value",
+      "q_column": "q_global_9",
+      "filter": {}
+    },
+    {
+      "family": "climate_genus",
+      "n_tests": 600,
+      "method": "Benjamini-Hochberg",
+      "source": "environment_associations/climate_genus_correlations.tsv",
+      "source_sha256": "7b0822112124f057df39d82706cc690c1865e68672d569f53bbf278f88aef3ce",
+      "p_column": "p_value",
+      "q_column": "q_global_600",
+      "filter": {}
+    },
+    {
+      "family": "field_weather",
+      "n_tests": 9,
+      "method": "Benjamini-Hochberg",
+      "source": "environment_associations/field_weather_adjusted_models.tsv",
+      "source_sha256": "ac0ef8e73644fa93e53a491c2761e44d3669f96914621fc39e2eee726f7ce84b",
+      "p_column": "p_value",
+      "q_column": "q_global_9",
+      "filter": {}
+    },
+    {
+      "family": "taxon_route",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "taxon_context_corrected_20260909/transect_replacement.tsv",
+      "source_sha256": "84cc32b518955613dfd0b5835e37008568e46437343b40b242abaa3239065fbb",
+      "p_column": "p_value",
+      "q_column": "q_bh_200",
+      "filter": {}
+    },
+    {
+      "family": "compartment_genus",
+      "n_tests": 600,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/compartment_genus_family.tsv",
+      "source_sha256": "744595fe2469b610af836780d2f37103af733dba1675395314a019ffea5a71b6",
+      "p_column": "sign_flip_p",
+      "q_column": "q_bh_600",
+      "filter": {}
+    },
+    {
+      "family": "landform_genus:none",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/landform_genus_contrasts.tsv",
+      "source_sha256": "1847dcc13173050cfa89142bc53a565e400781f56870e81fcbc5187b413d3fd9",
+      "p_column": "mannwhitney_p",
+      "q_column": "q_bh_200",
+      "filter": {
+        "adjustment": "none"
+      }
+    },
+    {
+      "family": "landform_genus:route_linear_quadratic",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/landform_genus_contrasts.tsv",
+      "source_sha256": "1847dcc13173050cfa89142bc53a565e400781f56870e81fcbc5187b413d3fd9",
+      "p_column": "mannwhitney_p",
+      "q_column": "q_bh_200",
+      "filter": {
+        "adjustment": "route_linear_quadratic"
+      }
+    },
+    {
+      "family": "dune_route",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/route_genus_correlations_dune_sites.tsv",
+      "source_sha256": "1d39901af392a9c6e156583858ddc5adab46b89250f591b9b9fe778bd1e51301",
+      "p_column": "p_value",
+      "q_column": "q_bh_200",
+      "filter": {}
+    },
+    {
+      "family": "dune_climate",
+      "n_tests": 9,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/climate_diversity_dune_sensitivity.tsv",
+      "source_sha256": "a6d26c2ac9a984e056ed704744505a60115951f7af021e788abec01ee6af797f",
+      "p_column": "p_dune_44",
+      "q_column": "q_bh_9_dune_44",
+      "filter": {}
+    },
+    {
+      "family": "ph_genus",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/ph_genus_correlations.tsv",
+      "source_sha256": "8aaec1b2664c791e73fd3ff12af8eb2cc125a352c45d09e59fe37c9f5a1999f5",
+      "p_column": "p_value",
+      "q_column": "q_bh_200",
+      "filter": {}
+    },
+    {
+      "family": "xrf_genus",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "biology_context_corrected_20260909/xrf_axis_genus_correlations.tsv",
+      "source_sha256": "38b50a429de9240b978e4d124b63eb6bcb01c47c197f812a5a87188b31f13214",
+      "p_column": "p_value",
+      "q_column": "q_bh_200",
+      "filter": {}
+    },
+    {
+      "family": "pathway_profile",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "picrust2_ecology/position_profile_tests.tsv",
+      "source_sha256": "eb2c689eb6536e921acadbec57de2f5ed75e0ada37b5738fa30ea79b2076b62e",
+      "p_column": "permutation_p",
+      "q_column": "q_primary_three",
+      "filter": {}
+    },
+    {
+      "family": "pathway_compartment",
+      "n_tests": 600,
+      "method": "Benjamini-Hochberg",
+      "source": "picrust2_ecology/pathway_position_effects.tsv",
+      "source_sha256": "8d45dabcc13c7f74b7170122c59d041597da6a6d5d6e45296b95021fb416e67f",
+      "p_column": "p_value",
+      "q_column": "q_global_600",
+      "filter": {}
+    },
+    {
+      "family": "pathway_route",
+      "n_tests": 200,
+      "method": "Benjamini-Hochberg",
+      "source": "picrust2_ecology/pathway_geographic_correlations.tsv",
+      "source_sha256": "a2f9f5528b17987d8f53d6e61fdf0facc559e7d11146a6bdecadfcec530d8ce5",
+      "p_column": "p_value",
+      "q_column": "q_global_200",
+      "filter": {}
+    },
+    {
+      "family": "marker_compartment",
+      "n_tests": 60,
+      "method": "Benjamini-Hochberg",
+      "source": "trait_genes/picrust_trait_compartment_contrasts.tsv",
+      "source_sha256": "c0ea8a487c3e1b390bce90060819ae6c82d3c849ae7461ebfb6d02bbd34c6a74",
+      "p_column": "sign_flip_p",
+      "q_column": "q_bh",
+      "filter": {}
+    },
+    {
+      "family": "marker_route",
+      "n_tests": 20,
+      "method": "Benjamini-Hochberg",
+      "source": "trait_genes/picrust_trait_summary.tsv",
+      "source_sha256": "082b5197221a75ee636f1f9ba8c82a000e1add1d7f96b6b27f6fe050a7156b91",
+      "p_column": "p_route",
+      "q_column": "q_bh_route",
+      "filter": {}
+    },
+    {
+      "family": "normalized_alpha:evenness_h_over_log_hurlbert",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "evenness_decomposition/paired_contrasts.tsv",
+      "source_sha256": "7b5dd22de48f8657c4b74448c9184a7605b15b33188a034dc04d59e855cd238c",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "evenness_h_over_log_hurlbert"
+      }
+    },
+    {
+      "family": "normalized_alpha:evenness_h_over_log_observed",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "evenness_decomposition/paired_contrasts.tsv",
+      "source_sha256": "7b5dd22de48f8657c4b74448c9184a7605b15b33188a034dc04d59e855cd238c",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "evenness_h_over_log_observed"
+      }
+    },
+    {
+      "family": "normalized_alpha:richness_hurlbert_25000",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "evenness_decomposition/paired_contrasts.tsv",
+      "source_sha256": "7b5dd22de48f8657c4b74448c9184a7605b15b33188a034dc04d59e855cd238c",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "richness_hurlbert_25000"
+      }
+    },
+    {
+      "family": "normalized_alpha:shannon",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "evenness_decomposition/paired_contrasts.tsv",
+      "source_sha256": "7b5dd22de48f8657c4b74448c9184a7605b15b33188a034dc04d59e855cd238c",
+      "p_column": "p",
+      "q_column": "q_within_metric",
+      "filter": {
+        "metric": "shannon"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:normalized_shannon:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "normalized_shannon",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:normalized_shannon:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "normalized_shannon",
+        "estimand": "marginal"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:richness_rare:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "richness_rare",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:richness_rare:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "richness_rare",
+        "estimand": "marginal"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:shannon:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "shannon",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:common_profiles:shannon:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "common_profiles",
+        "metric": "shannon",
+        "estimand": "marginal"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:normalized_shannon:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "normalized_shannon",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:normalized_shannon:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "normalized_shannon",
+        "estimand": "marginal"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:richness_rare:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "richness_rare",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:richness_rare:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "richness_rare",
+        "estimand": "marginal"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:shannon:campaign_matched",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "shannon",
+        "estimand": "campaign_matched"
+      }
+    },
+    {
+      "family": "paired_alpha_sensitivity:endpoint_specific:shannon:marginal",
+      "n_tests": 3,
+      "method": "Benjamini-Hochberg",
+      "source": "paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
+      "source_sha256": "b0a0f8fdcc2b52eeeb74268a434203078546ac899260b23cbe6c3852cf40a6db",
+      "p_column": "wilcoxon_p",
+      "q_column": "q_three_contrasts",
+      "filter": {
+        "cohort": "endpoint_specific",
+        "metric": "shannon",
+        "estimand": "marginal"
+      }
+    }
+  ],
+  "script_sha256": "b9417f882a3b84285371acd78d78b057cc4105ee1e11c11f54b812c792ad37d0",
+  "other_tests": {
+    "omnibus_tests": "Reported individually with their permutation scheme",
+    "rainfall_search": "Maximum statistic over 3 endpoints x 60 peak lags; shared circular shifts within expedition; 19,999 draws; seed 20260804",
+    "distance_slope_contrasts": "Maximum statistic over two compartment slope contrasts; 9,999 whole-site-label permutations"
+  }
+}

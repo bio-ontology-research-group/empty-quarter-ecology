@@ -1,0 +1,49 @@
+contrast	higher_in	rank	pathway	description	mean_clr_difference	q_global_600
+Deep-Surface	shallow_subsurface	1	PWY-5104	L-isoleucine biosynthesis IV	0.221287717	0.0005042016807
+Deep-Surface	shallow_subsurface	2	P42-PWY	incomplete reductive TCA cycle	0.1454941441	0.0005042016807
+Deep-Surface	shallow_subsurface	3	PWY-6609	adenine and adenosine salvage III	0.1434151397	0.001775147929
+Deep-Surface	shallow_subsurface	4	PWY-5121	superpathway of geranylgeranyl diphosphate biosynthesis II (via MEP)	0.1210893694	0.0008333333333
+Deep-Surface	shallow_subsurface	5	PWY-5659	GDP-mannose biosynthesis	0.08874224121	0.0005042016807
+Deep-Surface	shallow_subsurface	6	ARGSYN-PWY	L-arginine biosynthesis I (via L-ornithine)	0.08457491094	0.0005042016807
+Deep-Surface	shallow_subsurface	7	PWY-7400	L-arginine biosynthesis IV (archaebacteria)	0.08405972881	0.0005042016807
+Deep-Surface	shallow_subsurface	8	UDPNAGSYN-PWY	UDP-N-acetyl-D-glucosamine biosynthesis I	0.08259471715	0.0005042016807
+Deep-Surface	surface	1	PWY0-1061	superpathway of L-alanine biosynthesis	-0.3610912322	0.0005042016807
+Deep-Surface	surface	2	PWY0-1479	tRNA processing	-0.3499539377	0.0005042016807
+Deep-Surface	surface	3	PWY-6519	8-amino-7-oxononanoate biosynthesis I	-0.3294405846	0.0005042016807
+Deep-Surface	surface	4	BIOTIN-BIOSYNTHESIS-PWY	biotin biosynthesis I	-0.307118242	0.0005042016807
+Deep-Surface	surface	5	PWY-7254	TCA cycle VII (acetate-producers)	-0.2440290286	0.0005042016807
+Deep-Surface	surface	6	UBISYN-PWY	superpathway of ubiquinol-8 biosynthesis (prokaryotic)	-0.1831200927	0.0005042016807
+Deep-Surface	surface	7	FASYN-INITIAL-PWY	superpathway of fatty acid biosynthesis initiation (E. coli)	-0.1661234758	0.004352331606
+Deep-Surface	surface	8	PWY-5989	stearate biosynthesis II (bacteria and plants)	-0.1578009184	0.01100917431
+Rhizosphere-Deep	shallow_subsurface	1	PWY-5104	L-isoleucine biosynthesis IV	-0.3840136835	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	2	PWY-5659	GDP-mannose biosynthesis	-0.190463463	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	3	PWY-6467	Kdo transfer to lipid IVA III (Chlamydia)	-0.1864205547	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	4	GLYCOCAT-PWY	glycogen degradation I (bacterial)	-0.171754002	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	5	DENOVOPURINE2-PWY	superpathway of purine nucleotides de novo biosynthesis II	-0.1705877335	0.006502463054
+Rhizosphere-Deep	shallow_subsurface	6	PWY-6737	starch degradation V	-0.1686610626	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	7	PWY-7323	superpathway of GDP-mannose-derived O-antigen building blocks biosynthesis	-0.1607245239	0.0005042016807
+Rhizosphere-Deep	shallow_subsurface	8	OANTIGEN-PWY	O-antigen building blocks biosynthesis (E. coli)	-0.1523575843	0.0005042016807
+Rhizosphere-Deep	root_adjacent	1	PWY-1861	formaldehyde assimilation II (RuMP Cycle)	0.5309220197	0.0005042016807
+Rhizosphere-Deep	root_adjacent	2	PWY-5971	palmitate biosynthesis II (bacteria and plants)	0.4947999523	0.02722891566
+Rhizosphere-Deep	root_adjacent	3	PWY-2941	L-lysine biosynthesis II	0.3657819968	0.0005042016807
+Rhizosphere-Deep	root_adjacent	4	PWY-7254	TCA cycle VII (acetate-producers)	0.3469514433	0.0005042016807
+Rhizosphere-Deep	root_adjacent	5	PWY0-1061	superpathway of L-alanine biosynthesis	0.3107097249	0.0008333333333
+Rhizosphere-Deep	root_adjacent	6	PWY-7328	superpathway of UDP-glucose-derived O-antigen building blocks biosynthesis	0.2976565399	0.006502463054
+Rhizosphere-Deep	root_adjacent	7	PWY-7242	D-fructuronate degradation	0.2899322597	0.0005042016807
+Rhizosphere-Deep	root_adjacent	8	PWY-6901	superpathway of glucose and xylose degradation	0.2600310541	0.0005042016807
+Rhizosphere-Surface	root_adjacent	1	PWY-1861	formaldehyde assimilation II (RuMP Cycle)	0.5108458389	0.0005042016807
+Rhizosphere-Surface	root_adjacent	2	PWY-5837	1,4-dihydroxy-2-naphthoate biosynthesis I	0.3073657682	0.0005042016807
+Rhizosphere-Surface	root_adjacent	3	PWY-5863	superpathway of phylloquinol biosynthesis	0.3043532622	0.0005042016807
+Rhizosphere-Surface	root_adjacent	4	PWY-2941	L-lysine biosynthesis II	0.2846008259	0.0005042016807
+Rhizosphere-Surface	root_adjacent	5	PWY-5897	superpathway of menaquinol-11 biosynthesis	0.266617616	0.0005042016807
+Rhizosphere-Surface	root_adjacent	6	PWY-5898	superpathway of menaquinol-12 biosynthesis	0.266617616	0.0005042016807
+Rhizosphere-Surface	root_adjacent	7	PWY-5899	superpathway of menaquinol-13 biosynthesis	0.266617616	0.0005042016807
+Rhizosphere-Surface	root_adjacent	8	PWY-5840	superpathway of menaquinol-7 biosynthesis	0.2647659001	0.0005042016807
+Rhizosphere-Surface	surface	1	PWY-6467	Kdo transfer to lipid IVA III (Chlamydia)	-0.169872405	0.0008333333333
+Rhizosphere-Surface	surface	2	PWY-5104	L-isoleucine biosynthesis IV	-0.1627259666	0.0008333333333
+Rhizosphere-Surface	surface	3	PWY-6737	starch degradation V	-0.1561253401	0.0005042016807
+Rhizosphere-Surface	surface	4	PWY-1269	CMP-3-deoxy-D-manno-octulosonate biosynthesis I	-0.1530365395	0.0008333333333
+Rhizosphere-Surface	surface	5	PWY0-1479	tRNA processing	-0.1430351135	0.007211538462
+Rhizosphere-Surface	surface	6	NAGLIPASYN-PWY	lipid IVA biosynthesis	-0.1407489205	0.001161290323
+Rhizosphere-Surface	surface	7	PWY-7323	superpathway of GDP-mannose-derived O-antigen building blocks biosynthesis	-0.1406738428	0.0005042016807
+Rhizosphere-Surface	surface	8	LEU-DEG2-PWY	L-leucine degradation I	-0.1377321905	0.003351955307

@@ -1,0 +1,17 @@
+{
+  "source": "analysis/v2/review/cache/alpha.tsv",
+  "source_sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
+  "script_sha256": "536fd15bf245cf2e9d6d3ac919c553a989e09839df4a4f65afb37d57ed8839fd",
+  "bootstrap_resamples": 1000000,
+  "seed": 20260723,
+  "bootstrap_unit": "site",
+  "interval": "percentile 95%",
+  "wilcoxon_null": "symmetric distribution of site differences about zero",
+  "adjustment_family": "three contrasts per metric, cohort and estimand",
+  "normalized_shannon_range": [
+    0.33609531046741226,
+    0.9453833941362138
+  ],
+  "normalized_shannon_depth_spearman": 0.09631954749089615,
+  "scope": "descriptive sensitivity; retains original marginal estimates"
+}

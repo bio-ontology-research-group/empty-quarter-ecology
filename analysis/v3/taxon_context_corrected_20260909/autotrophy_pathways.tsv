@@ -1,0 +1,8 @@
+rank	pathway	description	mean_relative_abundance	prevalence
+44	CALVIN-PWY	Calvin-Benson-Bassham cycle	0.005873047503	1
+122	P23-PWY	reductive TCA cycle I	0.004095606713	0.9959250204
+284	CODH-PWY	reductive acetyl coenzyme A pathway	0.0003660085837	0.9845150774
+304	PWY-5392	reductive TCA cycle II	0.0002391345575	0.9364303178
+360	PWY-5743	3-hydroxypropanoate cycle	4.491026924e-05	0.8679706601
+362	PWY-5744	glyoxylate assimilation	3.861692462e-05	0.8679706601
+460	PWY-5789	3-hydroxypropanoate/4-hydroxybutanate cycle	2.934692021e-10	0.000814995925

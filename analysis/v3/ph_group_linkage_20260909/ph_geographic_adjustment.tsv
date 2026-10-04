@@ -1,0 +1,4 @@
+model	n_groups	n_sites	taxon_count	pseudocount	partial_r2	residual_response_r2	estimand	pseudo_f	p	n_observations	residual_df	permutations
+same_cohort_without_ph_adjustment	560	60	200	0.5	0.37541786442333624	0.37541786442333624	route_R2_of_site_averaged_residual_response	17.130507785315597	0.001	60	57	999
+same_cohort_with_ph_adjustment	560	60	200	0.5	0.19775278967430732	0.19775278967430732	route_R2_of_site_averaged_residual_response	7.025209228748453	0.001	60	57	999
+ph_transect_pattern_after_campaign_position	560	60	0		0.8431043252701133	0.8431043252701133	route_R2_of_site_averaged_residual_response	153.14936700177302	0.001	60	57	999

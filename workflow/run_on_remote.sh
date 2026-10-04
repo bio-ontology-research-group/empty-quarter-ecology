@@ -5,8 +5,10 @@ host=$(hostname -s)
 case "$host" in
   cbontsr01|leechuck-office) ;;
   *)
-    printf 'Refusing real workflow on %s; use ws or Ontolinator.\n' "$host" >&2
-    exit 69
+    if [[ ${EQ_EXECUTION_CONTEXT:-institutional} != external ]]; then
+      printf 'Institutional runs use ws/Ontolinator. On an external compute host set EQ_EXECUTION_CONTEXT=external.\n' >&2
+      exit 69
+    fi
     ;;
 esac
 
@@ -14,6 +16,12 @@ root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 data_repo=${1:-"$root/../empty-quarter-data-paper"}
 output_dir=${2:-"$root/results/remote-validation-$(date -u +%Y%m%dT%H%M%SZ)"}
 data_repo=$(cd "$data_repo" && pwd)
+
+if [[ ! -x "$data_repo/.conda-env/bin/python" ]]; then
+  printf 'Create the locked analysis environment first: make -C %s env-linux-exact\n' "$data_repo" >&2
+  exit 69
+fi
+export PATH="$data_repo/.conda-env/bin:$PATH"
 
 export RAPTOR_BOOTSTRAP_DIR=${RAPTOR_BOOTSTRAP_DIR:-"$data_repo/workflow/.raptor-bin"}
 bash "$data_repo/workflow/bin/bootstrap_raptor.sh"
@@ -60,4 +68,4 @@ python3 "$data_repo/scripts/manuscript/test_manuscript_consistency.py"
     "$data_repo/metadata/sra-submissions/submission-sheet.tsv" \
   --outdir "$output_dir"
 
-printf 'PASS: complete remote workflow written to %s\n' "$output_dir"
+printf 'PASS: configured workflow completed; execution evidence written to %s\n' "$output_dir"

@@ -21,26 +21,27 @@
   "inputs": {
     "atacama_gradient_site_table": {
       "bytes": 1464,
-      "path": "analysis/v2/RQ27_Transportability/atacama_gradient/atacama_per_site.csv",
+      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/comparators/atacama/gradient/atacama_per_site.csv",
       "sha256": "7d12c3ff102a8fa9d535d4bb55f1832ce756ba4c07ee24cbc4cbd7bff8a29b97"
     },
     "atacama_pit_asv_table": {
       "bytes": 1480567,
-      "path": "analysis/v2/RQ27_Transportability/atacama_pit/ASV_table.tsv",
+      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/comparators/atacama/pit/ASV_table.tsv",
       "sha256": "0ccc857ae41b929c280f876f827f67559154378cc9e0927b11f4971125626c1e"
     },
     "atacama_pit_depth_map": {
       "bytes": 1530,
-      "path": "analysis/v2/RQ27_Transportability/atacama_pit/sample_depth_map.tsv",
+      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/comparators/atacama/pit/sample_depth_map.tsv",
       "sha256": "48214b4912729005498aa3f0f0e9332f10602d56fff7bd7c6abef8aa8041e985"
     },
     "atacama_pit_taxonomy": {
       "bytes": 3340348,
-      "path": "analysis/v2/RQ27_Transportability/atacama_pit/ASV_tax.silva_138_2.tsv",
+      "path": "/home/leechuck/Public/software/empty-quarter-ecology-data/metadata/comparators/atacama/pit/ASV_tax.silva_138_2.tsv",
       "sha256": "835aa7811d9669378f579bf034de1f5731ef5eefd9122db4eddd7e48ca998014"
     }
   },
   "parameters": {
+    "partial_correlation_p_method": "two-sided Student t approximation; residual df = n - rank(intercept plus covariates) - 1",
     "permutations": 9999,
     "pseudocount": 0.5,
     "rarefaction_depth": 8000,

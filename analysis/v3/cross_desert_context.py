@@ -55,7 +55,11 @@ def portable_path(path: Path, project_root: Path) -> str:
 def partial_spearman(
     x: np.ndarray, y: np.ndarray, covariates: np.ndarray
 ) -> tuple[float, float]:
-    """Rank x and y, residualize both on covariates, then correlate."""
+    """Correlate residualized ranks with a residual-df Student approximation.
+
+    The p-value accounts for the fitted nuisance design. It is an
+    approximate partial-correlation test; ranking does not make it exact.
+    """
     ranked_x = stats.rankdata(np.asarray(x, dtype=float))
     ranked_y = stats.rankdata(np.asarray(y, dtype=float))
     design = np.column_stack(
@@ -68,7 +72,16 @@ def partial_spearman(
         design, ranked_y, rcond=None
     )[0]
     result = stats.pearsonr(residual_x, residual_y)
-    return float(result.statistic), float(result.pvalue)
+    rho = float(result.statistic)
+    residual_df = len(ranked_x) - np.linalg.matrix_rank(design) - 1
+    if residual_df <= 0:
+        raise ValueError("Partial correlation has no residual degrees of freedom")
+    if abs(rho) >= 1:
+        p_value = 0.0
+    else:
+        statistic = rho * math.sqrt(residual_df / (1 - rho * rho))
+        p_value = float(2 * stats.t.sf(abs(statistic), residual_df))
+    return rho, p_value
 
 
 def pseudo_f(coordinates: np.ndarray, groups: np.ndarray) -> float:
@@ -416,6 +429,10 @@ def main() -> None:
             "rarefaction_iterations": RAREFACTION_ITERATIONS,
             "top_genera": TOP_GENERA,
             "pseudocount": PSEUDOCOUNT,
+            "partial_correlation_p_method": (
+                "two-sided Student t approximation; residual df = "
+                "n - rank(intercept plus covariates) - 1"
+            ),
         },
         "cohorts": {"atacama_gradient": gradient_audit, "atacama_pit": pit_audit},
         "inputs": {

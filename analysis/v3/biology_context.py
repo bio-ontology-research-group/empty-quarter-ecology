@@ -4,8 +4,8 @@
 Second round of the co-author review of 2 Sep 2026 (R. Gruenberg): the paper
 reported statistics without organisms or substrates in several places.  This
 module adds the missing descriptions from the canonical inputs and the
-committed canonical result bundles.  Every analysis is descriptive or a
-declared multiple-testing family; none changes a tracked conclusion.
+committed canonical result bundles. Analyses are descriptive or use the
+declared multiple-testing families below.
 
 Analyses
 --------
@@ -123,6 +123,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project-root", type=Path, default=HERE.parents[1])
     parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument("--ph-groups", type=Path, default=None,
+                        help="Corrected campaign/site/compartment pH group table")
     parser.add_argument("--seed", type=int, default=20260904)
     parser.add_argument("--permutations", type=int, default=9999)
     parser.add_argument("--bootstrap", type=int, default=2000)
@@ -146,7 +148,7 @@ def main() -> None:
         "pathway_position_effects": root / "analysis/v3/picrust2_ecology/pathway_position_effects.tsv",
         "xrf_axis": root / "analysis/v3/xrf_community_rescue/laboratory_xrf_axis.tsv",
         "xrf_loadings": root / "analysis/v3/xrf_community_rescue/elemental_pc1_loadings.tsv",
-        "ph_sample_profile_join": root / "analysis/v3/ph_shared_v1/ecology/ph_sample_profile_join.tsv",
+        "ph_group_table": root / (args.ph_groups or Path("analysis/v3/ph_shared_v1/ecology/ph_group_analysis_table.tsv")),
     }
     missing = [str(p) for p in inputs.values() if not p.is_file()]
     if missing:
@@ -410,9 +412,9 @@ def main() -> None:
     write_tsv(xrf_loadings, output / "xrf_axis_loadings.tsv")
 
     # ---- 5. pH -----------------------------------------------------------------
-    ph = pd.read_csv(inputs["ph_sample_profile_join"], sep="\t")
-    ph = ph[ph["disposition"] == "ADMITTED_MEASUREMENT"]
-    ph_site = ph.groupby("site")["ph_value"].mean()
+    from ph_context_reanalysis import site_ph
+    ph = pd.read_csv(inputs["ph_group_table"], sep="\t")
+    ph_site = site_ph(ph)
     ph_sites = [s for s in ordered if s in ph_site.index]
     ph_rows = []
     for g in primary:
@@ -470,9 +472,9 @@ def main() -> None:
         "schema_version": SCHEMA_VERSION,
         "status": "descriptive_biology_context_complete",
         "scope": (
-            "Descriptive taxon-level context for tracked results; declared BH "
+            "Descriptive taxon-level context; declared BH "
             "families (600 compartment genus tests; 200 tests each for landform, "
-            "dune-only route, XRF axis and pH); no tracked conclusion changed."
+            "dune-only route, XRF axis and pH)."
         ),
         "landform": {
             "sites_per_landform": alpha_by_landform.set_index("landform")["n_sites"].to_dict(),
@@ -545,8 +547,8 @@ def main() -> None:
         readme.append(f"  higher in {LABEL[second]}: " + top(block, "mean_clr_difference", 10, True))
     readme += ["", "## XRF elemental axis", "", f"- Positive loadings: {summary['xrf_axis']['positive_loading_elements']}; negative: {summary['xrf_axis']['negative_loading_elements']}",
                f"- Axis vs route position: rho {rho_axis_route:+.2f} (p {p_axis_route:.2g}); genera tracking the axis: {summary['xrf_axis']['supported_genera']}",
-               "- Positive (evaporite/carbonate side): " + top(xrf_genus, "spearman_rho_elemental_axis", 10, False),
-               "- Negative (quartz side): " + top(xrf_genus, "spearman_rho_elemental_axis", 10, True)]
+               "- Positive (Ca/Mg/Na/S/Cl/Fe/Ti loadings): " + top(xrf_genus, "spearman_rho_elemental_axis", 10, False),
+               "- Negative (Si loading): " + top(xrf_genus, "spearman_rho_elemental_axis", 10, True)]
     readme += ["", "## pH", "", f"- Sites {len(ph_sites)}; genera tracking site pH: {summary['ph']['supported_genera']} ({summary['ph']['supported_also_route_supported']} also route-supported)",
                "- Higher at higher pH: " + top(ph_genus, "spearman_rho_site_ph", 10, False),
                "- Higher at lower pH: " + top(ph_genus, "spearman_rho_site_ph", 10, True)]
@@ -556,9 +558,9 @@ def main() -> None:
     readme.append(f"- Core shared by all three compartments: {len(shared_all)}")
     readme += ["", "## Permitted wording", "",
                "- Landform contrasts are site-level and descriptive; saline pans sit at both ends of the route, so the route-adjusted contrast is the informative one.",
-               "- Compartment genus contrasts are paired within site and campaign; they describe which genera carry the compartment difference and do not identify a mechanism.",
-               "- The XRF axis is an elemental axis (Ca, Mg, Na, S, Cl, Fe, Ti positive; Si negative); do not call it salinity.",
-               "- Core counts describe occupancy after subsampling and do not test a hypothesis.", ""]
+               "- Compartment genus contrasts are paired within site and campaign and describe the taxa contributing to each difference.",
+               "- The XRF axis describes elemental variation (Ca, Mg, Na, S, Cl, Fe, Ti positive; Si negative).",
+               "- Core counts describe occupancy after subsampling.", ""]
     (output / "README.md").write_text("\n".join(readme), encoding="utf-8")
     lines = [f"{sha256(p)}  {p.name}" for p in sorted(output.iterdir()) if p.is_file() and p.name != "SHA256SUMS"]
     (output / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")

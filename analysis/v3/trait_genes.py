@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-specified trait-gene screen from two independent gene sources.
+"""Descriptive trait-gene screen from two gene sources.
 
 The manuscript predicts metabolic potential with PICRUSt2 and validates it
 against shotgun-derived KEGG Ortholog (KO) profiles.  This module asks a
@@ -21,10 +21,10 @@ and oxidative-stress defence.  Two sources are used and never merged:
    Benjamini-Hochberg over traits x 3 contrasts), and the Spearman
    correlation with route position.
 
-KO membership is a fixed list declared in this file (TRAITS).  Hydrogenase
-KOs cannot resolve the high-affinity group 1h enzyme from other group 1
-[NiFe] hydrogenases, so that trait is labelled "[NiFe]-hydrogenase large
-subunit (group 1/1h KOs)".  Presence of a gene is potential, not activity.
+KO membership is a fixed list declared in this file (TRAITS). The hydrogenase
+set includes hyaB, hhyL and hoxH large-subunit markers with different enzyme
+specificities. A genome carries a multi-KO trait when ANY listed KO is present;
+these OR sets measure marker presence and do not require a complete pathway.
 """
 from __future__ import annotations
 
@@ -56,17 +56,17 @@ CONTRASTS = (("Deep", "Surface"), ("Rhizosphere", "Surface"), ("Rhizosphere", "D
 # trait -> (category, description, KO list)
 TRAITS: dict[str, tuple[str, str, tuple[str, ...]]] = {
     "coxL_CO_dehydrogenase": ("trace gas", "aerobic CO dehydrogenase large subunit (coxL)", ("K03520",)),
-    "NiFe_hydrogenase_large": ("trace gas", "[NiFe]-hydrogenase large subunit (group 1/1h KOs hyaB, hhyL, hoxH)", ("K06281", "K18008", "K00436")),
+    "NiFe_hydrogenase_large": ("hydrogen metabolism", "hydrogenase large-subunit markers (hyaB, hhyL, hoxH)", ("K06281", "K18008", "K00436")),
     "rbcL_RuBisCO": ("carbon fixation", "RuBisCO large subunit (rbcL/cbbL)", ("K01601",)),
-    "psbA_photosystem_II": ("carbon fixation", "photosystem II D1 protein (psbA)", ("K02703",)),
+    "psbA_photosystem_II": ("photosynthesis", "photosystem II D1 protein (psbA)", ("K02703",)),
     "nifH_nitrogenase": ("nitrogen", "nitrogenase iron protein (nifH)", ("K02588",)),
     "amoA_pmoA_ammonia_monooxygenase": ("nitrogen", "ammonia/methane monooxygenase subunit A (amoA/pmoA)", ("K10944",)),
     "nirK_nirS_nitrite_reductase": ("nitrogen", "dissimilatory nitrite reductase (nirK, nirS)", ("K00368", "K15864")),
     "nosZ_N2O_reductase": ("nitrogen", "nitrous-oxide reductase (nosZ)", ("K00376",)),
     "ureC_urease": ("nitrogen", "urease alpha subunit (ureC)", ("K01428",)),
-    "otsA_otsB_trehalose": ("osmolyte", "trehalose synthesis (otsA, otsB)", ("K00697", "K01087")),
-    "treY_treZ_trehalose": ("osmolyte", "trehalose from maltooligosaccharides (treY, treZ)", ("K06044", "K01236")),
-    "ectABC_ectoine": ("osmolyte", "ectoine synthesis (ectA, ectB, ectC)", ("K06718", "K00836", "K06720")),
+    "otsA_otsB_trehalose": ("osmolyte", "trehalose synthesis markers (otsA or otsB)", ("K00697", "K01087")),
+    "treY_treZ_trehalose": ("osmolyte", "maltooligosaccharide-derived trehalose markers (treY or treZ)", ("K06044", "K01236")),
+    "ectABC_ectoine": ("osmolyte", "ectoine synthesis markers (ectA, ectB or ectC)", ("K06718", "K00836", "K06720")),
     "crtB_phytoene_synthase": ("pigment", "phytoene synthase (crtB), carotenoid pigments", ("K02291",)),
     "spo0A_sporulation": ("dormancy", "sporulation master regulator (spo0A)", ("K07699",)),
     "phrB_photolyase": ("DNA repair", "deoxyribodipyrimidine photolyase (phrB)", ("K01669",)),
@@ -353,7 +353,7 @@ def main() -> None:
     readme += ["", "## Agreement genome-derived vs PICRUSt2 (matched libraries)", ""]
     for r in pd.DataFrame(agree_rows).itertuples():
         readme.append(f"- {r.trait}: rho {r.spearman_rho_genome_vs_picrust:+.2f}")
-    readme += ["", "## Permitted wording", "", "- Gene presence and predicted share are metabolic potential; no activity, rate or expression is measured.", "- The hydrogenase trait pools group 1 KOs and cannot single out the high-affinity group 1h enzyme.", "- The genome catalogue covers the recruited fraction of 150 shotgun libraries, mostly root-adjacent soil; compartment shares from it are descriptive.", ""]
+    readme += ["", "## Interpretation", "", "- Gene presence and predicted share describe metabolic potential.", "- The hydrogenase set pools hyaB, hhyL and hoxH large-subunit markers.", "- Multi-KO genome carrier fractions use an OR rule: at least one listed marker is present.", "- The genome catalogue covers the recruited fraction of 150 shotgun libraries, mostly root-adjacent soil; compartment shares from it are descriptive.", ""]
     (output / "README.md").write_text("\n".join(readme), encoding="utf-8")
     lines = [f"{sha256(p)}  {p.name}" for p in sorted(output.iterdir()) if p.is_file() and p.name != "SHA256SUMS"]
     (output / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")

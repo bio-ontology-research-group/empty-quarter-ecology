@@ -1,0 +1,4 @@
+scenario	exclusion_scope	excluded_trip	excluded_site	excluded_compartment	excluded_group_ph	excluded_group_n_ph_specimens	n_groups	n_sites	residual_df	geography_before_partial_r2	geography_before_p	geography_after_partial_r2	geography_after_p	geography_descriptive_relative_change	ph_transect_partial_r2	ph_transect_p
+baseline	none						560	60	57	0.37541786442333624	0.001	0.19775278967430732	0.001	-0.47324619200509505	0.8431043252701133	0.001
+exclude_singleton_maximum_group	group	4	60	Rhizosphere	9.98	1.0	559	60	57	0.3776365684201676	0.001	0.18821909620502308	0.001	-0.5015866789796534	0.8227191410711976	0.001
+exclude_maximum_site	site	4	60	Rhizosphere	9.98	1.0	552	59	56	0.37844391062689253	0.001	0.18948229593597454	0.001	-0.49931207606935196	0.8289627910757995	0.001

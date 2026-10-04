@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from manuscript_paths import PAPER
+from manuscript_paths import PAPER, locked_data_bytes
 import manuscript_text as mt
 from manuscript_text import fmt, has_number, pct
 
@@ -193,7 +193,7 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
     assert "Ministry of Environment, Water and Agriculture (MEWA), Riyadh" in main_tex
     assert "Institute of Data Science, Department of Advanced Computing" in main_tex
 
-    data_source = _read_manuscript_source(ROOT / "data-paper/sn-article.tex")
+    data_source = locked_data_bytes("paper/sn-article.tex").decode("utf-8")
     data_author_pairs = re.findall(
         r"^\\author\*?\[([0-9]+)\]\{\\fnm\{([^{}]+)\} \\sur\{([^{}]+)\}\}",
         data_source,
@@ -203,9 +203,8 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
         f"{given} {surname}": affiliation
         for affiliation, given, surname in data_author_pairs
     }
-    # The pinned data-paper clone lags the live list (it may still carry
-    # Maxat Kulmanov, Hind Aldakhil at BORG, and older name spellings); only
-    # the authors present in both are compared.
+    # Affiliation numbering differs between papers; read the pinned companion
+    # manuscript independently of unrelated edits in the local data checkout.
     for name in (
         "Rund Tawfiq",
         "Marwa Abdelhakim",
@@ -220,14 +219,14 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
                           "Jood Kamal Zubair"):
         if optional_borg in data_by_name:
             assert data_by_name[optional_borg] == "1"
-    assert data_by_name["Michel Dumontier"] == "7"
+    assert data_by_name["Michel Dumontier"] == "5"
     assert data_by_name["Raik Gr\\\"unberg"] == "6"
-    assert data_by_name["Tiannyu Wang"] == "5"
-    assert data_by_name["Magnus Rueping"] == "5"
+    assert data_by_name["Tiannyu Wang"] == "8"
+    assert data_by_name["Magnus Rueping"] == "8"
     assert "Bio-Ontology Research Group (BORG)" in data_source
     assert "Mathematical Sciences and Engineering (CEMSE) Division" in data_source
     assert "Physical Science and Engineering (PSE) Division" in data_source
-    assert "Biological and Environmental Science and Engineering (BESE)" in data_source
+    assert "Biomedical Sciences Division (BioMed)" in data_source
     assert "Institute of Data Science, Department of Advanced Computing" in data_source
 
 

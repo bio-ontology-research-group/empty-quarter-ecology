@@ -9,6 +9,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
+
+from manuscript_paths import DATA_REPO
 from pathlib import Path
 
 import pandas as pd
@@ -25,6 +28,23 @@ OLD_SITE_52 = (20.851514166666668, 53.75788444444444)
 def _lock() -> dict[str, str]:
     frame = pd.read_csv(ROOT / "DATA_REPOSITORY.lock", sep="\t", dtype=str)
     return dict(zip(frame["field"], frame["value"]))
+
+
+def _verify_data_revision(recorded_commit: str) -> None:
+    # Keep the run's original provenance; a later paper/evidence release may
+    # advance the lock only while all original scientific input bytes agree.
+    current = _lock()["commit"]
+    subprocess.run(["git", "-C", str(DATA_REPO), "merge-base", "--is-ancestor",
+                    recorded_commit, current], check=True)
+    def scientific_blobs(commit):
+        rows = subprocess.check_output(
+            ["git", "-C", str(DATA_REPO), "ls-tree", "-r", commit,
+             "metadata", "processed"], text=True).splitlines()
+        return {row.split("\t", 1)[1]: row.split("\t", 1)[0] for row in rows}
+    previous, updated = scientific_blobs(recorded_commit), scientific_blobs(current)
+    for relative, blob in previous.items():
+        assert updated.get(relative) == blob, relative
+
 
 
 def _sha256(path: Path) -> str:
@@ -82,8 +102,9 @@ def test_xrf_results_and_provenance() -> None:
     assert by_fraction.loc[0.95, "partial_r2"] == pytest.approx(0.003304, abs=5e-7)
     assert by_fraction.loc[0.95, "p"] == pytest.approx(0.044)
 
-    lock = _lock()
-    assert manifest["data_repository"]["commit"] == lock["commit"]
+    _verify_data_revision(manifest["data_repository"]["commit"])
+    for relative, entry in manifest["inputs"].items():
+        assert _sha256(ROOT / relative) == entry["sha256"], relative
     for trip in range(1, 6):
         relative = f"data/metadata/geodata/trip{trip}_geodata.tsv"
         assert manifest["inputs"][relative]["sha256"] == _sha256(ROOT / relative)
@@ -119,8 +140,7 @@ def test_environment_results_after_coordinate_correction() -> None:
     assert adjusted["q_global_9"].min() == pytest.approx(0.3192, abs=5e-5)
     assert adjusted["q_global_9"].max() == pytest.approx(0.7966, abs=5e-5)
 
-    lock = _lock()
-    assert decision["data_repository"]["commit"] == lock["commit"]
+    _verify_data_revision(decision["data_repository"]["commit"])
     for trip in range(1, 6):
         path = ROOT / f"data/metadata/geodata/trip{trip}_geodata.tsv"
         assert decision["coordinate_input_sha256"][f"trip{trip}_geodata"] == _sha256(path)

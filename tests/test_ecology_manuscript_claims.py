@@ -547,7 +547,8 @@ def test_reproducibility_boundary_does_not_promise_a_missing_status_table(
     flat = " ".join(main_tex.split())
     assert "Supplementary Information records the current component" not in flat
     assert "The public repository provides the staged inputs and downstream analyses" in flat
-    assert "outstanding archival and public-download checks" in flat
+    assert "records required for a complete raw-read replay" in flat
+    assert "10.5281/zenodo.23134168" in flat
 
 
 def test_figure_manifest_matches_the_current_rainfall_artifact():

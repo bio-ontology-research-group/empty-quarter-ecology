@@ -2,17 +2,20 @@
 
 The ecology paper uses two levels of verification. The short path checks the
 committed claim evidence, rerenders every submitted figure, and rebuilds both
-PDFs. The complete path starts from the checksum-pinned inputs in the data
-repository and reruns the analysis and knowledge-graph workflow on an approved
-remote host.
+PDFs. The workflow path starts from the checksum-pinned inputs in the data
+repository and reruns the configured analysis and knowledge-graph processes.
+It is not a complete raw-read-to-paper reconstruction. The September 2026
+revision also uses explicit replays whose outputs are the dated evidence
+directories under `analysis/v3/*_20260909`; each carries its own manifest and
+checksums.
 
 ## 1. Obtain the exact repositories
 
 ```bash
-git clone git@github.com:bio-ontology-research-group/empty-quarter-data-paper.git
-git clone git@github.com:bio-ontology-research-group/empty-quarter-ecology-reproducibility.git
+git clone https://github.com/bio-ontology-research-group/empty-quarter-ecology-reproducibility.git
+git clone https://github.com/bio-ontology-research-group/empty-quarter-data-paper.git
 cd empty-quarter-data-paper
-git checkout de711a3ad7c0863e922f6729e45763e0d2add1e6
+git checkout "$(awk -F '\t' '$1 == "commit" {print $2}' ../empty-quarter-ecology-reproducibility/DATA_REPOSITORY.lock)"
 bash scripts/release/download_bulk_artifacts.sh
 bash scripts/release/bootstrap_package_layout.sh .
 cd ../empty-quarter-ecology-reproducibility
@@ -31,6 +34,7 @@ Create it before byte-level figure verification or the complete workflow:
 ```bash
 cd ../empty-quarter-data-paper
 make env-linux-exact
+export PATH="$PWD/.conda-env/bin:$PATH"
 cd ../empty-quarter-ecology-reproducibility
 ```
 
@@ -86,13 +90,37 @@ bash workflow/run_on_remote.sh ../empty-quarter-data-paper \
   ./results/remote-validation-$(date -u +%Y%m%dT%H%M%SZ)
 ```
 
-The wrapper refuses every hostname except `leechuck-office` (`ws`) and
-`cbontsr01` (Ontolinator). It verifies the repository lock, runs both test
-suites, regenerates the core and advanced ecology analyses, reruns the control,
-rainfall, function, network, pH, XRF, and knowledge-graph stages, validates the
-full taxonomy ABox, regenerates figures, and builds both manuscripts. Nextflow
+The institutional profile uses `leechuck-office` (`ws`) or `cbontsr01`
+(Ontolinator). External users can run the same wrapper on their own Linux
+compute host by setting `EQ_EXECUTION_CONTEXT=external`; the full graph path
+requires at least 32 GB Java heap and additional memory and scratch storage.
+The wrapper activates the locked environment and verifies the repository lock.
+It runs the currently wired core/advanced ecology and graph stages. Nextflow
 writes a trace, report, timeline, DAG, source-state record, environment record,
 commands, logs, and SHA-256 manifests into a new output directory.
+
+The current full-workflow entry point still copies the frozen pH analysis and
+does not regenerate every later taxon, landform, trait and control follow-up.
+Those modules have source programs and result tables in `analysis/`. A complete
+final manuscript replay requires their integration and a new frozen cross-paper
+release after the September source corrections. The claim tests compare many
+numbers to frozen outputs; a passing short test run is not evidence of fresh
+regeneration from raw reads. Public raw-read accession and upstream prediction/
+genome provenance requirements are listed in the companion data repository.
+
+The following committed result directories were produced before the Site 52
+coordinate correction and still carry the uncorrected position for that site
+(Trip 1 and Trip 3 rows, or the site average over all trips). They are not
+cited for coordinate-dependent numbers in the manuscript copy:
+`analysis/v3/environment_associations/climate_site_summary.tsv` (the
+corrected climate-diversity sensitivity is in
+`analysis/v3/biology_context_corrected_20260909/`), the
+`analysis/v3/rain_pulse_response*` and `analysis/v3/rain_pulse_sensitivities/`
+cohorts (superseded by `analysis/v3/rain_calendar_refit_20260909/`),
+`analysis/v3/xrf_community_rescue/xrf_alpha_analysis_table.tsv`,
+`analysis/batch-adjacency-2026-09-07/batch_meta.tsv`, and the control-filter
+sensitivity under `analysis/rerun-controls-2026-08-30/sensitivity/`, whose
+distance-decay comparison was run on the uncorrected coordinates.
 
 Do not use `-resume` after changing source code, input data, manuscript text, or
 the data lock. A local Nextflow stub is useful only for checking wiring and is

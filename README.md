@@ -6,13 +6,24 @@ and supplement, the analysis programs used for their claims, the canonical
 machine-readable results, the four submitted figures, regression tests, and
 byte-verifiable copies of key methodological sources.
 
-The manuscript reports the first broad bacterial survey of the Rub' al-Khali.
+The manuscript reports a bacterial survey across the Rub' al-Khali.
 Its main results concern geographic organization, paired soil-position
 differences, environmental associations, predicted functional profiles, a
 short observational association between rain and richness, relic-DNA checks,
-and assay-aware low-biomass controls. The wording tests connect each numerical
-claim to the corresponding result file and enforce the stated limits on
-interpretation.
+and assay-aware low-biomass controls. Regression tests cover specified
+calculations, figure semantics and selected result/prose checks; they do not
+regenerate every number or the upstream raw-read processing.
+
+The September 2026 revision corrects the Site 52 coordinate on the Trip 1 and
+Trip 3 field sheets (data repository commit `a3f1c21`) and reruns every
+coordinate-dependent analysis: spatial turnover, ASV-resolution and
+neighbour-count sensitivities, distance decay, geographic prediction,
+predicted-function geography, cross-desert context and the headline
+uncertainty table. Dated pH, taxon, biology, trait, paired-alpha, rainfall
+calendar and spatial-covariance directories under `analysis/v3/*_20260909`
+hold the current reanalyses. `DATA_REPOSITORY.lock` pins the data repository
+commit that contains the coordinate correction. Analyses that were not rerun
+after the correction are listed in `REPRODUCE.md`.
 
 ## Repository relationship
 

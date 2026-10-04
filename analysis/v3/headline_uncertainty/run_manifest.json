@@ -4,12 +4,12 @@
     {
       "bytes": 1506,
       "path": "analysis/v3/spatial_turnover_rescue/results/spatial_model_results.tsv",
-      "sha256": "14463f0c6464479b233f7c6edb5cadf5dfdf014c8e84958c13098edc192ee1cd"
+      "sha256": "87ce9c65f2dff3a49d63d3b2f24eb39d8c2e5dfb0ae7c561ee27fc6ada93900e"
     },
     {
-      "bytes": 2177,
+      "bytes": 2167,
       "path": "analysis/v3/distance_decay_turnover/distance_decay_slopes.tsv",
-      "sha256": "ff82109b880e877f78f7b6f397de1f61b49d7c1bf8d23354331cdcfd7f060349"
+      "sha256": "bc7fbc31220baf41568f673a9fb24734ea684d0e65e5cf13ee1ada8e1cc5830b"
     },
     {
       "bytes": 900,
@@ -52,9 +52,9 @@
       "sha256": "0b24dbd8ea5e0846e14013de6a7789783aad2e901b199052f75b114ec19198ed"
     },
     {
-      "bytes": 1434,
+      "bytes": 1443,
       "path": "analysis/v3/picrust2_ecology/geographic_profile_tests.tsv",
-      "sha256": "001159ba7a1743bc7d73564a002db3b9bcfd6753240d11d69c5e390eaf46ae4d"
+      "sha256": "56df1d38361cb4b437422e7ee450a0d82bd17daea8765c8d75d17d9d890595a1"
     },
     {
       "bytes": 5858,
@@ -80,7 +80,7 @@
   "n_estimates": 44,
   "output": {
     "path": "headline_uncertainty.tsv",
-    "sha256": "9563791ceb36e870195020919b02d463e2325d8a090551960f638f362372fef6"
+    "sha256": "73390b901cdf4862d13b082b0b52530595a2aadf5315ca9f800ceeb548400b0c"
   },
   "purpose": "typed uncertainty summary for manuscript reporting",
   "schema_version": "1.0"

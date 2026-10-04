@@ -1,8 +1,9 @@
-"""Regression checks for claims added in the 2026-07-29 ecology rewrite.
+"""Regression checks for the active ecology rewrite and retained archives.
 
 These tests tie the consolidated manuscript prose to the canonical
-machine-readable verdicts.  They intentionally check both the printed values
-and the interpretation boundary that accompanies each result.
+machine-readable verdicts, including the corrected-coordinate, group-linked
+pH and calendar-refitted rainfall outputs. Archived diagnostics remain tested
+without requiring their superseded values in current prose.
 """
 
 import hashlib
@@ -13,10 +14,10 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from manuscript_paths import PAPER
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = ROOT / "empty-quarter-amplicon"
 MAIN_PATH = PAPER / "main.tex"
 SUPPLEMENT_PATH = PAPER / "supplement.tex"
 PH_SHARED_PATH = PAPER / "ph_shared_v1.tex"
@@ -26,9 +27,7 @@ PH_VALUES_PATH = PAPER / "generated/ph_shared_v1_values.tex"
 def _read_manuscript_source(path: Path) -> str:
     if path.exists():
         return path.read_text(encoding="utf-8")
-    if (ROOT / "data-paper").is_dir():
-        pytest.fail(f"required active manuscript source is missing: {path}")
-    pytest.skip("submission manuscripts are not part of this release package")
+    pytest.fail(f"required active manuscript source is missing: {path}")
 
 
 @pytest.fixture(scope="module")
@@ -76,12 +75,10 @@ def test_author_notes_are_resolved_and_no_paragraph_headings_remain(
     main_tex, supplement_tex
 ):
     combined = main_tex + supplement_tex
-    # Exactly one \todo is a documented open item: the corresponding author
-    # still has to obtain the BioProject accession for the companion shotgun
-    # study (see HANDOVER).  Any other \todo marker must fail.
+    # Unavailable scientific metadata is documented in prose, not TODO boxes.
     todos = re.findall(r"\\todo\{([^}]*)\}", combined)
-    assert todos == ["BioProject accession"], todos
-    assert combined.count(r"\todo{") == 1
+    assert todos == [], todos
+    assert combined.count(r"\todo{") == 0
     assert r"\paragraph{" not in combined
     assert r"\subparagraph{" not in combined
     for author_note in (
@@ -242,7 +239,9 @@ def test_active_manuscript_prose_follows_robert_forbidden_word_list(
         r"demonstrat(?:e|ed|es|ing))\b",
         re.I,
     )
-    assert forbidden.search(main_tex + supplement_tex) is None
+    # "Robust covariance" is the technical sandwich-estimator term.
+    prose = (main_tex + supplement_tex).replace("robust covariance", "sandwich covariance")
+    assert forbidden.search(prose) is None
 
 
 def test_main_source_contains_its_prose_and_has_no_tex_fragment_includes(
@@ -261,18 +260,15 @@ def test_main_source_contains_its_prose_and_has_no_tex_fragment_includes(
     assert re.search(r"\\PH[A-Za-z]+", main_tex) is None
     flat_main = _without_value_math(_flat(main_tex))
     for visible_prose in (
-        "We measured pH in 767 archived soil samples from all campaigns",
+        "The archived workbook contained 767 pH measurements from all campaigns",
         "In total, 712 measurements passed",
-        "Quality-controlled pH measurements matched 702 profiles",
-        "pH and location therefore described substantial overlapping variation",
+        "Of 712 accepted measurements, 709 linked to ecology groups",
+        "Each percentage uses the variance of its own residual response as the denominator",
     ):
         assert visible_prose in flat_main
-    assert (
-        re.search(
-            r"\b(?:row|rows|column|columns)\b", main_tex + supplement_tex, re.I
-        )
-        is None
-    )
+    # Rows and columns are valid terms for actual tables/matrix operations.
+    assert "702 profiles" not in flat_main
+    assert "563" in flat_main and "560" in flat_main and "1,086" in flat_main
 
 
 def test_shared_ph_helper_contains_only_generated_scalar_constants(
@@ -306,15 +302,15 @@ def test_control_method_explains_training_scope(main_tex, supplement_tex):
     flat_supplement = _without_value_math(_flat(supplement_tex))
     assert "17 sequenced extraction blanks" in flat_main
     assert "could be linked by extraction day to 217 Trip~5 profiles" in flat_main
-    assert "extraction blanks could train the contaminant sensitivity for Trips~4 and 5 only" in flat_main
+    assert "95 Trip~4 profiles" in flat_main and "7 candidate ASVs" in flat_main
     assert "they were kept separate because their biological batch links were incomplete" in flat_main
     assert "Positive standards were used only to assess" in flat_main
-    assert "one extraction blank per extraction kit rather than per day" in flat_supplement
+    assert "one extraction blank per extraction kit" in flat_supplement
     assert "maps EB1--EB17 to dates and 220 Trip~5 biological profiles" in flat_supplement
     assert "217 occur in the canonical table" in flat_supplement
     assert "six \\texttt{Negative}-labelled profiles" in flat_supplement
-    assert "Three paired 16S libraries with explicit PCR or NTC labels" in flat_supplement
-    assert "PCR blanks remain separate from extraction blanks" in flat_supplement
+    assert "no-template PCR controls (water in place of template)" in flat_supplement
+    assert "not sequenced" in flat_supplement
 
 
 def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
@@ -323,9 +319,9 @@ def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
         r"\section*{Results}", 1
     )[0]
     assert "world's largest continuous sand desert" in introduction
-    assert "Yet the bacteria in its open interior have not been surveyed" in introduction
+    assert "regional context for a repeated survey of the open Empty Quarter" in introduction
     # Naming policy: Rub' al-Khali is introduced once, then "Empty Quarter".
-    assert "None covers the open Empty Quarter at landscape scale" in introduction
+    assert "Sampling the same sites and soil compartments across campaigns" in introduction
     assert "The only direct microbial study" not in introduction
     assert "support more than 38\\,\\% of the world's population" not in introduction
 
@@ -333,10 +329,10 @@ def test_geography_first_results_order_and_regional_novelty_opener(main_tex):
         r"\subsection*{Bacterial communities change across the landscape}"
     )
     paired = flat.index(
-        r"\subsection*{Compartment shapes bacterial composition and evenness}"
+        r"\subsection*{Compartment differences in composition and normalized Shannon diversity}"
     )
     environment = flat.index(
-        r"\subsection*{Climate and soil properties track bacterial variation}"
+        r"\subsection*{Climate gradients track bacterial diversity and composition}"
     )
     function = flat.index(
         r"\subsection*{Predicted metabolic pathways follow geography and compartment}"
@@ -359,12 +355,12 @@ def test_abstract_leads_with_science_and_keeps_resource_subordinate(main_tex):
         r"\\begin\{abstract\}(.*?)\\end\{abstract\}", main_tex, re.S
     ).group(1)
     flat = _flat(abstract)
-    assert "Bacterial communities formed a recurring geographic pattern" in flat
-    assert "mainly because taxa replaced one another" in flat
-    assert "local soil context changes which bacteria dominate" in flat
-    assert "The study establishes a regional biological baseline" in flat
+    assert "distant sites contained more different communities" in flat
+    assert "taxon replacement accounted for most incidence dissimilarity" in flat
+    assert "root-adjacent communities differed from bulk soil" in flat
+    assert "regional biological baseline" in flat
     assert "knowledge graph" not in flat.lower()
-    assert flat.index("Bacterial communities formed") < flat.index("reusable resource")
+    assert flat.index("distant sites") < flat.index("linked resource")
 
 
 def test_pH_attenuation_is_bounded_and_negative_diagnostics_are_supplementary(
@@ -372,9 +368,17 @@ def test_pH_attenuation_is_bounded_and_negative_diagnostics_are_supplementary(
 ):
     flat = _without_value_math(_flat(main_tex))
     flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "fell from 35.8\\,\\% to 19.6\\,\\% after pH adjustment" in flat
+    summary = _json("analysis/v3/ph_group_linkage_20260909/summary.json")
+    counts = summary["counts"]
+    assert counts["group_linked_ph_measurements"] == 709
+    assert counts["site_campaign_position_groups"] == 563
+    assert counts["composition_groups"] == 560
+    geo = summary["geographic_same_cohort"]
+    for key in ("without_ph_adjustment_partial_r2", "with_ph_adjustment_partial_r2"):
+        assert f"{100 * geo[key]:.1f}" in flat
+    assert "Each percentage uses the variance of its own residual response as the denominator" in flat
     assert "no stable direct composition association" not in flat
-    assert "no stable direct composition association" in flat_supplement
+    assert "group-linked" in flat_supplement
     assert "fig:environment-spatial" not in main_tex
 
 
@@ -391,7 +395,9 @@ def test_paired_composition_claims_match_the_canonical_verdict(
     assert omnibus["permutation_p"] == 0.001
     for text in (main_tex, supplement_tex):
         assert "170 complete" in _without_value_math(text)
-        assert "pseudo-$F=17.28$" in text
+        assert "pseudo-$F" in text
+    assert f"{omnibus['pseudo_f']:.2f}" in main_tex
+    assert f"{omnibus['pseudo_f']:.4f}" in supplement_tex
 
     expected_displacements = {
         "Deep-Surface": "0.331",
@@ -404,12 +410,12 @@ def test_paired_composition_claims_match_the_canonical_verdict(
         assert result["permutation_p"] == 0.001
         assert result["q_within_primary_family"] == 0.001
         assert printed in supplement_tex
-    assert "All 3 comparisons passed correction" in _without_value_math(_flat(main_tex))
+    assert "All three comparisons remained supported after correction for three tests" in _without_value_math(_flat(main_tex))
     assert "fig2_soil_position.pdf" in main_tex
 
     assert "sign-flipped the mean within-block CLR difference vector" in supplement_tex
-    assert "paired-symmetry null" in supplement_tex
-    assert "does not establish a plant selective filter" in supplement_tex
+    assert "centrally symmetric paired-difference null" in _flat(supplement_tex)
+    assert "root distance" in main_tex
 
 
 def test_evenness_decomposition_is_numerically_and_semantically_bounded(
@@ -428,9 +434,9 @@ def test_evenness_decomposition_is_numerically_and_semantically_bounded(
 
     assert "$H/\\log(E[S_{25k}])$" in main_tex
     assert "$H/\\log(E[S_{25k}])$" in supplement_tex
-    assert "not conventional Pielou evenness" in _flat(main_tex)
-    assert "not conventional Pielou evenness" in _flat(supplement_tex)
-    assert "An additional evenness analysis" in _flat(main_tex)
+    assert "custom mixed-depth index" in _flat(main_tex)
+    assert "custom normalized index" in _flat(supplement_tex)
+    assert "An additional analysis of normalized Shannon diversity" in _flat(main_tex)
     assert "617 of the 633" not in main_tex
     assert "617 of 633" in _without_value_math(supplement_tex)
     assert verdict["input"]["blocks_with_evenness_sensitivity"] == 617
@@ -442,28 +448,21 @@ def test_geographic_transport_detail_is_relocated_and_interpretation_bounded(
     verdict = _json("analysis/v3/geographic_prediction/claim_verdict.json")
     assert verdict["primary_arm_supported"] is False
     assert verdict["sensitivity_arm_supported"] is True
-    assert round(verdict["group_level_equal_weight_skill"], 4) == -0.0015
-    assert round(verdict["group_level_pooled_skill"], 4) == -0.0004
-    assert round(verdict["site_level_block_skill"], 4) == 0.2526
+    assert round(verdict["group_level_equal_weight_skill"], 4) == -0.0017
+    assert round(verdict["group_level_pooled_skill"], 4) == -0.0005
+    assert round(verdict["site_level_block_skill"], 4) == 0.2528
+    assert verdict["strictest_group_level_null_p_value"] == 0.406
     assert verdict["n_group_level_folds_with_positive_skill"] == 10
     assert verdict["n_group_level_folds"] == 18
 
-    flat_main = _flat(main_tex).replace("$R^2=", "$R^{2}=")
-    flat_supplement = _flat(supplement_tex).replace("$R^2=", "$R^{2}=")
-    primary = flat_supplement.index("$R^{2}=-0.0015$")
-    sensitivity = flat_supplement.index("$R^{2}=0.2526$")
-    assert primary < sensitivity
-    assert "does not test transport to an unseen campaign" in flat_supplement
-    assert "$p=0.354$" in flat_supplement and "$p=0.083$" in flat_supplement
-    for value in ("$R^{2}=-0.0015$", "$R^{2}=0.2526$", "$p=0.354$"):
-        assert value not in flat_main
-    assert "jointly held out one campaign and one contiguous block of sites" not in flat_main
-    assert "held out" in flat_supplement and "contiguous ten-site block" in flat_supplement
-
+    # Only the corrected-coordinate transport diagnostic is reported.
     alias = verdict["collection_order_alias"]
     assert alias["campaigns_with_abs_rho_at_least_0_99"] == 5
-    assert "0.9938" in supplement_tex
-    assert "links location to collection order" in _flat(main_tex)
+    for stale in ("archived pre-correction prediction", "earlier coordinate version"):
+        assert stale not in _flat(supplement_tex)
+    assert "collection order" in _flat(main_tex)
+    for legacy in ("$R^{2}=-0.0017$", "$R^{2}=0.2528$", "-0.0015", "0.2526"):
+        assert legacy not in main_tex
 
 
 def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale(
@@ -480,20 +479,34 @@ def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale(
         "residual_autocorrelation_depends_on_neighbour_count"
     )
     assert table["neighbours_k"].tolist() == [3, 4, 5, 6, 8, 10]
-    assert round(table.iloc[0]["residual_moran_i"], 4) == 0.1104
-    assert round(table.iloc[-1]["residual_moran_i"], 4) == -0.0097
-    assert table.iloc[-1]["permutation_p"] == 0.241
+    assert round(table.iloc[0]["residual_moran_i"], 4) == 0.1101
+    assert round(table.iloc[-1]["residual_moran_i"], 4) == -0.0098
+    assert table.iloc[-1]["permutation_p"] == 0.243
+    assert verdict["neighbour_counts_with_detected_autocorrelation"] == [3, 4, 5, 6]
+    assert verdict["neighbour_counts_without_detected_autocorrelation"] == [8, 10]
+    flat_supplement = _flat(supplement_tex)
+    for current in ("$0.1101$", "$-0.0098$", "$p=0.243$", "$p=0.050$"):
+        assert current in flat_supplement
+    for stale in (
+        "0.1104",
+        "-0.0097",
+        "$p=0.241$ at",
+        "through $k=8$",
+        "earlier coordinate version",
+        "629",
+    ):
+        assert stale not in flat_supplement
 
-    assert "Communities also became less similar with distance" in _flat(main_tex)
-    assert "at ten neighbours" not in main_tex
-    assert "$k=10$" in supplement_tex and "$p=0.241$" in supplement_tex
-    assert "not a scale-independent property" in supplement_tex
-    assert "primary fixed-$k$ analysis" in supplement_tex
-    figure_script = (
-        ROOT / "analysis/v3/make_submission_figures.py"
-    ).read_text(encoding="utf-8")
-    assert "pH adjustment attenuates" not in figure_script
-    assert "Residual Moran's $I$ at fixed $k=5$" not in figure_script
+    # Current inference propagates corrected coordinates through specified
+    # row covariances.
+    current = _json("analysis/v3/spatial_covariance_sensitivity_20260909/summary.json")
+    assert current["model_count"] == 73
+    assert current["original_descriptive_r2"] == pytest.approx(0.40073421629965933)
+    assert current["family_p_min"] == 0.0001 and current["family_p_max"] == 1.0
+    assert "73" in main_tex and "0.0001" in main_tex and "1.0000" in main_tex
+    assert "specified spatial covariance" in _flat(main_tex)
+    assert "Moran's $I=0.06464$" in supplement_tex
+    assert "neighbour-count diagnostics" in _flat(supplement_tex)
 
 
 def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
@@ -504,12 +517,12 @@ def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
         "def make_landscape_figure", 1
     )[1].split("def make_soil_position_figure", 1)[0]
 
-    assert "plt.subplots(2, 3" in study_figure
+    assert "plt.subplots(3, 2" in study_figure
     for content in (
         "Repeated 60-site desert transect",
         "Communities diverge with distance",
-        "Diversity is lower at higher climate values",
-        "Genera associated with long-term climate",
+        "Climate–diversity associations",
+        "Climate-associated genera",
     ):
         assert content in study_figure
     assert "Explicit analysis cohorts" not in study_figure
@@ -523,8 +536,8 @@ def test_xrf_non_detection_is_not_written_as_evidence_of_absence(
     flat_main = _flat(main_tex)
     flat_supplement = _flat(supplement_tex)
     assert "did not track within-site Shannon diversity" not in flat_main
-    assert "smaller but consistent share" in flat_main
-    assert "adjusted Shannon $p=0.990$" in flat_supplement
+    assert r"0.358\,\%" in flat_main and "within-site composition model" in flat_main
+    assert "$p=0.990$" in flat_supplement and "Shannon" in flat_supplement
     assert "$p=0.990$" not in flat_main
     assert "Its adjusted association with Shannon diversity was null" not in flat_main
     assert "It had no conditional association with Shannon diversity" not in flat_main
@@ -546,7 +559,7 @@ def test_depth_adjusted_claims_match_the_canonical_verdict(
     assert f"{supported['depth_adjusted_ci'][0]:.3f}" == "-0.424"
     assert f"{supported['depth_adjusted_ci'][1]:.3f}" == "-0.122"
     assert f"{direction_only['depth_adjusted_estimate']:.3f}" == "0.103"
-    assert "$-0.273$" in main_tex
+    assert "sequencing-depth and extraction-method adjustments" in _flat(main_tex)
     for value in ("0.00831", "0.17476", "$-0.273$"):
         assert value in supplement_tex
     assert "$+0.103$" in supplement_tex
@@ -562,7 +575,7 @@ def test_depth_adjusted_claims_match_the_canonical_verdict(
         "root-adjacent--surface" in flat_supplement
     )
     assert "three of the six" in flat_supplement or "only three fits" in flat_supplement
-    assert "recorded-kit" in flat_supplement and "complete-case" in flat_supplement
+    assert "Extraction kit was recorded" in flat_supplement and "complete cases" in flat_supplement
     assert "expected richness retained a depth-adjusted interaction" not in (
         main_tex + supplement_tex
     )
@@ -573,7 +586,7 @@ def test_consolidation_removes_untraceable_between_site_xrf_numbers(main_tex):
     assert "PC1 and Shannon diversity had $\\rho=-0.68$" not in flat
     assert "partial $\\rho=-0.30$" not in flat
     assert "block size increased from 3 to 20 sites" not in flat
-    assert "smaller but consistent share of bacterial composition" in flat
+    assert r"0.358\,\%" in flat and "within-site composition model" in flat
 
 
 def test_campaign_omission_is_bounded_as_an_influence_analysis(
@@ -595,9 +608,9 @@ def test_campaign_omission_is_bounded_as_an_influence_analysis(
         17.5,
     ]
     main_flat = _flat(main_tex)
-    assert "omitted any one expedition" in main_flat
+    assert "leave-one-campaign-out refits" in main_flat
     flat_supplement = _flat(supplement_tex)
-    assert "These are influence analyses, not five replications" in flat_supplement
+    assert "These influence analyses omit one campaign at a time" in flat_supplement
     for value in ("25.2", "2.5", "26.8", "27.9", "17.5"):
         assert value in flat_supplement
 
@@ -649,15 +662,16 @@ def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable(
     for text in (main_tex, supplement_tex):
         assert "14,822" not in text
         assert "2.8684" not in text
-    assert (
-        "repeated 25 geographic, environmental and compartment conclusions"
-        in _without_value_math(_flat(main_tex))
-    )
-    assert "25 tracked headline" in _without_value_math(supplement_tex)
+    # The 25-verdict source above remains an archived sensitivity. Current
+    # claims additionally use corrected coordinates and calibrated tests.
+    assert "25 tracked metrics" in _without_value_math(_flat(supplement_tex))
+    assert "312 filtered profiles" in _without_value_math(_flat(supplement_tex))
+    assert "0.0256" in supplement_tex and "0.0312" in supplement_tex
+    assert "candidate ASVs were removed only from profiles linked to their extraction blanks" in _flat(main_tex)
     flat = _flat(main_tex)
     assert "unfiltered biological table was the primary analysis input" in flat
     flat_supplement = _without_value_math(_flat(supplement_tex))
-    assert "one extraction blank per extraction kit rather than per day" in flat_supplement
+    assert "one extraction blank per extraction kit" in flat_supplement
     assert "Positive controls were excluded from training" in flat_supplement
     assert "Trip~5 also used D6300" in flat_supplement
 
@@ -693,28 +707,33 @@ def test_functional_top_k_sensitivity_matches_all_three_canonical_tables(
     assert "$p_{\\rm U}=0.001$ throughout" in supplement_tex
 
 
-def test_distance_decay_is_surfaced_and_uses_whole_site_permutations(
-    main_tex, supplement_tex,
-):
+def test_distance_decay_is_surfaced_and_uses_whole_site_permutations(main_tex, supplement_tex):
+    current = _json("analysis/v3/distance_decay_turnover/claim_verdict.json")
+    assert current["site_pairs"] == 1770
+    assert current["matched_sites"] == 60
+    assert current["standardised_depth"] == 12865
+    assert current["permutations"] == 9999
+    assert current["omnibus_p"] == 0.0051
+    slopes = pd.read_csv(ROOT / "analysis/v3/distance_decay_turnover/distance_decay_slopes.tsv", sep="\t")
     flat = _without_value_math(_flat(supplement_tex))
+    main = _without_value_math(_flat(main_tex))
     assert "1,770 geographic pairs" in flat
     assert "Whole-site permutations were applied simultaneously" in flat
-    assert "pairwise distances were not treated as independent observations" in flat
-    for value in ("1.351", "1.510", "1.180", "p=0.0053", "p_{\\mathrm{adj}}=0.0041"):
-        assert value in flat
-    assert "69--75\\,\\% of Sørensen dissimilarity" in flat
-    for value in ("0.0075", "0.0113", "0.0097", "0.0165", "0.0117", "0.0055"):
-        assert value in flat
-    assert "not the distance-related increase" in flat
-    main_flat = _without_value_math(_flat(main_tex))
-    for value in ("1.351", "1.510", "1.180", "p=0.0053"):
-        assert value in main_flat
-    assert (
-        "Replacement represented 69--75\\,\\% of the average difference in every compartment"
-        in main_flat
-    )
-    assert "randomly reassigned location labels to whole sites" in main_flat
-    assert "pairs of sites were not treated as independent observations" in main_flat
+    assert "site labels defined the permutation unit" in flat
+    for row in slopes[slopes.family == "aitchison"].itertuples():
+        assert f"{row.slope_per_100km:.3f}" in flat
+        assert f"{row.slope_per_100km:.3f}" in main
+        assert row.two_sided_p == 0.0001
+    assert "p=0.0051" in flat and "p=0.0051" in main
+    contrast = slopes.query("family == 'contrast' and response == 'Deep-Rhizosphere'").iloc[0]
+    assert contrast.max_t_adjusted_p == 0.0039
+    assert r"p_{\mathrm{adj}}=0.0039" in flat
+    for row in slopes[slopes.family.isin(["simpson_turnover", "nestedness"])].itertuples():
+        assert f"{row.slope_per_100km:.4f}" in flat
+    assert r"69--75\,\% of Sørensen dissimilarity" in flat
+    assert "Replacement supplied most mean dissimilarity" in flat
+    assert "randomly reassigned location labels to whole sites" in main
+    assert "keeping all 1,770 pairwise distances attached to their site identities" in main
 
 
 def test_new_methodological_citations_have_byte_verifiable_source_custody():

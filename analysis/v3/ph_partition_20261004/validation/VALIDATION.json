@@ -1,0 +1,9 @@
+{
+  "tests_passed": 6,
+  "clean_environment": true,
+  "python": "3.11.14",
+  "complete_output_files_byte_identical": 10,
+  "bootstrap_draws_regenerated": 15992,
+  "comparison": "diff -r results /tmp/eq-ph-verified-reproduction; exit 0",
+  "source_original_response_exact_match": true
+}

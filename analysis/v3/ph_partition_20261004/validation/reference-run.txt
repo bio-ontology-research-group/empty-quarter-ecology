@@ -1,0 +1,27 @@
+{
+  "primary": {
+    "unique_ph": 0.0031199935514532114,
+    "unique_geography": 0.06778423309465374,
+    "shared": 0.047627723395768456,
+    "unexplained": 0.8814680499581246,
+    "ph_including_shared": 0.05074771694722167,
+    "geography_including_shared": 0.1154119564904222,
+    "joint_explained": 0.1185319500418754,
+    "sse_N": 63469.323526238484,
+    "sse_P": 60248.4002610973,
+    "sse_G": 56144.20472095172,
+    "sse_PG": 55946.18084083476
+  },
+  "collinearity": {
+    "ph_R2_geography_given_nuisance": 0.5343933997795677,
+    "ph_VIF_given_nuisance": 2.1477358772976363,
+    "between_site_ph_R2_geography": 0.8439273614911944,
+    "between_site_ph_VIF": 6.407272982340082
+  },
+  "within_site": {
+    "partial_R2_within_site": 0.0030735003854038233,
+    "common_primary_denominator_fraction": 0.002149961949526877,
+    "nuisance_rank": 74,
+    "full_rank": 75
+  }
+}

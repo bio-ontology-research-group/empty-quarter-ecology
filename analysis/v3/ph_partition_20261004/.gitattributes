@@ -1,0 +1,2 @@
+# Frozen TSV trailing tabs encode empty final fields; preserve original bytes.
+inputs/*.tsv whitespace=-blank-at-eol

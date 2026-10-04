@@ -1,0 +1,53 @@
+Using CPython 3.11.14
+Creating virtual environment at: /tmp/eq-ph-env.4UV6iU00/venv
+Activate with: source /tmp/eq-ph-env.4UV6iU00/venv/bin/activate
+Using Python 3.11.14 environment at: /tmp/eq-ph-env.4UV6iU00/venv
+Resolved 6 packages in 34ms
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 6 packages in 573ms
+ + numpy==2.1.3
+ + pandas==2.2.3
+ + python-dateutil==2.9.0.post0
+ + pytz==2026.2
+ + six==1.17.0
+ + tzdata==2026.3
+test_between_site_refits_common_nuisance (test_partition.PartitionTests.test_between_site_refits_common_nuisance) ... ok
+test_frozen_cohort_weights_and_design (test_partition.PartitionTests.test_frozen_cohort_weights_and_design) ... ok
+test_known_partition_and_signed_shared (test_partition.PartitionTests.test_known_partition_and_signed_shared) ... ok
+test_non_circular_blocks_and_determinism (test_partition.PartitionTests.test_non_circular_blocks_and_determinism) ... ok
+test_nuisance_signal_and_global_weight_invariance (test_partition.PartitionTests.test_nuisance_signal_and_global_weight_invariance) ... ok
+test_site_draw_multiplicity_matches_explicit_repeated_rows (test_partition.PartitionTests.test_site_draw_multiplicity_matches_explicit_repeated_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.356s
+
+OK
+{
+  "primary": {
+    "unique_ph": 0.0031199935514532114,
+    "unique_geography": 0.06778423309465374,
+    "shared": 0.047627723395768456,
+    "unexplained": 0.8814680499581246,
+    "ph_including_shared": 0.05074771694722167,
+    "geography_including_shared": 0.1154119564904222,
+    "joint_explained": 0.1185319500418754,
+    "sse_N": 63469.323526238484,
+    "sse_P": 60248.4002610973,
+    "sse_G": 56144.20472095172,
+    "sse_PG": 55946.18084083476
+  },
+  "collinearity": {
+    "ph_R2_geography_given_nuisance": 0.5343933997795677,
+    "ph_VIF_given_nuisance": 2.1477358772976363,
+    "between_site_ph_R2_geography": 0.8439273614911944,
+    "between_site_ph_VIF": 6.407272982340082
+  },
+  "within_site": {
+    "partial_R2_within_site": 0.0030735003854038233,
+    "common_primary_denominator_fraction": 0.002149961949526877,
+    "nuisance_rank": 74,
+    "full_rank": 75
+  }
+}

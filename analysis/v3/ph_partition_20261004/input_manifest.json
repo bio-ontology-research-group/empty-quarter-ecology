@@ -1,0 +1,77 @@
+{
+  "source_repository_head": "b5cefb2354cd6f48015f23738e010264a0bf7189",
+  "source_worktree_status": " M README.md\n M REPRODUCE.md\n M analysis/v3/biology_context.py\n M analysis/v3/cross_desert_context.py\n M analysis/v3/cross_desert_context/README.md\n M analysis/v3/cross_desert_context/SHA256SUMS\n M analysis/v3/cross_desert_context/comparison_statistics.tsv\n M analysis/v3/cross_desert_context/run_manifest.json\n M analysis/v3/distance_decay_turnover/README.md\n M analysis/v3/distance_decay_turnover/SHA256SUMS\n M analysis/v3/distance_decay_turnover/claim_verdict.json\n M analysis/v3/distance_decay_turnover/distance_decay_pairs.tsv\n M analysis/v3/distance_decay_turnover/distance_decay_slopes.tsv\n M analysis/v3/make_submission_figures.py\n M analysis/v3/ph_ecology_analysis.py\n M analysis/v3/picrust2_ecology/SHA256SUMS\n M analysis/v3/picrust2_ecology/analysis_decision.json\n M analysis/v3/picrust2_ecology/geographic_profile_tests.tsv\n M analysis/v3/render_biology_context_tex.py\n M analysis/v3/render_ph_ecology_tex.py\n M analysis/v3/render_taxon_context_tex.py\n M analysis/v3/spatial_turnover_rescue/results/README.md\n M analysis/v3/spatial_turnover_rescue/results/SHA256SUMS\n M analysis/v3/spatial_turnover_rescue/results/claim_verdict.json\n M analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv\n M analysis/v3/spatial_turnover_rescue/results/spatial_model_results.tsv\n M analysis/v3/taxon_context.py\n M analysis/v3/trait_genes.py\n M analysis/v3/transect_altitude_figure.py\n M empty-quarter-amplicon/main.pdf\n M empty-quarter-amplicon/main.tex\n M empty-quarter-amplicon/supplement.pdf\n M empty-quarter-amplicon/supplement.tex\n M tests/test_biology_context.py\n M tests/test_cross_desert_context.py\n M tests/test_ecology_manuscript_claims.py\n M tests/test_ecology_rewrite_claims.py\n M tests/test_environment_picrust_manuscript.py\n M tests/test_taxon_context.py\n M workflow/run_on_remote.sh\n?? analysis/v3/RAIN_CALENDAR_REFIT.md\n?? analysis/v3/SPATIAL_COVARIANCE_SENSITIVITY.md\n?? analysis/v3/biology_context_corrected_20260909/\n?? analysis/v3/coordinate_pre_correction_20260909/\n?? analysis/v3/hypothesis_families_20260909/\n?? analysis/v3/hypothesis_family_registry.py\n?? analysis/v3/paired_alpha_sensitivity.py\n?? analysis/v3/paired_alpha_sensitivity_20260909/\n?? analysis/v3/ph_context_reanalysis.py\n?? analysis/v3/ph_context_reanalysis_20260909/\n?? analysis/v3/ph_group_linkage_20260909/\n?? analysis/v3/rain_calendar_refit.py\n?? analysis/v3/rain_calendar_refit_20260909/\n?? analysis/v3/render_paired_alpha_sensitivity.py\n?? analysis/v3/render_rain_calendar_refit.py\n?? analysis/v3/render_review_figures.py\n?? analysis/v3/render_spatial_covariance_tex.py\n?? analysis/v3/spatial_covariance_sensitivity.py\n?? analysis/v3/spatial_covariance_sensitivity_20260909/\n?? analysis/v3/spatial_turnover_rescue/pre_coordinate_correction_20260909/\n?? analysis/v3/taxon_context_corrected_20260909/\n?? analysis/v3/trait_genes_20260909/\n?? tests/manuscript_paths.py\n?? tests/test_paired_alpha_sensitivity.py\n?? tests/test_partial_correlation_regression.py\n?? tests/test_ph_context_reanalysis.py\n?? tests/test_ph_group_linkage.py\n?? tests/test_rain_calendar_refit.py\n?? tests/test_review_figure_semantics.py\n?? tests/test_review_table_typography.py\n?? tests/test_rund_reconciliation.py\n?? tests/test_spatial_covariance_sensitivity.py\n",
+  "files": [
+    {
+      "packaged_path": "inputs/alpha.tsv",
+      "source_relative_path": "analysis/v2/review/cache/alpha.tsv",
+      "source_sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
+      "packaged_sha256": "e6083716b713a36a5e6984826b20107613a1fd65359172a1e9cf10a7b3161c2c",
+      "source_bytes": 123109
+    },
+    {
+      "packaged_path": "inputs/genus_counts.tsv.gz",
+      "source_relative_path": "analysis/v2/review/cache/genus_counts.tsv",
+      "source_sha256": "324d19da3669d489a42b60e0bdd6ca7f3238308bbadc72b8a28ae6098ddc8481",
+      "packaged_sha256": "fba27ab774f74fd82e8403693b566fa710c06b7096309d118b9c343e3a53fb20",
+      "source_bytes": 8401418
+    },
+    {
+      "packaged_path": "inputs/accepted_ph.tsv",
+      "source_relative_path": "analysis/v3/ph_shared_v1/normalized/ph_accepted_measurements.tsv",
+      "source_sha256": "2f89d80eaf630d014099a8f58d2e9c2635cfa30a18b5888ebf35145f4125fa8e",
+      "packaged_sha256": "2f89d80eaf630d014099a8f58d2e9c2635cfa30a18b5888ebf35145f4125fa8e",
+      "source_bytes": 140371
+    },
+    {
+      "packaged_path": "inputs/site_coordinates.tsv",
+      "source_relative_path": "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+      "source_sha256": "18c208ad198f120159c997b3a29219e7040c0f047a90b0b8c19227990cd53fbd",
+      "packaged_sha256": "18c208ad198f120159c997b3a29219e7040c0f047a90b0b8c19227990cd53fbd",
+      "source_bytes": 3807
+    },
+    {
+      "packaged_path": "inputs/reference_groups.tsv",
+      "source_relative_path": "analysis/v3/ph_group_linkage_20260909/ph_group_analysis_table.tsv",
+      "source_sha256": "d12b11f88a91bca529d210f358009a308f60aced81bae95b725fa4bc7260056f",
+      "packaged_sha256": "d12b11f88a91bca529d210f358009a308f60aced81bae95b725fa4bc7260056f",
+      "source_bytes": 48588
+    },
+    {
+      "packaged_path": "provenance/analysis__v3__ph_ecology_analysis.py",
+      "source_relative_path": "analysis/v3/ph_ecology_analysis.py",
+      "source_sha256": "b8030fbf3b993dfeabd045446ff3f8d3643ae33f41bf64bd47561923e46d3dff",
+      "packaged_sha256": "b8030fbf3b993dfeabd045446ff3f8d3643ae33f41bf64bd47561923e46d3dff"
+    },
+    {
+      "packaged_path": "provenance/analysis__v3__ph_group_linkage_20260909__input_manifest.tsv",
+      "source_relative_path": "analysis/v3/ph_group_linkage_20260909/input_manifest.tsv",
+      "source_sha256": "473480f702946aa39b07bd241938818a9e1a48aec1ac8f990de48f07f9bfbace",
+      "packaged_sha256": "473480f702946aa39b07bd241938818a9e1a48aec1ac8f990de48f07f9bfbace"
+    },
+    {
+      "packaged_path": "provenance/analysis__v3__ph_group_linkage_20260909__summary.json",
+      "source_relative_path": "analysis/v3/ph_group_linkage_20260909/summary.json",
+      "source_sha256": "36bf207a732ca6f10693881ffb63f69705f54a6a62ba0c3ed2f446d85b66e8d7",
+      "packaged_sha256": "36bf207a732ca6f10693881ffb63f69705f54a6a62ba0c3ed2f446d85b66e8d7"
+    },
+    {
+      "packaged_path": "provenance/analysis__v3__ph_shared_v1__summary.json",
+      "source_relative_path": "analysis/v3/ph_shared_v1/summary.json",
+      "source_sha256": "97ebe64b1ff98f42643ff3748833ebe57f7f9455e8b5d055942f1b5632448ecc",
+      "packaged_sha256": "97ebe64b1ff98f42643ff3748833ebe57f7f9455e8b5d055942f1b5632448ecc"
+    },
+    {
+      "packaged_path": "provenance/DATA_REPOSITORY.lock",
+      "source_relative_path": "DATA_REPOSITORY.lock",
+      "source_sha256": "312cf159090c50b411ca8685d7d5c85f0f058610fa1fee83d4857097742c3e3d",
+      "packaged_sha256": "312cf159090c50b411ca8685d7d5c85f0f058610fa1fee83d4857097742c3e3d"
+    },
+    {
+      "packaged_path": "provenance/REPRODUCE.md",
+      "source_relative_path": "REPRODUCE.md",
+      "source_sha256": "b07b85487cb09b9c31aff4d80e3fdf9b032bc94d27aebc14188f6c8bd1b24b0e",
+      "packaged_sha256": "b07b85487cb09b9c31aff4d80e3fdf9b032bc94d27aebc14188f6c8bd1b24b0e"
+    }
+  ]
+}

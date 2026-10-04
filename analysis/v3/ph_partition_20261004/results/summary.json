@@ -1,0 +1,116 @@
+{
+  "between_site": {
+    "geography_including_shared": 0.37420206603539247,
+    "joint_explained": 0.38802617844501414,
+    "ph_including_shared": 0.2523840557800114,
+    "shared": 0.2385599433703897,
+    "sse_G": 11625.18225433454,
+    "sse_N": 18576.57499871518,
+    "sse_P": 13888.143658037883,
+    "sse_PG": 11368.377593366535,
+    "unexplained": 0.6119738215549858,
+    "unique_geography": 0.13564212266500278,
+    "unique_ph": 0.013824112409621657
+  },
+  "between_site_design_ranks": {
+    "G": 3,
+    "N": 1,
+    "P": 2,
+    "PG": 4
+  },
+  "bootstrap_replicates_per_method": 1999,
+  "collinearity": {
+    "between_site_ph_R2_geography": 0.8439273614911944,
+    "between_site_ph_VIF": 6.407272982340082,
+    "ph_R2_geography_given_nuisance": 0.5343933997795677,
+    "ph_VIF_given_nuisance": 2.1477358772976363
+  },
+  "design_ranks": {
+    "G": 17,
+    "N": 15,
+    "P": 16,
+    "PG": 18
+  },
+  "fractions": "raw descriptive; common nuisance-residual weighted SS denominator",
+  "genera": 200,
+  "groups": 560,
+  "linkage": "campaign-site-compartment; physical specimen pairing unverified",
+  "maximum_ph_group": {
+    "compartment": "Rhizosphere",
+    "n_ph_specimens": 1,
+    "ph": 9.98,
+    "site": 60,
+    "trip": 4
+  },
+  "maximum_ph_group_removed_partition": {
+    "geography_including_shared": 0.11635088464640046,
+    "joint_explained": 0.12041501247182766,
+    "ph_including_shared": 0.05769610566048383,
+    "shared": 0.05363197783505664,
+    "sse_G": 56086.45785424637,
+    "sse_N": 63471.41289424922,
+    "sse_P": 59809.35954948242,
+    "sse_PG": 55828.501918983675,
+    "unexplained": 0.8795849875281724,
+    "unique_geography": 0.06271890681134383,
+    "unique_ph": 0.0040641278254271935
+  },
+  "minimum_group_reads": 2000,
+  "numpy": "2.1.3",
+  "pandas": "2.2.3",
+  "primary": {
+    "geography_including_shared": 0.1154119564904222,
+    "joint_explained": 0.1185319500418754,
+    "ph_including_shared": 0.05074771694722167,
+    "shared": 0.047627723395768456,
+    "sse_G": 56144.20472095172,
+    "sse_N": 63469.323526238484,
+    "sse_P": 60248.4002610973,
+    "sse_PG": 55946.18084083476,
+    "unexplained": 0.8814680499581246,
+    "unique_geography": 0.06778423309465374,
+    "unique_ph": 0.0031199935514532114
+  },
+  "pseudocount": 0.5,
+  "python": "3.11.14",
+  "resampling": "percentile uncertainty under site or contiguous-block sampling assumptions; no hypothesis-test p-values",
+  "resampling_design": [
+    {
+      "maximum_block_span_km": 0.0,
+      "median_block_span_km": 0.0,
+      "method": "site_cluster",
+      "minimum_block_span_km": 0.0,
+      "sites_per_block": 1
+    },
+    {
+      "maximum_block_span_km": 110.36105122000001,
+      "median_block_span_km": 66.22771147999998,
+      "method": "noncircular_block_5",
+      "minimum_block_span_km": 46.53244670000001,
+      "sites_per_block": 5
+    },
+    {
+      "maximum_block_span_km": 207.10657055000001,
+      "median_block_span_km": 155.0022815,
+      "method": "noncircular_block_10",
+      "minimum_block_span_km": 124.6169918,
+      "sites_per_block": 10
+    },
+    {
+      "maximum_block_span_km": 290.30378994,
+      "median_block_span_km": 252.50687449999998,
+      "method": "noncircular_block_15",
+      "minimum_block_span_km": 215.0902969,
+      "sites_per_block": 15
+    }
+  ],
+  "seed": 20261004,
+  "selected_profile_columns": 1089,
+  "sites": 60,
+  "within_site_sensitivity": {
+    "common_primary_denominator_fraction": 0.002149961949526877,
+    "full_rank": 75,
+    "nuisance_rank": 74,
+    "partial_R2_within_site": 0.0030735003854038233
+  }
+}

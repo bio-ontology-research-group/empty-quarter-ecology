@@ -1,0 +1,24 @@
+{
+  "original_archived_implementation_response_identical": true,
+  "taxa_exact_order_identical": true,
+  "cohort_keys_exact_order_identical": true,
+  "response_shape": [
+    560,
+    200
+  ],
+  "reference_output_files": 10,
+  "source_files_byte_unchanged": [
+    "analysis/v2/review/cache/alpha.tsv",
+    "analysis/v2/review/cache/genus_counts.tsv",
+    "analysis/v3/ph_shared_v1/normalized/ph_accepted_measurements.tsv",
+    "analysis/v3/spatial_turnover_rescue/results/site_coordinates.tsv",
+    "analysis/v3/ph_group_linkage_20260909/ph_group_analysis_table.tsv",
+    "analysis/v3/ph_ecology_analysis.py",
+    "analysis/v3/ph_group_linkage_20260909/input_manifest.tsv",
+    "analysis/v3/ph_group_linkage_20260909/summary.json",
+    "analysis/v3/ph_shared_v1/summary.json",
+    "DATA_REPOSITORY.lock",
+    "REPRODUCE.md"
+  ],
+  "maximum_response_difference": 0.0
+}

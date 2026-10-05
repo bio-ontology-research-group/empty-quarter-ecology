@@ -1,0 +1,76 @@
+{
+  "seed": 42,
+  "permutations": 999,
+  "matching": "within-trip geographic distance decile x same/different compartment",
+  "permutation": "sample-to-well assignment within each plate",
+  "results": [
+    {
+      "trip": 1,
+      "neighbours": "ortho+diag",
+      "radius": 1.5,
+      "samples": 259,
+      "plates": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "pairs": 6534,
+      "adjacent_pairs": 441,
+      "strata": 20,
+      "delta": 0.005197271781583494,
+      "p_one_sided": 0.867,
+      "permutations": 999
+    },
+    {
+      "trip": 1,
+      "neighbours": "ortho_only",
+      "radius": 1.0,
+      "samples": 259,
+      "plates": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "pairs": 6534,
+      "adjacent_pairs": 190,
+      "strata": 20,
+      "delta": 0.003417375128959506,
+      "p_one_sided": 0.75,
+      "permutations": 999
+    },
+    {
+      "trip": 3,
+      "neighbours": "ortho+diag",
+      "radius": 1.5,
+      "samples": 28,
+      "plates": [
+        1
+      ],
+      "pairs": 367,
+      "adjacent_pairs": 69,
+      "strata": 20,
+      "delta": -0.012373780333385993,
+      "p_one_sided": 0.146,
+      "permutations": 999
+    },
+    {
+      "trip": 3,
+      "neighbours": "ortho_only",
+      "radius": 1.0,
+      "samples": 28,
+      "plates": [
+        1
+      ],
+      "pairs": 367,
+      "adjacent_pairs": 34,
+      "strata": 20,
+      "delta": -0.010309727720223568,
+      "p_one_sided": 0.222,
+      "permutations": 999
+    }
+  ]
+}

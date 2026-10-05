@@ -1,0 +1,81 @@
+trip	neighbours	stratum	n_adjacent	n_nonadjacent	mean_bc_adjacent	mean_bc_nonadjacent	delta	geo_km_range
+1	ortho+diag	1_diff	89	339	0.8357	0.7822	0.0534	28-51
+1	ortho+diag	4_same	2	213	0.8433	0.7991	0.0441	105-134
+1	ortho+diag	4_diff	9	438	0.8032	0.8150	-0.0118	105-134
+1	ortho+diag	6_same	12	213	0.7964	0.8192	-0.0228	172-219
+1	ortho+diag	6_diff	26	425	0.8312	0.8396	-0.0085	172-219
+1	ortho+diag	8_same	8	202	0.8209	0.8605	-0.0396	278-391
+1	ortho+diag	8_diff	15	409	0.8612	0.8825	-0.0213	278-391
+1	ortho+diag	9_same	1	209	0.9791	0.8783	0.1009	393-970
+1	ortho+diag	9_diff	9	434	0.8632	0.8881	-0.0249	393-989
+1	ortho+diag	1_same	25	194	0.7838	0.7518	0.0320	28-51
+1	ortho+diag	0_diff	133	313	0.7604	0.7796	-0.0192	3-28
+1	ortho+diag	5_same	11	200	0.8436	0.7998	0.0438	135-171
+1	ortho+diag	5_diff	23	409	0.8787	0.8201	0.0586	134-171
+1	ortho+diag	2_diff	11	430	0.8898	0.8130	0.0768	51-76
+1	ortho+diag	7_diff	12	413	0.8069	0.8797	-0.0728	220-277
+1	ortho+diag	0_same	40	178	0.7278	0.7424	-0.0146	3-28
+1	ortho+diag	2_same	5	216	0.7624	0.7628	-0.0004	51-76
+1	ortho+diag	7_same	6	218	0.8107	0.8594	-0.0487	220-277
+1	ortho+diag	3_diff	3	431	0.6802	0.8016	-0.1214	77-103
+1	ortho+diag	3_same	1	209	0.7503	0.7667	-0.0164	77-103
+1	ortho_only	1_diff	39	389	0.8136	0.7913	0.0223	28-51
+1	ortho_only	4_same	0	215		0.7996		105-134
+1	ortho_only	4_diff	4	443	0.8126	0.8148	-0.0022	105-134
+1	ortho_only	6_same	3	222	0.8600	0.8174	0.0426	172-219
+1	ortho_only	6_diff	11	440	0.8093	0.8399	-0.0306	172-219
+1	ortho_only	8_same	0	210		0.8590		278-391
+1	ortho_only	8_diff	10	414	0.8427	0.8827	-0.0400	278-391
+1	ortho_only	9_same	0	210		0.8787		393-970
+1	ortho_only	9_diff	3	440	0.8788	0.8876	-0.0088	393-989
+1	ortho_only	1_same	12	207	0.8237	0.7515	0.0721	28-51
+1	ortho_only	0_diff	77	369	0.7544	0.7779	-0.0235	3-28
+1	ortho_only	5_same	4	207	0.8886	0.8004	0.0881	135-171
+1	ortho_only	5_diff	11	421	0.9115	0.8209	0.0906	134-171
+1	ortho_only	2_diff	3	438	0.8731	0.8145	0.0586	51-76
+1	ortho_only	7_diff	4	421	0.8270	0.8781	-0.0511	220-277
+1	ortho_only	0_same	5	213	0.8116	0.7380	0.0736	3-28
+1	ortho_only	2_same	2	219	0.7275	0.7631	-0.0356	51-76
+1	ortho_only	7_same	0	224		0.8581		220-277
+1	ortho_only	3_diff	2	432	0.6674	0.8014	-0.1340	77-103
+1	ortho_only	3_same	0	210		0.7667		77-103
+3	ortho+diag	2_diff	7	17	0.9068	0.9155	-0.0086	55-112
+3	ortho+diag	3_same	1	10	0.6816	0.8671	-0.1855	116-161
+3	ortho+diag	5_diff	4	21	0.8962	0.9489	-0.0527	230-271
+3	ortho+diag	6_diff	9	18	0.9301	0.9443	-0.0143	276-375
+3	ortho+diag	8_diff	1	24	0.9978	0.9530	0.0448	466-579
+3	ortho+diag	8_same	0	11		0.9696		474-573
+3	ortho+diag	9_same	0	14		0.9781		593-767
+3	ortho+diag	9_diff	0	23		0.9676		597-767
+3	ortho+diag	4_diff	9	17	0.9311	0.8673	0.0638	163-229
+3	ortho+diag	4_same	2	12	0.9794	0.8892	0.0902	171-229
+3	ortho+diag	7_diff	1	16	0.8876	0.9765	-0.0888	390-463
+3	ortho+diag	7_same	0	20		0.9686		388-455
+3	ortho+diag	3_diff	6	19	0.7987	0.9191	-0.1204	116-161
+3	ortho+diag	1_diff	10	11	0.8591	0.8321	0.0270	29-54
+3	ortho+diag	2_same	3	10	0.9741	0.8532	0.1209	65-112
+3	ortho+diag	5_same	2	7	0.7828	0.9654	-0.1826	245-271
+3	ortho+diag	6_same	2	7	0.9458	0.9689	-0.0231	276-379
+3	ortho+diag	0_diff	5	19	0.8325	0.8499	-0.0174	5-24
+3	ortho+diag	0_same	2	13	0.8967	0.8368	0.0599	5-24
+3	ortho+diag	1_same	5	9	0.8534	0.9368	-0.0834	25-55
+3	ortho_only	2_diff	5	19	0.9068	0.9146	-0.0078	55-112
+3	ortho_only	3_same	0	11		0.8502		116-161
+3	ortho_only	5_diff	0	25		0.9405		230-271
+3	ortho_only	6_diff	4	23	0.9443	0.9388	0.0055	276-375
+3	ortho_only	8_diff	0	25		0.9548		466-579
+3	ortho_only	8_same	0	11		0.9696		474-573
+3	ortho_only	9_same	0	14		0.9781		593-767
+3	ortho_only	9_diff	0	23		0.9676		597-767
+3	ortho_only	4_diff	4	22	0.9295	0.8821	0.0474	163-229
+3	ortho_only	4_same	1	13	0.9651	0.8972	0.0679	171-229
+3	ortho_only	7_diff	0	17		0.9713		390-463
+3	ortho_only	7_same	0	20		0.9686		388-455
+3	ortho_only	3_diff	3	22	0.7363	0.9112	-0.1750	116-161
+3	ortho_only	1_diff	4	17	0.8744	0.8380	0.0365	29-54
+3	ortho_only	2_same	1	12	0.9903	0.8720	0.1184	65-112
+3	ortho_only	5_same	1	8	0.8072	0.9396	-0.1324	245-271
+3	ortho_only	6_same	1	8	0.9238	0.9687	-0.0449	276-379
+3	ortho_only	0_diff	4	20	0.8204	0.8514	-0.0310	5-24
+3	ortho_only	0_same	2	13	0.8967	0.8368	0.0599	5-24
+3	ortho_only	1_same	4	10	0.8765	0.9192	-0.0428	25-55

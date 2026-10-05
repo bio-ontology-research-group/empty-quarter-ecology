@@ -1,0 +1,54 @@
+=== TRIP 1 | neighbours: ortho+diag (d<=1.5) ===
+Wells: 259 (259 unique samples, plates [2, 3, 4, 5, 6])
+Within-plate different-site pairs: 6534 (adjacent: 441, non-adjacent: 6093); strata: 20
+Global permutation test
+  Observed T (weighted mean BC_adj - BC_nonadj): +0.0051
+  Null (999 within-plate position permutations): mean -0.0005, sd 0.0050, z = 1.12
+  One-sided p (adjacent less dissimilar): 0.866
+Low-yield vulnerability diagnostic
+  Wells with excess score and DNA conc: 230 (60 with conc = 0); 133/441 neighbour pairs used compartment-only matching
+  Spearman rho (excess vs dna_conc): -0.019, p = 0.771
+  Pearson r (excess vs log10(conc + 1.2e-04)): -0.002, p = 0.980
+  Pearson r, conc > 0 only (n=170): +0.059, p = 0.445
+
+=== TRIP 1 | neighbours: ortho_only (d<=1.0) ===
+Wells: 259 (259 unique samples, plates [2, 3, 4, 5, 6])
+Within-plate different-site pairs: 6534 (adjacent: 190, non-adjacent: 6344); strata: 20
+Global permutation test
+  Observed T (weighted mean BC_adj - BC_nonadj): +0.0033
+  Null (999 within-plate position permutations): mean -0.0007, sd 0.0060, z = 0.67
+  One-sided p (adjacent less dissimilar): 0.740
+Low-yield vulnerability diagnostic
+  Wells with excess score and DNA conc: 204 (53 with conc = 0); 44/190 neighbour pairs used compartment-only matching
+  Spearman rho (excess vs dna_conc): +0.089, p = 0.207
+  Pearson r (excess vs log10(conc + 1.2e-04)): +0.126, p = 0.073
+  Pearson r, conc > 0 only (n=151): +0.167, p = 0.040
+
+=== TRIP 2 === skipped (1 wells)
+
+=== TRIP 3 | neighbours: ortho+diag (d<=1.5) ===
+Wells: 28 (28 unique samples, plates [1])
+Within-plate different-site pairs: 367 (adjacent: 69, non-adjacent: 298); strata: 20
+Global permutation test
+  Observed T (weighted mean BC_adj - BC_nonadj): -0.0110
+  Null (999 within-plate position permutations): mean -0.0002, sd 0.0117, z = -0.92
+  One-sided p (adjacent less dissimilar): 0.173
+Low-yield vulnerability diagnostic
+  Wells with excess score and DNA conc: 27 (2 with conc = 0); 46/69 neighbour pairs used compartment-only matching
+  Spearman rho (excess vs dna_conc): -0.253, p = 0.202
+  Pearson r (excess vs log10(conc + 1.2e-03)): -0.132, p = 0.511
+  Pearson r, conc > 0 only (n=25): -0.192, p = 0.358
+
+=== TRIP 3 | neighbours: ortho_only (d<=1.0) ===
+Wells: 28 (28 unique samples, plates [1])
+Within-plate different-site pairs: 367 (adjacent: 34, non-adjacent: 333); strata: 20
+Global permutation test
+  Observed T (weighted mean BC_adj - BC_nonadj): -0.0110
+  Null (999 within-plate position permutations): mean +0.0001, sd 0.0135, z = -0.82
+  One-sided p (adjacent less dissimilar): 0.203
+Low-yield vulnerability diagnostic
+  Wells with excess score and DNA conc: 26 (2 with conc = 0); 20/34 neighbour pairs used compartment-only matching
+  Spearman rho (excess vs dna_conc): -0.130, p = 0.528
+  Pearson r (excess vs log10(conc + 1.2e-03)): +0.013, p = 0.948
+  Pearson r, conc > 0 only (n=24): -0.013, p = 0.950
+

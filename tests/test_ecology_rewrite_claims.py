@@ -98,7 +98,7 @@ def test_author_order_keeps_first_author_then_alphabetical_with_senior_authors_l
 ):
     authors = [
         name.removesuffix(r"\thanks")
-        for name in re.findall(r"^\\author(?:\[[0-9]+\])?\{([^{}]+)", main_tex, re.M)
+        for name in re.findall(r"^\\author(?:\[[0-9,]+\])?\{([^{}]+)", main_tex, re.M)
     ]
     assert authors == [
         "Rund Tawfiq",
@@ -157,7 +157,7 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
     ecology_by_name = {
         name: affiliation
         for affiliation, name in re.findall(
-            r"^\\author\[([0-9]+)\]\{([^{}]+)", main_tex, re.M
+            r"^\\author\[([0-9,]+)\]\{([^{}]+)", main_tex, re.M
         )
     }
     for name in (
@@ -170,7 +170,10 @@ def test_author_affiliations_match_the_confirmed_institutional_hierarchy(main_te
         "Krishnakumar Sivakumar",
         "Jood Zubair",
     ):
-        assert ecology_by_name[name] == "1"
+        assert "1" in ecology_by_name[name].split(",")
+    assert ecology_by_name["Rund Tawfiq"] == "1,2"
+    assert ecology_by_name["Susana Martinez Arbas"] == "9"
+    assert "Sano Centre for Computational Personalised Medicine" in main_tex
     assert "Maxat Kulmanov" not in ecology_by_name
     # Hind Aldakhil moved to NLFDP/MEWA, Riyadh (her request, 2 Sep 2026).
     assert ecology_by_name["Hind Aldakhil"] == "8"
@@ -326,7 +329,7 @@ def test_control_method_explains_training_scope():
     # Positive standards estimate genus recovery; they do not train the screen.
     assert "used for genus recovery" in table
     main = mt.text("main")
-    assert "217 linked T5 profiles" in main
+    assert "217 samples from Trip 5" in main
     assert "Control samples did not cover all campaigns and sample processing stages" in main
 
 
@@ -723,7 +726,7 @@ def test_assay_aware_control_filter_is_bounded_and_headlines_are_stable():
     removed = sensitivity["removed_read_fraction"]
     main = mt.text("main")
     kit = mt.section("supplement", "DNA extraction kit controls", "Microbial community standard controls")
-    assert f"{pct(removed['pooled'], 2)}% of pooled reads in 217 linked T5 profiles" in main
+    assert f"{pct(removed['pooled'], 2)}% of pooled reads in 217 samples from Trip 5" in main
     assert f"{pct(removed['pooled'], 1)}% of pooled reads and a median of {pct(removed['median'], 2)}% per profile" in kit
     assert f"maximum {pct(removed['maximum'], 2)}%" in kit
     assert f"ρ = {fmt(sensitivity['shannon']['spearman_before_after'], 3)}" in main

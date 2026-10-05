@@ -158,8 +158,13 @@ Overleaf revision (`a5d5623`). The finalization record identifies input versions
 reruns and validation. `scripts/release/build_rund_redlines.py` generates the
 text comparisons from an exported baseline and built current manuscript.
 
-One author-source verification remains: the physical well-to-well analysis
-(259 T1 samples, p=0.87) lacks a deposited plate map, code and output. Its
-manuscript text is preserved, and `OPEN_VERIFICATION.txt` in the review package
-identifies the required inputs. The reproduced library-order adjacency test
-is different. A passing test suite is not verification of that missing analysis.
+The physical well-to-well analysis is reproducible from the deposited plate
+map and canonical feature table. `analysis/well-adjacency-20261005/` contains
+the supplied archive, portable scripts, exclusions, outputs and verification.
+Run `make well-analysis DATA_REPO=/path/to/pinned/data-repository PYTHON=/path/to/python`.
+The current-coordinate T1 result is 259 samples, delta +0.00514797 and
+one-sided p=0.866 (999 within-plate permutations), preserving the reported
++0.005 and p=0.87. The original supplied outputs were independently reproduced,
+and the regenerated Bray–Curtis matrix is identical. This resolves the physical
+well-analysis item in the dated `OPEN_VERIFICATION.txt`; that historical review
+file remains unchanged. The library-order adjacency test is a separate analysis.

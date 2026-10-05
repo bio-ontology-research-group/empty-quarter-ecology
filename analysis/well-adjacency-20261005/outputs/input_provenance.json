@@ -1,0 +1,16 @@
+{
+  "positions_sha256": "8805cb6e48e7710745546b1c8c2978e34c59b3f624417bb17ab22c3062190691",
+  "metadata_sha256": "62f37cfb3c97feb02ea568fb6cf09d1695ee83f5da703a3e9ee2f1ccdeba5639",
+  "features_sha256": "129f47d8f0db8d9afd6f8c67b8d80b5bead90155d8c91d2f43ea6a4139b0cb12",
+  "source_position_rows": 344,
+  "unique_source_profiles": 298,
+  "repeated_profile_rows_removed": 46,
+  "mapped_profiles": 288,
+  "unmapped_profiles": 10,
+  "features_present": 52265,
+  "read_depth_min": 1230.0,
+  "read_depth_median": 339694.5,
+  "read_depth_max": 1852185.0,
+  "duplicate_profile_rule": "first listed well",
+  "distance": "Bray-Curtis on relative abundance of all canonical ASVs"
+}

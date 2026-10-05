@@ -3,7 +3,7 @@ PYTHON ?= python3
 DATA_REPO ?= ../empty-quarter-data-paper
 SOURCE_DATE_EPOCH ?= 1785888000
 
-.PHONY: bootstrap manifest verify test figures paper clean
+.PHONY: bootstrap manifest verify test figures paper clean well-analysis
 
 bootstrap:
 	bash scripts/release/bootstrap_data_dependency.sh "$(DATA_REPO)"
@@ -31,3 +31,13 @@ paper:
 
 clean:
 	cd empty-quarter-amplicon && latexmk -C main.tex && latexmk -C supplement.tex
+
+well-analysis: bootstrap
+	$(PYTHON) analysis/well-adjacency-20261005/01_build_bc.py \
+		--positions analysis/well-adjacency-20261005/well_positions.csv \
+		--metadata analysis/batch-adjacency-2026-09-07/batch_meta.tsv \
+		--features "$(DATA_REPO)/metadata/taxonomy/feature-table-trips1-5.tsv" \
+		--output analysis/well-adjacency-20261005/outputs
+	$(PYTHON) analysis/well-adjacency-20261005/02_neighbor_permtest.py \
+		--metadata analysis/batch-adjacency-2026-09-07/batch_meta.tsv \
+		--output analysis/well-adjacency-20261005/outputs

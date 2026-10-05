@@ -1,0 +1,11 @@
+Physical well analysis verification, 5 October 2026
+
+Comparison baseline: Rund Tawfiq, Overleaf commit 3a425f4d96a994c360a11086ab14c61761e9a2f6, 5 October 2026 at 13:03:56 Riyadh time. Her latest main-text edits are preserved in full and mirrored to GitHub.
+
+Our manuscript changes are confined to the well-to-well methods paragraph: specify same/different-compartment strata; state the first-listed-position rule for repeated profiles; specify within-plate permutations and seed 42. Rounded results remain unchanged: 259 T1 samples, dissimilarity contrast +0.005, one-sided p=0.87. Full precision from current coordinates: +0.005147972887045418, p=0.866.
+
+The supplied archive and plate map, portable analysis scripts, current outputs and provenance are deposited in analysis/well-adjacency-20261005 in the ecology reproducibility repository. The Bray-Curtis matrix was rebuilt from the canonical feature table and matches the supplied matrix exactly. Original source results were reproduced independently. The data dependency remains pinned to 277069892002afc0386314ac04c91ddfbe925bd0.
+
+Validation: all 206 ecology tests pass (396 existing dependency warnings); main and supplement PDFs build successfully. Wording tests were adapted to Rund's updated wording and multiple affiliations; scientific assertions remain intact. This closes the physical well-analysis item in the dated OPEN_VERIFICATION.txt. Other submission requirements are unaffected.
+
+The main-text comparison has no textual changes relative to this baseline. The supplement redline shows all manuscript edits from this task.

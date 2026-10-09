@@ -66,9 +66,8 @@ def test_soil_position_figure_adds_descriptive_taxon_context() -> None:
     )[0]
     assert "add_gridspec(2, 3" in figure
     assert "paired_displacement_loadings" in script
-    # Panel title follows the co-authors' rename of "soil position" to
-    # "compartment" (Overleaf, Sep 2026); the figure script is authoritative.
-    assert "Genera contributing most to compartment differences" in figure
+    # Panel titles were removed in the October 2026 figure revision; the
+    # caption carries the panel description.
     # The Figure 2d caption keeps the descriptive boundary; the Results text now
     # reports the per-genus family (analysis/v3/biology_context, Sep 2026).
     caption = " ".join(MAIN.split()).split("\\caption{Compartment differences", 1)[1].split("\\label", 1)[0]

@@ -4,7 +4,7 @@
     "matplotlib": "3.9.4",
     "freetype": "2.14.3"
   },
-  "scope": "Figure 2 campaign-matched common-profile diversity contrasts; Figure 3 descriptive PMA groups at two campsites; optional Figure 1 two-column layout and corrected route coordinates with frozen climate exposures",
+  "scope": "Figure 3 campaign-matched common-profile diversity contrasts; Figure 5 predicted pathways, descriptive PMA groups at two campsites and candidate-contaminant removal; optional Figures 1, 2 and 4 (landscape, Aitchison ordination and distance decay, environmental gradients) with corrected route coordinates and frozen climate exposures",
   "inputs": {
     "matched_alpha": {
       "path": "analysis/v3/paired_alpha_sensitivity_20260909/paired_alpha_estimands.tsv",
@@ -21,14 +21,6 @@
     "pathways": {
       "path": "analysis/v3/picrust2_ecology/position_profile_tests.tsv",
       "sha256": "eb2c689eb6536e921acadbec57de2f5ed75e0ada37b5738fa30ea79b2076b62e"
-    },
-    "ko_profiles": {
-      "path": "analysis/v3/measured_function_summary_results/per_sample_ko_correlations.tsv",
-      "sha256": "7f8b7c5a27b9688cee29b716d4241e9ea14cc5f532e56cf14288d84b69312dd5"
-    },
-    "ko_metrics": {
-      "path": "analysis/v3/measured_function_summary_results/summary_metrics.tsv",
-      "sha256": "d90051c1ef5c1237c62df7f11a6bdfdeb0dad4cfce239571f2689306b22aacd5"
     },
     "pma": {
       "path": "analysis/v3/pma_endpoint_results/pma_pair_endpoints.tsv",
@@ -50,6 +42,26 @@
       "path": "analysis/v3/distance_decay_turnover/distance_decay_pairs.tsv",
       "sha256": "85e295c34165a483897f071ab606d46f294892950be5006edb96cee9380689e7"
     },
+    "ordination_scores": {
+      "path": "analysis/v3/aitchison_ordination/ordination_scores.tsv",
+      "sha256": "1759a3a951c181fd5b2c93ab372fb165489d7b2a3c7a46edc591816d432b8357"
+    },
+    "ordination_summary": {
+      "path": "analysis/v3/aitchison_ordination/ordination_summary.json",
+      "sha256": "1a08322eca4f1cf773f0a3934c9415e5a1d5703ac5a02883f03c9da490008979"
+    },
+    "ph_groups": {
+      "path": "analysis/v3/ph_group_linkage_20260909/ph_group_analysis_table.tsv",
+      "sha256": "d12b11f88a91bca529d210f358009a308f60aced81bae95b725fa4bc7260056f"
+    },
+    "xrf_axis": {
+      "path": "analysis/v3/xrf_community_rescue/laboratory_xrf_axis.tsv",
+      "sha256": "5cc9008bcd24b6c284339d684d05ee55bacc4f12d44b77549d5a9286d4718d6a"
+    },
+    "landforms": {
+      "path": "analysis/v3/biology_context_corrected_20260909/site_landforms.tsv",
+      "sha256": "1fc498d681e9655e8500081503b390aba6e7f27899e2b1913f5df571add3dd4f"
+    },
     "climate_site": {
       "path": "analysis/v3/environment_associations/climate_site_summary.tsv",
       "sha256": "f39284ba3e2e10750745d6cc3771c9b46cb8257d296147a9c93ff8f8ed01982b"
@@ -68,29 +80,37 @@
     },
     "background": {
       "path": "metadata/geodata/bluemarble_arabia_200407_120ppd.png",
-      "sha256": "237b58c1e087e2ac86268e74c499a50d1e1e94eab7c1d3a7eabf7e9e17a71ac8"
+      "sha256": "d31248950620a9ecc5e70d5a7626249578d35d83b52056ed393702504fc54907"
     },
     "background_metadata": {
       "path": "metadata/geodata/bluemarble_arabia_200407_120ppd.json",
-      "sha256": "b79fa08a4fc5c220be46c26a06998e0c744502be39177f4e184ee588763272d3"
+      "sha256": "beeb8b917b0f345d24eb8974b74cf40598636367d5b1ceb28f18dcd1b0114014"
     }
   },
   "generators": {
-    "analysis/v3/render_review_figures.py": "78b8c7a0ba13020f13a80f4a0d30fb62e5fe0eae3347f3a9ae3629a5df2a02fc",
-    "analysis/v3/make_submission_figures.py": "a0bc4dffe869a0524f19651fd226107e26389a11a216770aac773a2a75dfc646"
+    "analysis/v3/render_review_figures.py": "803ccdb1ef20404d44ee8d673c1e5079936f77cd969d11a0ca9f0ab49ca6aceb",
+    "analysis/v3/make_submission_figures.py": "3b509e53bd7c1fb6ad8174160facefb34cf07f10c637987efdd262ce3b83481c"
   },
   "outputs": {
-    "fig2_soil_position.pdf": {
-      "sha256": "b90308330e4a47ea792d875f54c26e59c54f7fc623632024b5221b49f195950b",
-      "bytes": 28502
+    "fig3_soil_position.pdf": {
+      "sha256": "d422e624932de7dc5e0453ccfdd651db11a87d511edb0c5e7ff0b406883732e3",
+      "bytes": 32761
     },
-    "fig3_function_controls.pdf": {
-      "sha256": "29f894a9fb9cdcc284e43f94c528f62888e85a38e23022e445bd60e6506a5ea3",
-      "bytes": 28201
+    "fig5_function_controls.pdf": {
+      "sha256": "a839cd8bcf87f9f90962cded07abe62979326f05f27a9a4a822111ee3f0c8efb",
+      "bytes": 26739
     },
     "fig1_landscape.pdf": {
-      "sha256": "c2e1b4854df25034a642e5d12067e69c341948a6fb03072ed16f1b8448e7934a",
-      "bytes": 1511915
+      "sha256": "b225435c11c139fa52138178543991d3ee5e82acc23bebce0da2fe8678085664",
+      "bytes": 2991909
+    },
+    "fig2_composition_geography.pdf": {
+      "sha256": "72f2f5a508bce39ff56d9b7d7a052c1a073f8c946dda77b1fe172481c4ad0da9",
+      "bytes": 70172
+    },
+    "fig4_environment_gradients.pdf": {
+      "sha256": "6a7b38b48946faf97af50e805d6775126933bb6c7cacd55077faebdcdee32290",
+      "bytes": 43247
     }
   }
 }

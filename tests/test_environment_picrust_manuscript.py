@@ -195,7 +195,7 @@ def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
     assert (
         f"median Spearman ρ={fmt(median['estimate'], 2)}, 95% CI {fmt(median['interval_low'], 2)}–{fmt(median['interval_high'], 2)}"
     ) in main
-    assert f"(ρ={fmt(quality['community_mean_ko_spearman'], 2)};" in main
+    assert f"(ρ={fmt(quality['community_mean_ko_spearman'], 2)})" in main
     assert f"Across {quality['shared_kos']:,} shared KOs" in main
     assert f"using the {quality['shotgun_matched_samples']} libraries with matched amplicon profiles" in main
     # Pathway-geography table: the printed rhos are the strongest supported ones.
@@ -211,7 +211,7 @@ def test_picrust_ecology_matches_the_main_results_and_bounded_claim() -> None:
     ranking = pd.read_csv(PICRUST / "pathway_ranking.tsv", sep="\t")
     assert f"Of the 462 predicted pathways, {len(ranking)} were present in at least 20% of the 633 grouped sample profiles" in mt.text("supplement")
     # Bounded interpretation: potential, not activity.
-    assert "Functional analyses describe metabolic potential rather than activity" in mt.text("main")
+    assert "We did not measure function" in mt.text("main")
     assert "dedicated UV-repair pathway" not in mt.text("main")
     _verify_checksums(PICRUST)
 

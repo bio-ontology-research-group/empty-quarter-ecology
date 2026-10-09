@@ -18,10 +18,10 @@ script records its SHA-256 and reproduces the committed crop
 Procedure
 ---------
 1. Verify the tile checksum.
-2. Crop longitude 44-57 E and latitude 16-25 N (3,120 x 2,160 pixels).
+2. Crop longitude 38-63 E and latitude 16-25 N (6,000 x 2,160 pixels).
 3. Reduce by an exact factor of two with a Lanczos filter to 120 pixels per
-   degree (1,560 x 1,080 pixels), so that the embedded raster stays below
-   2 MB while exceeding 400 dots per inch at the printed panel width.
+   degree (3,000 x 1,080 pixels), which gives about 370 dots per inch
+   at the printed full-width panel.
 4. Write an optimised PNG and a JSON sidecar with the geographic extent.
 
 Run with the pinned environment (Pillow is a Matplotlib dependency).
@@ -42,7 +42,7 @@ SOURCE_URL = (
 SOURCE_SHA256 = "ee8490ab1eb35d620d8d1ad8e69b3234c0b050e4eddb80e7232a2d165e475aa0"
 TILE_LON0, TILE_LAT1 = 0.0, 90.0  # upper-left corner of tile C1
 PIXELS_PER_DEGREE = 240
-EXTENT = {"lon_min": 44.0, "lon_max": 57.0, "lat_min": 16.0, "lat_max": 25.0}
+EXTENT = {"lon_min": 38.0, "lon_max": 63.0, "lat_min": 16.0, "lat_max": 25.0}
 REDUCTION = 2
 
 

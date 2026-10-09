@@ -110,6 +110,7 @@ def test_section_order_matches_isme_communications(main_tex):
         "Results",
         "Discussion",
         "Materials and Methods",
+        "Data availability",
         # Added on Overleaf (Sep 2026); sits between Methods and the
         # bibliography as ISME Communications back matter.
         "Funding",
@@ -526,7 +527,8 @@ def test_final_ecology_cohort_is_reported_without_repair_history():
     main = mt.text("main")
     reads = mt.section("main", "Read processing", "Relic-DNA removal experiment")
     assert "10 samples that had <1,000 reads, leaving 1,237 samples" in reads
-    assert "1,237 quality-controlled profiles" in main
+    # The abstract and Results report the 1,227 samples from sites 1-60.
+    assert r"obtained $1{,}227$ $16$S rRNA profiles" in mt.source("main")
     assert "Four sites sampled only during T1 contributed 10 additional samples" in main
     assert has_number(main, "1,227")
     combined = mt.combined()
@@ -729,8 +731,9 @@ def test_every_main_text_cross_reference_resolves_in_main_text():
     assert r"\externaldocument[si-]{supplement}" in mt.source("main")
     assert r"\externaldocument[main-]{main}" in mt.source("supplement")
     assert "fig:network-function" not in main_labels | mt.refs("main")
-    # The three evidence-bearing figures remain in the main paper.
-    assert {"fig:landscape", "fig:soil-position", "fig:function-controls"} <= main_labels
+    # The five main-text figures after Rund Tawfiq's figure revision (Oct 2026).
+    assert {"fig:landscape", "fig:composition-beta", "fig:compartment-differences",
+            "fig:env-gradients", "fig:function-controls"} <= main_labels
 
 
 def test_relocated_detail_survives_in_the_supplement():

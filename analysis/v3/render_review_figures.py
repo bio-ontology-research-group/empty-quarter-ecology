@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate corrected compartment and descriptive PMA figures with provenance."""
+"""Regenerate the five main-text figures from their committed result tables with provenance."""
 import argparse
 import json
 from pathlib import Path
@@ -43,8 +43,6 @@ def main():
         "location": source / "compartment_composition/compartment_location_results.tsv",
         "loadings": source / "compartment_composition/paired_displacement_loadings.tsv",
         "pathways": source / "picrust2_ecology/position_profile_tests.tsv",
-        "ko_profiles": source / "measured_function_summary_results/per_sample_ko_correlations.tsv",
-        "ko_metrics": source / "measured_function_summary_results/summary_metrics.tsv",
         "pma": source / "pma_endpoint_results/pma_pair_endpoints.tsv",
         "controls": source / "control_audit/trip5_removal_fraction_by_profile.tsv",
     }
@@ -53,6 +51,11 @@ def main():
             "alpha": root / "analysis/v2/review/cache/alpha.tsv",
             "coordinates": source / "spatial_turnover_rescue/results/site_coordinates.tsv",
             "distance_pairs": source / "distance_decay_turnover/distance_decay_pairs.tsv",
+            "ordination_scores": source / "aitchison_ordination/ordination_scores.tsv",
+            "ordination_summary": source / "aitchison_ordination/ordination_summary.json",
+            "ph_groups": source / "ph_group_linkage_20260909/ph_group_analysis_table.tsv",
+            "xrf_axis": source / "xrf_community_rescue/laboratory_xrf_axis.tsv",
+            "landforms": source / "biology_context_corrected_20260909/site_landforms.tsv",
             "climate_site": source / "environment_associations/climate_site_summary.tsv",
             "climate_alpha": source / "environment_associations/climate_alpha_correlations.tsv",
             "climate_genus": source / "environment_associations/climate_genus_correlations.tsv",
@@ -67,25 +70,35 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     figures.setup_style()
     paired, evenness = campaign_matched_alpha(frames["matched_alpha"])
-    paths = [output / "fig2_soil_position.pdf", output / "fig3_function_controls.pdf"]
+    paths = [output / "fig3_soil_position.pdf", output / "fig5_function_controls.pdf"]
     figures.make_soil_position_figure(
         paired, evenness, frames["location"], frames["loadings"], paths[0]
     )
     figures.make_function_control_figure(
-        frames["pathways"], frames["ko_profiles"], frames["ko_metrics"],
-        frames["pma"], {}, frames["controls"], paths[1]
+        frames["pathways"], frames["pma"], {}, frames["controls"], paths[1]
     )
     if args.landscape:
         landscape = output / "fig1_landscape.pdf"
+        composition = output / "fig2_composition_geography.pdf"
+        environment = output / "fig4_environment_gradients.pdf"
         site = frames["climate_site"].drop(columns=["latitude", "longitude", "transect_km"])
         site = site.merge(frames["coordinates"], on="site", validate="one_to_one")
         figures.make_landscape_figure(
             frames["alpha"], frames["coordinates"], inputs["boundary"], inputs["background"],
-            frames["distance_pairs"], site, frames["climate_alpha"], frames["climate_genus"], landscape)
-        paths.append(landscape)
+            site, landscape)
+        ordination_summary = json.loads(inputs["ordination_summary"].read_text(encoding="utf-8"))
+        if (len(frames["ordination_scores"]) != ordination_summary["n_groups"]
+                or ordination_summary["n_genera"] != 200):
+            raise ValueError("Ordination scores do not match their summary")
+        figures.make_composition_geography_figure(
+            frames["ordination_scores"], ordination_summary, frames["distance_pairs"], composition)
+        figures.make_environment_gradient_figure(
+            frames["ph_groups"], frames["xrf_axis"], frames["coordinates"], site,
+            frames["landforms"], frames["climate_alpha"], frames["climate_genus"], environment)
+        paths += [landscape, composition, environment]
     manifest = {
         "runtime": runtime,
-        "scope": "Figure 2 campaign-matched common-profile diversity contrasts; Figure 3 descriptive PMA groups at two campsites; optional Figure 1 two-column layout and corrected route coordinates with frozen climate exposures",
+        "scope": "Figure 3 campaign-matched common-profile diversity contrasts; Figure 5 predicted pathways, descriptive PMA groups at two campsites and candidate-contaminant removal; optional Figures 1, 2 and 4 (landscape, Aitchison ordination and distance decay, environmental gradients) with corrected route coordinates and frozen climate exposures",
         "inputs": {key: {"path": str(path.relative_to(root)), "sha256": figures.sha256(path)} for key, path in inputs.items()},
         "generators": {str(path.relative_to(root)): figures.sha256(path) for path in [Path(__file__).resolve(), Path(figures.__file__).resolve()]},
         "outputs": {path.name: {"sha256": figures.sha256(path), "bytes": path.stat().st_size} for path in paths},

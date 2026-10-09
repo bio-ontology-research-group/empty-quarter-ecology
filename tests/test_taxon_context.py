@@ -274,7 +274,7 @@ def test_landscape_figure_uses_the_committed_satellite_crop() -> None:
     )
     crop = ROOT / "metadata/geodata/bluemarble_arabia_200407_120ppd.png"
     assert hashlib.sha256(crop.read_bytes()).hexdigest() == sidecar["output_sha256"]
-    assert sidecar["extent_degrees"] == {"lon_min": 44.0, "lon_max": 57.0, "lat_min": 16.0, "lat_max": 25.0}
+    assert sidecar["extent_degrees"] == {"lon_min": 38.0, "lon_max": 63.0, "lat_min": 16.0, "lat_max": 25.0}
     assert sidecar["pixels_per_degree"] == 120
     manifest = json.loads((PAPER / "figures/figure_review_manifest.json").read_text())
     row = manifest["inputs"]["background"]

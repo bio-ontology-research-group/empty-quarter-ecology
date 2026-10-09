@@ -245,7 +245,7 @@ def test_gradient_and_core_numbers_match_text() -> None:
     xrf = pd.read_csv(BIO / "xrf_axis_genus_correlations.tsv", sep="\t").set_index("genus")
     assert int(xrf["supported_q_lt_0_05"].sum()) == manifest["xrf_axis"]["supported_genera"]
     assert f"{manifest['xrf_axis']['supported_genera']} genera correlated with the score" in main
-    assert f"Scores increased from west to east along the transect (ρ={fmt(manifest['xrf_axis']['spearman_rho_axis_vs_route'], 2)})" in main
+    assert f"Scores increased from west to east along the transect (ρ={fmt(manifest['xrf_axis']['spearman_rho_axis_vs_route'], 2)};" in main
     for row in mt.table_rows("supplement", "tab:xrf-genera")[1:]:
         genus, phylum, rho, q = row
         assert xrf.loc[genus, "phylum"] == phylum

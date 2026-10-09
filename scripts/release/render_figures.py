@@ -8,8 +8,12 @@ import sys
 import tempfile
 from pathlib import Path
 
-FIGURES = ("fig1_landscape.pdf", "fig2_soil_position.pdf", "fig3_function_controls.pdf",
-           "fig_core_overlap.pdf", "rain_calendar_refit.pdf", "fig_pma_richness.pdf")
+FIGURES = ("fig1_landscape.pdf", "fig2_composition_geography.pdf", "fig3_soil_position.pdf",
+           "fig4_environment_gradients.pdf", "fig5_function_controls.pdf",
+           "rain_calendar_refit.pdf")
+# No longer cited after the October 2026 figure revision; still rendered and
+# compared so their committed copies and manifests remain reproducible.
+ARCHIVED = ("fig_core_overlap.pdf", "fig_pma_richness.pdf")
 
 
 def main():
@@ -29,7 +33,7 @@ def main():
         ):
             subprocess.run(command, check=True)
         reviewed = root / "empty-quarter-amplicon/figures"
-        differences = [name for name in FIGURES if not (reviewed / name).exists()
+        differences = [name for name in FIGURES + ARCHIVED if not (reviewed / name).exists()
                        or not filecmp.cmp(output / name, reviewed / name, shallow=False)]
         if differences:
             print("FAIL: regenerated figure PDFs differ: " + ", ".join(differences), file=sys.stderr)
@@ -39,7 +43,7 @@ def main():
             if not filecmp.cmp(output / manifest, reviewed / manifest, shallow=False):
                 print("FAIL: figure provenance differs: " + manifest, file=sys.stderr)
                 return 1
-    print("PASS: all six submitted figure PDFs and review manifests are byte-identical")
+    print("PASS: all six cited and two archived figure PDFs and review manifests are byte-identical")
     return 0
 
 

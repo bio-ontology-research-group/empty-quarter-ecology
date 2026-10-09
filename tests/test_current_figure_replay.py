@@ -43,7 +43,8 @@ def test_repository_verifier_detects_inline_todos_but_ignores_comments(tmp_path)
     (paper / "figures").mkdir(parents=True)
     (paper / "supplement.tex").write_text("")
     for name in ("main.pdf", "supplement.pdf", "figures/fig1_landscape.pdf",
-                 "figures/fig2_soil_position.pdf", "figures/fig3_function_controls.pdf",
+                 "figures/fig2_composition_geography.pdf", "figures/fig3_soil_position.pdf",
+                 "figures/fig4_environment_gradients.pdf", "figures/fig5_function_controls.pdf",
                  "figures/rain_calendar_refit.pdf", "figures/fig_core_overlap.pdf", "figures/fig_pma_richness.pdf",
                  "figures/pma_richness_manifest.json",
                  "figures/figure_review_manifest.json", "figures/core_overlap_manifest.json",

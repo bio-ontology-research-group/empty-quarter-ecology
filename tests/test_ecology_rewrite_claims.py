@@ -442,7 +442,7 @@ def test_paired_composition_claims_match_the_canonical_verdict():
             f"{result['n_blocks']} for {label}" in supplement
         )
     assert "every pair of compartments differed in composition (q=0.001" in main
-    assert "fig2_soil_position.pdf" in mt.source("main")
+    assert "fig3_soil_position.pdf" in mt.source("main")
     methods = mt.section("main", "Compartment differences.", "Turnover and nestedness")
     assert "paired sign flip permutation tests (999) on the mean within-site difference vector" in methods
     assert "assume sign symmetry of the site-level difference vectors under the null" in main
@@ -573,7 +573,7 @@ def test_moran_claim_is_bounded_to_the_tested_neighbourhood_scale():
     assert f"ranges of {round(low.range_km.min(), -1):.0f} km or more" in statement
 
 
-def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
+def test_landscape_figure_contains_three_survey_panels(main_tex):
     figure_script = (
         ROOT / "analysis/v3/make_submission_figures.py"
     ).read_text(encoding="utf-8")
@@ -581,14 +581,13 @@ def test_landscape_figure_contains_six_evidence_bearing_panels(main_tex):
         "def make_landscape_figure", 1
     )[1].split("def make_soil_position_figure", 1)[0]
 
-    assert "plt.subplots(3, 2" in study_figure
-    for content in (
-        "Repeated 60-site desert transect",
-        "Communities diverge with distance",
-        "Climate–diversity associations",
-        "Climate-associated genera",
-    ):
+    # Figure 1 after the October 2026 revision: map, samples per campaign and
+    # climate along the transect; distance decay moved to Figure 2 and the
+    # climate associations to Figure 4.
+    for content in ("map_ax", "coverage_ax", "climate_ax"):
         assert content in study_figure
+    assert "make_composition_geography_figure" in figure_script
+    assert "make_environment_gradient_figure" in figure_script
     assert "Explicit analysis cohorts" not in study_figure
     assert "fig:overview-revised" not in main_tex
     assert "(c) The samples available" not in main_tex

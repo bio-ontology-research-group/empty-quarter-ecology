@@ -142,19 +142,43 @@ def make_landscape_figure(
     coordinates: pd.DataFrame,
     boundary_path: Path,
     background_path: Path,
-    distance_pairs: pd.DataFrame,
     site: pd.DataFrame,
-    alpha_correlations: pd.DataFrame,
-    genus_correlations: pd.DataFrame,
     output: Path,
 ) -> None:
-    """Combine design, geography and climate into one landscape-scale figure."""
-    fig, axes = plt.subplots(3, 2, figsize=(8.4, 9.0))
-    map_ax, coverage_ax, distance_ax, climate_ax, diversity_ax, genus_ax = axes.flat
+    """Show the transect map above sampling coverage and site climate."""
+    # The map keeps true geographic proportions and spans the full figure
+    # width; it extends east and west of the boundary to fill the wide panel.
+    fig = plt.figure(figsize=(8.4, 6.5))
+    grid = fig.add_gridspec(2, 2, height_ratios=(1.05, 1.0))
+    map_ax = fig.add_subplot(grid[0, :])
+    coverage_ax = fig.add_subplot(grid[1, 0])
+    climate_ax = fig.add_subplot(grid[1, 1])
+    for panel_ax, panel_letter in (
+        (map_ax, "a"),
+        (coverage_ax, "b"),
+        (climate_ax, "c"),
+    ):
+        panel_ax.set_title(panel_letter, loc="left", fontweight="bold")
 
     coordinates = coordinates.sort_values("transect_km")
     boundary = read_kml_polygon(boundary_path)
+    # Show the whole boundary in latitude and twice its longitude range,
+    # centred on the boundary.
+    map_ylim = (boundary[:, 1].min() - 0.2, boundary[:, 1].max() + 0.2)
+    map_half_width = boundary[:, 0].max() - boundary[:, 0].min() + 0.4
+    map_centre = (boundary[:, 0].min() + boundary[:, 0].max()) / 2
+    map_xlim = (map_centre - map_half_width, map_centre + map_half_width)
     background, extent = read_background_image(background_path)
+    if (
+        extent[0] > map_xlim[0]
+        or extent[1] < map_xlim[1]
+        or extent[2] > map_ylim[0]
+        or extent[3] < map_ylim[1]
+    ):
+        raise ValueError(
+            f"Background {background_path} covers {extent}, which does not "
+            f"contain the map limits {map_xlim + map_ylim}"
+        )
     map_ax.imshow(
         background,
         extent=extent,
@@ -219,13 +243,9 @@ def make_landscape_figure(
             zorder=3,
         )
     map_ax.set_aspect(1 / np.cos(np.deg2rad(coordinates["latitude"].mean())))
-    map_ax.set_xlim(boundary[:, 0].min() - 0.2, boundary[:, 0].max() + 0.2)
-    map_ax.set_ylim(boundary[:, 1].min() - 0.2, boundary[:, 1].max() + 0.2)
-    map_ax.set(
-        xlabel="Longitude",
-        ylabel="Latitude",
-        title="(a) Repeated 60-site desert transect",
-    )
+    map_ax.set_xlim(*map_xlim)
+    map_ax.set_ylim(*map_ylim)
+    map_ax.set(xlabel="Longitude", ylabel="Latitude")
 
     type_order = ["Surface", "Deep", "Rhizosphere"]
     type_labels = ["Surface", "Shallow subsurface", "Root-adjacent"]
@@ -237,7 +257,7 @@ def make_landscape_figure(
     bottom = np.zeros(len(profile_counts), dtype=float)
     for sample_type, label, colour in zip(type_order, type_labels, type_colours):
         values = profile_counts[sample_type].to_numpy()
-        bars = coverage_ax.bar(
+        coverage_ax.bar(
             profile_counts.index,
             values,
             bottom=bottom,
@@ -245,31 +265,10 @@ def make_landscape_figure(
             label=label,
             width=0.72,
         )
-        for bar, value, base in zip(bars, values, bottom):
-            if value >= 20:
-                coverage_ax.text(
-                    bar.get_x() + bar.get_width() / 2,
-                    base + value / 2,
-                    f"{int(value)}",
-                    ha="center",
-                    va="center",
-                    fontsize=9.0,
-                    color="white",
-                )
         bottom += values
-    for campaign, total in zip(profile_counts.index, bottom):
-        coverage_ax.text(
-            campaign,
-            total + 7,
-            f"{int(total)}",
-            ha="center",
-            va="bottom",
-            fontsize=9.0,
-        )
     coverage_ax.set(
-        xlabel="Expedition",
-        ylabel="Quality-controlled profiles",
-        title="(b) Coverage by compartment",
+        xlabel="Campaign",
+        ylabel="Samples",
         xticks=range(1, 6),
         xticklabels=[
             "T1", "T2", "T3", "T4", "T5",
@@ -277,8 +276,8 @@ def make_landscape_figure(
     )
     coverage_ax.tick_params(axis="x", labelsize=9.0)
     coverage_ax.tick_params(axis="y", labelsize=9.0)
-    # Headroom keeps the legend clear of the tallest bar and its total label.
-    coverage_ax.set_ylim(0, 880)
+    # Headroom keeps the legend clear of the tallest bar.
+    coverage_ax.set_ylim(0, 700)
     coverage_ax.legend(frameon=False, fontsize=9.0, loc="upper right")
 
     climate_order = [
@@ -304,11 +303,96 @@ def make_landscape_figure(
         )
     climate_ax.axhline(0, color="#999999", linewidth=0.6)
     climate_ax.set(
-        xlabel="West--east coordinate (km)",
-        ylabel="Climate value relative to sites\n(standard deviations)",
-        title="(d) Climate changes along the route",
+        xlabel="West-east coordinate (km)",
+        ylabel="Climate\n(σ relative to site)",
     )
     climate_ax.legend(frameon=False, fontsize=9.0)
+
+    fig.tight_layout(h_pad=2.0, w_pad=1.8)
+    fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
+    plt.close(fig)
+
+
+def make_composition_geography_figure(
+    ordination: pd.DataFrame,
+    ordination_summary: dict,
+    distance_pairs: pd.DataFrame,
+    output: Path,
+) -> None:
+    """Show the Aitchison ordination by compartment above distance decay."""
+    fig = plt.figure(figsize=(8.4, 5.6), layout="constrained")
+    grid = fig.add_gridspec(2, 3, height_ratios=(1.0, 0.8))
+    first_ax = fig.add_subplot(grid[0, 0])
+    ordination_axes = [
+        first_ax,
+        fig.add_subplot(grid[0, 1], sharex=first_ax, sharey=first_ax),
+        fig.add_subplot(grid[0, 2], sharex=first_ax, sharey=first_ax),
+    ]
+    distance_ax = fig.add_subplot(grid[1, :])
+    for panel_ax, panel_letter in ((first_ax, "a"), (distance_ax, "b")):
+        panel_ax.set_title(panel_letter, loc="left", fontweight="bold")
+
+    variance = ordination_summary["variance_explained"]
+    # One joint ordination and one colour scale; each panel highlights one
+    # compartment over all profiles in grey. Marker shapes match panel b.
+    colour_norm = plt.Normalize(
+        ordination["transect_km"].min(), ordination["transect_km"].max()
+    )
+    compartment_markers = [
+        ("Surface", "Surface", "o"),
+        ("Deep", "Shallow subsurface", "s"),
+        ("Rhizosphere", "Root-adjacent", "^"),
+    ]
+    unknown = set(ordination["compartment"]) - {
+        compartment for compartment, _, _ in compartment_markers
+    }
+    if unknown:
+        raise ValueError(f"Unexpected ordination compartments: {sorted(unknown)}")
+    for panel_ax, (compartment, label, marker) in zip(
+        ordination_axes, compartment_markers
+    ):
+        part = ordination[ordination["compartment"] == compartment]
+        panel_ax.scatter(
+            ordination["pc1"],
+            ordination["pc2"],
+            color="#DDDDDD",
+            s=7,
+            linewidth=0,
+            zorder=1,
+        )
+        points = panel_ax.scatter(
+            part["pc1"],
+            part["pc2"],
+            c=part["transect_km"],
+            cmap="viridis",
+            norm=colour_norm,
+            marker=marker,
+            s=15,
+            edgecolor="white",
+            linewidth=0.25,
+            zorder=2,
+        )
+        panel_ax.scatter(
+            [], [], marker=marker, s=15, color="#555555", label=label
+        )
+        panel_ax.legend(
+            frameon=False,
+            fontsize=9.0,
+            loc="upper left",
+            handletextpad=0.1,
+            borderaxespad=0.1,
+        )
+    # Headroom keeps the compartment labels clear of the points.
+    pc2_low, pc2_high = first_ax.get_ylim()
+    first_ax.set_ylim(pc2_low, pc2_high + 0.12 * (pc2_high - pc2_low))
+    first_ax.set_ylabel(f"PC2 ({100 * variance['pc2']:.1f}%)")
+    ordination_axes[1].set_xlabel(f"PC1 ({100 * variance['pc1']:.1f}%)")
+    for panel_ax in ordination_axes[1:]:
+        panel_ax.tick_params(labelleft=False)
+    colourbar = fig.colorbar(
+        points, ax=ordination_axes, fraction=0.03, pad=0.015
+    )
+    colourbar.set_label("West-east coordinate (km)")
 
     distance_pairs = distance_pairs.copy()
     upper = float(distance_pairs["geographic_distance_km"].max())
@@ -345,10 +429,143 @@ def make_landscape_figure(
         )
     distance_ax.set(
         xlabel="Distance between sites (km)",
-        ylabel="Difference in relative composition\n(Aitchison dissimilarity)",
-        title="(c) Communities diverge with distance",
+        ylabel="Aitchison dissimilarity",
     )
     distance_ax.legend(frameon=False, fontsize=9.0)
+
+    fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
+    plt.close(fig)
+
+
+def make_environment_gradient_figure(
+    ph_groups: pd.DataFrame,
+    xrf_axis: pd.DataFrame,
+    coordinates: pd.DataFrame,
+    site: pd.DataFrame,
+    landforms: pd.DataFrame,
+    alpha_correlations: pd.DataFrame,
+    genus_correlations: pd.DataFrame,
+    output: Path,
+) -> None:
+    """Show soil and diversity along the transect with climate associations."""
+    fig = plt.figure(figsize=(8.4, 8.4))
+    grid = fig.add_gridspec(4, 2, height_ratios=(1.0, 1.0, 1.0, 2.0))
+    ph_ax = fig.add_subplot(grid[0, :])
+    xrf_ax = fig.add_subplot(grid[1, :], sharex=ph_ax)
+    shannon_ax = fig.add_subplot(grid[2, :], sharex=ph_ax)
+    diversity_ax = fig.add_subplot(grid[3, 0])
+    genus_ax = fig.add_subplot(grid[3, 1])
+    for panel_ax, panel_letter in zip(
+        (ph_ax, xrf_ax, shannon_ax, diversity_ax, genus_ax),
+        "abcde",
+    ):
+        panel_ax.set_title(panel_letter, loc="left", fontweight="bold")
+
+    # Compartment colours and markers match the distance-decay panel.
+    compartment_styles = [
+        ("Surface", "Surface", COLORS["surface"], "o"),
+        ("Deep", "Shallow subsurface", COLORS["deep"], "s"),
+        ("Rhizosphere", "Root-adjacent", COLORS["root"], "^"),
+    ]
+    transect_by_site = coordinates.set_index("site")["transect_km"]
+    ph_means = ph_groups.groupby(["site", "compartment"], as_index=False)[
+        "ph"
+    ].mean()
+    xrf_means = (
+        xrf_axis.rename(columns={"Site": "site", "Type": "compartment"})
+        .groupby(["site", "compartment"], as_index=False)["elemental_pc1"]
+        .mean()
+    )
+    for panel_ax, means, value in (
+        (ph_ax, ph_means, "ph"),
+        (xrf_ax, xrf_means, "elemental_pc1"),
+    ):
+        unknown = set(means["compartment"]) - {
+            compartment for compartment, _, _, _ in compartment_styles
+        }
+        if unknown or not set(means["site"]) <= set(transect_by_site.index):
+            raise ValueError(f"Unexpected site or compartment in {value} table")
+        for compartment, label, colour, marker in compartment_styles:
+            part = means[means["compartment"] == compartment]
+            panel_ax.scatter(
+                part["site"].map(transect_by_site),
+                part[value],
+                color=colour,
+                marker=marker,
+                s=16,
+                alpha=0.85,
+                edgecolor="white",
+                linewidth=0.3,
+                label=label,
+            )
+    ph_ax.set_ylabel("Soil pH")
+    ph_ax.legend(
+        frameon=False,
+        fontsize=9.0,
+        ncol=3,
+        loc="upper left",
+        handletextpad=0.1,
+        columnspacing=1.0,
+    )
+    xrf_ax.set_ylabel("Elemental PC1")
+
+    climate_order = [
+        "mean_air_temperature_c",
+        "mean_monthly_rain_mm",
+        "mean_relative_humidity_pct",
+    ]
+    climate_labels = ["Temperature", "Rain", "Humidity"]
+    climate_colours = ["#D55E00", "#0072B2", "#009E73"]
+
+    # Landforms recorded at a single site are pooled so that each colour
+    # stands for at least three sites.
+    landform_styles = [
+        ("sand dune", "Sand dune", "#B08D3C"),
+        ("saline pan", "Saline pan", "#56B4E9"),
+        ("desert oasis", "Desert oasis", "#CC79A7"),
+    ]
+    site_landform = site.merge(
+        landforms[["site", "landform"]], on="site", validate="one_to_one"
+    )
+    if len(site_landform) != len(site):
+        raise ValueError("A site has no landform record")
+    named = {landform for landform, _, _ in landform_styles}
+    for landform, label, colour in landform_styles:
+        part = site_landform[site_landform["landform"] == landform]
+        shannon_ax.scatter(
+            part["transect_km"],
+            part["shannon"],
+            color=colour,
+            s=20,
+            edgecolor="white",
+            linewidth=0.3,
+            label=label,
+        )
+    other = site_landform[~site_landform["landform"].isin(named)]
+    if other["landform"].value_counts().max() > 1:
+        raise ValueError("A landform with several sites has no colour")
+    shannon_ax.scatter(
+        other["transect_km"],
+        other["shannon"],
+        color="#777777",
+        s=20,
+        edgecolor="white",
+        linewidth=0.3,
+        label="Other",
+    )
+    shannon_ax.set(
+        xlabel="West-east coordinate (km)", ylabel="Shannon diversity"
+    )
+    shannon_ax.legend(
+        frameon=False,
+        fontsize=9.0,
+        ncol=4,
+        loc="lower left",
+        handletextpad=0.1,
+        columnspacing=1.0,
+    )
+    for panel_ax in (ph_ax, xrf_ax):
+        panel_ax.tick_params(labelbottom=False)
 
     response_order = ["shannon", "expected_richness_25k", "normalized_evenness"]
     response_labels = ["Shannon", "Expected\nrichness", "Norm.\nShannon"]
@@ -378,7 +595,6 @@ def make_landscape_figure(
         xticklabels=response_labels,
         yticks=np.arange(3),
         yticklabels=climate_labels,
-        title="(e) Climate–diversity associations",
     )
     diversity_ax.tick_params(axis="x", labelsize=9.0, rotation=25)
     for label in diversity_ax.get_xticklabels():
@@ -424,11 +640,11 @@ def make_landscape_figure(
         yticks=genus_y,
         yticklabels=[rf"$\it{{{name}}}$" for name in selected.index],
         xlim=(-0.9, 0.9),
-        title="(f) Climate-associated genera",
     )
-    genus_ax.legend(frameon=False, fontsize=9.0, loc="upper left")
+    genus_ax.legend(frameon=False, fontsize=9.0, loc="lower right")
 
-    fig.tight_layout(h_pad=2.0, w_pad=1.8)
+    fig.tight_layout(h_pad=0.5, w_pad=1.8)
+    fig.align_ylabels([ph_ax, xrf_ax, shannon_ax])
     fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
     plt.close(fig)
 
@@ -445,6 +661,8 @@ def make_soil_position_figure(
     grid = fig.add_gridspec(2, 3, height_ratios=(1.0, 1.15))
     axes = [fig.add_subplot(grid[0, column]) for column in range(3)]
     loading_ax = fig.add_subplot(grid[1, :])
+    for panel_ax, panel_letter in zip([*axes, loading_ax], "abcd"):
+        panel_ax.set_title(panel_letter, loc="left", fontweight="bold")
 
     comparison_order = [
         "Rhizosphere-Deep",
@@ -488,7 +706,6 @@ def make_soil_position_figure(
         yticks=y,
         yticklabels=labels,
         xlabel="Consistency of composition shift\n(0 = cancelling, 1 = aligned)",
-        title="(a) Paired composition",
     )
 
     all_shannon = paired[
@@ -513,7 +730,6 @@ def make_soil_position_figure(
     axes[1].set(
         yticks=y,
         xlabel="Paired Shannon difference",
-        title="(b) Shannon diversity",
     )
     axes[1].tick_params(axis="y", labelleft=False)
 
@@ -546,7 +762,6 @@ def make_soil_position_figure(
     axes[2].set(
         yticks=y,
         xlabel="Paired normalized\nShannon difference",
-        title="(c) Normalized Shannon\ndiversity",
     )
     axes[2].tick_params(axis="y", labelleft=False)
     axes[2].set_xticks([-0.05, 0.0, 0.025], labels=["−0.05", "0", "0.025"])
@@ -604,7 +819,6 @@ def make_soil_position_figure(
         xticklabels=[rf"$\it{{{name}}}$" for name in selected_genera],
         yticks=np.arange(len(comparison_order)),
         yticklabels=labels,
-        title="(d) Genera contributing most to compartment differences",
     )
     loading_ax.tick_params(axis="x", rotation=28, labelsize=12.0)
     loading_ax.tick_params(axis="y", labelsize=12.0)
@@ -620,15 +834,17 @@ def make_soil_position_figure(
 
 def make_function_control_figure(
     position: pd.DataFrame,
-    ko_validation: pd.DataFrame,
-    ko_metrics: pd.DataFrame,
     pma_pairs: pd.DataFrame,
     pma_summary: dict[str, Any],
     removal: pd.DataFrame,
     output: Path,
 ) -> None:
-    """Show predicted pathway structure and the two assay checks."""
-    fig, axes = plt.subplots(2, 2, figsize=(8.4, 6.6))
+    """Show predicted pathway structure, PMA outcomes and control removal."""
+    fig, (pathway_ax, pma_ax, removal_ax) = plt.subplots(
+        1, 3, figsize=(10.6, 3.4)
+    )
+    for panel_ax, panel_letter in zip((pathway_ax, pma_ax, removal_ax), "abc"):
+        panel_ax.set_title(panel_letter, loc="left", fontweight="bold")
 
     primary = position[
         position["analysis"].eq("primary")
@@ -653,7 +869,7 @@ def make_function_control_figure(
     y = np.arange(3)
     pathway_low = primary["standardized_ci_low"]
     pathway_high = primary["standardized_ci_high"]
-    axes[0, 0].errorbar(
+    pathway_ax.errorbar(
         primary["standardized_displacement"],
         y,
         xerr=np.vstack(
@@ -666,53 +882,13 @@ def make_function_control_figure(
         color=COLORS["root"],
         capsize=3,
     )
-    axes[0, 0].axvline(0, color="#777777", linewidth=0.8)
-    axes[0, 0].set(
+    pathway_ax.axvline(0, color="#777777", linewidth=0.8)
+    pathway_ax.set(
         yticks=y,
         yticklabels=contrast_labels,
         xlabel="Consistency of pathway shift\n(0 = cancelling, 1 = aligned)",
-        title="(a) Predicted pathway profiles\ndiffer by compartment",
     )
-    axes[0, 0].invert_yaxis()
-
-    validation_values = ko_validation["spearman_rho"].to_numpy(dtype=float)
-    axes[0, 1].hist(
-        validation_values,
-        bins=np.linspace(0.4, 0.85, 16),
-        color="#0072B2",
-        edgecolor="white",
-        linewidth=0.5,
-    )
-    median = float(np.median(validation_values))
-    median_metric = ko_metrics[
-        ko_metrics["metric"].eq("per_sample_ko_profile_spearman_median")
-    ]
-    if len(median_metric) != 1:
-        raise ValueError("Missing median KO-profile uncertainty result")
-    median_low = float(median_metric.iloc[0]["interval_low"])
-    median_high = float(median_metric.iloc[0]["interval_high"])
-    axes[0, 1].axvspan(
-        median_low,
-        median_high,
-        color="#CC3311",
-        alpha=0.18,
-        linewidth=0,
-    )
-    axes[0, 1].axvline(median, color="#CC3311", linewidth=1.5)
-    axes[0, 1].text(
-        median - 0.008,
-        axes[0, 1].get_ylim()[1] * 0.92,
-        f"median {median:.2f}\n95% interval {median_low:.2f}--{median_high:.2f}",
-        ha="right",
-        va="top",
-        color="#CC3311",
-        fontsize=8.5,
-    )
-    axes[0, 1].set(
-        xlabel="Predicted vs genome-derived\nKO ranking (Spearman $\\rho$)",
-        ylabel="Matched samples",
-        title="(b) Gene-family rank agreement\n($n=125$)",
-    )
+    pathway_ax.invert_yaxis()
 
     pma_groups = pma_pairs.assign(group=pma_pairs["pair_id"].str.extract(r"^(C[12][RS])", expand=False))
     expected_groups = {"C1R", "C2R", "C2S"}
@@ -723,25 +899,23 @@ def make_function_control_figure(
         if len(values) != 3:
             raise ValueError(f"Expected three aliquot comparisons for {group}")
         for row in values.itertuples():
-            axes[1, 0].plot(
+            pma_ax.plot(
                 [0, 1],
                 [row.untreated_expected_rarefied_richness, row.treated_expected_rarefied_richness],
                 color=color, linewidth=0.9, alpha=0.5, marker="o", markersize=3.4,
             )
-        axes[1, 0].plot(
+        pma_ax.plot(
             [0, 1],
             [values["untreated_expected_rarefied_richness"].mean(), values["treated_expected_rarefied_richness"].mean()],
             color=color, linewidth=2.1, marker="D", markersize=4,
             label=f"{group} mean", zorder=4,
         )
-    axes[1, 0].set(
+    pma_ax.set(
         xticks=[0, 1],
         xticklabels=["Untreated", "PMA treated"],
-        xlabel="Trip 5 aliquots from two campsites",
         ylabel="Expected richness",
-        title="(c) PMA aliquot outcomes\nby sample group",
     )
-    axes[1, 0].legend(frameon=False, fontsize=8.0)
+    pma_ax.legend(frameon=False, fontsize=8.0)
 
     biological = removal[
         removal["role"].eq("compatible_biological_profile")
@@ -750,7 +924,7 @@ def make_function_control_figure(
         biological["candidate_contaminant_read_fraction"].to_numpy(dtype=float)
         * 100
     )
-    axes[1, 1].scatter(
+    removal_ax.scatter(
         np.arange(1, len(fractions) + 1),
         np.maximum(fractions, 0.0001),
         s=10,
@@ -758,36 +932,35 @@ def make_function_control_figure(
         alpha=0.75,
         edgecolor="none",
     )
-    axes[1, 1].axhline(
+    removal_ax.axhline(
         np.median(fractions), color="#CC3311", linewidth=1.2, linestyle="--"
     )
     fraction_q1, fraction_q3 = np.quantile(fractions, [0.25, 0.75])
-    axes[1, 1].axhspan(
+    removal_ax.axhspan(
         fraction_q1,
         fraction_q3,
         color="#CC3311",
         alpha=0.10,
         linewidth=0,
     )
-    axes[1, 1].set_yscale("log")
-    axes[1, 1].set(
-        xlabel="Trip 5 profiles, ordered by fraction",
-        ylabel="Candidate reads removed (%)",
-        title="(d) Candidate read fractions\nin linked profiles",
+    removal_ax.set_yscale("log")
+    removal_ax.set(
+        xlabel="Trip 5 profiles,\nordered by fraction",
+        ylabel="Contaminant reads removed (%)",
     )
-    axes[1, 1].text(
+    removal_ax.text(
         0.03,
         0.95,
         f"median {np.median(fractions):.2f}%\n"
-        f"middle 50% {fraction_q1:.2f}--{fraction_q3:.2f}%\n"
+        f"middle 50% {fraction_q1:.2f}–{fraction_q3:.2f}%\n"
         f"maximum {np.max(fractions):.1f}%",
-        transform=axes[1, 1].transAxes,
+        transform=removal_ax.transAxes,
         ha="left",
         va="top",
         fontsize=8.0,
     )
 
-    fig.tight_layout(h_pad=2.8, w_pad=2.2)
+    fig.tight_layout(w_pad=2.2)
     fig.savefig(output, bbox_inches="tight", metadata=PDF_METADATA)
     plt.close(fig)
 
@@ -802,7 +975,11 @@ def main() -> None:
     parser.add_argument("--environment-dir", type=Path, default=None)
     parser.add_argument("--picrust-dir", type=Path, default=None)
     parser.add_argument("--rain-dir", type=Path, default=None)
+    parser.add_argument("--ordination-dir", type=Path, default=None)
     parser.add_argument("--control-dir", type=Path, default=None)
+    parser.add_argument("--ph-dir", type=Path, default=None)
+    parser.add_argument("--xrf-dir", type=Path, default=None)
+    parser.add_argument("--biology-dir", type=Path, default=None)
     parser.add_argument("--pma-dir", type=Path, default=None)
     parser.add_argument("--measured-function-dir", type=Path, default=None)
     parser.add_argument("--boundary-file", type=Path, default=None)
@@ -826,6 +1003,21 @@ def main() -> None:
         args.control_dir.resolve()
         if args.control_dir is not None
         else local_v3 / "control_audit"
+    )
+    ph_dir = (
+        args.ph_dir.resolve()
+        if args.ph_dir is not None
+        else local_v3 / "ph_group_linkage_20260909"
+    )
+    xrf_dir = (
+        args.xrf_dir.resolve()
+        if args.xrf_dir is not None
+        else local_v3 / "xrf_community_rescue"
+    )
+    biology_dir = (
+        args.biology_dir.resolve()
+        if args.biology_dir is not None
+        else local_v3 / "biology_context_corrected_20260909"
     )
     pma_dir = (
         args.pma_dir.resolve()
@@ -861,6 +1053,11 @@ def main() -> None:
         args.rain_dir.resolve()
         if args.rain_dir is not None
         else local_v3 / "rain_pulse_response"
+    )
+    ordination_dir = (
+        args.ordination_dir.resolve()
+        if args.ordination_dir is not None
+        else local_v3 / "aitchison_ordination"
     )
     distance_decay_dir = core / "distance_decay_turnover"
     if not (distance_decay_dir / "distance_decay_pairs.tsv").is_file():
@@ -900,6 +1097,8 @@ def main() -> None:
         "distance_decay_pairs": (
             distance_decay_dir / "distance_decay_pairs.tsv"
         ),
+        "ordination_scores": ordination_dir / "ordination_scores.tsv",
+        "ordination_summary": ordination_dir / "ordination_summary.json",
         "climate_site_summary": (
             environment_dir / "climate_site_summary.tsv"
         ),
@@ -927,6 +1126,9 @@ def main() -> None:
         "control_sensitivity_summary": (
             control_dir / "sensitivity_inputs/summary.json"
         ),
+        "ph_group_table": ph_dir / "ph_group_analysis_table.tsv",
+        "laboratory_xrf_axis": xrf_dir / "laboratory_xrf_axis.tsv",
+        "site_landforms": biology_dir / "site_landforms.tsv",
     }
     missing = [str(path) for path in input_paths.values() if not path.is_file()]
     if missing:
@@ -947,6 +1149,37 @@ def main() -> None:
     distance_pairs = pd.read_csv(
         input_paths["distance_decay_pairs"], sep="\t"
     )
+    ph_groups = pd.read_csv(input_paths["ph_group_table"], sep="\t")
+    xrf_axis = pd.read_csv(input_paths["laboratory_xrf_axis"], sep="\t")
+    landforms = pd.read_csv(input_paths["site_landforms"], sep="\t")
+    require_columns(
+        ph_groups,
+        {"trip", "site", "compartment", "ph"},
+        input_paths["ph_group_table"],
+    )
+    require_columns(
+        xrf_axis,
+        {"Trip", "Site", "Type", "elemental_pc1"},
+        input_paths["laboratory_xrf_axis"],
+    )
+    require_columns(
+        landforms, {"site", "landform"}, input_paths["site_landforms"]
+    )
+    ordination = pd.read_csv(input_paths["ordination_scores"], sep="\t")
+    ordination_summary = json.loads(
+        input_paths["ordination_summary"].read_text(encoding="utf-8")
+    )
+    require_columns(
+        ordination,
+        {"campaign", "site", "compartment", "transect_km", "pc1", "pc2"},
+        input_paths["ordination_scores"],
+    )
+    if (
+        len(ordination) != ordination_summary["n_groups"]
+        or ordination_summary["n_genera"] != 200
+        or ordination[["pc1", "pc2", "transect_km"]].isna().any().any()
+    ):
+        raise ValueError("Ordination scores do not match their summary")
     climate_site = pd.read_csv(
         input_paths["climate_site_summary"], sep="\t"
     )
@@ -1146,22 +1379,27 @@ def main() -> None:
     setup_style()
     output_paths = {
         "landscape": output / "fig1_landscape.pdf",
-        "soil_position": output / "fig2_soil_position.pdf",
+        "composition_geography": output / "fig2_composition_geography.pdf",
+        "soil_position": output / "fig3_soil_position.pdf",
         "campaign_rainfall_supplement": (
             output / "figS_campaign_rainfall.pdf"
         ),
-        "function_controls": output / "fig3_function_controls.pdf",
+        "function_controls": output / "fig5_function_controls.pdf",
+        "environment_gradients": output / "fig4_environment_gradients.pdf",
     }
     make_landscape_figure(
         alpha,
         coordinates,
         boundary_file,
         background_file,
-        distance_pairs,
         climate_site,
-        climate_alpha,
-        climate_genus,
         output_paths["landscape"],
+    )
+    make_composition_geography_figure(
+        ordination,
+        ordination_summary,
+        distance_pairs,
+        output_paths["composition_geography"],
     )
     make_soil_position_figure(
         paired,
@@ -1176,12 +1414,20 @@ def main() -> None:
     )
     make_function_control_figure(
         picrust_position,
-        ko_validation,
-        ko_metrics,
         pma_pairs,
         pma_summary,
         control_removal,
         output_paths["function_controls"],
+    )
+    make_environment_gradient_figure(
+        ph_groups,
+        xrf_axis,
+        coordinates,
+        climate_site,
+        landforms,
+        climate_alpha,
+        climate_genus,
+        output_paths["environment_gradients"],
     )
 
     rows = []

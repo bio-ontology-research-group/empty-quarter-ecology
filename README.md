@@ -14,7 +14,8 @@ and assay-aware low-biomass controls. Regression tests cover specified
 calculations, figure semantics and selected result/prose checks; they do not
 regenerate every number or the upstream raw-read processing.
 
-The active manuscript preserves Rund Tawfiq's 2 October 2026 Overleaf revision,
+The active manuscript preserves Rund Tawfiq's 2 October 2026 Overleaf revision
+and her 9 October 2026 figure revision (`handover/figure-revision-20261009-rund.md`),
 with factual corrections documented in the coauthor review package. The paper
 and supplement in `empty-quarter-amplicon/` are synchronized with Overleaf,
 including the included tables and generated figures. The analysis inventory
@@ -51,8 +52,8 @@ make figures PYTHON=../empty-quarter-data-paper/.conda-env/bin/python
 make paper
 ```
 
-`make figures` renders all six submitted figures from their current result
-tables in a temporary directory and requires byte-identical PDFs and review
+`make figures` renders the five main-text figures and three supplementary or
+archived figures from their current result tables in a temporary directory and requires byte-identical PDFs and review
 manifests. Byte-level rendering uses the exact Linux environment in the data
 repository's `environment/conda-linux-64.lock`; the renderer fails before
 writing output if Python, Matplotlib, or FreeType differs. `make paper` builds

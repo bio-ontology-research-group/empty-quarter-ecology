@@ -54,6 +54,22 @@ and the other programs used by the complete workflow. Raptor is built from its
 checksum-pinned source archive. Every executed remote workflow records the
 versions it actually found and the explicit-lock digest.
 
+### Figure inputs added on 9 October 2026
+
+The five main-text figures follow Rund Tawfiq's figure revision (handoff of
+9 October 2026). Two inputs are generated rather than tracked as sources:
+
+```bash
+# Blue Marble tile C1 (88 MB, untracked; the script checks its SHA-256)
+curl -L -o /tmp/C1.jpg "https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73751/world.topo.bathy.200407.3x21600x21600.C1.jpg"
+python scripts/figures/prepare_bluemarble_crop.py /tmp/C1.jpg   # 38-63 E, 16-25 N
+python analysis/v3/aitchison_ordination.py --output-dir analysis/v3/aitchison_ordination
+```
+
+The crop and ordination outputs are committed, so `make figures` does not need
+the tile. The ordination is descriptive (630 profiles, 60 sites, 200 genera;
+PC1 14.1 %, PC2 9.6 %).
+
 ## 3. Verify claims, figures, and papers
 
 ```bash

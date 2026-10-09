@@ -309,11 +309,15 @@ def test_trait_gene_numbers_match_text() -> None:
     main = mt.text("main")
     results = mt.section("main", "We examined mechanisms relevant to survival", r"\begintable")
     assert (
-        f"{pct(genome.loc['coxL_CO_dehydrogenase', 'fraction_of_genomes'])}% of MAGs carried the aerobic CO dehydrogenase gene coxL "
-        f"and {pct(genome.loc['NiFe_hydrogenase_large', 'fraction_of_genomes'])}% a [NiFe]-hydrogenase"
+        f"Of the MAGs, {pct(genome.loc['coxL_CO_dehydrogenase', 'fraction_of_genomes'])}% carried the CO dehydrogenase gene coxL "
+        f"and {pct(genome.loc['NiFe_hydrogenase_large', 'fraction_of_genomes'])}% a [NiFe]-hydrogenase gene"
     ) in results
-    assert "membrane-bound group 1 or soluble group 3d" in results
-    assert f"nifH was only in {pct(genome.loc['nifH_nitrogenase', 'fraction_of_genomes'])}%" in results
+    # De-emphasized trace-gas markers (9 Oct 2026): broad KO sets, no high-affinity claim,
+    # no phylum attribution and no compartment statement for hydrogenase carriers.
+    assert "membrane-bound group 1 and soluble group 3d" in results
+    assert "neither identifies high-affinity trace-gas oxidation" in results
+    assert "hydrogenase carriers" not in main and "mostly within Actinomycetota" not in main
+    assert f"nifH was found in only {pct(genome.loc['nifH_nitrogenase', 'fraction_of_genomes'])}%" in results
     assert f"(ρ={named.min():.2f}-{named.max():.2f} across 119 samples)" in results
     assert "combines hyaB, hhyL and hoxH" in mt.text("supplement")
     # Directions along the transect stated in the Results agree with the q<0.05 rhos.

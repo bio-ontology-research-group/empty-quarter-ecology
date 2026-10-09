@@ -63,7 +63,7 @@ def test_reconciled_claims_and_prose():
     ).iloc[0]
     assert f"{root_deep['mean']:.3f}" == "-0.269"
     assert "-0.269" in supplement and "[-0.492, -0.031]" in supplement
-    assert "membrane-bound group 1 or soluble group 3d" in main
+    assert "membrane-bound group 1 and soluble group 3d" in main
     assert "both membrane-bound group 1 and soluble group 3d" in supplement
     assert "permutations restricted within sites (999)" in main
     assert main.index("nearest-sequenced-taxon index") < main.index("Of the 462 predicted MetaCyc pathways")

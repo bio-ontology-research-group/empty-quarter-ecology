@@ -801,13 +801,16 @@ def test_companion_title_is_consistent(main_tex, supplement_tex):
     # The subtitle was dropped on 3 Sep 2026 at a co-author's suggestion.
     assert "reveals recurring" not in flat_main
     assert "reveals recurring" not in flat_supplement
-    bibliography = (
-        ROOT / "data-paper/sn-bibliography.bib"
-    ).read_text(encoding="utf-8")
+    locked_bib = locked_data_bytes("paper/sn-bibliography.bib").decode("utf-8")
     assert expected.replace("Rub'", "{Rub'").replace("al-Khali", "al-Khali}") \
-        in bibliography
+        in locked_bib
+    live_bib = (ROOT / "data-paper/sn-bibliography.bib").read_text(encoding="utf-8")
+    active_alt = (PAPER / "alt_stats.tex").read_text(encoding="utf-8")
+    active_title = "Microbial biogeography and functional differentiation across the Rub' al-Khali"
+    assert "\\title{" + active_title + "}" in " ".join(active_alt.split())
+    assert active_title.replace("Rub'", "{Rub'").replace("al-Khali", "al-Khali}") in live_bib
     assert "compartment and genomic-potential structure" not in (
-        main_tex + supplement_tex + bibliography
+        main_tex + supplement_tex + locked_bib + live_bib
     )
 
 

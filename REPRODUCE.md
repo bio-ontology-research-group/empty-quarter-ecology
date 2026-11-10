@@ -78,6 +78,8 @@ make verify PYTHON=.venv/bin/python
 make test PYTHON=.venv/bin/python DATA_REPO=../empty-quarter-data-paper
 make figures PYTHON=../empty-quarter-data-paper/.conda-env/bin/python
 make paper
+# Optional: rebuild preserved historical amplicon-only targets (main.pdf, supplement.pdf)
+make paper-legacy
 ```
 
 The test suite checks numerical claims against canonical TSV/JSON outputs,

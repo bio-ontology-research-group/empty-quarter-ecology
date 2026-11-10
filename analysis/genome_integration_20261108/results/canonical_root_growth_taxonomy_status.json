@@ -1,0 +1,11 @@
+{
+  "canonical_3guild_genus_turnover_status": "COMPLETED_EXACT_R232_DECOMPOSITION_10_SPATIAL_BLOCKS",
+  "primary_3guild_panels_verified": [
+    "HMM:glycine betaine transporter",
+    "HMM:ahpCF",
+    "typed:[NiFe]_Group_1l"
+  ],
+  "secondary_grodon_order_genus_regression_claim": "root_growth_order_or_genus_association_gRodon",
+  "secondary_grodon_order_genus_regression_status": "PENDING_CANONICAL_TAXONOMY_RERUN_VISIBLE_PLACEHOLDER_APPROVED_DO_NOT_ASSERT_LEGACY_AS_CURRENT",
+  "note": "Per canonical-taxonomy-sensitivity-design.txt Item 4 and canonical-runtime-final-review.txt Item 3, canonical 3-guild genus turnover decomposition (BetL: HMM:glycine betaine transporter, AhpCF: HMM:ahpCF, Group 1l: typed:[NiFe]_Group_1l) is recomputed directly under canonical gtdb_r232_classification using the 10 contiguous spatial blocks (transect_km). In contrast, the secondary gRodon/root-growth order/genus regression remains pending a canonical rerun and uses the supervisor-approved TAXONOMY-SNAPSHOT-SENSITIVITY placeholder rather than asserting legacy taxonomy labels as current."
+}

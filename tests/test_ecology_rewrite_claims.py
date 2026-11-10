@@ -133,7 +133,7 @@ def _surname_sort_key(surname: str) -> str:
 def test_data_paper_uses_the_same_author_order_rule():
     source = _read_manuscript_source(ROOT / "data-paper/sn-article.tex")
     authors = re.findall(
-        r"^\\author\*?\[[0-9]+\]\{\\fnm\{([^{}]+)\} \\sur\{([^{}]+)\}\}",
+        r"^\\author\*?\[[0-9,]+\]\{\\fnm\{([^{}]+)\} \\sur\{([^{}]+)\}\}",
         source,
         re.M,
     )

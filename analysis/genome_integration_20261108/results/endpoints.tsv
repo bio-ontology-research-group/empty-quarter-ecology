@@ -1,0 +1,208 @@
+endpoint	name	source	units	n
+0	HMM:hsp10:mapped	MAG	percentage_points	546
+1	HMM:hsp10:whole	MAG	percentage_points	546
+2	HMM:hsp24:mapped	MAG	percentage_points	546
+3	HMM:hsp24:whole	MAG	percentage_points	546
+4	HMM:hsp40:mapped	MAG	percentage_points	546
+5	HMM:hsp40:whole	MAG	percentage_points	546
+6	HMM:hsp60:mapped	MAG	percentage_points	546
+7	HMM:hsp60:whole	MAG	percentage_points	546
+8	HMM:hsp70:mapped	MAG	percentage_points	546
+9	HMM:hsp70:whole	MAG	percentage_points	546
+10	HMM:hsp100_key:mapped	MAG	percentage_points	546
+11	HMM:hsp100_key:whole	MAG	percentage_points	546
+12	HMM:hsp100_or:mapped	MAG	percentage_points	546
+13	HMM:hsp100_or:whole	MAG	percentage_points	546
+14	HMM:lon_or:mapped	MAG	percentage_points	546
+15	HMM:lon_or:whole	MAG	percentage_points	546
+16	HMM:heatinducibleTF:mapped	MAG	percentage_points	546
+17	HMM:heatinducibleTF:whole	MAG	percentage_points	546
+18	HMM:sodA:mapped	MAG	percentage_points	546
+19	HMM:sodA:whole	MAG	percentage_points	546
+20	HMM:ahpCF:mapped	MAG	percentage_points	546
+21	HMM:ahpCF:whole	MAG	percentage_points	546
+22	HMM:TF_redox:mapped	MAG	percentage_points	546
+23	HMM:TF_redox:whole	MAG	percentage_points	546
+24	HMM:trehalose_biosynthesis:mapped	MAG	percentage_points	546
+25	HMM:trehalose_biosynthesis:whole	MAG	percentage_points	546
+26	HMM:betaine_biosynthesis:mapped	MAG	percentage_points	546
+27	HMM:betaine_biosynthesis:whole	MAG	percentage_points	546
+28	HMM:mannosylglycerate_biosynthesis:mapped	MAG	percentage_points	546
+29	HMM:mannosylglycerate_biosynthesis:whole	MAG	percentage_points	546
+30	HMM:proline_biosynthesis:mapped	MAG	percentage_points	546
+31	HMM:proline_biosynthesis:whole	MAG	percentage_points	546
+32	HMM:glycine betaine/proline transport system:mapped	MAG	percentage_points	546
+33	HMM:glycine betaine/proline transport system:whole	MAG	percentage_points	546
+34	HMM:glycine betaine transporter:mapped	MAG	percentage_points	546
+35	HMM:glycine betaine transporter:whole	MAG	percentage_points	546
+36	HMM:choline/glycine/proline betaine transport:mapped	MAG	percentage_points	546
+37	HMM:choline/glycine/proline betaine transport:whole	MAG	percentage_points	546
+38	HMM:proline transport:mapped	MAG	percentage_points	546
+39	HMM:proline transport:whole	MAG	percentage_points	546
+40	HMM:opu_and:mapped	MAG	percentage_points	546
+41	HMM:opu_and:whole	MAG	percentage_points	546
+42	HMM:mechanosensitive channel:mapped	MAG	percentage_points	546
+43	HMM:mechanosensitive channel:whole	MAG	percentage_points	546
+44	HMM:dpp-1_full:mapped	MAG	percentage_points	546
+45	HMM:dpp-1_full:whole	MAG	percentage_points	546
+46	HMM:dpp-1_key:mapped	MAG	percentage_points	546
+47	HMM:dpp-1_key:whole	MAG	percentage_points	546
+48	HMM:dpp-2_full:mapped	MAG	percentage_points	546
+49	HMM:dpp-2_full:whole	MAG	percentage_points	546
+50	HMM:dpp-2_key:mapped	MAG	percentage_points	546
+51	HMM:dpp-2_key:whole	MAG	percentage_points	546
+52	HMM:opp-1_full:mapped	MAG	percentage_points	546
+53	HMM:opp-1_full:whole	MAG	percentage_points	546
+54	HMM:opp-1_key:mapped	MAG	percentage_points	546
+55	HMM:opp-1_key:whole	MAG	percentage_points	546
+56	HMM:aap_full:mapped	MAG	percentage_points	546
+57	HMM:aap_full:whole	MAG	percentage_points	546
+58	HMM:aap_key:mapped	MAG	percentage_points	546
+59	HMM:aap_key:whole	MAG	percentage_points	546
+60	HMM:gln_full:mapped	MAG	percentage_points	546
+61	HMM:gln_full:whole	MAG	percentage_points	546
+62	HMM:glt_full:mapped	MAG	percentage_points	546
+63	HMM:glt_full:whole	MAG	percentage_points	546
+64	HMM:amt:mapped	MAG	percentage_points	546
+65	HMM:amt:whole	MAG	percentage_points	546
+66	HMM:urease:mapped	MAG	percentage_points	546
+67	HMM:urease:whole	MAG	percentage_points	546
+68	HMM:ammonia assimilation to glutamate:mapped	MAG	percentage_points	546
+69	HMM:ammonia assimilation to glutamate:whole	MAG	percentage_points	546
+70	HMM:ammonia assimilation to glutamine-GS:mapped	MAG	percentage_points	546
+71	HMM:ammonia assimilation to glutamine-GS:whole	MAG	percentage_points	546
+72	HMM:nitrogen fixation_key:mapped	MAG	percentage_points	546
+73	HMM:nitrogen fixation_key:whole	MAG	percentage_points	546
+74	HMM:ammonia oxidation to nitrite_full:mapped	MAG	percentage_points	546
+75	HMM:ammonia oxidation to nitrite_full:whole	MAG	percentage_points	546
+76	HMM:lycopene biosynthesis:mapped	MAG	percentage_points	546
+77	HMM:lycopene biosynthesis:whole	MAG	percentage_points	546
+78	HMM:spoIIGA:mapped	MAG	percentage_points	546
+79	HMM:spoIIGA:whole	MAG	percentage_points	546
+80	KO_projection:hsp10:mapped	MAG	percentage_points	546
+81	KO_projection:hsp10:whole	MAG	percentage_points	546
+82	KO_projection:hsp24:mapped	MAG	percentage_points	546
+83	KO_projection:hsp24:whole	MAG	percentage_points	546
+84	KO_projection:hsp40:mapped	MAG	percentage_points	546
+85	KO_projection:hsp40:whole	MAG	percentage_points	546
+86	KO_projection:hsp60:mapped	MAG	percentage_points	546
+87	KO_projection:hsp60:whole	MAG	percentage_points	546
+88	KO_projection:hsp70:mapped	MAG	percentage_points	546
+89	KO_projection:hsp70:whole	MAG	percentage_points	546
+90	KO_projection:hsp100_key:mapped	MAG	percentage_points	546
+91	KO_projection:hsp100_key:whole	MAG	percentage_points	546
+92	KO_projection:hsp100_or:mapped	MAG	percentage_points	546
+93	KO_projection:hsp100_or:whole	MAG	percentage_points	546
+94	KO_projection:lon_or:mapped	MAG	percentage_points	546
+95	KO_projection:lon_or:whole	MAG	percentage_points	546
+96	KO_projection:heatinducibleTF:mapped	MAG	percentage_points	546
+97	KO_projection:heatinducibleTF:whole	MAG	percentage_points	546
+98	KO_projection:sodA:mapped	MAG	percentage_points	546
+99	KO_projection:sodA:whole	MAG	percentage_points	546
+100	KO_projection:ahpCF:mapped	MAG	percentage_points	546
+101	KO_projection:ahpCF:whole	MAG	percentage_points	546
+102	KO_projection:TF_redox:mapped	MAG	percentage_points	546
+103	KO_projection:TF_redox:whole	MAG	percentage_points	546
+104	KO_projection:trehalose_biosynthesis:mapped	MAG	percentage_points	546
+105	KO_projection:trehalose_biosynthesis:whole	MAG	percentage_points	546
+106	KO_projection:betaine_biosynthesis:mapped	MAG	percentage_points	546
+107	KO_projection:betaine_biosynthesis:whole	MAG	percentage_points	546
+108	KO_projection:mannosylglycerate_biosynthesis:mapped	MAG	percentage_points	546
+109	KO_projection:mannosylglycerate_biosynthesis:whole	MAG	percentage_points	546
+110	KO_projection:proline_biosynthesis:mapped	MAG	percentage_points	546
+111	KO_projection:proline_biosynthesis:whole	MAG	percentage_points	546
+112	KO_projection:glycine betaine/proline transport system:mapped	MAG	percentage_points	546
+113	KO_projection:glycine betaine/proline transport system:whole	MAG	percentage_points	546
+114	KO_projection:glycine betaine transporter:mapped	MAG	percentage_points	546
+115	KO_projection:glycine betaine transporter:whole	MAG	percentage_points	546
+116	KO_projection:choline/glycine/proline betaine transport:mapped	MAG	percentage_points	546
+117	KO_projection:choline/glycine/proline betaine transport:whole	MAG	percentage_points	546
+118	KO_projection:proline transport:mapped	MAG	percentage_points	546
+119	KO_projection:proline transport:whole	MAG	percentage_points	546
+120	KO_projection:opu_and:mapped	MAG	percentage_points	546
+121	KO_projection:opu_and:whole	MAG	percentage_points	546
+122	KO_projection:mechanosensitive channel:mapped	MAG	percentage_points	546
+123	KO_projection:mechanosensitive channel:whole	MAG	percentage_points	546
+124	KO_projection:dpp-1_full:mapped	MAG	percentage_points	546
+125	KO_projection:dpp-1_full:whole	MAG	percentage_points	546
+126	KO_projection:dpp-1_key:mapped	MAG	percentage_points	546
+127	KO_projection:dpp-1_key:whole	MAG	percentage_points	546
+128	KO_projection:dpp-2_full:mapped	MAG	percentage_points	546
+129	KO_projection:dpp-2_full:whole	MAG	percentage_points	546
+130	KO_projection:dpp-2_key:mapped	MAG	percentage_points	546
+131	KO_projection:dpp-2_key:whole	MAG	percentage_points	546
+132	KO_projection:opp-1_full:mapped	MAG	percentage_points	546
+133	KO_projection:opp-1_full:whole	MAG	percentage_points	546
+134	KO_projection:opp-1_key:mapped	MAG	percentage_points	546
+135	KO_projection:opp-1_key:whole	MAG	percentage_points	546
+136	KO_projection:aap_full:mapped	MAG	percentage_points	546
+137	KO_projection:aap_full:whole	MAG	percentage_points	546
+138	KO_projection:aap_key:mapped	MAG	percentage_points	546
+139	KO_projection:aap_key:whole	MAG	percentage_points	546
+140	KO_projection:gln_full:mapped	MAG	percentage_points	546
+141	KO_projection:gln_full:whole	MAG	percentage_points	546
+142	KO_projection:glt_full:mapped	MAG	percentage_points	546
+143	KO_projection:glt_full:whole	MAG	percentage_points	546
+144	KO_projection:amt:mapped	MAG	percentage_points	546
+145	KO_projection:amt:whole	MAG	percentage_points	546
+146	KO_projection:urease:mapped	MAG	percentage_points	546
+147	KO_projection:urease:whole	MAG	percentage_points	546
+148	KO_projection:ammonia assimilation to glutamate:mapped	MAG	percentage_points	546
+149	KO_projection:ammonia assimilation to glutamate:whole	MAG	percentage_points	546
+150	KO_projection:ammonia assimilation to glutamine-GS:mapped	MAG	percentage_points	546
+151	KO_projection:ammonia assimilation to glutamine-GS:whole	MAG	percentage_points	546
+152	KO_projection:nitrogen fixation_key:mapped	MAG	percentage_points	546
+153	KO_projection:nitrogen fixation_key:whole	MAG	percentage_points	546
+154	KO_projection:ammonia oxidation to nitrite_full:mapped	MAG	percentage_points	546
+155	KO_projection:ammonia oxidation to nitrite_full:whole	MAG	percentage_points	546
+156	KO_projection:lycopene biosynthesis:mapped	MAG	percentage_points	546
+157	KO_projection:lycopene biosynthesis:whole	MAG	percentage_points	546
+158	KO_projection:spoIIGA:mapped	MAG	percentage_points	546
+159	KO_projection:spoIIGA:whole	MAG	percentage_points	546
+160	legacy:photolyase:mapped	MAG	percentage_points	546
+161	legacy:photolyase:whole	MAG	percentage_points	546
+162	legacy:nhej:mapped	MAG	percentage_points	546
+163	legacy:nhej:whole	MAG	percentage_points	546
+164	legacy:carotenoid:mapped	MAG	percentage_points	546
+165	legacy:carotenoid:whole	MAG	percentage_points	546
+166	legacy:SOS_translesion:mapped	MAG	percentage_points	546
+167	legacy:SOS_translesion:whole	MAG	percentage_points	546
+168	legacy:base_excision_repair:mapped	MAG	percentage_points	546
+169	legacy:base_excision_repair:whole	MAG	percentage_points	546
+170	legacy:dna_protection_oxidative:mapped	MAG	percentage_points	546
+171	legacy:dna_protection_oxidative:whole	MAG	percentage_points	546
+172	legacy:mismatch_repair:mapped	MAG	percentage_points	546
+173	legacy:mismatch_repair:whole	MAG	percentage_points	546
+174	legacy:nucleotide_excision_repair:mapped	MAG	percentage_points	546
+175	legacy:nucleotide_excision_repair:whole	MAG	percentage_points	546
+176	curated:trehalose_strict:mapped	MAG	percentage_points	546
+177	curated:trehalose_strict:whole	MAG	percentage_points	546
+178	curated:ectoine_marker:mapped	MAG	percentage_points	546
+179	curated:ectoine_marker:whole	MAG	percentage_points	546
+180	curated:glucosylglycerol_strict:mapped	MAG	percentage_points	546
+181	curated:glucosylglycerol_strict:whole	MAG	percentage_points	546
+182	curated:mannosylglycerate_strict:mapped	MAG	percentage_points	546
+183	curated:mannosylglycerate_strict:whole	MAG	percentage_points	546
+184	typed:[NiFe]_Group_1l:mapped	MAG	percentage_points	546
+185	typed:[NiFe]_Group_1l:whole	MAG	percentage_points	546
+186	typed:[NiFe]_Group_1h:mapped	MAG	percentage_points	546
+187	typed:[NiFe]_Group_1h:whole	MAG	percentage_points	546
+188	typed:[NiFe]_Group_2a:mapped	MAG	percentage_points	546
+189	typed:[NiFe]_Group_2a:whole	MAG	percentage_points	546
+190	bacteria_hill1	community	natural_log	546
+191	archaea_hill1	community	natural_log	531
+192	thermoplasmatota_hill1	community	natural_log	479
+193	KO_hq_mq_hill1	community	natural_log	546
+194	archaea_whole_percent	community	percentage_points	546
+195	thermoplasmatota_whole_percent	community	percentage_points	546
+196	catalogue_mapped_percent	community	percentage_points	546
+197	reads:hydB_1l	direct_reads	log2_GE_plus_0.01	546
+198	reads:hydB_1h	direct_reads	log2_GE_plus_0.01	546
+199	reads:hydB_2a	direct_reads	log2_GE_plus_0.01	546
+200	reads:coxL_formI	direct_reads	log2_GE_plus_0.01	546
+201	reads:hydB_other_nife	direct_reads	log2_GE_plus_0.01	546
+202	reads:coxL_other	direct_reads	log2_GE_plus_0.01	546
+203	reads_excess:hydB_1l	direct_reads	log2_excess	546
+204	reads_excess:hydB_1h	direct_reads	log2_excess	546
+205	reads_excess:hydB_2a	direct_reads	log2_excess	546
+206	reads_excess:coxL_formI	direct_reads	log2_excess	546

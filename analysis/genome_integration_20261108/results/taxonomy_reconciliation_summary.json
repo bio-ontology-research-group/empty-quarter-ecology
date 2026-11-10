@@ -1,0 +1,56 @@
+{
+  "n_total_genomes": 5438,
+  "n_whole_taxonomy_strings_differ": 1898,
+  "n_domain_differs": 0,
+  "n_phylum_differs": 247,
+  "n_class_differs": 34,
+  "n_order_differs": 220,
+  "n_family_differs": 511,
+  "n_genus_differs": 1124,
+  "n_species_differs": 46,
+  "max_completeness_abs_diff": 0.0,
+  "max_contamination_abs_diff": 0.0,
+  "thermoplasmatota_237": {
+    "n_genomes": 237,
+    "n_whole_taxonomy_strings_differ": 42,
+    "n_class_differs": 0,
+    "n_order_differs": 5,
+    "n_family_differs": 12,
+    "n_genus_differs": 29,
+    "canonical_class_counts": {
+      "c__SW-10-69-26": 185,
+      "c__E2": 51,
+      "c__Thermoplasmata": 1
+    },
+    "legacy_named_orders_n": 4,
+    "legacy_named_orders": [
+      "o__JACPAO01",
+      "o__JACQPN01",
+      "o__RBG-16-68-12",
+      "o__SW-10-69-26"
+    ],
+    "legacy_unassigned_order_genomes_n": 0,
+    "canonical_named_orders_n": 4,
+    "canonical_named_orders": [
+      "o__JACPAO01",
+      "o__JACQPN01",
+      "o__RBG-16-68-12",
+      "o__SW-10-69-26"
+    ],
+    "canonical_unassigned_order_genomes_n": 2,
+    "legacy_named_genera_n": 14,
+    "legacy_unassigned_genus_genomes_n": 139,
+    "legacy_genus_singleton_blocks_n": 153,
+    "canonical_named_genera_n": 19,
+    "canonical_unassigned_genus_genomes_n": 135,
+    "canonical_genus_singleton_blocks_n": 154
+  },
+  "provenance_note": "Reconciles analytical inputs/genome_quality.tsv and inputs/thermoplasmatota.tsv against data-paper canonical metadata/metagenome/canonical/refined_representatives.tsv (gtdb_r232_classification) by exact 1:1 genome==mag join. Does not speculate on the release or cause of the legacy taxonomy strings.",
+  "input_sha256": {
+    "refined_representatives.tsv": "dbe9db11362e77c4274543431ad40ee92ed6b181c2c0f7ddc055c4f5a32971d6",
+    "legacy_genome_quality.tsv": "eaa687d9fed4e4062ea6655bf24194edd0514926b42cafe04c3ad4bfe034a7f5",
+    "legacy_thermoplasmatota.tsv": "27ee8668c0062775cbf95310b9711692756ffbd4a36924d2fb9405fdabc785cf",
+    "overlay_genome_quality.tsv": "2a2e05877b88e2ad583df64d82e44d038540ed2aebc8739a42f488451d148ef5",
+    "overlay_thermoplasmatota.tsv": "ba4c908cec56a834a23f065f0f3d8e115e9a2e3f24cccf4d8013ad469910ece6"
+  }
+}

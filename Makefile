@@ -3,7 +3,7 @@ PYTHON ?= python3
 DATA_REPO ?= ../empty-quarter-data-paper
 SOURCE_DATE_EPOCH ?= 1785888000
 
-.PHONY: bootstrap manifest verify test figures paper clean well-analysis
+.PHONY: bootstrap manifest verify test figures paper paper-legacy clean well-analysis
 
 bootstrap:
 	bash scripts/release/bootstrap_data_dependency.sh "$(DATA_REPO)"
@@ -24,13 +24,21 @@ figures:
 paper:
 	cd empty-quarter-amplicon && \
 		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
+		latexmk -pdf -interaction=nonstopmode -halt-on-error supp_altstat.tex
+	cd empty-quarter-amplicon && \
+		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
+		latexmk -pdf -interaction=nonstopmode -halt-on-error alt_stats.tex
+
+paper-legacy:
+	cd empty-quarter-amplicon && \
+		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
 		latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 	cd empty-quarter-amplicon && \
 		SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 \
 		latexmk -pdf -interaction=nonstopmode -halt-on-error supplement.tex
 
 clean:
-	cd empty-quarter-amplicon && latexmk -C main.tex && latexmk -C supplement.tex
+	cd empty-quarter-amplicon && latexmk -C alt_stats.tex && latexmk -C supp_altstat.tex && latexmk -C main.tex && latexmk -C supplement.tex
 
 well-analysis: bootstrap
 	$(PYTHON) analysis/well-adjacency-20261005/01_build_bc.py \

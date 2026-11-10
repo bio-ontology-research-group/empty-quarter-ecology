@@ -1,0 +1,429 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{todonotes}
+\usepackage[table]{xcolor}
+\usepackage{xr}
+\externaldocument[main-]{alt_stats}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{gensymb}
+\usepackage{threeparttable}
+\input{ph_shared_v1.tex}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{Supplementary Information\\
+\large Microbial biogeography and functional differentiation across the Rub' al-Khali}
+\author{Rund Tawfiq and co-authors}
+\date{4 October 2026}
+
+\begin{document}
+\maketitle
+
+\section{Controls and contamination quantification}\label{sup:controls}
+We followed recommended guidelines for reporting contamination in low biomass samples by analyzing each control according to the study stage it tested \cite{fierer2025controls}. Table~\ref{tab:controls} details the controls included in the analyses. The canonical $1{,}271$-profile amplicon table contains $24$ sequenced assay-control profiles: $18$ Trip~5 extraction blanks (\texttt{EB1}--\texttt{EB18}, of which $17$ have confirmed extraction-day links to $217$ biological profiles and \texttt{EB18} lacks an extraction-batch mapping) and six sequenced Trip~5 water PCR no-template controls (\texttt{Negative1}, \texttt{Negative2}, \texttt{Negative4}--\texttt{Negative7}). Six additional Trip~4 extraction blanks (\texttt{SEB}, \texttt{EB1}--\texttt{EB5}; $24$ sequenced extraction blanks in total, $23$ batch-linked across Trips~4 and~5) and four positive mock-community standards were denoised in separate control analyses, whereas reagent-only amplification-plate negative controls did not have a measurable DNA concentration and were not sequenced because TapeStation profiles showed only primer and adapter dimers. After excluding the 24 assay controls, ten low-depth biological profiles and duplicate sequencing runs were removed to yield the 1,186 deduplicated primary-transect profiles ([PENDING: \texttt{ECOL-READ-CUTOFF-RECONCILIATION}; current manuscript text cites a $<10{,}000$ read cutoff whereas canonical data descriptors and companion methods record ten biological profiles with $<1{,}000$ reads, including \texttt{T1Dr1} with 934 reads; source threshold under verification]).
+
+
+\begin{table}[htbp]\centering\small
+\caption{Control samples overview across the canonical survey table and stage-specific control analyses.}
+\label{tab:controls}
+\begin{tabular}{p{0.24\linewidth}p{0.25\linewidth}p{0.39\linewidth}}\toprule
+Control & Stage and material & Sequenced and linked analysis counts \\\midrule
+Survey extraction blanks (T5) & Extraction; nuclease-free water and extraction reagents & 18 canonical profiles (\texttt{EB1}--\texttt{EB18}); 17 batch-linked to 217 T5 biological profiles \\
+Survey PCR no-template controls (T5) & Amplification; PCR reagents and nuclease-free water & 6 canonical profiles (\texttt{Negative1}, \texttt{Negative2}, \texttt{Negative4}--\texttt{Negative7}) \\
+T4 extraction-blank rerun & Extraction; nuclease-free water and extraction reagents & 6 separately denoised blanks linked to 95 T4 biological profiles (23 batch-linked blanks across T4--T5) \\
+Reagent-only plate controls & Amplification; PCR reagents without water or DNA template & Not sequenced (only primer/adapter dimers) \\
+T2 DNA community controls & Amplification and sequencing; ZymoBIOMICS HMW DNA Standard (D6322) & 2 samples \\
+T3 whole-cell community controls & Extraction, amplification and sequencing; ZymoBIOMICS Microbial Community Standard (D6300) & 2 samples \\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{DNA extraction kit controls}\label{kitcontrols}
+Since the study involved DNA extraction using different kits and extractions during different sessions, we included extraction blanks to understand contamination introduced during the extraction steps. We performed two sensitivity analyses using extraction blanks linked to samples from two different campaigns (Trip 4 and Trip 5), independently. We denoised the six Trip 4 extraction blanks together with the additional control libraries and matched their ASVs to the biological count table by exact sequence. T5 samples and their extraction blanks shared a sequencing run. For both analyses, we considered an ASV as a candidate contaminant if it was present in at least $2$ blanks and was more prevalent in blanks than in samples using an unadjusted one-sided Fisher test ($p<0.1$). We quantified the candidate contaminant ASVs in the samples, then removed them and measured the effect of their removal on Shannon diversity and raw richness using Spearman’s correlation coefficient to compare the sample profiles before and after their removal.
+
+The Trip 5 set included $17$ extraction blanks linked to $217$ samples, and we found $351$ candidate contaminant ASVs that comprised 2.2\% of pooled reads and a median of 0.40\% per sample (IQR 0.16—0.99\%, maximum 56.60\%). Shannon diversity and raw richness rankings were strongly correlated before and after removing the candidate contaminants ($\rho = 0.995$ and $0.999$, respectively). Trip 4 had $6$ extraction blanks linked to $95$ samples, and we found $7$ candidate contaminant ASVs, including \textit{Nesterenkonia}, \textit{Brevibacterium} and \textit{Alcaligenes} and $4$ ASVs without a genus assignment. Candidate contaminant ASVs were present in 33\% of the samples and comprised 0.14\% of pooled reads (maximum 14\%). Across the $95$ linked samples, before/after Shannon diversity and raw richness rankings were strongly correlated (Spearman $\rho=0.999$ and $1.000$, respectively).
+
+
+\subsection{Microbial community standard controls}
+We included two different types of mock microbial community control samples in the study design. These controls included purified DNA ZymoBIOMICS HMW DNA Standard (D6322) in Trip 1 and Trip 2, and whole-cell ZymoBIOMICS Microbial Community Standard (D6300) which we later extracted in Trip 3. We used two community control replicates from Trip 2 and two from Trip 3 to estimate genus recovery based on the known community composition from the vendor. At the genus level, one Trip 2 community control and two Trip 3 controls recovered all the known genera present, with 31\%, 100\%, and  99.99\% of their reads assigned to the expected genera, respectively.
+
+\subsection{Well-to-well contamination}
+Use of 96-well plates for sequencing library preparation is known to introduce cross-contamination between physically close samples in microbiome studies \cite{welltowell}. We used $259$ biological samples from T1 and their well positions to evaluate whether well-to-well contamination occurred in our study. Within each campaign and 96-well plate, we compared Bray--Curtis dissimilarities between pairs of samples from different sites. We defined adjacent wells as pairs of wells sharing an edge or a corner (Euclidean distance $\le \sqrt{2}$), and we matched the pairs by geographic-distance decile and whether they came from the same or different soil compartments. For profiles listed in more than one well, we retained the first listed position. We calculated the mean difference in dissimilarity between adjacent and non-adjacent pairs, weighted by the number of adjacent pairs per stratum. The null distribution used 999 permutations of sample-to-well assignments within each plate (random seed 42). Adjacent wells were not more similar than matched non-adjacent wells. Dissimilarity difference was +0.005 (999 permutations, one-sided $p$ = 0.87).
+
+\subsection{Replicate variation}
+Replicate samples collected a few millimetres apart from the same compartment, site, and campaign were generally similar in diversity. The median difference in rarefied richness between a replicate and the mean of its replicate group was $11\,\%$ (Figure~\ref{fig:replicate_spread}). In the remaining $42$ groups, one replicate was usually poorer than the others ($15$ of $20$ groups with three replicates). These discordant replicates had fewer sequencing reads than the other replicates in the same group ($32$ of $37$ cases; median $114{,}000$ versus $365{,}000$ reads) and lacked genera that were common in the rest of the group (a median of $6$ of the $50$ most common genera missing, compared with $1$). They were not distinguished by measured DNA concentration. These patterns indicate that most discordance reflects technical variation in low-yield samples, clustered in particular campaigns and sites, rather than differences between soils a few millimetres apart.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{updated_figures/replicate_spread.png}
+\caption{(a) Standard deviation differences in log richness between replicate samples. (b) Quantile–quantile (Q–Q) plot of the replicate deviations.}
+\label{fig:replicate_spread}
+\end{figure}
+
+\section{XRF element axis}\label{sup:xrf}
+We retained the $11$ elements detected in at least $75\,\%$ of laboratory XRF records: Al, Ca, Cl, Fe, K, Mg, Na, P, S, Si, and Ti. We transformed their readings as $\log(1+x)$, and standardized each element within campaign. We then reduced the standardized elements to principal components and took the first component (PC1) as a single elemental score per sample (Table~\ref{tab:xrf_elements}). PC1 captured $39.2\,\%$ of the elemental variance and was weighted most strongly toward Ca ($0.413$), Mg ($0.406$), Na ($0.370$), S ($0.354$) and Cl ($0.338$), and negatively toward Si ($-0.273$). This axis contrasts higher Ca, Mg, Na, S and Cl with lower Si. This score correlated $r = 0.825$ with an internal evaporite-element reference and $r = 0.976$ with a globally standardized version of the same axis.
+
+We oriented PC1 to correlate positively with the mean within-campaign standardized log readings for Cl, Na and S, the retained elements in the internal reference set. The globally standardized sensitivity standardized each element across all campaigns together. Missing values and values constant within the standardization group were assigned zero after standardization.
+
+
+
+\begin{table}[htbp]\centering\small
+\caption{Elements used in the elemental score. Medians are taken over samples in which the element was detected. Loadings are the weights of each element on the first principal component (elemental score), computed on log-transformed concentrations standardized within campaign.}\label{tab:xrf_elements}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrcrrrrr}\toprule
+ & & & \multicolumn{4}{c}{Median by dune field} & \\\cmidrule(lr){4-7}
+Element & Detected (\%) & Median (IQR) & Uruq & Seif & Sigm./hooked & Megabarchans & Loading \\\midrule
+Ca & 100.0 & 1.80 (0.89--3.93) & 1.20 & 3.47 & 4.36 & 3.93 & 0.41 \\
+Mg & 100.0 & 0.33 (0.24--0.51) & 0.28 & 0.42 & 0.51 & 0.64 & 0.41 \\
+Na & 96.8 & 0.21 (0.13--0.34) & 0.18 & 0.26 & 0.26 & 0.50 & 0.37 \\
+S & 87.6 & 0.052 (0.031--0.110) & 0.042 & 0.056 & 0.077 & 0.480 & 0.35 \\
+Cl & 87.3 & 0.069 (0.042--0.130) & 0.052 & 0.066 & 0.092 & 0.970 & 0.34 \\
+Fe & 100.0 & 0.52 (0.38--0.76) & 0.49 & 0.60 & 0.58 & 0.52 & 0.28 \\
+Ti & 98.6 & 0.12 (0.08--0.20) & 0.11 & 0.14 & 0.14 & 0.12 & 0.28 \\
+K & 99.9 & 0.78 (0.60--0.93) & 0.74 & 0.82 & 0.86 & 0.75 & 0.17 \\
+Al & 100.0 & 1.10 (0.86--1.40) & 1.20 & 1.20 & 1.15 & 0.91 & 0.16 \\
+P & 79.6 & 0.065 (0.041--0.120) & 0.070 & 0.057 & 0.064 & 0.054 & $-0.01$ \\
+Si & 100.0 & 20.0 (16.9--21.8) & 20.8 & 19.3 & 19.1 & 15.7 & $-0.27$ \\\bottomrule
+\end{tabular}
+}\end{table}
+
+
+
+
+\section{Relic DNA experiment}\label{sup:relic}
+\subsection{Sample description}
+During T5, we collected additional samples from two campsites: C1R (root-adjacent soil) and C2R, C2S (root-adjacent soil, surface soil, respectively). We also collected C2 shallow sub-surface soil, but these samples were not included in the experiments because DNA extractions failed for these samples. For each of the three remaining parent soil tubes, representing a site $\times$ compartment group, we prepared $3$ separate homogenized soil slurries in sterile phosphate-buffered saline (PBS, pH $7.4$) at a $1:10$ (w/v) ratio. We split each slurry into a treated and an untreated aliquot, giving nine paired comparisons grouped within three parent tubes.
+
+\subsection{PMAxx treatment}
+We added PMAxx (Biotium, Hayward, USA) to each treated aliquot at a final concentration of $50\,\mu\mathrm{M}$. We subjected both treated and untreated aliquots to the following conditions: 10 min dark incubation, photo activation with a $450\,\mathrm{nm}$ LED lamp for 35 min on a white reflective surface ($15$--$20\,\mathrm{cm}$ from the lamp), and rotation at 15 min intervals. We stored samples at $-20\,^{\circ}\mathrm{C}$ until DNA extraction, which was performed using $860\,\mu\mathrm{L}$ from each aliquot with the DNeasy PowerSoil Pro kit (QIAGEN). We amplified the DNA and sequenced the samples with the protocols described in Section~\ref{main-sec:methods_sampleprocessing}.
+
+\subsection{Results}
+We calculated Hurlbert expected richness at $123{,}897$ reads, the minimum
+depth among the 18 libraries, and Shannon diversity at full read depth. We report each treated--untreated difference and the mean difference within each of the three site $\times$ compartment groups (Table~\ref{tab:relicresults}; Figure~\ref{fig:relicRichness}). The headline-estimate index is under \path{analysis/v3/headline_uncertainty/}.
+
+\begin{table}[htbp]
+\centering
+\caption{Relic DNA aliquot comparisons for $9$ sample pairs ($18$ libraries) across three site $\times$ compartment groups in T5 campsites.}
+\label{tab:relicresults}
+\begin{tabular}{llll}
+\hline
+Measure                        & C1R    & C2R     & C2S     \\ \hline
+Rarefied Richness (treated - untreated) & -36.70 & -341.78 & -111.49 \\
+Shannon (treated - untreated)  & 0.726  & -0.025  & -0.311  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\linewidth]{figures/fig_pma_richness.pdf}
+\caption{Expected ASV richness at $123{,}897$ reads in untreated and PMA-treated aliquots. Thin lines join the paired aliquots from each slurry; thick lines show the mean of three slurries from each parent soil tube. C1R and C2R are root-adjacent soil at two campsites, and C2S is surface soil at the second campsite.}
+\label{fig:relicRichness}
+\end{figure}
+
+%%%%%%%%%
+
+%%%%%%%%%
+\section{Statistical Models}
+\subsection{Identifiability simulation}\label{identifiability}
+Environmental covariates and soil properties that change systematically across the landscape can be confounded with unmeasured spatial variation. We therefore used simulation to assess which associations our sampling design can identify. We report an association only when in simulation the 95\% credible interval recovered the true value in at least 90\% of replicates, and excluded zero in at most 10\% of replicates in which there was no true effect.
+
+We used the measured covariates and site coordinates, and simulated log richness for the 1,138 samples. Simulated values included compartment, campaign, and sequencing run effects, independent random effects for sites, visits (site $\times$ campaign) and units (site $\times$ campaign $\times$ compartment), and Student-$t$ observation noise accounting for variation between replicate samples. All values were set to the posterior medians of the fitted richness model without covariates (standard deviations: site 0.08, visit 0.26, unit 0.33; residual scale 0.34). Spatial variation was added as a Mat\'ern Gaussian field ($\nu = 1$) at the fitted range and standard deviation (SD) (967~km, SD = $0.56$) or 200 km (SD = $0.4$) generated independently of the covariates.
+
+For site-mean elemental score, we simulated either no effect or an effect of $-0.15$ per SD, close to the observed estimate. For site mean pH, we simulated either no effect or an effect of $-1.0$ per SD. Each replicate was fitted with the richness model described above, with an SPDE field using the same mesh and priors as the main analysis. We ran 100--300 replicates per scenario (Table~\ref{tab:identifiability}). For each scenario we report coverage, the false-positive rate or power, bias, and their Monte Carlo standard errors.
+
+We repeated the elemental-score checks for genera. We selected five genera spanning the range of prevalence (\textit{Geodermatophilus}, \textit{Chelativorans}, \textit{Verrucosispora}, \textit{Thermosipho} and \textit{Staphylococcus}). For each genus, we simulated presence and abundance from its fitted hurdle model, with a true effect of either zero or $-0.3$ per SD, and ran 50 replicates per genus and scenario. This check used each genus's own coefficients. It did not cover the slopes expressed relative to the mean of all genera, or the false discovery rate correction.
+
+% We simulated six scenarios with 300 replicates each. Two scenarios included spatial variation without covariate effects, with a range of either 1,000 or 200 km, to estimate how often spatial variation alone produces a false association. The other four each had one true covariate effect: temperature without spatial variation, temperature with spatial variation, site-mean XRF with spatial variation, and within-site XRF with spatial variation. The three effect scenarios that included spatial variation used the 1,000 km range. Temperature and site-mean XRF effects were set to $-0.25$ per SD across sites, and the within-site XRF effect to $-0.15$ per SD of within-site deviations. Each replicate was fitted with the model structure described above plus an SPDE spatial field using the same mesh and priors as the main analysis. Models for within-site effects also included site-mean XRF and within-site pH, and used only samples with unit-level measurements. An association was declared when the 95\% credible interval excluded zero. For each scenario we report the false-positive rate or power, bias, and coverage of the 95\% interval.
+
+\paragraph{Results.}
+No fit failed or reached a degenerate solution in any scenario. With spatial variation but no covariate effect, the SPDE model rarely reported a false association for site-mean XRF (4.5\% of replicates at the fitted range of 967 km and 3.5\% at the 200 km range, against a nominal 5\%). For site-mean pH, false associations were reported in 9\% of replicates at the fitted range and 2\% at the 200 km range. False-positive rates for within-site XRF were 7.0\% (fitted range) and 12.0\% (200 km), and for within-site pH 10.5\% (fitted range) and 5.0\% (200 km). The two highest rates were within about one Monte Carlo standard error of 10\%. In these two scenarios, the model slightly underestimated uncertainty (mean posterior SD 0.021, against an SD of 0.024--0.025 in estimates across simulated datasets).
+
+Estimates were unbiased in every simulated scenario with a covariate effect (absolute bias $\leq 0.005$). A site-mean XRF effect of $-0.15$ per SD was detected in 92.5\% of replicates (94.5\% coverage), and a within-site XRF effect of $-0.15$ per SD in every replicate (96.0\% coverage). Within-site pH, which had no effect, was falsely detected in 4.5\% of these replicates. A site-mean pH effect of $-0.10$ per SD was detected in only 33\% of replicates, although its intervals were well calibrated (91\% coverage).
+
+Genus models behaved similarly. With spatial variation but no covariate effect, false associations with site-mean XRF were reported in 8.0\% of replicates for presence and 7.2\% for abundance, and with within-site XRF and pH in 3.6--7.6\%. Estimates were close to unbiased (absolute bias $\leq 0.018$). A site-mean XRF effect of $-0.3$ per SD was detected in 51\% (presence) and 72\% (abundance) of replicates (coverage 92.8\% and 89.6\%), and a within-site XRF effect of $-0.2$ per SD in 49\% and 78\% (coverage 93.2\% and 92.4\%). The model slightly underestimated uncertainty for site-mean XRF: posterior SDs were about 12\% smaller than the SD of estimates across simulated datasets.
+
+Under random spatial variation, our sampling design can therefore identify associations with site-mean XRF and with within-site variation in XRF and pH, for both richness and genera (Table~\ref{tab:identifiability}). Within-site associations with richness should be interpreted with some caution, as their false-positive rate reached 10--12\% in one of the two spatial settings. Site-mean pH associations were well calibrated but had low power, so the absence of a detected pH association is not evidence of no effect. Power for genera was moderate, so a genus without a detected association may still respond to these properties. Monte Carlo standard errors were at most 4.7 percentage points (site-mean pH, 100 replicates) and at most 3.2 percentage points elsewhere.
+
+\begin{table}[ht]
+\centering
+\caption{Performance of the SPDE models in the identifiability simulation. Spatial variation was a Mat\'ern Gaussian field at the range and SD of the fitted model (richness: 967 km, SD 0.56; genera: fitted per genus) or at a range of 200 km (SD 0.4; richness only). Richness scenarios had 200 replicates, except site-mean pH (100). Genus scenarios pooled five genera with 50 replicates each (250). ``Excludes zero'' is the percentage of replicates in which the 95\% credible interval excluded zero: the false-positive rate when the true effect is zero, and the power otherwise. Coverage is the percentage in which the interval contained the true value (nominal 95\%). Monte Carlo standard errors were $\leq 4.7$ percentage points.}
+\label{tab:identifiability}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllrrr}
+\toprule
+Response & Scenario & Term & True effect & Excludes zero (\%) & Coverage (\%) \\
+\midrule
+Richness & No effect, fitted range   & Site-mean XRF   & 0 & 4.5  & 95.5 \\
+         &                           & Site-mean pH    & 0 & 9.0  & 91.0 \\
+         &                           & Within-site XRF & 0 & 7.0  & 93.0 \\
+         &                           & Within-site pH  & 0 & 10.5 & 89.5 \\
+\addlinespace
+         & No effect, 200 km range   & Site-mean XRF   & 0 & 3.5  & 96.5 \\
+         &                           & Site-mean pH    & 0 & 2.0  & 98.0 \\
+         &                           & Within-site XRF & 0 & 12.0 & 88.0 \\
+         &                           & Within-site pH  & 0 & 5.0  & 95.0 \\
+\addlinespace
+         & Site-mean XRF, fitted range   & Site-mean XRF   & $-0.15$ & 92.5  & 94.5 \\
+         & Site-mean pH, fitted range    & Site-mean pH    & $-0.10$ & 33.0  & 91.0 \\
+         & Within-site XRF, fitted range & Within-site XRF & $-0.15$ & 100.0 & 96.0 \\
+         &                               & Within-site pH  & 0       & 4.5   & 95.5 \\
+\midrule
+Genus presence & No effect, fitted range       & Site-mean XRF   & 0      & 8.0  & 92.0 \\
+               &                               & Within-site XRF & 0      & 6.4  & 93.6 \\
+               &                               & Within-site pH  & 0      & 5.6  & 94.4 \\
+               & Site-mean XRF, fitted range   & Site-mean XRF   & $-0.3$ & 50.8 & 92.8 \\
+               & Within-site XRF, fitted range & Within-site XRF & $-0.2$ & 48.8 & 93.2 \\
+               &                               & Within-site pH  & 0      & 6.4  & 93.6 \\
+\addlinespace
+Genus abundance & No effect, fitted range       & Site-mean XRF   & 0      & 7.2  & 92.8 \\
+                &                               & Within-site XRF & 0      & 3.6  & 96.4 \\
+                &                               & Within-site pH  & 0      & 7.6  & 92.4 \\
+                & Site-mean XRF, fitted range   & Site-mean XRF   & $-0.3$ & 71.6 & 89.6 \\
+                & Within-site XRF, fitted range & Within-site XRF & $-0.2$ & 77.6 & 92.4 \\
+                &                               & Within-site pH  & 0      & 6.4  & 93.6 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{Prior sensitivity}\label{priors}
+We assessed whether the main estimates depended on the choice of priors. We refitted the compartment contrasts (models without environmental variables) and the association with site-mean XRF (models with the site mean and the spatial field). For each set, the median of the PC prior on the range of the spatial field was changed from 200~km to 50~km and to 500~km. For the compartment contrasts, we also changed the scale of the PC priors on the random-effect SDs from $P(\mathrm{SD} > 1) = 0.01$ to $P(\mathrm{SD} > 0.5) = 0.01$ and $P(\mathrm{SD} > 2) = 0.01$, halving and doubling the prior scale. The prior on the SD of the spatial field was kept at $P(\sigma > 1) = 0.01$. All other model components were as in the main analysis. Prior sensitivity was not assessed for within-site associations, site-mean pH, climate or the genus models.
+
+\paragraph{Results.}
+Estimates were insensitive to the priors (Table~\ref{tab:prior_sensitivity}). Across the four alternative priors, the compartment contrasts in rarefied richness changed by at most 0.1 percentage points, and those in Shannon and normalized Shannon by less than 0.001. Credible-interval limits changed by similar amounts, and no interval changed in whether it included zero. The site-mean XRF association with richness was $-13.5\%$ (95\% CrI $-21.0$ to $-5.2$) with the 200~km prior, $-13.5\%$ ($-20.9$ to $-5.3$) with 50~km, and $-13.4\%$ ($-20.9$ to $-5.3$) with 500~km. The corresponding Shannon estimates ranged from $-0.175$ to $-0.178$ nats, and the normalized Shannon estimates from $-0.015$ to $-0.018$. All intervals excluded zero.
+
+\begin{sidewaystable}[p]
+\centering
+\caption{Sensitivity of the main estimates to the priors. Richness contrasts are percentage changes; Shannon and normalized Shannon are differences. Main analysis: prior median range of the spatial field 200~km, and PC priors on the random-effect SDs with $P(\mathrm{SD} > 1) = 0.01$. Values are posterior medians with 95\% credible intervals.}
+\label{tab:prior_sensitivity}
+\small
+\resizebox{\textheight}{!}{%
+\begin{tabular}{lllll}
+\toprule
+Estimate & Main analysis & Range 50 km & Range 500 km & SD scale $\times 0.5$ / $\times 2$ \\
+\midrule
+\multicolumn{5}{l}{\textit{Rarefied richness (\%)}} \\
+Shallow subsurface $-$ surface & 9.5 (0.5, 19.2)    & 9.5 (0.5, 19.2)    & 9.5 (0.5, 19.3)    & 9.5 (0.5, 19.2) / 9.5 (0.4, 19.3) \\
+Root-adjacent $-$ surface      & $-9.9$ ($-17.2$, $-1.8$) & $-9.9$ ($-17.1$, $-1.8$) & $-9.9$ ($-17.2$, $-1.8$) & $-9.9$ ($-17.2$, $-1.9$) / $-9.8$ ($-17.1$, $-1.7$) \\
+Root-adjacent $-$ shallow subsurface & $-17.7$ ($-24.3$, $-10.3$) & $-17.7$ ($-24.3$, $-10.3$) & $-17.7$ ($-24.3$, $-10.3$) & $-17.8$ ($-24.3$, $-10.4$) / $-17.7$ ($-24.3$, $-10.2$) \\
+Site-mean XRF (per SD)         & $-13.5$ ($-21.0$, $-5.2$) & $-13.5$ ($-20.9$, $-5.3$) & $-13.4$ ($-20.9$, $-5.3$) & -- \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Shannon diversity (nats)}} \\
+Shallow subsurface $-$ surface & 0.11 ($-0.01$, 0.23) & 0.11 ($-0.01$, 0.23) & 0.11 ($-0.01$, 0.23) & 0.11 ($-0.01$, 0.23) / 0.11 ($-0.01$, 0.23) \\
+Root-adjacent $-$ surface      & $-0.15$ ($-0.27$, $-0.03$) & $-0.15$ ($-0.27$, $-0.03$) & $-0.15$ ($-0.27$, $-0.03$) & $-0.15$ ($-0.27$, $-0.04$) / $-0.15$ ($-0.27$, $-0.03$) \\
+Root-adjacent $-$ shallow subsurface & $-0.26$ ($-0.38$, $-0.15$) & $-0.26$ ($-0.38$, $-0.15$) & $-0.26$ ($-0.38$, $-0.15$) & $-0.26$ ($-0.38$, $-0.15$) / $-0.26$ ($-0.38$, $-0.15$) \\
+Site-mean XRF (per SD)         & $-0.18$ ($-0.31$, $-0.04$) & $-0.18$ ($-0.32$, $-0.04$) & $-0.17$ ($-0.31$, $-0.04$) & -- \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Normalized Shannon diversity}} \\
+Shallow subsurface $-$ surface & 0.012 (0.002, 0.023) & 0.012 (0.002, 0.023) & 0.012 (0.002, 0.023) & 0.012 (0.002, 0.023) / 0.012 (0.002, 0.023) \\
+Root-adjacent $-$ surface      & $-0.029$ ($-0.039$, $-0.018$) & $-0.029$ ($-0.039$, $-0.018$) & $-0.029$ ($-0.039$, $-0.018$) & $-0.029$ ($-0.039$, $-0.018$) / $-0.029$ ($-0.039$, $-0.018$) \\
+Root-adjacent $-$ shallow subsurface & $-0.041$ ($-0.052$, $-0.031$) & $-0.041$ ($-0.052$, $-0.031$) & $-0.041$ ($-0.052$, $-0.031$) & $-0.041$ ($-0.052$, $-0.031$) / $-0.041$ ($-0.052$, $-0.031$) \\
+Site-mean XRF (per SD)         & $-0.016$ ($-0.028$, $-0.004$) & $-0.018$ ($-0.028$, $-0.006$) & $-0.015$ ($-0.027$, $-0.004$) & -- \\
+\bottomrule
+\end{tabular}
+}
+\end{sidewaystable}
+
+
+\subsection{Models}\label{models}
+Climate, soil properties and position change together along the transect, so we tested each type of association with the part of the data that can separate it from geography. Including a spatial field accounts for the similarity of nearby sites, but it does not by itself distinguish a measured variable from other factors that vary smoothly across the landscape \cite{hodges2010}. We therefore first simulated log richness and genus presence and abundance on the real sampling design, with known environmental effects and with spatial trends unrelated to any measured variable, to test which associations the design could recover (Table~\ref{tab:identifiability}).
+
+We compared compartments sampled during the same site visit, in models without environmental variables. To test whether pH and XRF PC1 were associated with diversity within sites, we split each group's value into its site mean and its deviation from that mean \cite{mundlak1978}, and entered both parts of both variables in one model. The deviations compare samples from the same site, so their associations are not confounded with differences between sites. Associations between sites were estimated in separate models, each including one site mean (pH or XRF PC1) and the spatial field, and therefore describe differences among sites beyond the broad spatial pattern. Long-term temperature and humidity closely track position along the transect ($r = 0.93$ and $0.92$), so we modeled each separately, with and without the spatial field, and interpret their associations as descriptions of the west--east gradient rather than as independent environmental effects.
+
+\subsection{Calibration of distance decay intervals}\label{decay_calibration}
+Pairwise distances share sites, so standard regression intervals for distance-decay slopes are too narrow. We used simulation to compare interval methods on our site layout. For each simulated dataset, we generated a CLR profile of 200 genera at each of the 60 sites. Each genus value was the sum of a site-level Gaussian process with exponential covariance and independent noise. Each genus had its own process. The range of the process was 300 or 1,000~km. We set the variances of the two terms so that the expected Aitchison distance matched the observed mean surface-soil distance for site pairs less than 50~km apart and more than 800~km apart. We then computed Aitchison distances between the simulated profiles and estimated the slope per 100~km by ordinary least squares, as in the main analysis. The true slope was the mean slope over 4,000 realizations of the same process.
+
+We compared three interval methods: the delete-one-site jackknife; a delete-one-block jackknife, in which the sites were divided into 12, 6 or 4 contiguous blocks along the transect and each block was removed in turn ($t$ quantiles with one fewer degree of freedom than the number of sites or blocks); and a model of the pairwise distances fitted with INLA, with random effects for both sites in each pair, either independent or spatially structured (BYM2 on a five-nearest-neighbor graph). We used 100 simulated datasets for the comparison with the INLA model and 500 for the comparison of jackknife intervals.
+
+To assess intervals for the difference in slope between two compartments, we simulated pairs of compartments with the same true slope (300 datasets per range). Each compartment's profile combined a Gaussian process shared by both compartments, a compartment-specific Gaussian process with the same range, and independent noise. The shared fraction was chosen so that the correlation between the two compartments' distance matrices matched the observed value for shallow subsurface and root-adjacent soil (0.67). We compared the delete-one-site and 12-block jackknife intervals, and a permutation test of site labels (999 permutations) applied to the matrix of differences.
+
+\paragraph{Results.}
+Intervals that treated sites as exchangeable were too narrow (Table~\ref{tab:decay_calibration}). Delete-one-site jackknife intervals contained the true slope in 82\% of simulated datasets with a 300~km range and 67\% with a 1,000~km range. Intervals from the INLA model of pairwise distances contained it in only 11--12\%, whether site effects were independent or spatially structured. Block jackknife intervals reached or exceeded nominal coverage: 99.8\% and 94\% with 12 blocks, and 99--100\% with 6 or 4 blocks. Block intervals were wider, 2.0--2.5 times the width of the site jackknife intervals with 12 blocks. We therefore used the 12-block jackknife, the smallest number of blocks that achieved nominal coverage at both ranges.
+
+For differences between compartments, no method reached nominal coverage. Delete-one-site jackknife intervals contained the true difference of zero in 60--63\% of datasets, and 12-block jackknife intervals in 77--81\%. The site permutation test falsely detected a difference in 66--72\% of datasets. Differences in decay slope between compartments should therefore be interpreted with caution.
+
+\begin{table}[ht]
+\centering
+\caption{Coverage of 95\% intervals for the distance-decay slope of Aitchison distance in simulated communities on the real site layout. Communities were generated from Gaussian processes with a range of 300 or 1,000~km. ``Single compartment'': percentage of simulated datasets in which the interval contained the true slope. ``Difference'': percentage in which the interval for the difference between two compartments with equal true slopes contained zero; for the permutation test, the percentage of datasets in which it falsely detected a difference ($p < 0.05$).}
+\label{tab:decay_calibration}
+\small
+\begin{tabular}{llrr}
+\toprule
+Target & Method & Range 300 km & Range 1,000 km \\
+\midrule
+Single compartment & Delete-one-site jackknife$^a$          & 82.2  & 66.8  \\
+                   & 12-block jackknife$^a$                 & 99.8  & 94.0  \\
+                   & 6-block jackknife$^a$                  & 100.0 & 99.0  \\
+                   & 4-block jackknife$^a$                  & 100.0 & 100.0 \\
+                   & INLA pair model, independent sites$^b$ & 12.0  & 11.0  \\
+                   & INLA pair model, BYM2 sites$^b$        & 11.0  & 11.0  \\
+\addlinespace
+Difference         & Delete-one-site jackknife$^c$          & 63.3  & 60.0  \\
+                   & 12-block jackknife$^c$                 & 80.7  & 76.7  \\
+                   & Site permutation test (false positives)$^c$ & 66.0 & 71.7 \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize $^a$500 datasets; $^b$100 datasets; $^c$300 datasets.}
+\end{tabular}
+\end{table}
+
+\subsection{Genus models}\label{genus_models}
+\subsection{Hurdle models}\label{hurdle}
+We summed reads within each site $\times$ campaign $\times$ compartment group and retained groups with at least 2,000 reads (630 groups). Of the 384 genera present in at least 20\% of these groups, we analyzed the 200 with the highest mean relative abundance. Most genera were absent from many samples, so for each genus we fitted a hurdle model with two parts, both at the level of individual samples (1,186 profiles). Presence was modeled with a binomial likelihood and standardized log total read count as a covariate. Abundance where present was modeled with a zero-truncated negative binomial likelihood, with the log total read count of the profile (including unclassified reads) as an offset. Both parts included the fixed effects of compartment, campaign and sequencing run, independent random effects for sites, visits and site $\times$ campaign $\times$ compartment groups, and the SPDE spatial field, with the same mesh and priors as the diversity models. Fixed effects for the design had normal priors with SD 10, because differences in genus abundance between compartments and campaigns can be large; standardized covariate slopes had normal priors with SD 1.
+
+Each genus was fitted with the same set of models as diversity (see Models). A model without environmental variables for compartment contrasts, a model with the site means and within-site deviations of pH and XRF PC1, and separate models with the site mean of XRF PC1 or of pH. 
+
+Read counts carry information only on relative abundance, so an increase in some genera lowers the share of all others. We therefore summarized each slope on two scales: the raw coefficient of each genus, and the coefficient relative to the mean coefficient of all 200 genera, computed for each of 20,000 posterior draws. The relative scale identifies genera that respond more or less strongly than the average genus and is unaffected by shifts shared by all genera, such as changes in total load or sequencing depth. For each slope we calculated a two-sided posterior tail probability and controlled the false discovery rate at 5\% (Benjamini--Hochberg) separately for each model part, estimate and scale. 
+
+To compare dune fields, we added the four dune fields as a fixed effect (uruq as reference; normal prior with SD 10), alone or together with site-mean XRF. For each genus and model part, we tested whether the genus differed among dune fields with a Wald test of the three dune-field coefficients (3 degrees of freedom), and controlled the false discovery rate across genera.
+
+\subsubsection{Joint model}\label{joint}
+We fitted hierarchical joint species distribution models (HMSC) \cite{hmsc} to the 50 most abundant of the 200 genera, with presence (probit) and log abundance where present (normal) modeled separately. Fixed effects were compartment, campaign, sequencing run and log read depth (HMSC does not use an offset). A second model added a natural spline of transect position (3 degrees of freedom) and the standardized site means of XRF PC1 and pH, so that associations that disappear in this model can be attributed to the shared west--east gradient. Random effects with latent factors were included at the site level (a Gaussian process on site coordinates), the site $\times$ campaign $\times$ compartment level and the sample level. We ran two chains with 12,500 burn-in iterations and retained 250 samples per chain at a thinning of 100.
+
+Because most groups held only one or two samples, the group and sample levels exchanged covariance between chains, so we combined them into a single within-site level. For each posterior draw, we centered the within-site residual covariance on the mean of the 50 genera (centered log-ratio), which removes variation shared by all genera, and summarized each pair of genera by its proportionality $\rho$ \cite{lovell2015, erb2016}. A pair was classified as positively associated when $P(\rho > 0) > 0.95$ and negatively associated when $P(\rho > 0) < 0.05$. To test replication, we refitted the model separately to campaigns 1 and 3 and to campaigns 4 and 5. Convergence was assessed with the potential scale reduction factor.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+\section{Figures}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{updated_figures/Landforms.png}
+\caption{Landforms observed in the study area.}
+\label{fig:landforms}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{updated_figures/fig_climate_samples.pdf}
+\caption{(a) Temperature and relative humidity from the 49-month period across the transect. (b) Number of samples used in the study across campaigns and compartments.}
+\label{fig:climate_samples}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{updated_figures/dune_field_effect_comparison_supp.png}
+\caption{Comparison of genus effect sizes. Each point is one of the 200 genera, colored by whether its effect is significant ($q < 0.05$) on both axes, one axis or neither; lines are least-squares fits. (\textbf{A}) Megabarchans vs uruq: presence vs abundance where present. (\textbf{B}, \textbf{C}) Site-mean XRF slope without vs with dune field, for presence (B) and abundance (C). (\textbf{D}) Megabarchan effect vs XRF slope in the same abundance model. All effects are relative to the average genus. Both axes come from the same data, so $R^2$ is descriptive.}
+\label{fig:genus_effect}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%
+\section{Tables}
+% Duplicate draft overview table retained in source comments; alt_stats.tex references tab:dune_alpha and tab:dune_cv below.
+% \begin{table}[htbp]
+% \centering
+% \caption{Alpha diversity by dune field.}
+% \label{tab:dune_alpha_overview}
+% \small
+% \resizebox{\linewidth}{!}{%
+% \begin{tabular}{lccc}
+% \hline
+%  & Rarefied richness (\%) & Shannon diversity & Normalized Shannon \\
+% \hline
+% Uruq ($n = 32$ sites) & reference & reference & reference \\
+% Seif ($n = 13$) & $-7$ ($-23$ to $+27$) & $-0.17$ ($-0.44$ to $+0.21$) & $-0.008$ ($-0.030$ to $+0.014$) \\
+% Sigmoidal and hooked ($n = 6$) & $-44$ ($-56$ to $-15$) & $-0.52$ ($-0.87$ to $+0.01$) & $-0.018$ ($-0.047$ to $+0.011$) \\
+% Megabarchans ($n = 9$) & $-79$ ($-84$ to $-68$) & $-1.68$ ($-2.03$ to $-1.13$) & $-0.088$ ($-0.116$ to $-0.059$) \\
+% \hline
+% Prediction gain (log score) & $+29.8$ & $+21.6$ & $+11.4$ \\
+% Spatial field SD, without dune field & $0.56$ ($0.32$ to $1.02$) & $0.57$ ($0.33$ to $0.99$) & $0.034$ ($0.017$ to $0.067$) \\
+% Spatial field SD, with dune field & $0.09$ ($0.02$ to $0.28$) & $0.14$ ($0.03$ to $0.63$) & $0.006$ ($0.001$ to $0.028$) \\
+% \hline
+% \end{tabular}
+% }
+% \end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Alpha diversity in each dune field relative to the uruq field (SPDE models without environmental covariates). Richness differences are percentages; Shannon (nats) and normalized Shannon differences are absolute. Posterior medians with $95\,\%$ credible intervals.}\label{tab:dune_alpha}
+\begin{tabular}{lccc}\toprule
+Dune field & Rarefied richness (\%) & Shannon & Normalized Shannon \\\midrule
+Seif & $-7$ ($-23$, $27$) & $-0.15$ ($-0.43$, $0.21$) & $-0.008$ ($-0.030$, $0.014$) \\
+Sigmoidal and hooked & $-44$ ($-56$, $-15$) & $-0.52$ ($-0.87$, $0.01$) & $-0.018$ ($-0.047$, $0.011$) \\
+Megabarchans & $-79$ ($-84$, $-68$) & $-1.65$ ($-2.03$, $-1.13$) & $-0.088$ ($-0.116$, $-0.059$) \\\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Spatial structure of rarefied richness and the effect of adding dune field. Standard deviations are on the log scale. Prediction gain is the improvement in leave-site-out log score when dune field is added.}\label{tab:dune_cv}
+\begin{tabular}{lcc}\toprule
+ & Without dune field & With dune field \\\midrule
+Spatial field SD & $0.56$ & $0.09$ \\
+Site SD (not captured by the spatial field) & $0.08$ & -- \\
+Spatial range (km, posterior median) & $970$ & -- \\\midrule
+\multicolumn{3}{l}{Prediction gain with dune field} \\
+\quad Rarefied richness & \multicolumn{2}{c}{$29.8$} \\
+\quad Shannon & \multicolumn{2}{c}{$21.6$} \\
+\quad Normalized Shannon & \multicolumn{2}{c}{$11.4$} \\\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Between-site associations with alpha diversity, per standard deviation of the site-level covariate (SPDE models). Richness in percent; Shannon in nats. Climate associations are descriptive (Section~\ref{identifiability}).}\label{tab:between_site}
+\begin{tabular}{lcc}\toprule
+Covariate and model & Rarefied richness (\%) & Shannon \\\midrule
+Elemental score & $-13.5$ ($-21.0$, $-5.2$) & $-0.18$ ($-0.31$, $-0.04$) \\
+\quad with dune field & $-8.8$ ($-15.7$, $-1.2$) & $-0.09$ ($-0.21$, $0.02$) \\
+\quad without low diversity profiles & $-5.4$ ($-12.6$, $2.5$) & $-0.10$ ($-0.23$, $0.03$) \\
+pH & $-15.1$ ($-30.3$, $0.3$) & $-0.24$ ($-0.51$, $0.03$) \\
+Humidity & $-38.6$ ($-50.3$, $-18.5$) & $-0.51$ ($-0.71$, $-0.22$) \\
+Temperature & $-16.7$ ($-42.6$, $23.5$) & $-0.32$ ($-0.69$, $0.09$) \\\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Differences in alpha diversity between compartments within sites, estimated from spatial (SPDE) models. Richness differences are percentages; Shannon (nats) and normalized Shannon differences are absolute. Posterior medians with $95\,\%$ credible intervals.}\label{tab:compartment_alpha}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccc}\toprule
+Contrast & Rarefied richness (\%) & Shannon & Normalized Shannon \\\midrule
+Root-adjacent vs surface & $-9.9$ ($-17.2$, $-1.8$) & $-0.15$ ($-0.27$, $-0.03$) & $-0.029$ ($-0.039$, $-0.018$) \\
+Root-adjacent vs shallow subsurface & $-17.7$ ($-24.3$, $-10.3$) & $-0.26$ ($-0.38$, $-0.15$) & $-0.041$ ($-0.052$, $-0.031$) \\
+Shallow subsurface vs surface & $9.5$ ($0.5$, $19.2$) & $0.11$ ($-0.01$, $0.23$) & $0.012$ ($0.002$, $0.023$) \\\bottomrule
+\end{tabular}
+}\end{table}
+
+%
+
+\begin{table}[htbp]\centering\small
+\caption{Distance decay per compartment. Slopes are changes in dissimilarity per $100$~km from pairwise regressions on the $1{,}770$ site pairs. $95\,\%$ intervals from a $12$-block jackknife along the transect.}\label{tab:decay}
+\begin{tabular}{lccc}\toprule
+ & Surface & Shallow subsurface & Root-adjacent \\\midrule
+Aitchison slope & $1.35$ ($0.48$, $2.21$) & $1.52$ ($0.57$, $2.47$) & $1.18$ ($0.20$, $2.15$) \\\addlinespace
+Mean S\o{}rensen & $0.41$ & $0.42$ & $0.41$ \\
+Turnover share (\%) & $74$ & $71$ & $76$ \\\addlinespace
+S\o{}rensen slope & $0.018$ ($-0.002$, $0.039$) & $0.026$ ($-0.003$, $0.054$) & $0.017$ ($0.002$, $0.032$) \\
+Turnover slope & $0.008$ ($-0.002$, $0.018$) & $0.010$ ($-0.006$, $0.026$) & $0.012$ ($0.000$, $0.023$) \\
+Nestedness slope & $0.011$ ($-0.004$, $0.025$) & $0.016$ ($-0.017$, $0.049$) & $0.005$ ($-0.005$, $0.015$) \\\bottomrule
+\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{Aitchison distance decay with dune field. Upper rows: one model with distance and, for each dune field, the number of sites in the pair belonging to that field ($0$--$2$; uruq as reference); field coefficients are the added dissimilarity per such site. Bottom row: a separate model with distance and an indicator for pairs from different fields. $95\,\%$ intervals from a $12$-block jackknife.}\label{tab:decay_dune}
+\begin{tabular}{lccc}\toprule
+ & Surface & Shallow subsurface & Root-adjacent \\\midrule
+Distance (per $100$~km) & $1.19$ ($0.74$, $1.63$) & $1.23$ ($0.67$, $1.79$) & $0.88$ ($0.17$, $1.60$) \\
+Seif & $1.9$ ($-3.3$, $7.0$) & $1.2$ ($-0.2$, $2.6$) & $0.8$ ($-0.9$, $2.4$) \\
+Sigmoidal and hooked & $2.4$ ($0.9$, $4.0$) & $1.5$ ($-4.8$, $7.8$) & $3.0$ ($-3.9$, $9.8$) \\
+Megabarchans & $5.0$ ($-2.0$, $12.1$) & $7.3$ ($0.5$, $14.1$) & $6.9$ ($1.0$, $12.9$) \\\midrule
+Different dune fields & $3.9$ ($-1.8$, $9.6$) & $4.0$ ($-0.6$, $8.7$) & $4.3$ ($-0.1$, $8.6$) \\\bottomrule
+\end{tabular}\end{table}
+
+
+\clearpage
+\input{mag_lifeonair_supplement}
+\clearpage
+
+\bibliographystyle{plainnat}
+\bibliography{sample}
+
+
+
+\end{document}

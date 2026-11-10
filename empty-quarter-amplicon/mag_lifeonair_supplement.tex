@@ -1,0 +1,582 @@
+\clearpage
+\section{Genome-resolved integration}\label{sup:mag_integration}
+{\emergencystretch=3em
+\subsection{Cohorts, functional calls and contrasts}
+The refined genome catalogue (\texttt{EQ-\allowbreak MAG-\allowbreak REFINED-\allowbreak v1.0.0}) contains 5,438 species representatives: 126 high-quality and 5,311 strict medium-quality genomes ($<10\%$ contamination) under MIMAG standards, plus one boundary representative (\texttt{48Dr2\_\_\allowbreak self\_\allowbreak SemiBin\_25}) at $64.61\%$ completeness and $10.0\%$ contamination. From 551 read-bearing shotgun libraries (\texttt{EQ-\allowbreak SHOTGUN-\allowbreak READ-\allowbreak LIBS-\allowbreak v1.0.0}, 554 paired-end sequencing runs across 221 Illumina NovaSeq~6000 and 333 Illumina NovaSeq~X runs), abundance analyses (\texttt{EQ-\allowbreak COVERM-\allowbreak REL-\allowbreak ABUND-\allowbreak v1.0.0}) retained 546 core-transect profiles across 59 sites (489 unique specimen keys; \texttt{EQ-\allowbreak ECOL-\allowbreak SHOTGUN-\allowbreak CORE-\allowbreak 546-\allowbreak v1.0.0}) after excluding one library with zero mapped read share (\texttt{F5Dr1}, $100\%$ unmapped; leaving 550 mapped libraries) and four out-of-core libraries from Sites~62 and 64 (\texttt{62PRr2}, \texttt{64Dr3}, \texttt{64PRr2} and \texttt{64Sr2}). Exact specimen matching to the 1,186 retained amplicon libraries yielded 442 profiles across 58 sites (\texttt{EQ-\allowbreak ECOL-\allowbreak MATCHED-\allowbreak 442-\allowbreak v1.0.0}). A missing read-depth value in the spatial covariate table (\texttt{F45PRr3}) reduced the spatial-model cohorts to 545 (\texttt{EQ-\allowbreak ECOL-\allowbreak SHOTGUN-\allowbreak MODEL-\allowbreak 545-\allowbreak v1.0.0}) and 441 (\texttt{EQ-\allowbreak ECOL-\allowbreak MATCHED-\allowbreak MODEL-\allowbreak 441-\allowbreak v1.0.0}), respectively. These cohorts differ from the marker-read screening set described below because genome abundance and marker-read analyses have separate quality filters.
+
+We searched 20,451,986 representative-genome proteins called by Pyrodigal (\texttt{EQ-\allowbreak PROT-\allowbreak PYRODIGAL-\allowbreak REP-\allowbreak v1.0.0}) with 106 published microTrait HMMs and evaluated 41 rules at trusted cutoffs \citep{karaoz2022microtrait}. A separate KO projection used the frozen analytical representative-genome KO matrix (\texttt{rep\_\allowbreak ko\_\allowbreak v2.tsv}, \texttt{EQ-\allowbreak KO-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}; IBEX \texttt{04\_\allowbreak functional/\allowbreak repko\_\allowbreak clean/\allowbreak results}) to test annotation dependence; neither \texttt{EQ-\allowbreak PROT-\allowbreak PYRODIGAL-\allowbreak REP-\allowbreak v1.0.0} nor \texttt{rep\_\allowbreak ko\_\allowbreak v2.tsv} is asserted to derive from the foundational 19,186,792-protein Bakta v1.12.0 and eggNOG-mapper v2.1.13 release annotation product (\texttt{EQ-\allowbreak PROT-\allowbreak BAKTA-\allowbreak v1.0.0}; [PENDING: \texttt{DATA-\allowbreak PROVENANCE-\allowbreak UNVERIFIED-\allowbreak PROTEIN-\allowbreak EQUIVALENCE}]). A genome's rule call was weighted by its abundance either within the mapped community or relative to the original read pool; these denominators were not interchanged. The higher-quality sensitivity retained genomes with at least 70\% completeness and at most 5\% contamination. Surface--subsurface contrasts used 68 visits at 36 sites. Replicates were averaged within visit and compartment; paired differences were then averaged within site, with intervals from resampling ten contiguous geographic blocks.
+
+For each genus shared between compartments, the change in trait abundance was decomposed exactly into the change in genus abundance multiplied by its mean carrier fraction and the change in carrier fraction multiplied by its mean abundance. Groups detected in only one compartment supplied a separate exclusive component. By algebra, the total compartment contrast is invariant to taxonomic assignment, whereas genus labels partition that total across the between-shared, within-shared and exclusive components. Genomes without a named genus assignment (\texttt{g\_\_}) entered as individual singleton groups rather than a pooled bin; they are not treated as independent biological lineages, and their within-group component is zero by construction because within-lineage change cannot be estimated for singletons. Under the frozen analytical taxonomy snapshot (\texttt{EQ-\allowbreak TAX-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}, \texttt{genome\_\allowbreak quality.tsv}) retained in the frozen 41-trait matrix (Table~\ref{tab:stage4_selected_panel}), unclassified-genus genomes accounted for a mean 27.5\% of mapped abundance in the paired surface--subsurface comparison ($26.04\%$ under canonical \texttt{gtdb\_\allowbreak r232\_\allowbreak classification}, and $23.86\%$ versus $25.72\%$ in the paired root-adjacent--subsurface comparison). Whereas total community trait contrasts and bacterial MAG Hill diversity do not depend on below-domain taxonomy labels (domain assignments agree across all 5,438 representatives), 1,898 full taxonomy strings (including 247 phylum, 34 class, 220 order and 1,124 genus labels) differ between \texttt{EQ-\allowbreak TAX-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0} and canonical \texttt{gtdb\_\allowbreak r232\_\allowbreak classification} in \texttt{EQ-\allowbreak MAG-\allowbreak REFINED-\allowbreak v1.0.0}. Recomputing the exact decomposition under canonical \texttt{gtdb\_\allowbreak r232\_\allowbreak classification} for the three focal guilds (BetL, AhpCF and group 1l $[\mathrm{NiFe}]$-hydrogenase; Table~\ref{tab:canonical_turnover_3guilds}) confirmed that between-genus and compartment-exclusive replacement dominate each contrast while within-genus changes remain small; non-focal traits in Table~\ref{tab:stage4_selected_panel} retain their frozen legacy decomposition components without a canonical replay. The three-component decomposition reported here differs from an earlier trace-gas summary that combined exclusive and between-genus contributions.
+
+BetL and AhpCF surface enrichment retained the same direction under both annotation approaches, both denominators, the higher-quality restriction and matched-cohort analysis. The complete panel showed different responses among stress-protection and DNA-repair capacities (Table~\ref{tab:stage4_selected_panel}). Photolyase, carotenoid and mismatch-repair markers were more represented at the surface, whereas superoxide dismutase and several baseline repair pathways had uncertain contrasts. Betaine biosynthesis and other osmolyte-synthesis markers provided weaker or annotation-dependent evidence than uptake. Trehalose illustrates this dependence: the microTrait HMM rule gave a positive surface contrast, while its KO projection and the stricter two-step synthesis rule did not. The stage-II sporulation protease marker \texttt{spoIIGA} alone does not establish a complete sporulation pathway. Table~\ref{tab:stage4_selected_panel} reports paired estimates, spatial-model intervals, multiplicity adjustments and turnover components. The reproducibility package supplies the complete panel-by-contrast matrices, including unavailable and annotation-sensitive entries.
+\par}
+
+\begin{table}[htbp]\centering\scriptsize
+\setlength{\tabcolsep}{1.5pt}
+\caption{Selected surface-minus-subsurface functional panel from the Stage~4 synthesis (\texttt{task\_\allowbreak d\_\allowbreak h6\_\allowbreak baseline\_\allowbreak vs\_\allowbreak protection\_\allowbreak surface\_\allowbreak deep.tsv}). Paired site-block bootstrap estimates ($n=68$ visits across 36 sites; 10 spatial blocks) and primary INLA spatial-model posterior estimates ($n=545$ libraries across 59 sites) are reported in percentage points of the mapped community, alongside the frozen three-component genus turnover decomposition under the legacy analytical taxonomy snapshot (\texttt{EQ-\allowbreak TAX-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}; canonical \texttt{gtdb\_\allowbreak r232\_\allowbreak classification} decompositions for BetL, AhpCF and group 1l are reported in Table~\ref{tab:canonical_turnover_3guilds}, whereas non-focal traits were not replayed). KO rows use the frozen analytical representative-genome KO matrix (\texttt{rep\_\allowbreak ko\_\allowbreak v2.tsv}, \texttt{EQ-\allowbreak KO-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}). Paired $q$-values are Benjamini--Hochberg adjustments of site-level Wilcoxon signed-rank tests ($q_{\mathrm{all41}}$ across the 41-rule family; $q_{\mathrm{fam}}$ within each exploratory post-fit family). Their dependence assumptions differ from those of the spatial-block intervals; spatial-model estimates and intervals guide the habitat interpretation. $^a$HMM and KO annotations give different conclusions; $^b$a single sporulation marker rather than a complete pathway.}\label{tab:stage4_selected_panel}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm}lrrrrrr}\toprule
+Panel & Family & Paired [95\% CI] & $q_{\mathrm{all41}}$ / $q_{\mathrm{fam}}$ & INLA [95\% CrI] & Betw. & With. & Excl.\\\midrule
+\texttt{HMM:glycine betaine transporter} (BetL) & Osmolyte/stress & $+7.55\ [5.11,10.16]$ & $2.1\times 10^{-5}$ / $1.5\times 10^{-5}$ & $+6.70\ [5.24,8.16]$ & $+6.12$ & $-0.21$ & $+1.65$\\
+\texttt{KO:glycine betaine transporter} & Osmolyte/stress & $+12.17\ [7.71,16.25]$ & $1.9\times 10^{-5}$ / $1.2\times 10^{-5}$ & $+11.23\ [8.15,14.27]$ & $+8.40$ & $+0.39$ & $+3.39$\\
+\texttt{HMM:choline/\allowbreak glycine/\allowbreak proline betaine} & Osmolyte/stress & $+6.87\ [4.33,10.00]$ & $1.2\times 10^{-4}$ / $1.0\times 10^{-4}$ & $+5.45\ [3.08,7.80]$ & $+3.22$ & $+0.64$ & $+3.01$\\
+\texttt{HMM:mechano-\allowbreak sensitive channel} & Osmolyte/stress & $+6.88\ [4.02,10.27]$ & $1.7\times 10^{-5}$ / $1.4\times 10^{-5}$ & $+5.95\ [4.09,7.80]$ & $+5.87$ & $+0.26$ & $+0.74$\\
+\texttt{HMM:betaine\_\allowbreak biosynthesis} & Osmolyte/stress & $-1.22\ [-3.27,0.96]$ & $0.341$ / $0.345$ & $-0.76\ [-2.61,1.09]$ & $-0.65$ & $-0.28$ & $-0.28$\\
+\texttt{KO:betaine\_\allowbreak biosynthesis} & Osmolyte/stress & $+3.25\ [0.66,6.72]$ & $0.086$ / $0.099$ & $+3.38\ [1.26,5.48]$ & $+3.08$ & $-0.63$ & $+0.80$\\
+\texttt{curated:\allowbreak ectoine\_\allowbreak marker} & Osmolyte/stress & $+0.76\ [-1.27,3.44]$ & $0.798$ / $0.775$ & $-0.39\ [-2.45,1.65]$ & $+0.59$ & $-0.15$ & $+0.32$\\
+\texttt{HMM:trehalose\_\allowbreak biosynthesis}$^a$ & Osmolyte/stress & $+12.07\ [7.35,17.26]$ & $1.2\times 10^{-4}$ / $1.0\times 10^{-4}$ & $+11.47\ [8.23,14.67]$ & $+8.61$ & $+0.15$ & $+3.31$\\
+\texttt{KO:trehalose\_\allowbreak biosynthesis}$^a$ & Osmolyte/stress & $-1.51\ [-4.94,3.49]$ & $0.346$ / $0.336$ & $-0.66\ [-2.84,1.52]$ & $-0.25$ & $+0.38$ & $-1.64$\\
+\texttt{curated:\allowbreak trehalose\_\allowbreak strict}$^a$ & Osmolyte/stress & $+0.20\ [-3.03,4.97]$ & $0.863$ / $0.830$ & $+0.78\ [-1.21,2.78]$ & $+1.29$ & $+0.26$ & $-1.34$\\
+\texttt{HMM:spoIIGA}$^b$ & Osmolyte/stress & $+0.63\ [-0.10,1.59]$ & $0.093$ / $0.112$ & $+0.27\ [-0.10,0.64]$ & $+0.84$ & $-0.21$ & $+0.01$\\
+\texttt{HMM:ahpCF} & UV/oxidative & $+6.95\ [4.04,9.65]$ & $1.5\times 10^{-5}$ / $1.4\times 10^{-5}$ & $+5.53\ [3.84,7.22]$ & $+5.28$ & $+0.29$ & $+1.38$\\
+\texttt{KO:ahpCF} & UV/oxidative & $+5.79\ [3.36,8.01]$ & $5.2\times 10^{-5}$ / $2.7\times 10^{-5}$ & $+4.64\ [3.16,6.13]$ & $+4.24$ & $+0.11$ & $+1.44$\\
+\texttt{HMM:sodA} & UV/oxidative & $-0.32\ [-3.63,2.87]$ & $0.966$ / $0.895$ & $-0.47\ [-2.59,1.66]$ & $+0.24$ & $-0.22$ & $-0.34$\\
+\texttt{KO:sodA} & UV/oxidative & $-1.13\ [-4.04,1.82]$ & $0.463$ / $0.408$ & $-1.17\ [-3.28,0.93]$ & $-0.52$ & $-0.26$ & $-0.35$\\
+\texttt{legacy:photolyase} & UV/oxidative & $+10.14\ [4.88,15.04]$ & $0.0012$ / $7.9\times 10^{-4}$ & $+11.36\ [8.95,13.75]$ & $+6.31$ & $+1.02$ & $+2.81$\\
+\texttt{legacy:carotenoid} & UV/oxidative & $+9.95\ [6.23,14.02]$ & $7.9\times 10^{-5}$ / $3.3\times 10^{-5}$ & $+10.49\ [8.23,12.76]$ & $+5.31$ & $+1.04$ & $+3.61$\\
+\texttt{HMM:lycopene biosynthesis} & UV/oxidative & $+4.98\ [1.47,8.55]$ & $0.034$ / $0.029$ & $+6.34\ [4.11,8.57]$ & $+2.28$ & $+0.77$ & $+1.93$\\
+\texttt{legacy:\allowbreak mismatch\_\allowbreak repair} & Baseline repair & $+8.91\ [3.97,12.27]$ & $0.0017$ / $0.0014$ & $+8.17\ [5.15,11.16]$ & $+5.74$ & $+0.10$ & $+3.07$\\
+\texttt{legacy:\allowbreak base\_\allowbreak excision\_\allowbreak repair} & Baseline repair & $-0.07\ [-0.20,0.07]$ & $0.245$ / $0.164$ & $-0.01\ [-0.08,0.06]$ & $+2.12$ & $-0.02$ & $-2.16$\\
+\texttt{legacy:\allowbreak nucleotide\_\allowbreak excision\_\allowbreak repair} & Baseline repair & $+0.20\ [-0.05,0.51]$ & $5.2\times 10^{-5}$ / $2.7\times 10^{-5}$ & $+0.11\ [0.06,0.15]$ & $+2.27$ & $-0.01$ & $-2.06$\\
+\texttt{legacy:\allowbreak SOS\_\allowbreak translesion} & Baseline repair & $+3.86\ [0.40,8.48]$ & $0.015$ / $0.0097$ & $+1.08\ [0.44,1.71]$ & $+4.86$ & $+0.04$ & $-1.04$\\
+\texttt{legacy:nhej} & Baseline repair & $-4.49\ [-7.69,0.67]$ & $0.017$ / $0.0097$ & $-4.44\ [-6.52,-2.36]$ & $-1.47$ & $-0.25$ & $-2.76$\\\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Genus-turnover decomposition for the three focal guilds under GTDB release 232 versus the earlier analytical taxonomy snapshot, in percentage points of the mapped community. Surface--subsurface contrasts span 36 sites and 68 paired visits; the root-adjacent--subsurface contrast spans 47 sites and 106 paired visits. Confidence intervals (95\% CI) resample ten contiguous spatial blocks (1,000 draws). By algebra, $\mathrm{Between} + \mathrm{Within} + \mathrm{Exclusive} = \mathrm{Total}$, so total contrasts are identical across taxonomies. Genomes without a named genus ($26.04\%$ versus $27.52\%$ of mapped abundance in surface--subsurface pairs, and $23.86\%$ versus $25.72\%$ in root-adjacent--subsurface pairs) enter as singletons, are not independent lineages, and have zero within-group change by construction.}\label{tab:canonical_turnover_3guilds}
+\begin{tabular}{llrr}\toprule
+Guild/contrast & Component & Canonical [95\% CI] & Earlier estimate\\\midrule
+BetL (Surface $-$ Subsurface) & Total & $+7.55\ [4.72,10.33]$ & $+7.55$\\
+ & Between shared & $+5.89\ [4.01,7.68]$ & $+6.12$\\
+ & Within shared & $-0.15\ [-0.83,0.39]$ & $-0.21$\\
+ & Exclusive & $+1.80\ [0.99,2.78]$ & $+1.65$\\\midrule
+AhpCF (Surface $-$ Subsurface) & Total & $+6.95\ [3.34,9.71]$ & $+6.95$\\
+ & Between shared & $+5.28\ [2.05,8.00]$ & $+5.28$\\
+ & Within shared & $+0.22\ [-0.03,0.48]$ & $+0.29$\\
+ & Exclusive & $+1.45\ [0.71,2.25]$ & $+1.38$\\\midrule
+Group 1l (Root-adjacent $-$ Subsurface) & Total & $-18.77\ [-25.25,-11.82]$ & $-18.77$\\
+ & Between shared & $-11.57\ [-15.46,-7.77]$ & $-11.35$\\
+ & Within shared & $-0.41\ [-0.59,-0.21]$ & $-0.58$\\
+ & Exclusive & $-6.79\ [-9.65,-3.60]$ & $-6.84$\\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Spatial models and numerical audit}
+We fitted standardised responses with compartment (reference: shallow subsurface), campaign and standardised log read depth as fixed effects, optionally including dune field (reference: uruq). The hierarchy included site, site--visit and site--visit--compartment random intercepts and a two-dimensional Mat\'ern SPDE field. The primary specification used a Student-$t$ likelihood with ten degrees of freedom and a 200-km spatial-range prior; sensitivity fits used 50- and 500-km range priors, a Gaussian likelihood, the matched cohort and the higher-quality genome set. Diversity responses were log-transformed; marker responses used log$_2$(GE+0.01). The range prior assigned probability 0.5 below its stated range; the spatial standard-deviation prior assigned probability 0.01 above one standardised response unit. Random-intercept and residual precision priors likewise used PC priors with parameters $(1,0.01)$. Fixed effects had unit precision on the standardised scale and a flat intercept. The mesh used inner and outer maximum edges of 40 and 200~km, a 5-km cutoff and 50- and 300-km extensions. The primary coefficients below are transformed back from response standardisation. Chemistry covariates were unavailable in these integration inputs and were not fitted in the functional models.
+
+The screen produced 1,800 fits across 207 responses; 29 requested response--specification combinations lacked a result. Six fits triggered numerical diagnostics (covariance conditioning, CPO failure or mode flags): one KO-projected ammonia-oxidation fit, three glucosylglycerol fits and two whole-read-denominator MAG group-1l fits. Those fits were excluded from evidential support. In particular, the group-1l conclusions use the independently quantified marker reads, not the flagged MAG fits. Complete fit coefficients, diagnostics and analysis scripts are provided in Supplementary Data~1. Intervals in this broad Bayesian screen were not multiplicity-adjusted; headline results were checked against paired analyses and sensitivity fits. Missing or numerically flagged results do not provide evidence for an absent association.
+
+\begin{table}[htbp]\centering\small
+\caption{Selected coefficients from the primary spatial model ($n=545$ libraries across 59 sites), with 95\% credible intervals. Surface and root-adjacent contrasts use shallow subsurface as reference; eastern contrasts compare megabarchan with uruq fields. Percentage-point effects refer to the mapped community; annotated KO diversity uses the frozen analytical KO matrix (\texttt{rep\_\allowbreak ko\_\allowbreak v2.tsv}, \texttt{EQ-\allowbreak KO-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}).}\label{tab:mag_spatial}
+\begin{tabular}{lll}\toprule
+Response & Contrast & Estimate [interval]\\\midrule
+Bacterial MAG Hill diversity (log) & Eastern field & $-1.132\ [-1.589,-0.327]$\\
+Annotated KO Hill diversity (log) & Eastern field & $0.025\ [-0.022,0.073]$\\
+BetL (percentage points) & Surface & $6.70\ [5.24,8.16]$\\
+AhpCF (percentage points) & Surface & $5.53\ [3.84,7.22]$\\
+Group 1l excess (log$_2$ units) & Root-adjacent & $-1.733\ [-2.038,-1.424]$\\
+Group 1h excess (log$_2$ units) & Root-adjacent & $-0.083\ [-0.213,0.047]$\\
+Group 2a excess (log$_2$ units) & Root-adjacent & $0.052\ [-0.083,0.187]$\\
+Form-I CoxL excess (log$_2$ units) & Root-adjacent & $-0.117\ [-0.224,-0.011]$\\\bottomrule
+\end{tabular}
+\end{table}
+
+As an exploratory sensitivity analysis complementing the separate primary INLA posterior fits in Table~\ref{tab:mag_spatial}, we evaluated the paired within-sample difference in the eastern megabarchan versus uruq slope ($\beta_{\mathrm{tax}} - \beta_{\mathrm{KO}}$) using covariate-adjusted linear fixed-effect regressions resampled jointly across the ten spatial blocks (\texttt{task\_\allowbreak d\_\allowbreak eastern\_\allowbreak joint\_\allowbreak diversity\_\allowbreak contrast.tsv}; Table~\ref{tab:stage4_joint_diversity}). Because the eastern megabarchan sites are concentrated in the eastern spatial blocks, $315$ of $1{,}000$ sample-level block resamples ($233$ of $1{,}000$ for site--compartment averages) omitted the target dune group and were rank-deficient; the resulting intervals are therefore conditional on the $685$ (or $767$) identifiable resamples and are reported as conditional sensitivity summaries rather than primary INLA posterior contrasts or formal equivalence tests. Across the matched 441-sample cohort ($58$ sites; $27$ megabarchan and $308$ uruq units) and the 545-sample shotgun cohort ($59$ sites; $33$ megabarchan and $363$ uruq units), bacterial MAG versus KO log-$q=1$ slope differences were $-1.280$ (conditional 95\% block CI $-1.503$ to $-1.064$) and $-1.309$ ($-1.507$ to $-1.050$) under site-balanced weighting, $-1.550$ ($-1.767$ to $-1.214$) and $-1.506$ ($-1.669$ to $-1.211$) under sample weighting, and $-1.372$ ($-1.489$ to $-1.222$; $n=149$) and $-1.403$ ($-1.519$ to $-1.178$; $n=155$) for site--compartment averages. Standardized $z$-score slope differences ranged from $-1.186$ to $-1.425$ across specifications. Amplicon 16S versus KO copy-number diversity comparisons use the $n=441$ ($n=149$ site--compartment) matched subset across 58 sites where 16S Hill diversity is defined, yielding $\beta_{\mathrm{16S}} - \beta_{\mathrm{KO}} = -0.713$ ($-1.087$ to $-0.491$) under site-balanced weighting.
+
+\begin{table}[htbp]\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\caption{Conditional joint spatial-block bootstrap sensitivity for the eastern megabarchan versus uruq diversity slope difference ($\beta_{\mathrm{tax}} - \beta_{\mathrm{KO}}$; \texttt{task\_\allowbreak d\_\allowbreak eastern\_\allowbreak joint\_\allowbreak diversity\_\allowbreak contrast.tsv}). Estimates are covariate-adjusted linear fixed-effect slope differences in natural-log Hill $q=1$ units and standardized $z$-score units, with 95\% intervals conditional on identifiable spatial-block bootstrap draws ($685/1{,}000$ valid for sample-level fits; $767/1{,}000$ for site--compartment averages). KO copy-number diversity uses the frozen analytical KO matrix (\texttt{rep\_\allowbreak ko\_\allowbreak v2.tsv}, \texttt{EQ-\allowbreak KO-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}). Amplicon 16S rows evaluate the $n=441$ ($149$ site--compartment) matched subset across 58 sites.}\label{tab:stage4_joint_diversity}
+\begin{tabular}{>{\raggedright\arraybackslash}p{1.6cm}llrrrr}\toprule
+Cohort & Pair & Weighting ($n$, sites) & $\beta_{\mathrm{tax}}$ & $\beta_{\mathrm{KO}}$ & $\Delta\beta_{\mathrm{log}}$ [cond.\ 95\% CI] & $\Delta\beta_{z}$ [cond.\ 95\% CI]\\\midrule
+Matched 441 & MAG vs.\ KO & Site-balanced ($441$, $58$) & $-1.337$ & $-0.056$ & $-1.280\ [-1.503,-1.064]$ & $-1.186\ [-1.674,-0.325]$\\
+Matched 441 & MAG vs.\ KO & Sample-weighted ($441$, $58$) & $-1.564$ & $-0.015$ & $-1.550\ [-1.767,-1.214]$ & $-1.425\ [-1.810,-0.805]$\\
+Matched 441 & MAG vs.\ KO & Site--compartment ($149$, $58$) & $-1.416$ & $-0.044$ & $-1.372\ [-1.489,-1.222]$ & $-1.391\ [-1.818,-0.630]$\\
+All 545 & MAG vs.\ KO & Site-balanced ($545$, $59$) & $-1.333$ & $-0.025$ & $-1.309\ [-1.507,-1.050]$ & $-1.298\ [-1.709,-0.594]$\\
+All 545 & MAG vs.\ KO & Sample-weighted ($545$, $59$) & $-1.503$ & $+0.002$ & $-1.506\ [-1.669,-1.211]$ & $-1.421\ [-1.741,-0.927]$\\
+All 545 & MAG vs.\ KO & Site--compartment ($155$, $59$) & $-1.425$ & $-0.022$ & $-1.403\ [-1.519,-1.178]$ & $-1.387\ [-1.747,-0.785]$\\
+Matched 441 & 16S vs.\ KO & Site-balanced ($441$, $58$) & $-0.769$ & $-0.056$ & $-0.713\ [-1.087,-0.491]$ & $-0.533\ [-1.181,+0.251]$\\
+Matched 441 & 16S vs.\ KO & Sample-weighted ($441$, $58$) & $-0.996$ & $-0.015$ & $-0.981\ [-1.372,-0.578]$ & $-0.878\ [-1.332,-0.323]$\\
+Matched 441 & 16S vs.\ KO & Site--compartment ($149$, $58$) & $-0.793$ & $-0.044$ & $-0.749\ [-1.097,-0.506]$ & $-0.678\ [-1.201,+0.068]$\\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{PICRUSt2 comparison and archaeal mapping controls}
+PICRUSt2 and MAG-derived KO profiles (\texttt{rep\_ko\_v2.tsv}, \texttt{EQ-KO-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}) were normalised to each platform's complete KO total, not reclosed to the shared KO subset. On the 442 exact matched profiles across 58 sites, 8,860 KOs were shared. Replicates were averaged within visits and paired visit differences within sites. Spearman correlations of the compartment effects were 0.520 (surface; 95\% block interval 0.305--0.545) and 0.552 (root-adjacent; 0.432--0.569), with direction agreement of 67.0\% and 67.8\%. Intervals used 1,000 joint resamples of ten contiguous blocks. Restricting to 6,678 prevalent KOs increased correlations to 0.576 and 0.590 and direction agreement to 71.2\% and 72.4\%. Agreement is partial and does not validate individual PICRUSt2 predictions.
+
+Competitive archaeal mapping (\texttt{EQ-COVERM-\allowbreak ARCHAEA-\allowbreak COMP-\allowbreak v1.0.0}) included all 5,438 representatives and 301 external Thermoplasmatota genomes, requiring at least 95\% read identity and 75\% aligned read length. The paired review covered 193 profiles, 68 visits and 36 sites. At a 20\% genome-breadth threshold, 35 sites had a greater Thermoplasmatota read share in subsurface soil, with a mean excess of 0.528 percentage points (95\% block interval 0.258--0.903). A 50\% breadth threshold retained a positive contrast (0.472 points; 0.210--0.816). A MAPQ-20 analysis of unnormalised coverage (\texttt{EQ-COVERM-\allowbreak ARCHAEA-\allowbreak MAPQ20-\allowbreak v1.0.0}) had a wider interval spanning zero. These controls support the relative-abundance contrast under breadth filtering but do not establish an absolute abundance difference or activity.
+
+\clearpage
+\section{Trace-gas analysis: detailed methods and validation}\label{sup:loa_methods}\label{sup:loa}
+
+
+\subsection*{Sampling, sequencing and genome catalogue}
+Sampling, DNA extraction, sequencing and the genome catalogue are shared with companion papers on the
+same transect (main Methods and the accompanying data resource \citep{rubalkhali_datapaper}). Sixty sites along a 1{,}043~km
+west to east transect through the Saudi Rub' al-Khali were sampled on five expeditions (March
+2023, July 2023, February 2024, August 2024 and October 2025). At each site and
+visit, three co-located replicates were taken at three positions: surface soil (0~cm), bulk subsurface
+soil (5--10~cm) and soil from the root zone of the nearest plant at 5--10~cm, which we call
+root-adjacent because soil was not consistently attached to roots. Soil was frozen at $-20^\circ$C in the
+field and stored at $-80^\circ$C. DNA was extracted from 0.9--1.2~g of soil with the QIAGEN PowerLyzer
+PowerSoil or DNeasy PowerSoil Pro kit and sequenced on Illumina NovaSeq~6000 (221 paired-end runs) and Illumina NovaSeq~X (333 paired-end runs) instruments across 554 runs from 551 read-bearing libraries (150-nt paired reads;
+101-nt reads for the fourth expedition). Reads were quality-filtered with fastp v1.0.1
+\citep{chen2018fastp}. Samples from two special-interest locations outside the repeated transect (sites
+62 and 64) and samples without site metadata were excluded, so the analysis covers sites 1--60.
+
+{\emergencystretch=3em
+Each sample was assembled with MEGAHIT v1.2.9 \citep{li2015megahit} and binned with SemiBin2 v2.2.1
+\citep{pan2023semibin2}; bins were refined with DAS\_Tool v1.1.7 \citep{sieber2018dastool}, assessed with
+CheckM2 v1.1.0 \citep{chklovski2023checkm2}, and the 12{,}434 bins of at least medium quality
+(completeness $\geq 50\%$, contamination $\leq 10\%$) were dereplicated with dRep v3.6.2
+\citep{olm2017drep} at 95\% average nucleotide identity into 5{,}438 species representatives (\texttt{EQ-\allowbreak MAG-\allowbreak REFINED-\allowbreak v1.0.0}: 126 high-quality and 5{,}311 strict medium-quality genomes with $<10\%$ contamination under MIMAG standards, plus one boundary genome, \texttt{48Dr2\_\_\allowbreak self\_\allowbreak SemiBin\_25}, at $64.61\%$ completeness and $10.0\%$ contamination).
+In the foundational data release, representatives were classified with GTDB-Tk v2.7.2 \citep{chaumeil2022gtdbtk} against GTDB release 232
+\citep{parks2022gtdb} (\texttt{gtdb\_\allowbreak r232\_\allowbreak classification}) and annotated with Bakta v1.12.0 \citep{schwengers2021bakta} and eggNOG-mapper
+v2.1.13 \citep{cantalapiedra2021eggnog} (\texttt{EQ-\allowbreak PROT-\allowbreak BAKTA-\allowbreak v1.0.0}, 19{,}186{,}792 proteins); the three-guild genus-turnover decomposition was verified directly under canonical \texttt{gtdb\_\allowbreak r232\_\allowbreak classification} (Table~\ref{tab:canonical_turnover_3guilds}), whereas the exploratory order- and genus-adjusted \texttt{gRodon2} growth analyses below used the frozen analytical taxonomy snapshot (\texttt{EQ-\allowbreak TAX-\allowbreak LEGACY-\allowbreak ANALYTICAL-\allowbreak v0}; [PENDING: \texttt{TAXONOMY-\allowbreak SNAPSHOT-\allowbreak SENSITIVITY}; confirm order- and genus-adjusted \texttt{gRodon2} regression using canonical assignments]). Relative abundance of each representative per sample was
+computed with CoverM v0.7.0 \citep{aroney2025coverm} in genome mode (\texttt{EQ-\allowbreak COVERM-\allowbreak REL-\allowbreak ABUND-\allowbreak v1.0.0}). For 1{,}010 representatives that
+refinement emitted as contig subsets of a parent bin, the Bakta/eggNOG release annotations were taken from the parent bin and
+restricted to genes on contigs retained in the representative, matched by sequence; genes on removed
+contigs were not counted towards carriage or traits.\par}
+
+\subsection*{Typing of hydrogenase and carbon monoxide dehydrogenase large subunits}
+Proteins annotated with the [NiFe]-hydrogenase large subunit orthologue (KEGG K06281) and the carbon
+monoxide dehydrogenase large subunit orthologue (K03520) were extracted from the representatives. Each
+hydrogenase was assigned the class of its best DIAMOND blastp hit in ultra-sensitive mode in HydDB
+\citep{sondergaard2016hyddb,greening2016genomic}. We analyse groups 1h, 1l and 2a separately, because all
+three include enzymes that oxidise atmospheric hydrogen \citep{greening2016genomic,islam2020group2a}. Each
+CoxL protein was called form I when it carried the form-I active-site motif AYXCSFR, including the
+variants with S in the first or L in the sixth position reported among form-I references
+\citep{imaura2026coxl}, and form II when it carried AYRGAGR
+\citep{king2007coox,martincuadrado2009coxl,cunliffe2011roseobacter}; proteins without either motif were
+called form I at more than 55\% identity and at least 90\% query coverage to the three form-I references of
+\citet{cordero2019atmospheric} and were otherwise unresolved. All 59 form-I calls made without the motif were
+fragments in which the alignment did not span the motif region. A representative carries a group when it
+encodes at least one retained protein of that group.
+
+To check the genomic context of typed genes, we took the ten genes on each side of every typed large
+subunit on the same contig from the Bakta annotation and scored the co-occurrence of the hydrogenase
+small subunit (K06282, K05927, K00437), hydrogenase maturation genes (K04651--K04656, K03605, K03192, or
+Bakta product names) and, for CoxL, the medium and small subunits (K03519, K03518) and the accessory genes
+\textit{coxDEFG}. Proportions are reported for loci with at least five genes on both sides; they describe
+neighbourhood co-occurrence within the stated window.
+
+For display, hydrogenase large subunits of at least 400 residues were clustered at 70\% identity with
+MMseqs2 v18.8cc5c \citep{steinegger2017mmseqs2}, combined with all HydDB group 1 and group 2 references,
+aligned with MAFFT v7.526 \citep{katoh2013mafft} (\texttt{--auto}), stripped of columns with more than 50\%
+gaps and used to build a tree with FastTree v2.2.0 \citep{price2010fasttree} (\texttt{-lg -gamma}), rooted
+on the clade that best separates the group 2 references. CoxL proteins of at least 600 residues were
+treated in the same way with the form-I references.
+
+\subsection*{Read-based quantification}
+Groups were quantified in reads so that sequences outside the genome catalogue contribute. A competitive
+protein database contained every typed hydrogenase large subunit of the representatives labelled with its
+HydDB class, all HydDB reference hydrogenases, every CoxL protein of the representatives labelled form I,
+form II or unresolved, the three form-I CoxL references, and 14 universal single-copy ribosomal proteins of
+the representatives (KEGG K02886, K02906, K02926, K02931, K02933, K02867, K02874, K02878, K02982, K02988,
+K02994, K02946, K02948 and K02965) clustered at 90\% identity. Every read is assigned to its single best
+hit, so related enzymes of other classes compete for each read. From each sample, 10 million forward reads
+were drawn with seqtk v1.5 \citep{li2023seqtk} (seed 11) and truncated to 100~nt so that the 101-nt and
+150-nt libraries were screened identically; reads shorter than 75~nt were discarded. Reads were searched
+with DIAMOND v2.0.15 \citep{buchfink2021diamond} blastx (\texttt{--id 50 --evalue 1e-5 --max-target-seqs
+1}), and each read's best hit with an alignment of at least 25 residues was counted at identity floors of
+50, 60 and 70\%. For each sample and label, reads were divided by the length of the hit subject in
+kilobases and summed, and each marker was divided by the median of the 14 ribosomal-protein values. The
+result, genome equivalents (GE), is an estimated ratio of marker to single-copy-gene coverage, which
+approximates marker copies per genome \citep{nayfach2015microbecensus}; differences in read assignment
+between markers and the ribosomal proteins offset it from true copies per genome (see the mock communities
+below). GE describe relative gene representation among the genomes present. The primary
+measure used the 60\% identity floor and samples in which at least 10 of the 14 ribosomal proteins were
+detected.
+
+We report six markers: group 1l, 1h and 2a hydrogenases, form-I CoxL, all other [NiFe]-hydrogenases and
+all other CoxL (form II and unresolved). The last two serve as controls. Of the 573 sequenced samples
+screened, 546 from sites 1--60 had complete metadata and passed the ribosomal-protein filter (116
+surface, 164 bulk and 266 root-adjacent samples; median 9.77 million reads screened).
+
+To estimate how well reads are assigned when their source is absent from the database, we tiled 100-nt
+fragments every 30~nt over each typed gene and held out, in five folds each, (i) all marker proteins of
+20\% of the representatives, (ii) 20\% of the clusters of catalogue marker proteins at 50\% identity, with
+the HydDB and CoxL references retained, and (iii) 20\% of graph components, obtained by
+single-linkage grouping of all marker proteins of the database, catalogue and references alike, at 70\%
+identity over at least half of the shorter protein in a DIAMOND search ($E\leq10^{-5}$), with every member of a held-out component removed.
+Fixed identity thresholds can assign reads of one enzyme class to a homologue \citep{orellana2017rocker},
+and scheme (iii) tests removal of connected reference groups. A more permissive verification search
+($E\leq10$) still found 34 of 6,478 held-out proteins with matches above 70\% identity at half-length
+coverage (maximum 83.3\%); this benchmark therefore does not guarantee identity-disjoint references.
+At a 50\% linkage
+threshold, groups 1l and 1h formed a single component, and holding out that component reduced recall to near zero. Fragments
+of 50 random non-marker genes per held-out genome were added as negatives, and fragments were classified
+exactly as the reads. To calibrate GE, we simulated 20 communities from the CoverM profiles of bulk and
+root-adjacent samples of ten site visits, drawing 4 million 150-nt reads with 0.5\% substitutions from the
+representative genomes in proportion to their abundance and truncating them to 100~nt; true copies per
+genome were the cell-weighted mean number of typed markers. The reads were screened against the full
+database and against a database from which every marker and ribosomal protein of the community's own
+genomes had been removed. The form-I CoxL misassignment rates of scheme (ii) were used to correct form-I
+and other CoxL GE by inverting the $2\times2$ assignment matrix, as a sensitivity analysis.
+
+\subsection*{Contamination screen}
+Representatives whose GTDB genus matched a 16S rRNA amplicon variant flagged in 17
+extraction blanks of the fifth expedition or six of the fourth expedition were flagged, and a re-implementation of the frequency method of
+decontam \citep{davis2018decontam} compared abundance models independent of and inversely proportional to
+extracted DNA concentration, both over all samples with a single recorded concentration and after centring
+within each combination of expedition and extraction kit. Reads whose best hit belonged to a
+representative flagged by either method were removed in a sensitivity analysis. The shotgun no-template
+control of the fourth expedition contained no reads assigned to groups 1l, 1h or 2a or to form-I CoxL; its
+only marker reads came from an \textit{Escherichia} genome carrying group 1c and 1d hydrogenases.
+The fourth-expedition screen compared six blanks with 95 biological profiles and yielded seven candidate
+variants (one-sided Fisher $p<0.1$, detection in at least two blanks and higher prevalence in blanks).
+The three named genera, \textit{Alcaligenes}, \textit{Brevibacterium} and \textit{Nesterenkonia}, matched
+14 representatives, four additional to the previous exclusion set; four variants lacked a named genus.
+Candidate sequences and calls are retained with the analysis. The combined exclusion set contained 387
+representatives, including two catalogue orphans already removed from the primary analysis.
+These cross-assay genus matches define a conservative sensitivity screen and do not establish contamination
+of individual MAGs. Genus, genome-trait and candidate carbon-fixation models were refitted after these
+exclusions; their sensitivity estimates use model standard errors without repeating the site bootstrap.
+
+\subsection*{Environmental covariates}
+Daily precipitation for 1995--2025 was obtained from the ERA5 reanalysis \citep{hersbach2020era5} at
+0.25$^\circ$ resolution through the Open-Meteo archive (\texttt{models=era5}). Long-term mean annual
+precipitation was computed for 1995--2024 and, as sensitivity, from the NASA POWER 2001--2020 climatology
+based on MERRA-2 \citep{gelaro2017merra2} and from Open-Meteo's default blend of ERA5 with the ECMWF
+operational model. Mean annual precipitation from ERA5 ranged from 13 to 19~mm across sites; because
+reanalysis precipitation in Saudi Arabia agrees only moderately with gauges \citep{wang2025sara}, we
+treat it as a ranking of sites rather than an absolute water balance. The 60 sites fall into 41 ERA5 grid
+cells. Antecedent precipitation was the sum over the 90 and 365 days before each site visit from ERA5 and,
+as sensitivity, from NASA POWER daily data (MERRA-2 based) and the blended product (365 days, first four
+expeditions). Surface skin temperature was the NASA POWER daily mean (TS) over the 30 days before the
+centre date of each expedition, and soil moisture the SMAP surface value over the preceding 30 days. Vegetation greenness was the median MODIS normalised
+difference vegetation index (NDVI; MOD13Q1 and MYD13Q1 v061, 250~m \citep{didan2021mod13q1}) over the 60
+days before sampling. Extract DNA concentration was taken from the sample ledger for samples with a single
+positive recorded value (267 of 546 samples). Soil geochemistry was summarised from X-ray fluorescence
+measurements of the same sites by centred log-ratio principal components and by Ca, Cl and S. Soil organic
+carbon and water content were not measured on these samples.
+
+\subsection*{Statistical analysis}
+Analyses were run in R v4.4.3 with lme4 v2.0.6 \citep{bates2015lme4}, vegan v2.7.5
+\citep{oksanen2025vegan} and ape v5.8.1 \citep{paradis2019ape}. A site visit is one site sampled on one
+expedition. For paired contrasts between positions, each marker was summarised as the median over
+replicates within a site visit and the log$_2$ ratio of the medians computed for each visit with both
+positions, with a pseudocount of 0.01~GE (results without a pseudocount and with 0.001 and 0.1 are
+reported). Confidence intervals were obtained by resampling sites with replacement (2{,}000 resamples), and
+tests are Wilcoxon signed-rank tests on site means of the visit values, so that the site is the
+independent unit. The excess change of a high-affinity marker is its log$_2$ ratio minus the mean of the
+two control log$_2$ ratios. A shared change in the ribosomal-protein denominator would shift all markers
+equally, and the excess removes it up to the effects of the pseudocount and of taking replicate medians
+separately for each marker. Mixed models of log$_2$ GE with marker, position, their interaction and
+expedition as fixed effects and site, site visit and sample as random intercepts tested the interaction
+by likelihood ratio. The contribution of position to each marker was summarised as the gain in marginal
+$R^2$ when position is added to a model with expedition.
+
+To relate group 1l to biomass, log$_2$ GE was regressed on log$_2$ extract DNA concentration with position,
+expedition and extraction kit as fixed effects and site and site visit as random intercepts; the DNA term
+was split into within-visit and between-visit components, the model was repeated within visits that used a
+single kit and within bulk soil, each with extraction kit as a fixed effect and site and site visit as
+random intercepts. If DNA concentration measured biomass with classical error of reliability 0.8 or 0.6,
+the slope would be attenuated by that factor, and we report the correspondingly rescaled slopes as a
+conditional sensitivity. Under a model in which group 1l copies per gram scale with biomass with exponent
+$\alpha$, GE scale with exponent $\alpha-1$. The root effect on group 1l was estimated with and without the
+DNA term in the same samples.
+
+The change in the share of the mapped community held by group 1l carriers between root-adjacent and bulk
+soil was decomposed into a genus-turnover term (change in genus abundance at the mean carrier fraction of
+each genus) and a within-genus term (change in the carrier fraction of each genus at its mean abundance).
+Genera absent from one position contributed zero abundance there, and the carrier fraction of a genus
+present in only one position was taken from that position; the turnover share was bootstrapped over sites.
+The same decomposition was applied across bulk-soil sites against mean annual precipitation, with genus
+shares averaged over all visits to a site and absent genera counted as zero. Within the 81 genera that
+contain both carriers and non-carriers, the logit of the carrier share of each genus at each site, clipped
+to 0.005--0.995, was modelled on standardised log precipitation in a Gaussian mixed model weighted by the
+square root of the genus share, with genus and site as random intercepts; clipping at 0.001 and 0.02 is
+reported. To separate the number of carriers from the number of copies per
+carrier, the root contrast was computed for the abundance share of carriers ($F$), their copy-weighted share
+($M$) and copies per carrier ($C$).
+
+For growth strategy, the minimum doubling time of each representative was predicted from codon usage bias
+with gRodon2 v2.7.3 \citep{weissman2021grodon} in partial mode from coding sequences of at least 240~nt
+with ribosomal-protein genes as the highly expressed set; these are predictions of maximal growth
+potential under the codon-usage model. Doubling time, completeness-adjusted genome size and GC content were
+compared between carriers and non-carriers in mixed models with order as a random intercept. The
+community-weighted mean log doubling time of a sample was the CoverM-weighted mean over representatives
+with an estimate, and its shift between root-adjacent and bulk soil was computed per site visit. The
+mapped abundance with a doubling-time estimate was a median of 97--99\% per position (lowest 1.5\%), and the
+analysis was repeated in samples with at least 80\% and 90\% coverage and with unestimated representatives
+set to the fastest or the slowest observed doubling time. The
+excess change of group 1l was regressed on this shift with site and expedition as random intercepts, and
+the intercept, which estimates the excess at zero shift, was bootstrapped over sites. Across genera with a
+mean bulk-soil share of at least 0.05\% of the mapped community, the median visit-level log$_2$ ratio
+between root-adjacent and bulk soil was regressed on median log doubling time and the fractions of
+representatives carrying groups 1l, 1h and 2a and form-I CoxL, with phylum as a fixed effect and weights
+equal to the square root of the bulk-soil share; the model was repeated for genera with a nonzero ratio,
+for genera with at least two representatives, for genera present in at least 25\% or 50\% of paired visits,
+with carriage computed among representatives at least 90\% complete, and with order instead of phylum as a
+fixed effect, and the group 1l coefficient was bootstrapped over sites by recomputing the genus ratios from
+resampled visits. As a candidate screen for co-carriage of carbon fixation, genomes encoding all three
+Calvin--Benson--Bassham marker orthologues (RuBisCO large and small subunits, K01601 and K01602, and
+phosphoribulokinase, K00855) were compared between group 1l and 1h carriers in a binomial mixed model with
+order as a random intercept, with and without genome completeness and among genomes at least 90\% complete.
+
+Spatial associations were Spearman correlations of site medians with mean annual precipitation for each
+position, marker and precipitation product, with each site entered once and confidence intervals from a bootstrap over $k$-means spatial blocks of the site
+coordinates ($k = 4, 6, 8, 10$), Moran's $I$ of the residuals with inverse-distance weights, and partial
+correlations controlling for latitude, longitude and elevation, for the first two geochemical principal
+components, for Ca, Cl and S, and for the first principal coordinate of community composition. A mixed
+model over all samples regressed log$_2$ GE on standardised log precipitation with position and expedition
+as fixed effects and site and site visit as random intercepts. For change over time, log antecedent
+precipitation was split into a within-site component and a site mean, and log$_2$ visit medians were
+modelled on both with expedition as a fixed effect and site as a random intercept; the within-site slope
+was bootstrapped over sites and scaled to the within-site interquartile range of precipitation, and an
+interval was compared with an exploratory bound of $\pm 0.5$ log$_2$(GE+0.01) units.
+This bound corresponds to a factor of $\sqrt{2}$ on the pseudocount-shifted GE scale; its ecological
+interpretation is weakest for sparse markers. The exposure scale is the pooled interquartile range
+of within-site deviations of log(1+precipitation). The within-site estimates were repeated with ERA5 and NASA POWER exposures, with a
+bootstrap over ERA5 grid cells instead of sites, leaving out each expedition in turn and with pseudocounts
+of 0.001 and 0.1. These intervals are conditional on the available climate grids and do not propagate
+local rainfall measurement error; bootstrap fits with finite estimates were retained without a full
+convergence audit. Because the surface exposure models rest on 68 visits in which temperature was largely
+determined by expedition, they were repeated leaving out each expedition. Turnover of composition was
+partitioned by PERMANOVA \citep{anderson2001permanova} on Bray--Curtis dissimilarities between visit-level
+profiles (mean relative abundance over the replicates of a site, expedition and position) at sites visited
+at least twice, with whole visit profiles permuted among expeditions within each site and position; the
+dispersion test used the same permutation design. The Benjamini--Hochberg procedure
+\citep{benjamini1995fdr} was applied within each declared family: the ten quantities (six markers and four
+excess changes) of each position contrast; the twelve spatial correlations (three positions by four groups)
+for each precipitation product; the twelve within-site slopes for each antecedent-precipitation exposure;
+and the twelve surface exposure models (four groups by three exposures). Genus, DNA, NDVI,
+genome-trait and carbon-fixation co-occurrence models are exploratory; their reported $p$ values are
+unadjusted. Sensitivity variants assess dependence on analysis choices within these same data.
+
+Sensitivity variants recomputed the position contrasts and spatial correlations at identity floors of 50
+and 70\%, without reads to contamination-flagged representatives, without reads to the 122 group 1l
+proteins typed below 50\% identity or 80\% coverage to their HydDB hit, with motif-less form-I CoxL calls
+treated as unresolved, with CoxL GE corrected for misassignment, without the fifth and without the fourth
+expedition. The excess of group 1l was also computed against each control separately.
+
+% ============================================================================
+
+\begin{figure}[p]\centering
+\includegraphics[width=\textwidth]{figures/loa_scaling.pdf}
+\caption{\textbf{The relative depletion of group 1l scales with DNA yield and with genus carriage, after adjustment for predicted growth potential.} \textbf{a}, Group 1l genome equivalents against
+extract DNA concentration, per sample, coloured by position, with the mixed-model slope annotated. \textbf{b}, Median
+log$_2$ ratio of genus abundance between root-adjacent and bulk soil against the fraction of the genus's
+representatives carrying group 1l; symbol area scales with the genus's share of bulk soil; the coefficient
+is from a weighted regression with predicted doubling time, carriage of the other groups and phylum.
+\textbf{c}, Root effect on group 1l: the median visit log$_2$ ratio, the mixed-model estimate without and
+with DNA concentration, the excess beyond the controls, and the excess predicted at zero shift in community
+growth potential, with 95\% intervals.}
+\label{fig:loa_scaling}
+\end{figure}
+
+\subsection*{Supplementary Results}
+\subsection*{Genus-model sensitivity and carrier genome traits}
+Across 289 genera, the fraction of a genus carrying group 1l predicted its depletion beside roots ($-0.81$
+log$_2$ units, SE 0.18; site bootstrap $-1.12$ to $-0.52$) with predicted doubling time, carriage of the
+other groups and phylum in the model, whereas carriage of group 1h and form-I CoxL did not
+(Fig.~\ref{fig:loa_scaling}b). The association held among genera with a nonzero ratio ($-0.92$), with at least
+two representatives ($-1.08$), present in at least 25\% or 50\% of paired visits ($-1.12$, $-1.18$), with
+carriage counted among genomes at least 90\% complete ($-0.98$) and with order instead of phylum as a fixed
+effect ($-1.03$, SE 0.22). With order in the model, predicted doubling time no longer predicted genus
+depletion ($-0.05$, SE 0.15), and carriage of group 2a also did ($-1.68$, SE 0.67; 134 carriers), although
+group 2a showed no excess depletion at the community level. Finer phylogenetic control therefore shifts
+weight from predicted growth potential to lineage. Vegetation greenness was negatively associated
+with group 1l in bulk soil ($-0.80$ log$_2$ units per standard deviation of NDVI, SE 0.19) and at the surface
+($-1.17$, SE 0.16) with mean annual precipitation in the model, and the excess change beside roots was
+smaller at greener sites (site medians, $\rho=0.37$, 47 sites).
+
+Group 1l carriers also differed in genome traits. Within orders, they had higher GC content than
+non-carriers (+0.7 percentage points) and genomes of similar size ($-1.9\%$, $p=0.08$), whereas group 1h,
+group 2a and form-I CoxL carriers had larger genomes (+7\%, +11\% and +17\%). Across all genomes, carriers
+of group 1l only had a smaller median estimated genome size than genomes without high-affinity groups
+(3.78 against 3.97~Mb), consistent with the across-lineage comparison of trace-gas oxidisers along a
+northern-China aridity gradient \citep{wang2025genomesize}; that study used broader functional groups
+and a different growth-prediction method. Our genome-size difference did not persist within orders. In a candidate screen for
+carbon fixation, all three Calvin--Benson--Bassham marker genes were encoded by 18\% of group 1l-only and
+8\% of group 1h-only carriers; the difference was not significant within orders (log-odds 0.73, SE 0.39,
+$p=0.06$) but was after adjustment for genome completeness (0.96, $p=0.02$) and among genomes at least 90\%
+complete (28\% against 9\%; 1.29, SE 0.54, $p=0.02$). RuBisCO co-occurs with high-affinity hydrogenases in
+desert genomes worldwide \citep{leung2025aridity}. These comparisons describe candidate gene co-occurrence;
+sequence-form and pathway validation would refine their functional interpretation. Excluding contamination-flagged
+representatives retained the negative genus association for group 1l (281 genera; phylum-adjusted coefficient
+$-0.77$, SE 0.18; order-adjusted $-0.96$, SE 0.21). The completeness-adjusted carbon-fixation association
+also remained positive (log-odds 1.04, SE 0.43). With the expanded exclusion set, the median
+root-to-bulk group-1l contrast was $-2.29$ log$_2$ units and its excess was $-1.76$ (106 visits at 47 sites).
+
+
+\subsection*{Spatial associations with aridity depend on the precipitation product}
+Across 51 sites, group 1l GE in bulk soil were negatively associated with mean annual precipitation from
+ERA5 ($\rho=-0.40$, $q=0.007$), NASA POWER ($-0.43$) and the blended product ($-0.51$).
+The ERA5 association persisted after adjustment for geography ($-0.36$) and geochemistry ($-0.30$),
+but its spatial block bootstrap intervals included zero at every block count (six blocks: $-0.64$ to
+$0.07$; Fig.~\ref{loa:fig:climate}). With POWER the intervals included zero at eight and ten blocks;
+with the blended product they excluded zero at all four block counts. Adjustment for community composition
+reduced the ERA5 correlation to $-0.02$.
+
+At the surface, all four groups were negatively associated with ERA5 precipitation ($\rho=-0.46$ to
+$-0.53$, 45 sites), with spatial block intervals below zero. For group 1l, however, the correlation
+was weaker with POWER ($-0.29$, $q=0.078$) and the blended product ($-0.25$, $q=0.14$), whose block
+intervals included zero. Residual spatial autocorrelation remained in the ERA5 models for group 1l
+(Moran's $I=0.16$, $p<0.001$) and form-I CoxL ($p=0.046$). These associations therefore depend on
+both the precipitation product and spatial structure.
+
+The bulk-soil association also tracked lineage composition. Holding the carrier fraction of each genus
+at its mean reproduced the correlation of the carrier share with precipitation ($-0.43$ for both the
+observed and turnover-only shares). Within the 81 genera containing carriers and non-carriers, the
+Gaussian model of clipped logits gave a negative carrier-share slope ($-0.29$ per standard deviation of
+log precipitation, SE 0.12); changing the clipping threshold gave slopes of $-0.38$ and $-0.21$.
+
+\subsection*{Within-site change between expeditions}
+The five expeditions span 31 months. In bulk soil, the within-site association of group 1l with
+precipitation over the preceding year was imprecise (103 visits at 35 sites; ERA5 $q=0.34$).
+Resampling ERA5 grid cells gave an interval of $-0.03$ to $1.02$ log$_2$(GE+0.01) units across the
+within-site interquartile range of log precipitation, and leaving out individual expeditions gave
+estimates from $-0.32$ to $0.80$ (Fig.~\ref{loa:fig:temporal}).
+
+At the surface and beside roots, group 1l was lower after wetter 90-day periods according to ERA5
+(changes of $-0.65$ and $-0.73$ log$_2$(GE+0.01) units; $q=0.013$ and $0.020$). These estimates
+remained negative under grid-cell resampling, alternative pseudocounts and omission of each expedition.
+With POWER exposures on the same visits, the estimates were $-0.12$ and $+0.33$, with intervals
+spanning zero. Within-site 90-day precipitation anomalies agreed weakly between products
+($\rho=0.19$ across 244 site visits), compared with $0.61$ for annual anomalies. The seasonal
+association is therefore conditional on the precipitation product. Several other marker intervals
+lay within the exploratory $\pm0.5$ bound on log$_2$(GE+0.01); their interpretation depends on the
+pseudocount and exposure range.
+
+In the visit-level community profiles, expedition accounted for 2.1\% of variation, site for 30.4\%
+and position for 4.5\%. Permuting visits within site and position gave $p=0.001$ for expedition,
+with dispersion also differing ($p=0.002$). Within bulk soil alone, expedition accounted for 3.7\%
+($p=0.036$; dispersion $p=0.26$). The community profiles document temporal change, while inference
+about rainfall responses is limited by the exposure products and the sparse repeated-site design.
+
+
+
+\begin{table}[h]\centering\small
+\caption{\textbf{Held-out benchmark of read assignment.} Fraction of 100-nt fragments from held-out genes
+assigned to their own group (recall) and fraction of fragments assigned to a group that came from it
+(precision), at the 60\% identity floor, when all marker proteins of 20\% of the representatives (genome)
+or 20\% of catalogue 50\%-identity clusters were removed with external references retained, or
+20\% of all-reference 70\%-identity components were removed, over five folds. Component linkage
+required at least half-length coverage. A more permissive verification search found 34 held-out proteins
+with matches above 70\% identity at this coverage, reaching 83.3\%; the holdout is not strictly identity-disjoint.}
+\label{loa:tab:benchmark}
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+Group & Recall & Precision & Recall & Precision & Recall & Precision\\
+ & \multicolumn{2}{c}{Genome holdout} & \multicolumn{2}{c}{Catalogue cluster} & \multicolumn{2}{c}{All-reference component}\\
+\midrule
+\csname @@input\endcsname loa_tab_benchmark.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{\textbf{Calibration in 20 simulated catalogue communities.} True median marker copies per genome,
+median log$_2$ GE bias, Pearson correlation on the log scale, and mean root-to-bulk log$_2$ ratio error
+(number of evaluable pairs). Full: complete reference database. Removed: community genomes' marker and
+ribosomal proteins removed. Simulation assumes uniform coverage and catalogue-only genomes.}
+\label{loa:tab:mock}
+\footnotesize
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & True & \multicolumn{3}{c}{Full} & \multicolumn{3}{c}{Removed}\\
+Group & copies & Bias & $r$ & Ratio error ($n$) & Bias & $r$ & Ratio error ($n$)\\
+\midrule
+\csname @@input\endcsname loa_tab_mock.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{\textbf{Sensitivity of the position contrasts and the spatial association.} Median log$_2$ ratio of
+group 1l genome equivalents between root-adjacent and bulk soil, the excess beyond the controls with its
+site-level Wilcoxon $p$, the excess for group 1h and form-I CoxL, group 1l excess against other CoxL alone, the surface excess of group 1l, and the
+Spearman correlation of bulk-soil site medians of group 1l with ERA5 and NASA POWER mean annual
+precipitation.}
+\label{loa:tab:sensitivity}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrr}
+\toprule
+Variant & Samples & 1l ratio & 1l excess & $p$ & 1l vs CoxL\\
+\midrule
+\csname @@input\endcsname loa_tab_sensitivity.tex
+\bottomrule
+\end{tabular}
+
+\medskip
+\begin{tabular}{lrrrrr}
+\toprule
+Variant & 1h excess & Form-I excess & Surface 1l & $\rho$ ERA5 & $\rho$ POWER\\
+\midrule
+\csname @@input\endcsname loa_tab_sensitivity_secondary.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{\textbf{Orders of group 1l carriers beside roots.} The ten orders of group 1l carriers with the
+highest mean share of the mapped community in bulk soil, with the median log$_2$ ratio of their share
+between root-adjacent and bulk soil over 106 site visits and the fraction of visits with a lower share
+beside roots.}
+\label{loa:tab:lineages}
+\begin{tabular}{llrrr}
+\toprule
+Phylum & Order & Bulk share (\%) & Log$_2$ ratio & Visits lower\\
+\midrule
+\csname @@input\endcsname loa_tab_lineages.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=\textwidth]{figures/loa_figS1_coxL_tree.pdf}
+
+
+\caption{\textbf{CoxL large subunits.} Tree of Rub' al-Khali CoxL proteins of at least 600 residues (70\%
+identity cluster representatives, filled) with the three form-I references of \citet{cordero2019atmospheric}
+(open). Form I (AYXCSFR and specified variants) purple, form II (AYRGAGR) orange, unresolved grey.}
+\label{loa:fig:coxl}
+\end{figure}
+
+\begin{figure}[h]\centering
+\includegraphics[width=\textwidth]{figures/loa_figS2_temporal.pdf}
+
+
+\caption{\textbf{Within-site change between expeditions.} Change in log$_2$(GE+0.01) across the
+within-site interquartile range of log(1+antecedent ERA5 precipitation) over 90 and 365 days, from mixed models
+with expedition as a fixed effect and site as a random intercept, with 95\% intervals from resampling
+sites. The shaded band marks the exploratory $\pm 0.5$ bound on the transformed scale.}
+\label{loa:fig:temporal}
+\end{figure}
+
+
+\begin{figure}[p]\centering
+\includegraphics[width=\textwidth]{figures/loa_figS3_hyd_tree.pdf}
+
+\caption{\textbf{[NiFe]-hydrogenase classification.} Large-subunit tree of catalogue proteins
+(70\% identity cluster representatives, filled) and HydDB references (open), rooted on group 2.
+Colours identify groups 1l, 1h and 2a; node labels give SH-like support.}
+\label{loa:fig:hydtree}\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=\textwidth]{figures/loa_figS4_climate.pdf}
+
+\caption{\textbf{ERA5 precipitation associations.} Spearman correlations of site medians
+with mean annual precipitation, with 95\% intervals from resampling six spatial blocks.
+Product and block-count sensitivity are described in Supplementary Results.}
+\label{loa:fig:climate}\end{figure}
+
+
+\subsection*{Full microTrait annotation and focal surface contrasts}
+
+The complete microTrait pipeline processed all 5,438 canonical genomes and produced 37, 100 and 189 trait categories at increasing granularity. We used its exact BetL and AhpCF rule calls for a targeted sensitivity analysis of the two focal surface contrasts. BetL was positive in 341 genomes, all among the 415 positives in the earlier profile screen. AhpCF was positive in 522 genomes, all among the earlier 525 positives. The differences reflect the combined change in gene calling and profile processing; their separate contributions were not isolated. The surface contrasts retained positive spatial-block intervals (Table~\ref{tab:microtrait_sensitivity}). The full profiles provide a broader reusable annotation product, while inference here remains focused on the stated ecological comparisons.
+
+\begin{table}[htbp]\centering\small
+\caption{Surface-minus-subsurface sensitivity to the complete microTrait implementation. Values are percentage-point differences with 95\% spatial-block bootstrap intervals, using identical paired membership (68 visits, 36 sites) and equal-site weighting. The earlier profile-screen estimates reproduce the canonical-taxonomy sensitivity results. These confidence intervals are separate from the INLA posterior intervals in Table~\ref{tab:mag_spatial}.}
+\label{tab:microtrait_sensitivity}
+\begin{tabular}{llrrr}\toprule
+Trait & Annotation & Positive MAGs & Mapped community & Original reads\\\midrule
+BetL & Earlier profile screen & 415 & $7.55\ [4.72,10.33]$ & $3.30\ [2.02,4.56]$\\
+BetL & Full microTrait & 341 & $6.91\ [4.33,9.45]$ & $3.00\ [1.84,4.14]$\\
+AhpCF & Earlier profile screen & 525 & $6.95\ [3.34,9.71]$ & $3.23\ [1.37,4.83]$\\
+AhpCF & Full microTrait & 522 & $6.93\ [3.34,9.68]$ & $3.22\ [1.37,4.81]$\\\bottomrule
+\end{tabular}
+\end{table}
+
+The complete release lacks the \texttt{aphA} and \texttt{phoN} profiles used as alternatives in the phosphatase rule. The coverage-aware output therefore retains 2,452 genomes as unassessed for absence of that trait; 2,986 have a positive assayed alternative. Neither BetL nor AhpCF depends on the missing profiles. Broad trait sums, carbon-fixation marker rules and predicted generation times were kept distinct from complete pathways, measured process rates and the specialised hydrogenase calls.
